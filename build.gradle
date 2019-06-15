@@ -83,6 +83,10 @@ repositories {
         // CraftTweaker2
         url = "http://maven.blamejared.com"
     }
+    maven {
+        //jitpack
+        url 'https://www.jitpack.io'
+    }
 }
 
 dependencies {
@@ -93,7 +97,5 @@ dependencies {
     }
     deobfCompile "CraftTweaker2:CraftTweaker2-API:${ct_version}"
     deobfCompile "CraftTweaker2:ZenScript:${ct_version}"
-	compile files(
-        'libs/SilveroakOutpost-0.0.1-B13.615-1.12.2-deobf.jar'
-    )
+    compile 'com.github.lemon-slice-studio:Silveroak-Outpost:5494851455:dev'
 }
