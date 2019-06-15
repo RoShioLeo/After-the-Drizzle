@@ -97,5 +97,5 @@ dependencies {
     }
     deobfCompile "CraftTweaker2:CraftTweaker2-API:${ct_version}"
     deobfCompile "CraftTweaker2:ZenScript:${ct_version}"
-    compile 'com.github.lemon-slice-studio:Silveroak-Outpost:5494851455:dev'
+    compile "com.github.lemon-slice-studio:Silveroak-Outpost:${so_version}:dev"
 }
