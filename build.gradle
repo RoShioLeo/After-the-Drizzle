@@ -1,0 +1,99 @@
+buildscript {
+    repositories {
+        jcenter()
+        maven { url = "http://files.minecraftforge.net/maven" }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+    }
+}
+apply plugin: 'net.minecraftforge.gradle.forge'
+
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+compileJava {
+    sourceCompatibility = targetCompatibility = '1.8'
+}
+
+version = mod_version + "-B${System.getenv().BUILD_NUMBER}.${System.getenv().BUILD_DATE}-${minecraft_version}"
+group = mod_group
+archivesBaseName = "CultivationAge"
+
+minecraft {
+    version = minecraft_version + "-" + forge_version
+    runDir = "run"
+    mappings = mcp_mapping
+
+    replace "@version@", project.version
+    makeObfSourceJar = false
+}
+
+task deobfJar(type: Jar) {
+    from(sourceSets.main.output)
+    classifier "dev"
+    archiveName = "${baseName}-${version}-deobf.${extension}"
+}
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+    archiveName = "${baseName}-${version}-sources.${extension}"
+}
+artifacts {
+    archives deobfJar
+    archives sourcesJar
+}
+
+processResources {
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
+
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+
+        expand 'version': project.version, 'mcversion': project.minecraft.version
+    }
+
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+    }
+}
+
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+	maven {
+        // JEI
+        name 'progwm\'s maven'
+        url 'http://dvs1.progwml6.com/files/maven'
+    }
+    maven {
+        // Hwyla && Guide-API
+        url "http://tehnut.info/maven"
+    }
+    maven {
+        // Redstone Flux
+        url = "http://maven.covers1624.net"
+    }
+	maven {
+        // CraftTweaker2
+        url = "http://maven.blamejared.com"
+    }
+}
+
+dependencies {
+    deobfCompile "mezz.jei:jei_${minecraft_version}:${jei_version}"
+    deobfCompile "mcp.mobius.waila:Hwyla:${hwyla_version}"
+	deobfCompile("CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-${ct_version}") {
+        exclude group: 'org.ow2.asm'
+    }
+    deobfCompile "CraftTweaker2:CraftTweaker2-API:${ct_version}"
+    deobfCompile "CraftTweaker2:ZenScript:${ct_version}"
+	compile files(
+        'libs/SilveroakOutpost-0.0.1-B13.615-1.12.2-deobf.jar'
+    )
+}
