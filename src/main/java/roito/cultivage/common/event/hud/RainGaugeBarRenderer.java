@@ -13,7 +13,7 @@ public class RainGaugeBarRenderer extends Gui
 	private final static int WIDTH = 31;
 	private final static int HEIGHT = 5;
 
-	private float rainfall = -1.0F;
+	private float rainfall = 0;
 
 	private Minecraft mc;
 
@@ -35,21 +35,39 @@ public class RainGaugeBarRenderer extends Gui
 		{
 			if (rainfall > this.rainfall)
 			{
-				this.rainfall += (rainfall - this.rainfall) / 1024;
+				this.rainfall += 0.001F;
 			}
 			else if (rainfall < this.rainfall)
 			{
-				this.rainfall -= (this.rainfall - rainfall) / 1024;
+				this.rainfall -= 0.001F;
 			}
 		}
 
 		mc.getTextureManager().bindTexture(overlayBar);
 		int offsetX = (screenWidth - WIDTH + 1) / 2, offsetY = (screenHeight + 36 - HEIGHT) / 2;
 
-		int width = Math.min((int) (27 * this.rainfall), 27);
+		int width = Math.min((int) (29 * this.rainfall), 29);
 		width = Math.max(width, 0);
 
 		drawTexturedModalRect(offsetX + 1, offsetY + 1, 1, 0, width, HEIGHT - 2);
 		drawTexturedModalRect(offsetX, offsetY, 0, 4, WIDTH, HEIGHT);
+	}
+
+	public int getWidth(float rainfall)
+	{
+		int width = 0;
+
+		if (rainfall <= 0)
+		{
+			return width;
+		}
+		if (rainfall <= 1.0F)
+		{
+			return width + (int) ((WIDTH - 2) * rainfall);
+		}
+		else
+		{
+			return WIDTH - 2;
+		}
 	}
 }

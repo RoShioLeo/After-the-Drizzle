@@ -4,55 +4,25 @@ public final class EnvionmentHelper
 {
 	public static Temperature getTemperatureLevel(float temp)
 	{
-		if (temp < 0.15F)
+		for (Temperature t : Temperature.values())
 		{
-			return Temperature.FREEZING;
+			if (t.isInTemperature(temp))
+			{
+				return t;
+			}
 		}
-		else if (temp < 0.3F)
-		{
-			return Temperature.COLD;
-		}
-		else if (temp < 0.6F)
-		{
-			return Temperature.COOL;
-		}
-		else if (temp < 0.8F)
-		{
-			return Temperature.WARM;
-		}
-		else if (temp < 1.5F)
-		{
-			return Temperature.HOT;
-		}
-		else
-		{
-			return Temperature.HEAT;
-		}
+		return Temperature.FREEZING;
 	}
 
 	public static Rainfall getRainfallLevel(float rainfall)
 	{
-		if (rainfall < 0.1F)
+		for (Rainfall r : Rainfall.values())
 		{
-			return Rainfall.RARE;
+			if (r.isInRainfall(rainfall))
+			{
+				return r;
+			}
 		}
-		else if (rainfall < 0.3F)
-		{
-			return Rainfall.SCARCE;
-		}
-		else if (rainfall < 0.6F)
-		{
-			return Rainfall.MODERATE;
-		}
-		else if (rainfall < 0.8F)
-		{
-			return Rainfall.ADEQUATE;
-		}
-		else
-		{
-			return Rainfall.ABUNDANT;
-		}
+		return Rainfall.RARE;
 	}
-
-
 }
