@@ -1,4 +1,4 @@
-package roito.cultivage.common.event.hud;
+package roito.cultivage.client.event.hud;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;

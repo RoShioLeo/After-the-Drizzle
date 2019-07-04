@@ -1,4 +1,4 @@
-package roito.cultivage.environment;
+package roito.cultivage.api.environment;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraftforge.fml.relauncher.Side;
@@ -37,9 +37,31 @@ public enum Rainfall
 		return min <= rainfall && rainfall < max;
 	}
 
+	public float getMin()
+	{
+		return min;
+	}
+
+	public float getMax()
+	{
+		return max;
+	}
+
 	@SideOnly(Side.CLIENT)
 	public String getTranslation()
 	{
-		return I18n.format(Cultivage.MODID + ".environment.rainfall" + getName());
+		return I18n.format(Cultivage.MODID + ".environment.rainfall." + getName());
+	}
+
+	public static Rainfall getRainfallLevel(float rainfall)
+	{
+		for (Rainfall r : Rainfall.values())
+		{
+			if (r.isInRainfall(rainfall))
+			{
+				return r;
+			}
+		}
+		return Rainfall.RARE;
 	}
 }

@@ -94,6 +94,6 @@ dependencies {
     deobfCompile "CraftTweaker2:CraftTweaker2-API:${ct_version}"
     deobfCompile "CraftTweaker2:ZenScript:${ct_version}"
     compile files(
-        'libs/SilveroakOutpost-1.12.2-0.1.0-B15-deobf.jar'
+        "libs/SilveroakOutpost-1.12.2-${so_version}-deobf.jar"
     )
 }

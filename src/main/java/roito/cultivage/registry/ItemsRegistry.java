@@ -11,8 +11,8 @@ import roito.silveroakoutpost.register.annotation.RegisterInfo;
 public final class ItemsRegistry
 {
 	@RegisterInfo("thermometer")
-	public static final Item ITEM_THERMOMETER = new SilveroakItem(64, Cultivage.TAB_ENV);
+	public static final Item THERMOMETER = new SilveroakItem(64, Cultivage.TAB_ENV);
 
 	@RegisterInfo("rain_gauge")
-	public static final Item ITEM_RAIN_GAUGE = new SilveroakItem(64, Cultivage.TAB_ENV);
+	public static final Item RAIN_GAUGE = new SilveroakItem(64, Cultivage.TAB_ENV);
 }

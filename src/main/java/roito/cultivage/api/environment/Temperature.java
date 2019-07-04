@@ -1,4 +1,4 @@
-package roito.cultivage.environment;
+package roito.cultivage.api.environment;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraftforge.fml.relauncher.Side;
@@ -8,11 +8,11 @@ import roito.cultivage.Cultivage;
 public enum Temperature
 {
 	FREEZING(Float.NEGATIVE_INFINITY, 0.15F),
-	COLD(0.15F, 0.3F),
-	COOL(0.3F, 0.6F),
-	WARM(0.6F, 0.8F),
-	HOT(0.8F, 1.5F),
-	HEAT(1.5F, Float.POSITIVE_INFINITY);
+	COLD(0.15F, 0.4F),
+	COOL(0.4F, 0.65F),
+	WARM(0.65F, 0.9F),
+	HOT(0.9F, 1.25F),
+	HEAT(1.25F, Float.POSITIVE_INFINITY);
 
 	private float min;
 	private float max;
@@ -38,9 +38,36 @@ public enum Temperature
 		return min <= temp && temp < max;
 	}
 
+	public float getMin()
+	{
+		return min;
+	}
+
+	public float getMax()
+	{
+		return max;
+	}
+
+	public float getWidth()
+	{
+		return max - min;
+	}
+
 	@SideOnly(Side.CLIENT)
 	public String getTranslation()
 	{
-		return I18n.format(Cultivage.MODID + ".environment.temperature" + getName());
+		return I18n.format(Cultivage.MODID + ".environment.temperature." + getName());
+	}
+
+	public static Temperature getTemperatureLevel(float temp)
+	{
+		for (Temperature t : Temperature.values())
+		{
+			if (t.isInTemperature(temp))
+			{
+				return t;
+			}
+		}
+		return Temperature.FREEZING;
 	}
 }

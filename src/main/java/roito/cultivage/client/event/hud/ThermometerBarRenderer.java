@@ -1,10 +1,11 @@
-package roito.cultivage.common.event.hud;
+package roito.cultivage.client.event.hud;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 import roito.cultivage.Cultivage;
+import roito.cultivage.api.environment.Temperature;
 
 public class ThermometerBarRenderer extends Gui
 {
@@ -54,55 +55,30 @@ public class ThermometerBarRenderer extends Gui
 
 	public int getWidth(float temp)
 	{
-		int width = 0;
-		int levelWidth = 5;
-
+		Temperature t = Temperature.getTemperatureLevel(temp);
 		if (temp <= 0)
 		{
+			return 0;
+		}
+		else if (temp <= Temperature.FREEZING.getMax())
+		{
+			return (int) (5 * temp);
+		}
+		else if (temp > Temperature.HEAT.getMin())
+		{
+			temp -= t.getMin();
+			int id = t.getId() - 1;
+			int width = id * 5;
+			width += 5 * temp / 0.35F;
 			return width;
-		}
-		if (temp <= 0.15F)
-		{
-			return (int) (levelWidth * (temp / 0.15F));
-		}
-
-		width += levelWidth;
-		if (temp <= 0.3F)
-		{
-			temp -= 0.15F;
-			return width + (int) (levelWidth * (temp / 0.15F));
-		}
-
-		width += levelWidth;
-		if (temp <= 0.6F)
-		{
-			temp -= 0.3F;
-			return width + (int) (levelWidth * (temp / 0.3F));
-		}
-
-		width += levelWidth;
-		if (temp <= 0.8F)
-		{
-			temp -= 0.6F;
-			return width + (int) (levelWidth * (temp / 0.2F));
-		}
-
-		width += levelWidth;
-		if (temp <= 1.5F)
-		{
-			temp -= 0.8F;
-			return width + (int) (levelWidth * (temp / 0.7F));
-		}
-
-		width += levelWidth;
-		if (temp <= 2.0F)
-		{
-			temp -= 1.5F;
-			return width + (int) ((levelWidth - 1) * (temp / 0.5F));
 		}
 		else
 		{
-			return width + (levelWidth - 1);
+			temp -= t.getMin();
+			int id = t.getId() - 1;
+			int width = id * 5;
+			width += 5 * temp / t.getWidth();
+			return width;
 		}
 	}
 }
