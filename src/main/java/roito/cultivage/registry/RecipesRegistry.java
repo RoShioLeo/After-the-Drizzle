@@ -2,14 +2,21 @@ package roito.cultivage.registry;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.LoaderState;
-import roito.cultivage.api.recipe.BasketDryingManager;
+import roito.cultivage.api.recipe.BasketBakeManager;
+import roito.cultivage.api.recipe.BasketIndoorsManager;
+import roito.cultivage.api.recipe.BasketOutdoorsManager;
+import roito.cultivage.api.recipe.BasketWetManager;
 import roito.silveroakoutpost.recipe.ISingleInRecipeManager;
 import roito.silveroakoutpost.recipe.SingleInRecipe;
 import roito.silveroakoutpost.register.annotation.Load;
 
 public final class RecipesRegistry
 {
-	public final static ISingleInRecipeManager managerBasketDrying = new BasketDryingManager();
+	public final static ISingleInRecipeManager MANAGER_BASKET_OUTDOORS = new BasketOutdoorsManager();
+	public final static ISingleInRecipeManager MANAGER_BASKET_INDOORS = new BasketIndoorsManager();
+	public final static ISingleInRecipeManager MANAGER_BASKET_IN_RAIN = new BasketWetManager();
+	public final static ISingleInRecipeManager MANAGER_BASKET_BAKE = new BasketBakeManager();
+
 
 	@Load(value = LoaderState.INITIALIZATION)
 	private static void registerRecipes()
@@ -19,6 +26,6 @@ public final class RecipesRegistry
 
 	private static void addBasketDryingRecipes()
 	{
-		managerBasketDrying.add(new SingleInRecipe("ingotIron", new ItemStack(ItemsRegistry.RAIN_GAUGE)));
+		MANAGER_BASKET_OUTDOORS.add(new SingleInRecipe("ingotIron", new ItemStack(ItemsRegistry.RAIN_GAUGE)));
 	}
 }

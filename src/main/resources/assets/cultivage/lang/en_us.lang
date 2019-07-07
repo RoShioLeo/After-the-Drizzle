@@ -1,0 +1,9 @@
+#Group
+itemGroup.cultivage.environment=Cultivation Age: Environment
+
+#Item
+item.cultivage.thermometer.name=Thermometer
+item.cultivage.rain_gauge.name=Rain Gauge
+
+#Block
+tile.cultivage.flat_basket.name=Flat Basket

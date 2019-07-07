@@ -6,7 +6,7 @@ import roito.silveroakoutpost.recipe.SingleInRecipeManager;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class BasketDryingManager extends SingleInRecipeManager
+public class BasketBakeManager extends SingleInRecipeManager
 {
 	private static ArrayList<ISingleInRecipe> recipes = new ArrayList<>();
 

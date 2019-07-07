@@ -1,0 +1,9 @@
+#Group
+itemGroup.cultivage.environment=农耕时代：环境
+
+#Item
+item.cultivage.thermometer.name=温度计
+item.cultivage.rain_gauge.name=雨量计
+
+#Block
+tile.cultivage.flat_basket.name=竹篾匾

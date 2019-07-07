@@ -64,16 +64,16 @@ public enum Humidity
 		}
 	}
 
-	public static Humidity getHumid(Rainfall r, Temperature t)
+	public static Humidity getHumid(Rainfall rainfall, Temperature temperature)
 	{
-		int rOrder = r.ordinal();
-		int tOrder = t.ordinal();
+		int rOrder = rainfall.ordinal();
+		int tOrder = temperature.ordinal();
 		int level = Math.max(0, rOrder - Math.abs(rOrder - tOrder) / 2);
 		return Humidity.values()[level];
 	}
 
-	public static Humidity getHumid(float r, float t)
+	public static Humidity getHumid(float rainfall, float temperature)
 	{
-		return Humidity.getHumid(Rainfall.getRainfallLevel(r), Temperature.getTemperatureLevel(t));
+		return Humidity.getHumid(Rainfall.getRainfallLevel(rainfall), Temperature.getTemperatureLevel(temperature));
 	}
 }

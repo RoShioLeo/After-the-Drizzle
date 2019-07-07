@@ -3,6 +3,7 @@ package roito.cultivage.common.tab;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import roito.cultivage.Cultivage;
+import roito.cultivage.registry.ItemsRegistry;
 
 public class TabEnv extends CreativeTabs
 {
@@ -14,6 +15,6 @@ public class TabEnv extends CreativeTabs
 	@Override
 	public ItemStack createIcon()
 	{
-		return ItemStack.EMPTY;
+		return new ItemStack(ItemsRegistry.RAIN_GAUGE);
 	}
 }
