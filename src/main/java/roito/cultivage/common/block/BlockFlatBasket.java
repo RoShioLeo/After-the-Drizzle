@@ -6,12 +6,17 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import roito.cultivage.Cultivage;
+import roito.cultivage.common.tileentity.TileEntityFlatBasket;
+import roito.cultivage.registry.GuiElementsRegistry;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -70,6 +75,35 @@ public class BlockFlatBasket extends Block
 	@SuppressWarnings("deprecation")
 	public boolean isFullCube(IBlockState state)
 	{
+		return false;
+	}
+
+	@Override
+	public boolean hasTileEntity(IBlockState state)
+	{
+		return true;
+	}
+
+	@Override
+	public TileEntity createTileEntity(World world, IBlockState state)
+	{
+		return new TileEntityFlatBasket();
+	}
+
+	@Override
+	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
+	{
+		TileEntity te = worldIn.getTileEntity(pos);
+		if (te != null && te instanceof TileEntityFlatBasket)
+		{
+			((TileEntityFlatBasket) te).refreshSeed();
+		}
+		if (!worldIn.isRemote && playerIn.isSneaking())
+		{
+			int id = GuiElementsRegistry.GUI_FLAT_BAKSET;
+			playerIn.openGui(Cultivage.getInstance(), id, worldIn, pos.getX(), pos.getY(), pos.getZ());
+			return true;
+		}
 		return false;
 	}
 }

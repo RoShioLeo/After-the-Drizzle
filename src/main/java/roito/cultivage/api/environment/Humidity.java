@@ -30,20 +30,37 @@ public enum Humidity
 		return I18n.format(Cultivage.MODID + ".environment.humidity." + getName());
 	}
 
-	public int getDryingTicks()
+	public int getOutdoorDryingTicks()
 	{
 		switch (this)
 		{
 			case ARID:
-				return (int) (ConfigMain.general.dryingBasicTime * 0.5F);
+				return (int) (ConfigMain.general.dryingOutdoorsBasicTime * 0.5F);
 			case DRY:
-				return (int) (ConfigMain.general.dryingBasicTime * 0.75F);
+				return (int) (ConfigMain.general.dryingOutdoorsBasicTime * 0.75F);
 			case AVERAGE:
-				return ConfigMain.general.dryingBasicTime;
+				return ConfigMain.general.dryingOutdoorsBasicTime;
 			case MOIST:
-				return (int) (ConfigMain.general.dryingBasicTime * 1.25F);
+				return (int) (ConfigMain.general.dryingOutdoorsBasicTime * 1.25F);
 			default:
-				return (int) (ConfigMain.general.dryingBasicTime * 1.5F);
+				return (int) (ConfigMain.general.dryingOutdoorsBasicTime * 1.5F);
+		}
+	}
+
+	public int getIndoorDryingTicks()
+	{
+		switch (this)
+		{
+			case ARID:
+				return (int) (ConfigMain.general.dryingIndoorsBasicTime * 0.5F);
+			case DRY:
+				return (int) (ConfigMain.general.dryingIndoorsBasicTime * 0.75F);
+			case AVERAGE:
+				return ConfigMain.general.dryingIndoorsBasicTime;
+			case MOIST:
+				return (int) (ConfigMain.general.dryingIndoorsBasicTime * 1.25F);
+			default:
+				return (int) (ConfigMain.general.dryingIndoorsBasicTime * 1.5F);
 		}
 	}
 

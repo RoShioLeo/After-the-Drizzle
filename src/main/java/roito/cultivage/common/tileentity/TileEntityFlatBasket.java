@@ -16,6 +16,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import roito.cultivage.api.environment.Humidity;
 import roito.cultivage.common.block.ModeFlatBasket;
+import roito.cultivage.common.config.ConfigMain;
 import roito.cultivage.registry.RecipesRegistry;
 import roito.silveroakoutpost.helper.NonNullListHelper;
 import roito.silveroakoutpost.recipe.ISingleInRecipe;
@@ -28,6 +29,8 @@ public class TileEntityFlatBasket extends TileEntity implements ITickable
 
 	protected int processTicks = 0;
 	protected int totalTicks = 0;
+
+	protected int randomSeed = 0;
 
 	protected ModeFlatBasket mode = ModeFlatBasket.OUTDOORS;
 
@@ -88,6 +91,7 @@ public class TileEntityFlatBasket extends TileEntity implements ITickable
 	@Override
 	public SPacketUpdateTileEntity getUpdatePacket()
 	{
+		refreshSeed();
 		return new SPacketUpdateTileEntity(pos, 1, writeToNBT(new NBTTagCompound()));
 	}
 
@@ -111,13 +115,16 @@ public class TileEntityFlatBasket extends TileEntity implements ITickable
 					getWet();
 					return;
 				case OUTDOORS:
-					refreshTotalTicks(Humidity.getHumid(rainfall, temp).getDryingTicks());
+					refreshTotalTicks(Humidity.getHumid(rainfall, temp).getOutdoorDryingTicks());
 					process(RecipesRegistry.MANAGER_BASKET_OUTDOORS);
 					return;
 				case INDOORS:
-					refreshTotalTicks(Humidity.getHumid(rainfall, temp).getDryingTicks());
-					process(RecipesRegistry.MANAGER_BASKET_OUTDOORS);
+					refreshTotalTicks(Humidity.getHumid(rainfall, temp).getIndoorDryingTicks());
+					process(RecipesRegistry.MANAGER_BASKET_INDOORS);
 					return;
+				case BAKE:
+					refreshTotalTicks(ConfigMain.general.BakeBasicTime);
+					process(RecipesRegistry.MANAGER_BASKET_BAKE);
 			}
 		}
 	}
@@ -138,7 +145,7 @@ public class TileEntityFlatBasket extends TileEntity implements ITickable
 			containerInventory.setStackInSlot(0, wetOutput);
 			refresh();
 		}
-		this.markDirty();
+		markDirty();
 	}
 
 	private boolean process(ISingleInRecipeManager recipeManager)
@@ -146,8 +153,8 @@ public class TileEntityFlatBasket extends TileEntity implements ITickable
 		ItemStack input = getInput();
 		if (input.isEmpty())
 		{
-			this.processTicks = 0;
-			this.markDirty();
+			processTicks = 0;
+			markDirty();
 			return false;
 		}
 		if (!currentRecipe.isTheSameInput(input) || mode != ModeFlatBasket.getMode(world, pos))
@@ -161,15 +168,15 @@ public class TileEntityFlatBasket extends TileEntity implements ITickable
 			{
 				ItemStack output = getOutput();
 				output.setCount(input.getCount());
-				this.containerInventory.setStackInSlot(0, output);
+				containerInventory.setStackInSlot(0, output);
 				refresh();
-				this.processTicks = 0;
+				processTicks = 0;
 			}
-			this.markDirty();
+			markDirty();
 			return true;
 		}
-		this.processTicks = 0;
-		this.markDirty();
+		processTicks = 0;
+		markDirty();
 		return false;
 	}
 
@@ -213,6 +220,11 @@ public class TileEntityFlatBasket extends TileEntity implements ITickable
 		return processTicks;
 	}
 
+	public ModeFlatBasket getMode()
+	{
+		return mode;
+	}
+
 	public NonNullList<ItemStack> getContents()
 	{
 		NonNullList<ItemStack> list = NonNullList.create();
@@ -221,5 +233,15 @@ public class TileEntityFlatBasket extends TileEntity implements ITickable
 			list.add(new ItemStack(this.containerInventory.getStackInSlot(0).getItem()));
 		}
 		return list;
+	}
+
+	public int getRandomSeed()
+	{
+		return randomSeed;
+	}
+
+	public void refreshSeed()
+	{
+		randomSeed = (int) (Math.random() * 10000);
 	}
 }
