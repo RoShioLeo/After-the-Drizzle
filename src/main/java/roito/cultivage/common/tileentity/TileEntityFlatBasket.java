@@ -244,4 +244,21 @@ public class TileEntityFlatBasket extends TileEntity implements ITickable
 	{
 		randomSeed = (int) (Math.random() * 10000);
 	}
+
+	public boolean isEmpty()
+	{
+		return getInput().isEmpty();
+	}
+
+	public boolean isCompleted()
+	{
+		return getOutput().isEmpty();
+	}
+
+	public void putItemStackIn(ItemStack itemStack)
+	{
+		containerInventory.setStackInSlot(0, itemStack);
+		markDirty();
+		refresh();
+	}
 }

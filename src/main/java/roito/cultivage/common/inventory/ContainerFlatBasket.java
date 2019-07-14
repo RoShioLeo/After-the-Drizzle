@@ -27,7 +27,7 @@ public class ContainerFlatBasket extends Container
 	{
 		super();
 		containerItem = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
-		addSlotToContainer(new SlotItemHandler(containerItem, 0, 80, 31));
+		addSlotToContainer(new SlotItemHandler(containerItem, 0, 107, 31));
 
 		for (int i = 0; i < 3; ++i)
 		{

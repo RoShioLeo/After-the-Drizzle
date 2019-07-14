@@ -6,7 +6,9 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -97,6 +99,24 @@ public class BlockFlatBasket extends Block
 		if (te != null && te instanceof TileEntityFlatBasket)
 		{
 			((TileEntityFlatBasket) te).refreshSeed();
+			if (!playerIn.isSneaking() && !worldIn.isRemote)
+			{
+				if (((TileEntityFlatBasket) te).isEmpty())
+				{
+					if (!playerIn.getHeldItem(hand).isEmpty())
+					{
+						((TileEntityFlatBasket) te).putItemStackIn(playerIn.getHeldItem(hand));
+						playerIn.setHeldItem(hand, ItemStack.EMPTY);
+						return true;
+					}
+				}
+				else if (((TileEntityFlatBasket) te).isCompleted())
+				{
+					worldIn.spawnEntity(new EntityItem(worldIn, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, ((TileEntityFlatBasket) te).getInput()));
+					((TileEntityFlatBasket) te).putItemStackIn(ItemStack.EMPTY);
+					return true;
+				}
+			}
 		}
 		if (!worldIn.isRemote && playerIn.isSneaking())
 		{
@@ -104,6 +124,6 @@ public class BlockFlatBasket extends Block
 			playerIn.openGui(Cultivage.getInstance(), id, worldIn, pos.getX(), pos.getY(), pos.getZ());
 			return true;
 		}
-		return false;
+		return true;
 	}
 }
