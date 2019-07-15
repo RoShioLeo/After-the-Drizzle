@@ -38,7 +38,7 @@ public class BlockFlatBasket extends Block
 		this.setHardness(0.5F);
 		this.setSoundType(SoundType.WOOD);
 		this.setTranslationKey("flat_basket");
-		this.setCreativeTab(Cultivage.TAB_ENV);
+		this.setCreativeTab(Cultivage.TAB_CRAFT);
 	}
 
 	@Override

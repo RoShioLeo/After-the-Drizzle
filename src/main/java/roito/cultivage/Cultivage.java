@@ -9,7 +9,9 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.apache.logging.log4j.Logger;
 import roito.cultivage.common.CommonProxy;
+import roito.cultivage.common.tab.TabCraft;
 import roito.cultivage.common.tab.TabEnv;
+import roito.cultivage.common.tab.TabFood;
 
 @Mod(modid = Cultivage.MODID,
 	name = Cultivage.NAME,
@@ -57,4 +59,6 @@ public class Cultivage
 	}
 
 	public static final CreativeTabs TAB_ENV = new TabEnv();
+	public static final CreativeTabs TAB_CRAFT = new TabCraft();
+	public static final CreativeTabs TAB_FOOD = new TabFood();
 }
