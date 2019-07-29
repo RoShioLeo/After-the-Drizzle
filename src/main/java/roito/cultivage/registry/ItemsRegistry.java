@@ -2,6 +2,7 @@ package roito.cultivage.registry;
 
 import net.minecraft.item.Item;
 import roito.cultivage.Cultivage;
+import roito.cultivage.common.item.ItemAsh;
 import roito.cultivage.common.item.ItemCAFood;
 import roito.silveroakoutpost.item.SilveroakItem;
 import roito.silveroakoutpost.register.RegisterType;
@@ -38,4 +39,7 @@ public final class ItemsRegistry
 	@OreDict("foodJerky")
 	@RegisterInfo("dried_beetroot")
 	public static final Item DRIED_BEETROOT = new ItemCAFood(3, 1.2F, false);
+
+	@RegisterInfo("ash")
+	public static final Item ASH = new ItemAsh();
 }

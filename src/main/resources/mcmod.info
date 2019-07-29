@@ -1,14 +1,17 @@
 [
 {
-  "modid": "examplemod",
-  "name": "Example Mod",
-  "description": "Example placeholder mod.",
+  "modid": "cultivage",
+  "name": "Cultivation Age",
+  "description": "Agricultural mod.",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
-  "authorList": ["ExampleDude"],
-  "credits": "The Forge and FML guys, for making this example",
+  "authorList": [
+    "RoitoLeonine",
+    "jihuayu"
+  ],
+  "credits": "Lemon Slice Studio",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "cultivage:stove_stone"
+    },
+    "facing=south": {
+      "model": "cultivage:stove_stone",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "cultivage:stove_stone",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "cultivage:stove_stone",
+      "y": 90
+    }
+  }
+}

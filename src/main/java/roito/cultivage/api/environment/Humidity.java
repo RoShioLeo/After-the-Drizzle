@@ -35,15 +35,15 @@ public enum Humidity
 		switch (this)
 		{
 			case ARID:
-				return (int) (ConfigMain.general.dryingOutdoorsBasicTime * 0.5F);
+				return (int) (ConfigMain.time.dryingOutdoorsBasicTime * 0.5F);
 			case DRY:
-				return (int) (ConfigMain.general.dryingOutdoorsBasicTime * 0.75F);
+				return (int) (ConfigMain.time.dryingOutdoorsBasicTime * 0.75F);
 			case AVERAGE:
-				return ConfigMain.general.dryingOutdoorsBasicTime;
+				return ConfigMain.time.dryingOutdoorsBasicTime;
 			case MOIST:
-				return (int) (ConfigMain.general.dryingOutdoorsBasicTime * 1.25F);
+				return (int) (ConfigMain.time.dryingOutdoorsBasicTime * 1.25F);
 			default:
-				return (int) (ConfigMain.general.dryingOutdoorsBasicTime * 1.5F);
+				return (int) (ConfigMain.time.dryingOutdoorsBasicTime * 1.5F);
 		}
 	}
 
@@ -52,15 +52,15 @@ public enum Humidity
 		switch (this)
 		{
 			case ARID:
-				return (int) (ConfigMain.general.dryingIndoorsBasicTime * 0.5F);
+				return (int) (ConfigMain.time.dryingIndoorsBasicTime * 0.5F);
 			case DRY:
-				return (int) (ConfigMain.general.dryingIndoorsBasicTime * 0.75F);
+				return (int) (ConfigMain.time.dryingIndoorsBasicTime * 0.75F);
 			case AVERAGE:
-				return ConfigMain.general.dryingIndoorsBasicTime;
+				return ConfigMain.time.dryingIndoorsBasicTime;
 			case MOIST:
-				return (int) (ConfigMain.general.dryingIndoorsBasicTime * 1.25F);
+				return (int) (ConfigMain.time.dryingIndoorsBasicTime * 1.25F);
 			default:
-				return (int) (ConfigMain.general.dryingIndoorsBasicTime * 1.5F);
+				return (int) (ConfigMain.time.dryingIndoorsBasicTime * 1.5F);
 		}
 	}
 
@@ -69,15 +69,15 @@ public enum Humidity
 		switch (this)
 		{
 			case ARID:
-				return (int) (ConfigMain.general.fermentationBasicTime * 0.5F);
+				return (int) (ConfigMain.time.fermentationBasicTime * 0.5F);
 			case DRY:
-				return (int) (ConfigMain.general.fermentationBasicTime * 0.75F);
+				return (int) (ConfigMain.time.fermentationBasicTime * 0.75F);
 			case AVERAGE:
-				return ConfigMain.general.fermentationBasicTime;
+				return ConfigMain.time.fermentationBasicTime;
 			case MOIST:
-				return (int) (ConfigMain.general.fermentationBasicTime * 1.25F);
+				return (int) (ConfigMain.time.fermentationBasicTime * 1.25F);
 			default:
-				return (int) (ConfigMain.general.fermentationBasicTime * 1.5F);
+				return (int) (ConfigMain.time.fermentationBasicTime * 1.5F);
 		}
 	}
 

@@ -14,6 +14,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import roito.cultivage.api.block.IBlockStove;
 import roito.cultivage.api.environment.Humidity;
 import roito.cultivage.common.block.ModeFlatBasket;
 import roito.cultivage.common.config.ConfigMain;
@@ -98,7 +99,7 @@ public class TileEntityFlatBasket extends TileEntity implements ITickable
 	@Override
 	public void onDataPacket(NetworkManager manager, SPacketUpdateTileEntity packet)
 	{
-		this.readFromNBT(packet.getNbtCompound());
+		readFromNBT(packet.getNbtCompound());
 	}
 
 	@Override
@@ -123,7 +124,7 @@ public class TileEntityFlatBasket extends TileEntity implements ITickable
 					process(RecipesRegistry.MANAGER_BASKET_INDOORS);
 					return;
 				case BAKE:
-					refreshTotalTicks(ConfigMain.general.BakeBasicTime);
+					refreshTotalTicks(ConfigMain.time.BakeBasicTime);
 					process(RecipesRegistry.MANAGER_BASKET_BAKE);
 			}
 		}
@@ -164,7 +165,15 @@ public class TileEntityFlatBasket extends TileEntity implements ITickable
 		}
 		if (!getOutput().isEmpty())
 		{
-			if (++this.processTicks >= this.totalTicks)
+			if (mode == ModeFlatBasket.BAKE)
+			{
+				processTicks += ((IBlockStove) getWorld().getBlockState(pos.down()).getBlock()).getFuelPower();
+			}
+			else
+			{
+				processTicks++;
+			}
+			if (processTicks >= totalTicks)
 			{
 				ItemStack output = getOutput();
 				output.setCount(input.getCount());
@@ -228,9 +237,11 @@ public class TileEntityFlatBasket extends TileEntity implements ITickable
 	public NonNullList<ItemStack> getContents()
 	{
 		NonNullList<ItemStack> list = NonNullList.create();
+		ItemStack con = containerInventory.getStackInSlot(0).copy();
+		con.setCount(1);
 		for (int i = getInput().getCount(); i > 0; i -= 16)
 		{
-			list.add(new ItemStack(this.containerInventory.getStackInSlot(0).getItem()));
+			list.add(con);
 		}
 		return list;
 	}
@@ -255,9 +266,8 @@ public class TileEntityFlatBasket extends TileEntity implements ITickable
 		return getOutput().isEmpty();
 	}
 
-	public void putItemStackIn(ItemStack itemStack)
+	public void mark()
 	{
-		containerInventory.setStackInSlot(0, itemStack);
 		markDirty();
 		refresh();
 	}

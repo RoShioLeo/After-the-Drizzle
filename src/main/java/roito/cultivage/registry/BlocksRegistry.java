@@ -3,6 +3,8 @@ package roito.cultivage.registry;
 import net.minecraft.block.Block;
 import roito.cultivage.Cultivage;
 import roito.cultivage.common.block.BlockFlatBasket;
+import roito.cultivage.common.block.BlockStoveDirt;
+import roito.cultivage.common.block.BlockStoveStone;
 import roito.silveroakoutpost.register.RegisterType;
 import roito.silveroakoutpost.register.annotation.AutoRegistry;
 import roito.silveroakoutpost.register.annotation.RegisterInfo;
@@ -12,4 +14,14 @@ public final class BlocksRegistry
 {
 	@RegisterInfo("flat_basket")
 	public static final Block FLAT_BASKET = new BlockFlatBasket();
+
+	@RegisterInfo("stove_dirt")
+	public static final Block STOVE_DIRT = new BlockStoveDirt(false);
+	@RegisterInfo("lit_stove_dirt")
+	public static final Block LIT_STOVE_DIRT = new BlockStoveDirt(true);
+
+	@RegisterInfo("stove_stone")
+	public static final Block STOVE_STONE = new BlockStoveStone(false);
+	@RegisterInfo("lit_stove_stone")
+	public static final Block LIT_STOVE_STONE = new BlockStoveStone(true);
 }

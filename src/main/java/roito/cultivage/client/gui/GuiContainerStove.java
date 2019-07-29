@@ -7,16 +7,16 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import roito.cultivage.Cultivage;
-import roito.cultivage.common.inventory.ContainerFlatBasket;
+import roito.cultivage.common.inventory.ContainerStove;
 
 @SideOnly(Side.CLIENT)
-public class GuiContainerFlatBasket extends GuiContainer
+public class GuiContainerStove extends GuiContainer
 {
-	private static final String TEXTURE_PATH = "textures/gui/container/gui_single_recipe.png";
+	private static final String TEXTURE_PATH = "textures/gui/container/gui_stove.png";
 	private static final ResourceLocation TEXTURE = new ResourceLocation(Cultivage.MODID, TEXTURE_PATH);
-	private ContainerFlatBasket inventory;
+	private ContainerStove inventory;
 
-	public GuiContainerFlatBasket(ContainerFlatBasket inventorySlotsIn)
+	public GuiContainerStove(ContainerStove inventorySlotsIn)
 	{
 		super(inventorySlotsIn);
 		xSize = 176;
@@ -38,27 +38,21 @@ public class GuiContainerFlatBasket extends GuiContainer
 		GlStateManager.color(1.0F, 1.0F, 1.0F);
 
 		mc.getTextureManager().bindTexture(TEXTURE);
-		int offsetX = (width - xSize) / 2, offsetY = (height - ySize) / 2;
+		int offsetX = (this.width - this.xSize) / 2, offsetY = (height - ySize) / 2;
 
 		drawTexturedModalRect(offsetX, offsetY, 0, 0, xSize, ySize);
 
-		int totalTicks = inventory.getTotalTicks();
-		int processTicks = inventory.getProcessTicks();
-		int textureWidth = 0;
-		if (totalTicks != 0)
-		{
-			textureWidth = (int) Math.ceil(24 * processTicks / totalTicks);
-		}
-		drawTexturedModalRect(offsetX + 76, offsetY + 31, 176, 0, textureWidth, 17);
+		int fuelTicks = inventory.getFuelTicks();
+		int remainTicks = inventory.getRemainTicks();
+		int textureHeight = fuelTicks == 0 ? 0 : (int) Math.ceil(14 * remainTicks / fuelTicks);
 
-		int id = inventory.getMode().ordinal();
-		drawTexturedModalRect(offsetX + 52, offsetY + 30, 176, 17 + id * 18, 18, 18);
+		drawTexturedModalRect(offsetX + 81, offsetY + 16 + 14 - textureHeight, 176, 14 - textureHeight, 14, textureHeight);
 	}
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
 	{
-		String title = I18n.format("tile.cultivage.flat_basket.name");
-		fontRenderer.drawString(title, (xSize - fontRenderer.getStringWidth(title)) / 2, 6, 0x404040);
+		String title = I18n.format("tile.cultivage.stove.name");
+		fontRenderer.drawString(title, (this.xSize - this.fontRenderer.getStringWidth(title)) / 2, 6, 0x404040);
 	}
 }

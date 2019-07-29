@@ -12,22 +12,30 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
-import roito.cultivage.common.block.ModeFlatBasket;
-import roito.cultivage.common.tileentity.TileEntityFlatBasket;
+import roito.cultivage.common.tileentity.TileEntityStove;
 
-public class ContainerFlatBasket extends Container
+public class ContainerStove extends Container
 {
-	public TileEntityFlatBasket tileEntity;
-	private IItemHandler containerItem;
-	protected int processTicks = 0;
-	protected int totalTicks = 0;
-	protected ModeFlatBasket mode = ModeFlatBasket.OUTDOORS;
+	private TileEntityStove tileEntity;
+	private IItemHandler fuelItem;
+	private IItemHandler ashItem;
+	private int remainTicks = 0;
+	private int fuelTicks = 0;
 
-	public ContainerFlatBasket(EntityPlayer player, TileEntity tileEntity)
+	public ContainerStove(EntityPlayer player, TileEntity tileEntity)
 	{
 		super();
-		containerItem = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
-		addSlotToContainer(new SlotItemHandler(containerItem, 0, 107, 31));
+		fuelItem = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
+		ashItem = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN);
+		addSlotToContainer(new SlotItemHandler(fuelItem, 0, 80, 33));
+		addSlotToContainer(new SlotItemHandler(ashItem, 0, 80, 61)
+		{
+			@Override
+			public boolean isItemValid(ItemStack stack)
+			{
+				return false;
+			}
+		});
 
 		for (int i = 0; i < 3; ++i)
 		{
@@ -41,7 +49,7 @@ public class ContainerFlatBasket extends Container
 		{
 			addSlotToContainer(new Slot(player.inventory, i, 8 + i * 18, 142));
 		}
-		this.tileEntity = (TileEntityFlatBasket) tileEntity;
+		this.tileEntity = (TileEntityStove) tileEntity;
 	}
 
 	@Override
@@ -64,19 +72,19 @@ public class ContainerFlatBasket extends Container
 
 		boolean isMerged = false;
 
-		if (index >= 0 && index < 1)
+		if (index >= 0 && index < 2)
 		{
-			isMerged = mergeItemStack(newStack, 1, 37, true);
+			isMerged = mergeItemStack(newStack, 2, 38, true);
 		}
-		else if (index >= 1 && index < 28)
+		else if (index >= 2 && index < 29)
 		{
-			isMerged = mergeItemStack(newStack, 0, 1, false)
+			isMerged = mergeItemStack(newStack, 0, 2, false)
 				|| mergeItemStack(newStack, 29, 38, false);
 		}
-		else if (index >= 28 && index < 37)
+		else if (index >= 29 && index < 38)
 		{
-			isMerged = mergeItemStack(newStack, 0, 1, false)
-				|| mergeItemStack(newStack, 1, 28, false);
+			isMerged = mergeItemStack(newStack, 0, 2, false)
+				|| mergeItemStack(newStack, 2, 29, false);
 		}
 
 		if (!isMerged)
@@ -103,15 +111,13 @@ public class ContainerFlatBasket extends Container
 	{
 		super.detectAndSendChanges();
 
-		this.processTicks = tileEntity.getProcessTicks();
-		this.totalTicks = tileEntity.getTotalTicks();
-		this.mode = tileEntity.getMode();
+		this.remainTicks = tileEntity.getRemainTicks();
+		this.fuelTicks = tileEntity.getFuelTicks();
 
 		for (IContainerListener i : this.listeners)
 		{
-			i.sendWindowProperty(this, 0, processTicks);
-			i.sendWindowProperty(this, 1, totalTicks);
-			i.sendWindowProperty(this, 5, mode.ordinal());
+			i.sendWindowProperty(this, 0, remainTicks);
+			i.sendWindowProperty(this, 1, fuelTicks);
 		}
 	}
 
@@ -124,29 +130,21 @@ public class ContainerFlatBasket extends Container
 		switch (id)
 		{
 			case 0:
-				this.processTicks = data;
+				this.remainTicks = data;
 				break;
 			case 1:
-				this.totalTicks = data;
-				break;
-			case 5:
-				this.mode = ModeFlatBasket.values()[data];
+				this.fuelTicks = data;
 				break;
 		}
 	}
 
-	public int getProcessTicks()
+	public int getRemainTicks()
 	{
-		return this.processTicks;
+		return this.remainTicks;
 	}
 
-	public int getTotalTicks()
+	public int getFuelTicks()
 	{
-		return this.totalTicks;
-	}
-
-	public ModeFlatBasket getMode()
-	{
-		return this.mode;
+		return this.fuelTicks;
 	}
 }

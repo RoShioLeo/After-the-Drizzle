@@ -16,6 +16,9 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.IItemHandlerModifiable;
 import roito.cultivage.Cultivage;
 import roito.cultivage.common.tileentity.TileEntityFlatBasket;
 import roito.cultivage.registry.GuiElementsRegistry;
@@ -25,12 +28,12 @@ import java.util.List;
 
 public class BlockFlatBasket extends Block
 {
-	protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.3125D, 1.0D);
-	protected static final AxisAlignedBB AABB_BOTTOM = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.0625D, 1.0D);
-	protected static final AxisAlignedBB AABB_SIDE1 = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.3125D, 0.0625D);
-	protected static final AxisAlignedBB AABB_SIDE2 = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 0.0625D, 0.3125D, 1.0D);
-	protected static final AxisAlignedBB AABB_SIDE3 = new AxisAlignedBB(0.9375D, 0.0D, 0.0D, 1.0D, 0.3125D, 1.0D);
-	protected static final AxisAlignedBB AABB_SIDE4 = new AxisAlignedBB(0.0D, 0.0D, 0.9375D, 1.0D, 0.3125D, 1.0D);
+	private static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.3125D, 1.0D);
+	private static final AxisAlignedBB AABB_BOTTOM = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.0625D, 1.0D);
+	private static final AxisAlignedBB AABB_SIDE1 = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.3125D, 0.0625D);
+	private static final AxisAlignedBB AABB_SIDE2 = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 0.0625D, 0.3125D, 1.0D);
+	private static final AxisAlignedBB AABB_SIDE3 = new AxisAlignedBB(0.9375D, 0.0D, 0.0D, 1.0D, 0.3125D, 1.0D);
+	private static final AxisAlignedBB AABB_SIDE4 = new AxisAlignedBB(0.0D, 0.0D, 0.9375D, 1.0D, 0.3125D, 1.0D);
 
 	public BlockFlatBasket()
 	{
@@ -96,34 +99,61 @@ public class BlockFlatBasket extends Block
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
 	{
 		TileEntity te = worldIn.getTileEntity(pos);
-		if (te != null && te instanceof TileEntityFlatBasket)
+		if (te instanceof TileEntityFlatBasket)
 		{
 			((TileEntityFlatBasket) te).refreshSeed();
-			if (!playerIn.isSneaking() && !worldIn.isRemote)
+			if (!playerIn.isSneaking())
 			{
-				if (((TileEntityFlatBasket) te).isEmpty())
+				if (!playerIn.getHeldItem(hand).isEmpty())
 				{
-					if (!playerIn.getHeldItem(hand).isEmpty())
+					IItemHandler container = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
+					playerIn.setHeldItem(hand, container.insertItem(0, playerIn.getHeldItem(hand), false));
+					((TileEntityFlatBasket) te).mark();
+					return true;
+				}
+				else
+				{
+					if (!((TileEntityFlatBasket) te).isEmpty() && ((TileEntityFlatBasket) te).isCompleted())
 					{
-						((TileEntityFlatBasket) te).putItemStackIn(playerIn.getHeldItem(hand));
-						playerIn.setHeldItem(hand, ItemStack.EMPTY);
+						IItemHandler container = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
+						if (!worldIn.isRemote)
+						{
+							worldIn.spawnEntity(new EntityItem(worldIn, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, container.extractItem(0, container.getStackInSlot(0).getCount(), false)));
+						}
+						((TileEntityFlatBasket) te).mark();
 						return true;
 					}
 				}
-				else if (((TileEntityFlatBasket) te).isCompleted())
-				{
-					worldIn.spawnEntity(new EntityItem(worldIn, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, ((TileEntityFlatBasket) te).getInput()));
-					((TileEntityFlatBasket) te).putItemStackIn(ItemStack.EMPTY);
-					return true;
-				}
 			}
 		}
-		if (!worldIn.isRemote && playerIn.isSneaking())
+		if (playerIn.isSneaking())
 		{
 			int id = GuiElementsRegistry.GUI_FLAT_BAKSET;
 			playerIn.openGui(Cultivage.getInstance(), id, worldIn, pos.getX(), pos.getY(), pos.getZ());
 			return true;
 		}
-		return true;
+		return false;
+	}
+
+	@Override
+	public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
+	{
+		TileEntity te = worldIn.getTileEntity(pos);
+
+		if (te != null)
+		{
+			IItemHandler inventory = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
+
+			for (int i = inventory.getSlots() - 1; i >= 0; --i)
+			{
+				if (!inventory.getStackInSlot(i).isEmpty())
+				{
+					Block.spawnAsEntity(worldIn, pos, inventory.getStackInSlot(i));
+					((IItemHandlerModifiable) inventory).setStackInSlot(i, ItemStack.EMPTY);
+				}
+			}
+		}
+
+		super.breakBlock(worldIn, pos, state);
 	}
 }
