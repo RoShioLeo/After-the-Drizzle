@@ -25,7 +25,7 @@ public final class ChineseCalendarHelper
 			0x0e968, 0x0d520, 0x0daa0, 0x16aa6, 0x056d0, 0x04ae0, 0x0a9d4, 0x0a2d0, 0x0d150, 0x0f252, //2090-2099
 			0x0d520}; //2100
 
-	public final static int[] SOLAR_TERMS_INFO = new int[]
+    private final static int[] SOLAR_TERMS_INFO = new int[]
 		{0x97783, 0x97bd0, 0x97c36, 0xb0b6f, 0xc9274, 0xc91aa, 0x97b6b, 0x97bd1, 0x9801e, 0xc9210, 0xc965c, 0xc920e, //1900-1901
 			0x97bcf, 0x97c35, 0x98082, 0xc95f8, 0xc965c, 0xc920f, 0x97bd0, 0xb06bd, 0xb0722, 0xc965c, 0xe1cfc, 0xc920f, //1902-1903
 			0xb0270, 0x97bd0, 0x97c36, 0xb0b6f, 0xc9274, 0xc91aa, 0x97b6b, 0x97bd1, 0x9801e, 0xc9210, 0xc965c, 0xc920e, //1904-1905
@@ -128,10 +128,6 @@ public final class ChineseCalendarHelper
 			0x7ec96, 0x7f0e3, 0x7f149, 0x98082, 0xb0787, 0xb06bd, 0x7f07e, 0x7f0e4, 0x7f531, 0xb0723, 0xb0b6f, 0xb0721, //2098-2099
 			0x7f0e2, 0x7f148, 0x7f531, 0xb0b0b, 0xb0b6f, 0xb0722}; //2100
 
-	private final static String[] SOLAR_TERMS_NAME =
-		{"小寒", "大寒", "立春", "雨水", "惊蛰", "春分", "清明", "谷雨", "立夏", "小满", "芒种", "夏至",
-			"小暑", "大暑", "立秋", "处暑", "白露", "秋分", "寒露", "霜降", "立冬", "小雪", "大雪", "冬至"};
-
 	private final static String[] MONTH_NAME = {"正月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "冬月", "腊月"};
 	private final static String[] NUMBER_NAME = {"十", "一", "二", "三", "四", "五", "六", "七", "八", "九"};
 
@@ -166,7 +162,6 @@ public final class ChineseCalendarHelper
 				ten = "二";
 			}
 		}
-
 		return ten + one;
 	}
 }
