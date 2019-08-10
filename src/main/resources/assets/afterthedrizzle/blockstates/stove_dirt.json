@@ -1,0 +1,19 @@
+{
+    "variants": {
+        "facing=north": {
+            "model": "afterthedrizzle:stove_dirt"
+        },
+        "facing=south": {
+            "model": "afterthedrizzle:stove_dirt",
+            "y": 180
+        },
+        "facing=west": {
+            "model": "afterthedrizzle:stove_dirt",
+            "y": 270
+        },
+        "facing=east": {
+            "model": "afterthedrizzle:stove_dirt",
+            "y": 90
+        }
+    }
+}

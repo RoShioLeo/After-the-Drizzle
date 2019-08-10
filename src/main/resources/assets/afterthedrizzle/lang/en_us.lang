@@ -1,0 +1,38 @@
+# Group
+itemGroup.afterthedrizzle.environment=Cultivation Age: Environment
+itemGroup.afterthedrizzle.craft=Cultivation Age: Craft
+itemGroup.afterthedrizzle.food=Cultivation Age: Food
+
+# Item
+item.afterthedrizzle.thermometer.name=Thermometer
+item.afterthedrizzle.rain_gauge.name=Rain Gauge
+
+item.afterthedrizzle.beef_jerky.name=Beef Jerky
+item.afterthedrizzle.pork_jerky.name=Pork Jerky
+item.afterthedrizzle.chicken_jerky.name=Chicken Jerky
+item.afterthedrizzle.rabbit_jerky.name=Rabbit Jerky
+item.afterthedrizzle.mutton_jerky.name=Mutton Jerky
+item.afterthedrizzle.dried_carrot.name=Dried Carrot
+item.afterthedrizzle.dried_beetroot.name=Dried Beetroot
+
+item.afterthedrizzle.ash.name=Ash
+
+# Block
+tile.afterthedrizzle.flat_basket.name=Flat Basket
+tile.afterthedrizzle.stove.name=Stove
+tile.afterthedrizzle.stove_dirt.name=Dirt Stove
+tile.afterthedrizzle.stove_stone.name=Stone Stove
+
+# Config
+afterthedrizzle.config.time=Time Configuration
+afterthedrizzle.config.time.outdoor_drying_basic=Outdoors Drying Basic Ticks
+afterthedrizzle.config.time.indoor_drying_basic=Indoors Drying Basic Ticks
+afterthedrizzle.config.time.fermentation_basic=Fermentation Basic Ticks
+afterthedrizzle.config.time.bake_basic=Bake Basic Ticks
+
+#Mode
+afterthedrizzle.mode.flat_basket.in_rain=Wet Mode
+afterthedrizzle.mode.flat_basket.outdoors=Outdoor Mode
+afterthedrizzle.mode.flat_basket.indoors=Indoor Mode
+afterthedrizzle.mode.flat_basket.bake=Bake Mode
+afterthedrizzle.mode.flat_basket.process=Process Mode

@@ -1,0 +1,35 @@
+{
+    "multipart": [
+        {
+            "apply": {
+                "model": "afterthedrizzle:flat_basket_bottom"
+            }
+        },
+        {
+            "apply": {
+                "model": "afterthedrizzle:flat_basket_side",
+                "uvlock": true
+            }
+        },
+        {
+            "apply": {
+                "model": "afterthedrizzle:flat_basket_side",
+                "y": 90,
+                "uvlock": true
+            }
+        },
+        {
+            "apply": {
+                "model": "afterthedrizzle:flat_basket_side",
+                "y": 180,
+                "uvlock": true
+            }
+        }, {
+            "apply": {
+                "model": "afterthedrizzle:flat_basket_side",
+                "y": 270,
+                "uvlock": true
+            }
+        }
+    ]
+}

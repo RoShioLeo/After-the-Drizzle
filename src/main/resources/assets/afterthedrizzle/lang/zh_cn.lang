@@ -1,0 +1,38 @@
+# Group
+itemGroup.afterthedrizzle.environment=农耕时代：环境
+itemGroup.afterthedrizzle.craft=农耕时代：工艺
+itemGroup.afterthedrizzle.food=农耕时代：食物
+
+# Item
+item.afterthedrizzle.thermometer.name=温度计
+item.afterthedrizzle.rain_gauge.name=雨量计
+
+item.afterthedrizzle.beef_jerky.name=牛肉干
+item.afterthedrizzle.pork_jerky.name=猪肉脯
+item.afterthedrizzle.chicken_jerky.name=鸡肉干
+item.afterthedrizzle.rabbit_jerky.name=兔肉干
+item.afterthedrizzle.mutton_jerky.name=羊肉干
+item.afterthedrizzle.dried_carrot.name=胡萝卜干
+item.afterthedrizzle.dried_beetroot.name=甜菜干
+
+item.afterthedrizzle.ash.name=灰烬
+
+# Block
+tile.afterthedrizzle.flat_basket.name=竹篾匾
+tile.afterthedrizzle.stove.name=炉灶
+tile.afterthedrizzle.stove_dirt.name=土灶
+tile.afterthedrizzle.stove_stone.name=石灶
+
+# Config
+afterthedrizzle.config.time=时间配置
+afterthedrizzle.config.time.outdoor_drying_basic=室外干燥基础时间
+afterthedrizzle.config.time.indoor_drying_basic=室内干燥基础时间
+afterthedrizzle.config.time.fermentation_basic=发酵基础时间
+afterthedrizzle.config.time.bake_basic=烘焙基础时间
+
+# Mode
+afterthedrizzle.mode.flat_basket.in_rain=淋雨模式
+afterthedrizzle.mode.flat_basket.outdoors=室外模式
+afterthedrizzle.mode.flat_basket.indoors=室内模式
+afterthedrizzle.mode.flat_basket.bake=烘焙模式
+afterthedrizzle.mode.flat_basket.process=加工模式
