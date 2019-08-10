@@ -7,14 +7,14 @@ import roito.cultivage.registry.ItemsRegistry;
 
 public class TabFood extends CreativeTabs
 {
-	public TabFood()
-	{
-		super(Cultivage.MODID + ".food");
-	}
+    public TabFood()
+    {
+        super(Cultivage.MODID + ".food");
+    }
 
-	@Override
-	public ItemStack createIcon()
-	{
-		return new ItemStack(ItemsRegistry.BEEF_JERKY);
-	}
+    @Override
+    public ItemStack createIcon()
+    {
+        return new ItemStack(ItemsRegistry.BEEF_JERKY);
+    }
 }

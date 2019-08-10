@@ -7,14 +7,14 @@ import roito.cultivage.registry.BlocksRegistry;
 
 public class TabCraft extends CreativeTabs
 {
-	public TabCraft()
-	{
-		super(Cultivage.MODID + ".craft");
-	}
+    public TabCraft()
+    {
+        super(Cultivage.MODID + ".craft");
+    }
 
-	@Override
-	public ItemStack createIcon()
-	{
-		return new ItemStack(BlocksRegistry.FLAT_BASKET);
-	}
+    @Override
+    public ItemStack createIcon()
+    {
+        return new ItemStack(BlocksRegistry.FLAT_BASKET);
+    }
 }

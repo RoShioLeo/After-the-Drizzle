@@ -4,11 +4,11 @@ import net.minecraft.block.Block;
 
 public interface IBlockStove
 {
-	boolean isBurning();
+    boolean isBurning();
 
-	int getFuelPower();
+    int getFuelPower();
 
-	Block getLit();
+    Block getLit();
 
-	Block getUnlit();
+    Block getUnlit();
 }

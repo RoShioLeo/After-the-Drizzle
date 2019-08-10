@@ -7,22 +7,22 @@ import roito.cultivage.registry.BlocksRegistry;
 
 public class BlockStoveStone extends BlockStove
 {
-	public BlockStoveStone(boolean light)
-	{
-		super(light, 2, Material.ROCK);
-		this.setHardness(3.5F);
-		this.setSoundType(SoundType.STONE);
-	}
+    public BlockStoveStone(boolean light)
+    {
+        super(light, 2, Material.ROCK);
+        this.setHardness(3.5F);
+        this.setSoundType(SoundType.STONE);
+    }
 
-	@Override
-	public Block getLit()
-	{
-		return BlocksRegistry.LIT_STOVE_STONE;
-	}
+    @Override
+    public Block getLit()
+    {
+        return BlocksRegistry.LIT_STOVE_STONE;
+    }
 
-	@Override
-	public Block getUnlit()
-	{
-		return BlocksRegistry.STOVE_STONE;
-	}
+    @Override
+    public Block getUnlit()
+    {
+        return BlocksRegistry.STOVE_STONE;
+    }
 }

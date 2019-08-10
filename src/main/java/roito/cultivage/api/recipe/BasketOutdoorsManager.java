@@ -8,11 +8,11 @@ import java.util.Collection;
 
 public class BasketOutdoorsManager extends SingleInRecipeManager
 {
-	private static ArrayList<ISingleInRecipe> recipes = new ArrayList<>();
+    private static ArrayList<ISingleInRecipe> recipes = new ArrayList<>();
 
-	@Override
-	public Collection<ISingleInRecipe> getRecipes()
-	{
-		return recipes;
-	}
+    @Override
+    public Collection<ISingleInRecipe> getRecipes()
+    {
+        return recipes;
+    }
 }

@@ -7,14 +7,14 @@ import roito.cultivage.registry.ItemsRegistry;
 
 public class TabEnv extends CreativeTabs
 {
-	public TabEnv()
-	{
-		super(Cultivage.MODID + ".environment");
-	}
+    public TabEnv()
+    {
+        super(Cultivage.MODID + ".environment");
+    }
 
-	@Override
-	public ItemStack createIcon()
-	{
-		return new ItemStack(ItemsRegistry.RAIN_GAUGE);
-	}
+    @Override
+    public ItemStack createIcon()
+    {
+        return new ItemStack(ItemsRegistry.RAIN_GAUGE);
+    }
 }

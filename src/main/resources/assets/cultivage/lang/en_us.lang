@@ -29,3 +29,10 @@ cultivage.config.time.outdoor_drying_basic=Outdoors Drying Basic Ticks
 cultivage.config.time.indoor_drying_basic=Indoors Drying Basic Ticks
 cultivage.config.time.fermentation_basic=Fermentation Basic Ticks
 cultivage.config.time.bake_basic=Bake Basic Ticks
+
+#Mode
+cultivage.mode.flat_basket.in_rain=Wet Mode
+cultivage.mode.flat_basket.outdoors=Outdoor Mode
+cultivage.mode.flat_basket.indoors=Indoor Mode
+cultivage.mode.flat_basket.bake=Bake Mode
+cultivage.mode.flat_basket.process=Process Mode

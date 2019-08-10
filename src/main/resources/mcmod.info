@@ -1,19 +1,19 @@
 [
-{
-  "modid": "cultivage",
-  "name": "Cultivation Age",
-  "description": "Agricultural mod.",
-  "version": "${version}",
-  "mcversion": "${mcversion}",
-  "url": "",
-  "updateUrl": "",
-  "authorList": [
-    "RoitoLeonine",
-    "jihuayu"
-  ],
-  "credits": "Lemon Slice Studio",
-  "logoFile": "",
-  "screenshots": [],
-  "dependencies": []
-}
+    {
+        "modid": "cultivage",
+        "name": "Cultivation Age",
+        "description": "Agricultural mod.",
+        "version": "${version}",
+        "mcversion": "${mcversion}",
+        "url": "",
+        "updateUrl": "",
+        "authorList": [
+            "RoitoLeonine",
+            "jihuayu"
+        ],
+        "credits": "Lemon Slice Studio",
+        "logoFile": "",
+        "screenshots": [],
+        "dependencies": []
+    }
 ]

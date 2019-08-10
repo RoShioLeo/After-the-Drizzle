@@ -5,8 +5,8 @@ import roito.silveroakoutpost.item.SilveroakItem;
 
 public class ItemAsh extends SilveroakItem
 {
-	public ItemAsh()
-	{
-		super(64, Cultivage.TAB_CRAFT);
-	}
+    public ItemAsh()
+    {
+        super(64, Cultivage.TAB_CRAFT);
+    }
 }

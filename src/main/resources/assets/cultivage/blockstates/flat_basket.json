@@ -24,8 +24,7 @@
         "y": 180,
         "uvlock": true
       }
-    },
-    {
+    }, {
       "apply": {
         "model": "cultivage:flat_basket_side",
         "y": 270,

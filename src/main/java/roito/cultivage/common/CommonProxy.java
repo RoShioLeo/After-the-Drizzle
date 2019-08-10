@@ -7,18 +7,18 @@ import roito.cultivage.registry.GuiElementsRegistry;
 
 public class CommonProxy
 {
-	public void preInit(FMLPreInitializationEvent event)
-	{
+    public void preInit(FMLPreInitializationEvent event)
+    {
 
-	}
+    }
 
-	public void init(FMLInitializationEvent event)
-	{
-		new GuiElementsRegistry();
-	}
+    public void init(FMLInitializationEvent event)
+    {
+        new GuiElementsRegistry();
+    }
 
-	public void postInit(FMLPostInitializationEvent event)
-	{
+    public void postInit(FMLPostInitializationEvent event)
+    {
 
-	}
+    }
 }

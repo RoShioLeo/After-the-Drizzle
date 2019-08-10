@@ -7,15 +7,17 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import roito.cultivage.Cultivage;
 import roito.cultivage.common.tileentity.TileEntityFlatBasket;
+import roito.cultivage.common.tileentity.TileEntityStoneMill;
 import roito.cultivage.common.tileentity.TileEntityStove;
 
 @Mod.EventBusSubscriber(modid = Cultivage.MODID, value = Side.CLIENT)
 public final class TESRender
 {
-	@SubscribeEvent
-	public static void onModelRegister(ModelRegistryEvent event)
-	{
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFlatBasket.class, new TESRFlatBasket());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityStove.class, new TESRStove());
-	}
+    @SubscribeEvent
+    public static void onModelRegister(ModelRegistryEvent event)
+    {
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFlatBasket.class, new TESRFlatBasket());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityStove.class, new TESRStove());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityStoneMill.class, new TESRStoneMill());
+    }
 }

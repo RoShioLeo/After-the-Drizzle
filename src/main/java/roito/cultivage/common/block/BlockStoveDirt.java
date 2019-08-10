@@ -7,22 +7,22 @@ import roito.cultivage.registry.BlocksRegistry;
 
 public class BlockStoveDirt extends BlockStove
 {
-	public BlockStoveDirt(boolean light)
-	{
-		super(light, 1, Material.GROUND);
-		this.setHardness(0.5F);
-		this.setSoundType(SoundType.GROUND);
-	}
+    public BlockStoveDirt(boolean light)
+    {
+        super(light, 1, Material.GROUND);
+        this.setHardness(0.5F);
+        this.setSoundType(SoundType.GROUND);
+    }
 
-	@Override
-	public Block getLit()
-	{
-		return BlocksRegistry.LIT_STOVE_DIRT;
-	}
+    @Override
+    public Block getLit()
+    {
+        return BlocksRegistry.LIT_STOVE_DIRT;
+    }
 
-	@Override
-	public Block getUnlit()
-	{
-		return BlocksRegistry.STOVE_DIRT;
-	}
+    @Override
+    public Block getUnlit()
+    {
+        return BlocksRegistry.STOVE_DIRT;
+    }
 }

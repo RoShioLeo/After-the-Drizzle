@@ -29,3 +29,10 @@ cultivage.config.time.outdoor_drying_basic=室外干燥基础时间
 cultivage.config.time.indoor_drying_basic=室内干燥基础时间
 cultivage.config.time.fermentation_basic=发酵基础时间
 cultivage.config.time.bake_basic=烘焙基础时间
+
+# Mode
+cultivage.mode.flat_basket.in_rain=淋雨模式
+cultivage.mode.flat_basket.outdoors=室外模式
+cultivage.mode.flat_basket.indoors=室内模式
+cultivage.mode.flat_basket.bake=烘焙模式
+cultivage.mode.flat_basket.process=加工模式
