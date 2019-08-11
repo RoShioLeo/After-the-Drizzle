@@ -1,12 +1,13 @@
 package roito.afterthedrizzle.registry;
 
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.LoaderState;
-import roito.afterthedrizzle.api.recipe.BasketBakeManager;
-import roito.afterthedrizzle.api.recipe.BasketIndoorsManager;
-import roito.afterthedrizzle.api.recipe.BasketOutdoorsManager;
-import roito.afterthedrizzle.api.recipe.BasketWetManager;
+import roito.afterthedrizzle.api.recipe.*;
+import roito.silveroakoutpost.helper.NonNullListHelper;
 import roito.silveroakoutpost.recipe.ISingleInRecipeManager;
 import roito.silveroakoutpost.recipe.SingleInRecipe;
 import roito.silveroakoutpost.register.annotation.Load;
@@ -17,6 +18,7 @@ public final class RecipesRegistry
     public final static ISingleInRecipeManager MANAGER_BASKET_INDOORS = new BasketIndoorsManager();
     public final static ISingleInRecipeManager MANAGER_BASKET_IN_RAIN = new BasketWetManager();
     public final static ISingleInRecipeManager MANAGER_BASKET_BAKE = new BasketBakeManager();
+    public final static IStoneMillRecipeManager MANAGER_STONE_MILL = new StoneMillRecipeManager();
 
 
     @Load(value = LoaderState.INITIALIZATION)
@@ -24,6 +26,7 @@ public final class RecipesRegistry
     {
         addBasketDryingRecipes();
         addBasketWetRecipes();
+        addStoneMillRecipes();
     }
 
     private static void addBasketDryingRecipes()
@@ -48,5 +51,12 @@ public final class RecipesRegistry
         MANAGER_BASKET_IN_RAIN.add(new SingleInRecipe(new ItemStack(ItemsRegistry.CHICKEN_JERKY), new ItemStack(Items.CHICKEN)));
         MANAGER_BASKET_IN_RAIN.add(new SingleInRecipe(new ItemStack(ItemsRegistry.DRIED_CARROT), new ItemStack(Items.CARROT)));
         MANAGER_BASKET_IN_RAIN.add(new SingleInRecipe(new ItemStack(ItemsRegistry.DRIED_BEETROOT), new ItemStack(Items.BEETROOT)));
+    }
+
+    private static void addStoneMillRecipes()
+    {
+        MANAGER_STONE_MILL.add(new StoneMillRecipe(new FluidStack(FluidRegistry.WATER, 100), new ItemStack(Blocks.STONE), NonNullListHelper.createNonNullList(new ItemStack(ItemsRegistry.ASH)), new FluidStack(FluidRegistry.LAVA, 100)));
+//        MANAGER_STONE_MILL.add(new StoneMillRecipe(new FluidStack(FluidRegistry.WATER, 100), new ItemStack(ItemLoader.soybeans), NonNullListHelper.createNonNullList(new ItemStack(ItemLoader.material, 1, 11)), new FluidStack(BlockLoader.SOYMILK_FLUID, 100)));
+        MANAGER_STONE_MILL.add(new StoneMillRecipe(new ItemStack(Items.GOLD_INGOT), NonNullListHelper.createNonNullList(new ItemStack(Items.GOLD_NUGGET, 9))));
     }
 }

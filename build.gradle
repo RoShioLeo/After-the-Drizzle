@@ -17,7 +17,7 @@ compileJava {
 
 version = "${minecraft_version}-${mod_version}-B${System.getenv().BUILD_NUMBER}"
 group = mod_group
-archivesBaseName = "CultivationAge"
+archivesBaseName = "After the Drizzle"
 
 minecraft {
     version = minecraft_version + "-" + forge_version
@@ -96,4 +96,7 @@ dependencies {
     compile files(
         "libs/SilveroakOutpost-1.12.2-${so_version}-deobf.jar"
     )
+	compile files(
+		"libs/TofuCraftReload-0.0.6.jar"
+	)
 }

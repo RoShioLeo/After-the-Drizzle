@@ -6,6 +6,7 @@ import roito.afterthedrizzle.AfterTheDrizzle;
 import roito.afterthedrizzle.common.tileentity.TileEntityFlatBasket;
 import roito.afterthedrizzle.common.tileentity.TileEntityStoneMill;
 import roito.afterthedrizzle.common.tileentity.TileEntityStove;
+import roito.afterthedrizzle.common.tileentity.TileEntityWoodenBarrel;
 import roito.silveroakoutpost.register.annotation.Load;
 
 public final class TileEntitiesRegistry
@@ -16,5 +17,6 @@ public final class TileEntitiesRegistry
         GameRegistry.registerTileEntity(TileEntityFlatBasket.class, new ResourceLocation(AfterTheDrizzle.MODID, "flat_basket"));
         GameRegistry.registerTileEntity(TileEntityStove.class, new ResourceLocation(AfterTheDrizzle.MODID, "stove"));
         GameRegistry.registerTileEntity(TileEntityStoneMill.class, new ResourceLocation(AfterTheDrizzle.MODID, "stone_mill"));
+        GameRegistry.registerTileEntity(TileEntityWoodenBarrel.class, new ResourceLocation(AfterTheDrizzle.MODID, "wooden_barrel"));
     }
 }

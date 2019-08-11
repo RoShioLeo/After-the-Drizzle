@@ -48,11 +48,11 @@ public class TileEntityStove extends TileEntity implements ITickable
         {
             if (facing == EnumFacing.DOWN)
             {
-                return (T) ashInventory;
+                return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(this.ashInventory);
             }
             else
             {
-                return (T) fuelInventory;
+                return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(this.fuelInventory);
             }
         }
         return super.getCapability(capability, facing);
@@ -62,11 +62,11 @@ public class TileEntityStove extends TileEntity implements ITickable
     public void readFromNBT(NBTTagCompound compound)
     {
         super.readFromNBT(compound);
-        fuelInventory.deserializeNBT(compound.getCompoundTag("FuelInventory"));
-        ashInventory.deserializeNBT(compound.getCompoundTag("AshInventory"));
-        fuelTicks = compound.getInteger("FuelTicks");
-        remainTicks = compound.getInteger("RemainTicks");
-        lit = compound.getBoolean("Lit");
+        this.fuelInventory.deserializeNBT(compound.getCompoundTag("FuelInventory"));
+        this.ashInventory.deserializeNBT(compound.getCompoundTag("AshInventory"));
+        this.fuelTicks = compound.getInteger("FuelTicks");
+        this.remainTicks = compound.getInteger("RemainTicks");
+        this.lit = compound.getBoolean("Lit");
     }
 
     @Override
@@ -83,77 +83,77 @@ public class TileEntityStove extends TileEntity implements ITickable
     @Override
     public NBTTagCompound getUpdateTag()
     {
-        return writeToNBT(new NBTTagCompound());
+        return this.writeToNBT(new NBTTagCompound());
     }
 
     @Override
     public SPacketUpdateTileEntity getUpdatePacket()
     {
         NBTTagCompound nbtTag = new NBTTagCompound();
-        writeToNBT(nbtTag);
+        this.writeToNBT(nbtTag);
         return new SPacketUpdateTileEntity(getPos(), 1, nbtTag);
     }
 
     @Override
     public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet)
     {
-        readFromNBT(packet.getNbtCompound());
+        this.readFromNBT(packet.getNbtCompound());
     }
 
     @Override
     public void update()
     {
-        if (!getWorld().isRemote)
+        if (!this.world.isRemote)
         {
-            if (lit)
+            if (this.lit)
             {
-                addFuel();
+                this.addFuel();
             }
-            if (remainTicks > 0)
+            if (this.remainTicks > 0)
             {
-                remainTicks--;
+                this.remainTicks--;
             }
             else
             {
-                BlockStove.setState(false, getWorld(), pos, (IBlockStove) getBlockType());
+                BlockStove.setState(false, this.world, this.pos, (IBlockStove) this.getBlockType());
             }
-            mark();
+            this.mark();
         }
     }
 
     private boolean addFuel()
     {
-        if (isBurning())
+        if (this.isBurning())
         {
-            lit = true;
+            this.lit = true;
             return true;
         }
         else
         {
-            ItemStack itemFuel = fuelInventory.extractItem(0, 1, true);
+            ItemStack itemFuel = this.fuelInventory.extractItem(0, 1, true);
             if (isItemFuel(itemFuel))
             {
-                fuelTicks = getItemBurnTime(itemFuel);
-                remainTicks = getItemBurnTime(itemFuel);
-                Item cItem = fuelInventory.getStackInSlot(0).getItem().getContainerItem();
+                this.fuelTicks = getItemBurnTime(itemFuel);
+                this.remainTicks = getItemBurnTime(itemFuel);
+                Item cItem = this.fuelInventory.getStackInSlot(0).getItem().getContainerItem();
                 if (cItem != null)
                 {
-                    fuelInventory.extractItem(0, 1, false);
-                    fuelInventory.insertItem(0, new ItemStack(cItem, 1), false);
+                    this.fuelInventory.extractItem(0, 1, false);
+                    this.fuelInventory.insertItem(0, new ItemStack(cItem, 1), false);
                 }
                 else
                 {
-                    fuelInventory.extractItem(0, 1, false);
+                    this.fuelInventory.extractItem(0, 1, false);
                 }
-                ashInventory.insertItem(0, new ItemStack(ItemsRegistry.ASH), false);
-                markDirty();
+                this.ashInventory.insertItem(0, new ItemStack(ItemsRegistry.ASH), false);
+                this.markDirty();
                 BlockStove.setState(true, getWorld(), pos, (IBlockStove) getBlockType());
-                lit = true;
+                this.lit = true;
                 return true;
             }
             else
             {
-                lit = false;
+                this.lit = false;
                 return false;
             }
         }
@@ -161,7 +161,7 @@ public class TileEntityStove extends TileEntity implements ITickable
 
     public boolean isBurning()
     {
-        return remainTicks > 0;
+        return this.remainTicks > 0;
     }
 
     @Override
@@ -173,9 +173,9 @@ public class TileEntityStove extends TileEntity implements ITickable
     public NonNullList<ItemStack> getContents()
     {
         NonNullList<ItemStack> list = NonNullList.create();
-        ItemStack con = fuelInventory.getStackInSlot(0).copy();
+        ItemStack con = this.fuelInventory.getStackInSlot(0).copy();
         con.setCount(1);
-        for (int i = fuelInventory.getStackInSlot(0).getCount(); i > 0; i -= 4)
+        for (int i = this.fuelInventory.getStackInSlot(0).getCount(); i > 0; i -= 4)
         {
             list.add(con);
         }
@@ -184,31 +184,31 @@ public class TileEntityStove extends TileEntity implements ITickable
 
     private void refresh()
     {
-        if (hasWorld() && !world.isRemote)
+        if (this.hasWorld() && !this.world.isRemote)
         {
-            IBlockState state = world.getBlockState(pos);
-            world.markAndNotifyBlock(pos, null, state, state, 11);
+            IBlockState state = this.world.getBlockState(pos);
+            this.world.markAndNotifyBlock(pos, null, state, state, 11);
         }
     }
 
     public int getRemainTicks()
     {
-        return remainTicks;
+        return this.remainTicks;
     }
 
     public int getFuelTicks()
     {
-        return fuelTicks;
+        return this.fuelTicks;
     }
 
     public void setToLit()
     {
-        lit = true;
+        this.lit = true;
     }
 
     public void mark()
     {
-        markDirty();
-        refresh();
+        this.markDirty();
+        this.refresh();
     }
 }

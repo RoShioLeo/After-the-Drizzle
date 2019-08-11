@@ -22,6 +22,9 @@ tile.afterthedrizzle.flat_basket.name=Flat Basket
 tile.afterthedrizzle.stove.name=Stove
 tile.afterthedrizzle.stove_dirt.name=Dirt Stove
 tile.afterthedrizzle.stove_stone.name=Stone Stove
+tile.afterthedrizzle.stone_mill.name=Stone Mill
+tile.afterthedrizzle.wooden_barrel.name=Wooden Barrel
+tile.afterthedrizzle.wooden_frame.name=Wooden Frame
 
 # Config
 afterthedrizzle.config.time=Time Configuration

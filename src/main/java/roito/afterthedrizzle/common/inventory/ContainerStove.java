@@ -25,10 +25,10 @@ public class ContainerStove extends Container
     public ContainerStove(EntityPlayer player, TileEntity tileEntity)
     {
         super();
-        fuelItem = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
-        ashItem = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN);
-        addSlotToContainer(new SlotItemHandler(fuelItem, 0, 80, 33));
-        addSlotToContainer(new SlotItemHandler(ashItem, 0, 80, 61)
+        this.fuelItem = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
+        this.ashItem = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN);
+        addSlotToContainer(new SlotItemHandler(this.fuelItem, 0, 80, 33));
+        addSlotToContainer(new SlotItemHandler(this.ashItem, 0, 80, 61)
         {
             @Override
             public boolean isItemValid(ItemStack stack)
@@ -61,7 +61,7 @@ public class ContainerStove extends Container
     @Override
     public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
     {
-        Slot slot = inventorySlots.get(index);
+        Slot slot = this.inventorySlots.get(index);
 
         if (slot == null || !slot.getHasStack())
         {
@@ -111,13 +111,13 @@ public class ContainerStove extends Container
     {
         super.detectAndSendChanges();
 
-        this.remainTicks = tileEntity.getRemainTicks();
-        this.fuelTicks = tileEntity.getFuelTicks();
+        this.remainTicks = this.tileEntity.getRemainTicks();
+        this.fuelTicks = this.tileEntity.getFuelTicks();
 
         for (IContainerListener i : this.listeners)
         {
-            i.sendWindowProperty(this, 0, remainTicks);
-            i.sendWindowProperty(this, 1, fuelTicks);
+            i.sendWindowProperty(this, 0, this.remainTicks);
+            i.sendWindowProperty(this, 1, this.fuelTicks);
         }
     }
 

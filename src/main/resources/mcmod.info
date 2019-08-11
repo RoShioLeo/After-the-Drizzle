@@ -1,7 +1,7 @@
 [
     {
         "modid": "afterthedrizzle",
-        "name": "Cultivation Age",
+        "name": "After the Drizzle",
         "description": "Agricultural mod.",
         "version": "${version}",
         "mcversion": "${mcversion}",

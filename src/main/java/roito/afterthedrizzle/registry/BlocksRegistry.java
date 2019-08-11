@@ -3,10 +3,7 @@ package roito.afterthedrizzle.registry;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import roito.afterthedrizzle.AfterTheDrizzle;
-import roito.afterthedrizzle.common.block.BlockFlatBasket;
-import roito.afterthedrizzle.common.block.BlockStoneMill;
-import roito.afterthedrizzle.common.block.BlockStoveDirt;
-import roito.afterthedrizzle.common.block.BlockStoveStone;
+import roito.afterthedrizzle.common.block.*;
 import roito.silveroakoutpost.register.RegisterType;
 import roito.silveroakoutpost.register.annotation.AutoRegistry;
 import roito.silveroakoutpost.register.annotation.RegisterInfo;
@@ -32,4 +29,8 @@ public final class BlocksRegistry
     @RegisterInfo("stone_mill_top")
     public static final Block STONE_MILL_TOP = new Block(Material.ROCK);
 
+    @RegisterInfo("wooden_frame")
+    public static final Block WOODEN_FRAME = new BlockWoodenFrame();
+    @RegisterInfo("wooden_barrel")
+    public static final Block WOODEN_BARREL = new BlockWoodenBarrel();
 }

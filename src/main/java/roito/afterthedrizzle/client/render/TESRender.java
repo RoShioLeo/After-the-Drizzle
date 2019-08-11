@@ -9,6 +9,7 @@ import roito.afterthedrizzle.AfterTheDrizzle;
 import roito.afterthedrizzle.common.tileentity.TileEntityFlatBasket;
 import roito.afterthedrizzle.common.tileentity.TileEntityStoneMill;
 import roito.afterthedrizzle.common.tileentity.TileEntityStove;
+import roito.afterthedrizzle.common.tileentity.TileEntityWoodenBarrel;
 
 @Mod.EventBusSubscriber(modid = AfterTheDrizzle.MODID, value = Side.CLIENT)
 public final class TESRender
@@ -19,5 +20,6 @@ public final class TESRender
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFlatBasket.class, new TESRFlatBasket());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityStove.class, new TESRStove());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityStoneMill.class, new TESRStoneMill());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityWoodenBarrel.class, new TESRWoodenBarrel());
     }
 }

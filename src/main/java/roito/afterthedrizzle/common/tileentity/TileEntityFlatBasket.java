@@ -1,16 +1,19 @@
 package roito.afterthedrizzle.common.tileentity;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
+import net.minecraft.server.management.PlayerChunkMapEntry;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
@@ -52,7 +55,7 @@ public class TileEntityFlatBasket extends TileEntity implements ITickable
     {
         if (CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.equals(capability))
         {
-            return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(containerInventory);
+            return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(this.containerInventory);
         }
         return super.getCapability(capability, facing);
     }
@@ -61,10 +64,10 @@ public class TileEntityFlatBasket extends TileEntity implements ITickable
     public void readFromNBT(NBTTagCompound compound)
     {
         super.readFromNBT(compound);
-        containerInventory.deserializeNBT(compound.getCompoundTag("ContainerInventory"));
-        processTicks = compound.getInteger("ProcessTicks");
-        totalTicks = compound.getInteger("TotalTicks");
-        mode = ModeFlatBasket.values()[compound.getInteger("Mode")];
+        this.containerInventory.deserializeNBT(compound.getCompoundTag("ContainerInventory"));
+        this.processTicks = compound.getInteger("ProcessTicks");
+        this.totalTicks = compound.getInteger("TotalTicks");
+        this.mode = ModeFlatBasket.values()[compound.getInteger("Mode")];
     }
 
     @Override
@@ -80,73 +83,70 @@ public class TileEntityFlatBasket extends TileEntity implements ITickable
     @Override
     public NBTTagCompound getUpdateTag()
     {
-        return writeToNBT(new NBTTagCompound());
+        return this.writeToNBT(new NBTTagCompound());
     }
 
     @Override
     public void handleUpdateTag(NBTTagCompound data)
     {
-        readFromNBT(data);
+        this.readFromNBT(data);
     }
 
     @Override
     public SPacketUpdateTileEntity getUpdatePacket()
     {
-        refreshSeed();
-        return new SPacketUpdateTileEntity(pos, 1, writeToNBT(new NBTTagCompound()));
+        this.refreshSeed();
+        return new SPacketUpdateTileEntity(this.pos, 1, this.writeToNBT(new NBTTagCompound()));
     }
 
     @Override
     public void onDataPacket(NetworkManager manager, SPacketUpdateTileEntity packet)
     {
-        readFromNBT(packet.getNbtCompound());
+        this.readFromNBT(packet.getNbtCompound());
     }
 
     @Override
     public void update()
     {
-        if (!world.isRemote)
+        float temp = this.world.getBiome(pos).getTemperature(pos);
+        float rainfall = this.world.getBiome(pos).getRainfall();
+        mode = ModeFlatBasket.getMode(this.world, this.pos);
+        switch (mode)
         {
-            float temp = world.getBiome(pos).getTemperature(pos);
-            float rainfall = world.getBiome(pos).getRainfall();
-            mode = ModeFlatBasket.getMode(world, pos);
-            switch (mode)
-            {
-                case IN_RAIN:
-                    refreshTotalTicks(0);
-                    getWet();
-                    return;
-                case OUTDOORS:
-                    refreshTotalTicks(Humidity.getHumid(rainfall, temp).getOutdoorDryingTicks());
-                    process(RecipesRegistry.MANAGER_BASKET_OUTDOORS);
-                    return;
-                case INDOORS:
-                    refreshTotalTicks(Humidity.getHumid(rainfall, temp).getIndoorDryingTicks());
-                    process(RecipesRegistry.MANAGER_BASKET_INDOORS);
-                    return;
-                case BAKE:
-                    refreshTotalTicks(ConfigMain.time.BakeBasicTime);
-                    process(RecipesRegistry.MANAGER_BASKET_BAKE);
-            }
+            case IN_RAIN:
+                this.refreshTotalTicks(0);
+                this.getWet();
+                return;
+            case OUTDOORS:
+                this.refreshTotalTicks(Humidity.getHumid(rainfall, temp).getOutdoorDryingTicks());
+                this.process(RecipesRegistry.MANAGER_BASKET_OUTDOORS);
+                return;
+            case INDOORS:
+                this.refreshTotalTicks(Humidity.getHumid(rainfall, temp).getIndoorDryingTicks());
+                this.process(RecipesRegistry.MANAGER_BASKET_INDOORS);
+                return;
+            case BAKE:
+                this.refreshTotalTicks(ConfigMain.time.BakeBasicTime);
+                this.process(RecipesRegistry.MANAGER_BASKET_BAKE);
         }
     }
 
     private void getWet()
     {
-        ItemStack input = getInput();
-        processTicks = 0;
-        if (!currentRecipe.isTheSameInput(input))
+        ItemStack input = this.getInput();
+        this.processTicks = 0;
+        if (!this.currentRecipe.isTheSameInput(input))
         {
-            currentRecipe = RecipesRegistry.MANAGER_BASKET_IN_RAIN.getRecipe(input);
+            this.currentRecipe = RecipesRegistry.MANAGER_BASKET_IN_RAIN.getRecipe(input);
         }
         if (!getOutput().isEmpty())
         {
-            ItemStack wetOutput = getOutput().copy();
+            ItemStack wetOutput = this.getOutput().copy();
             wetOutput.setCount(input.getCount());
-            containerInventory.setStackInSlot(0, wetOutput);
-            refresh();
+            this.containerInventory.setStackInSlot(0, wetOutput);
+            this.syncToTrackingClients();
         }
-        markDirty();
+        this.markDirty();
     }
 
     private boolean process(ISingleInRecipeManager recipeManager)
@@ -154,43 +154,43 @@ public class TileEntityFlatBasket extends TileEntity implements ITickable
         ItemStack input = getInput();
         if (input.isEmpty())
         {
-            processTicks = 0;
-            markDirty();
+            this.processTicks = 0;
+            this.markDirty();
             return false;
         }
-        if (!currentRecipe.isTheSameInput(input))
+        if (!this.currentRecipe.isTheSameInput(input))
         {
-            currentRecipe = recipeManager.getRecipe(input);
+            this.currentRecipe = recipeManager.getRecipe(input);
         }
-        if (!getOutput().isEmpty())
+        if (!this.getOutput().isEmpty())
         {
-            if (mode == ModeFlatBasket.BAKE)
+            if (this.mode == ModeFlatBasket.BAKE)
             {
-                processTicks += ((IBlockStove) getWorld().getBlockState(pos.down()).getBlock()).getFuelPower();
+                this.processTicks += ((IBlockStove) this.getWorld().getBlockState(pos.down()).getBlock()).getFuelPower();
             }
             else
             {
-                processTicks++;
+                this.processTicks++;
             }
-            if (processTicks >= totalTicks)
+            if (this.processTicks >= this.totalTicks)
             {
-                ItemStack output = getOutput();
+                ItemStack output = this.getOutput();
                 output.setCount(input.getCount());
-                containerInventory.setStackInSlot(0, output);
-                refresh();
-                processTicks = 0;
+                this.containerInventory.setStackInSlot(0, output);
+                this.syncToTrackingClients();
+                this.processTicks = 0;
             }
-            markDirty();
+            this.markDirty();
             return true;
         }
-        processTicks = 0;
-        markDirty();
+        this.processTicks = 0;
+        this.markDirty();
         return false;
     }
 
     private void refreshTotalTicks(int basicTicks)
     {
-        totalTicks = getInput().getCount() * basicTicks;
+        this.totalTicks = this.getInput().getCount() * basicTicks;
     }
 
     @Override
@@ -199,46 +199,53 @@ public class TileEntityFlatBasket extends TileEntity implements ITickable
         return oldState.getBlock() != newSate.getBlock();
     }
 
-    private void refresh()
+    private void syncToTrackingClients()
     {
-        if (hasWorld() && !world.isRemote)
+        if (!this.world.isRemote)
         {
-            IBlockState state = world.getBlockState(pos);
-            world.markAndNotifyBlock(pos, null, state, state, 11);
+            SPacketUpdateTileEntity packet = this.getUpdatePacket();
+            PlayerChunkMapEntry trackingEntry = ((WorldServer) this.world).getPlayerChunkMap().getEntry(this.pos.getX() >> 4, this.pos.getZ() >> 4);
+            if (trackingEntry != null)
+            {
+                for (EntityPlayerMP player : trackingEntry.getWatchingPlayers())
+                {
+                    player.connection.sendPacket(packet);
+                }
+            }
         }
     }
 
     public ItemStack getInput()
     {
-        return containerInventory.getStackInSlot(0).copy();
+        return this.containerInventory.getStackInSlot(0).copy();
     }
 
     public ItemStack getOutput()
     {
-        return currentRecipe.getOutput().copy();
+        return this.currentRecipe.getOutput().copy();
     }
 
     public int getTotalTicks()
     {
-        return totalTicks;
+        return this.totalTicks;
     }
 
     public int getProcessTicks()
     {
-        return processTicks;
+        return this.processTicks;
     }
 
     public ModeFlatBasket getMode()
     {
-        return mode;
+        return this.mode;
     }
 
     public NonNullList<ItemStack> getContents()
     {
         NonNullList<ItemStack> list = NonNullList.create();
-        ItemStack con = containerInventory.getStackInSlot(0).copy();
+        ItemStack con = this.containerInventory.getStackInSlot(0).copy();
         con.setCount(1);
-        for (int i = getInput().getCount(); i > 0; i -= 16)
+        for (int i = this.getInput().getCount(); i > 0; i -= 16)
         {
             list.add(con);
         }
@@ -247,27 +254,27 @@ public class TileEntityFlatBasket extends TileEntity implements ITickable
 
     public int getRandomSeed()
     {
-        return randomSeed;
+        return this.randomSeed;
     }
 
     public void refreshSeed()
     {
-        randomSeed = (int) (Math.random() * 10000);
+        this.randomSeed = (int) (Math.random() * 10000);
     }
 
     public boolean isEmpty()
     {
-        return getInput().isEmpty();
+        return this.getInput().isEmpty();
     }
 
     public boolean isCompleted()
     {
-        return getOutput().isEmpty();
+        return this.getOutput().isEmpty();
     }
 
     public void mark()
     {
-        markDirty();
-        refresh();
+        this.markDirty();
+        this.syncToTrackingClients();
     }
 }

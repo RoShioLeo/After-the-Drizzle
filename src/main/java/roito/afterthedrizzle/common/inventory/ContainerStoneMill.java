@@ -12,36 +12,61 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
-import roito.afterthedrizzle.common.block.ModeFlatBasket;
-import roito.afterthedrizzle.common.tileentity.TileEntityFlatBasket;
+import roito.afterthedrizzle.common.tileentity.TileEntityStoneMill;
 
-public class ContainerFlatBasket extends Container
+public class ContainerStoneMill extends Container
 {
-    private TileEntityFlatBasket tileEntity;
-    private IItemHandler containerItem;
+    private TileEntityStoneMill tileEntity;
+    private IItemHandler inputItem;
+    private IItemHandler outputItem;
+
     private int processTicks = 0;
     private int totalTicks = 0;
-    private ModeFlatBasket mode = ModeFlatBasket.OUTDOORS;
 
-    public ContainerFlatBasket(EntityPlayer player, TileEntity tileEntity)
+    public ContainerStoneMill(EntityPlayer player, TileEntity tileEntity)
     {
         super();
-        this.containerItem = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
-        addSlotToContainer(new SlotItemHandler(this.containerItem, 0, 107, 31));
+        this.inputItem = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
+        this.outputItem = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN);
+        this.addSlotToContainer(new SlotItemHandler(this.inputItem, 0, 73, 38));
+        this.addSlotToContainer(new SlotItemHandler(this.outputItem, 0, 123, 20)
+        {
+            @Override
+            public boolean isItemValid(ItemStack stack)
+            {
+                return false;
+            }
+        });
+        this.addSlotToContainer(new SlotItemHandler(this.outputItem, 1, 123, 38)
+        {
+            @Override
+            public boolean isItemValid(ItemStack stack)
+            {
+                return false;
+            }
+        });
+        this.addSlotToContainer(new SlotItemHandler(this.outputItem, 2, 123, 56)
+        {
+            @Override
+            public boolean isItemValid(ItemStack stack)
+            {
+                return false;
+            }
+        });
 
         for (int i = 0; i < 3; ++i)
         {
             for (int j = 0; j < 9; ++j)
             {
-                addSlotToContainer(new Slot(player.inventory, j + i * 9 + 9, 8 + j * 18, 51 + i * 18 + 33));
+                this.addSlotToContainer(new Slot(player.inventory, j + i * 9 + 9, 8 + j * 18, 51 + i * 18 + 33));
             }
         }
 
         for (int i = 0; i < 9; ++i)
         {
-            addSlotToContainer(new Slot(player.inventory, i, 8 + i * 18, 142));
+            this.addSlotToContainer(new Slot(player.inventory, i, 8 + i * 18, 142));
         }
-        this.tileEntity = (TileEntityFlatBasket) tileEntity;
+        this.tileEntity = (TileEntityStoneMill) tileEntity;
     }
 
     @Override
@@ -53,7 +78,7 @@ public class ContainerFlatBasket extends Container
     @Override
     public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
     {
-        Slot slot = this.inventorySlots.get(index);
+        Slot slot = inventorySlots.get(index);
 
         if (slot == null || !slot.getHasStack())
         {
@@ -66,17 +91,21 @@ public class ContainerFlatBasket extends Container
 
         if (index >= 0 && index < 1)
         {
-            isMerged = mergeItemStack(newStack, 1, 37, true);
+            isMerged = mergeItemStack(newStack, 4, 40, true);
         }
-        else if (index >= 1 && index < 28)
+        else if (index >= 1 && index < 4)
+        {
+            isMerged = mergeItemStack(newStack, 4, 40, true);
+        }
+        else if (index >= 4 && index < 31)
         {
             isMerged = mergeItemStack(newStack, 0, 1, false)
-                    || mergeItemStack(newStack, 29, 37, false);
+                    || mergeItemStack(newStack, 31, 40, false);
         }
-        else if (index >= 28 && index < 37)
+        else if (index >= 31 && index < 40)
         {
             isMerged = mergeItemStack(newStack, 0, 1, false)
-                    || mergeItemStack(newStack, 1, 28, false);
+                    || mergeItemStack(newStack, 4, 31, false);
         }
 
         if (!isMerged)
@@ -103,15 +132,13 @@ public class ContainerFlatBasket extends Container
     {
         super.detectAndSendChanges();
 
-        this.processTicks = this.tileEntity.getProcessTicks();
-        this.totalTicks = this.tileEntity.getTotalTicks();
-        this.mode = this.tileEntity.getMode();
+        this.processTicks = tileEntity.getProcessTicks();
+        this.totalTicks = tileEntity.getTotalTicks();
 
         for (IContainerListener i : this.listeners)
         {
             i.sendWindowProperty(this, 0, this.processTicks);
             i.sendWindowProperty(this, 1, this.totalTicks);
-            i.sendWindowProperty(this, 5, this.mode.ordinal());
         }
     }
 
@@ -128,10 +155,6 @@ public class ContainerFlatBasket extends Container
                 break;
             case 1:
                 this.totalTicks = data;
-                break;
-            case 5:
-                this.mode = ModeFlatBasket.values()[data];
-                break;
         }
     }
 
@@ -145,8 +168,8 @@ public class ContainerFlatBasket extends Container
         return this.totalTicks;
     }
 
-    public ModeFlatBasket getMode()
+    public TileEntityStoneMill getTileEntity()
     {
-        return this.mode;
+        return this.tileEntity;
     }
 }

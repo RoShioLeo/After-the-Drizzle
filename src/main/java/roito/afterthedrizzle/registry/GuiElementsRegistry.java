@@ -7,14 +7,20 @@ import net.minecraftforge.fml.common.network.IGuiHandler;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import roito.afterthedrizzle.AfterTheDrizzle;
 import roito.afterthedrizzle.client.gui.GuiContainerFlatBasket;
+import roito.afterthedrizzle.client.gui.GuiContainerStoneMill;
 import roito.afterthedrizzle.client.gui.GuiContainerStove;
+import roito.afterthedrizzle.client.gui.GuiContainerWoodenBarrel;
 import roito.afterthedrizzle.common.inventory.ContainerFlatBasket;
+import roito.afterthedrizzle.common.inventory.ContainerStoneMill;
 import roito.afterthedrizzle.common.inventory.ContainerStove;
+import roito.afterthedrizzle.common.inventory.ContainerWoodenBarrel;
 
 public class GuiElementsRegistry implements IGuiHandler
 {
-    public static final int GUI_FLAT_BAKSET = 0;
+    public static final int GUI_FLAT_BASKET = 0;
     public static final int GUI_STOVE = 1;
+    public static final int GUI_STONE_MILL = 2;
+    public static final int GUI_WOODEN_BARREL = 3;
 
     public GuiElementsRegistry()
     {
@@ -26,10 +32,14 @@ public class GuiElementsRegistry implements IGuiHandler
     {
         switch (ID)
         {
-            case GUI_FLAT_BAKSET:
+            case GUI_FLAT_BASKET:
                 return new ContainerFlatBasket(player, world.getTileEntity(new BlockPos(x, y, z)));
             case GUI_STOVE:
                 return new ContainerStove(player, world.getTileEntity(new BlockPos(x, y, z)));
+            case GUI_STONE_MILL:
+                return new ContainerStoneMill(player, world.getTileEntity(new BlockPos(x, y, z)));
+            case GUI_WOODEN_BARREL:
+                return new ContainerWoodenBarrel(player, world.getTileEntity(new BlockPos(x, y, z)));
             default:
                 return null;
         }
@@ -41,10 +51,14 @@ public class GuiElementsRegistry implements IGuiHandler
     {
         switch (ID)
         {
-            case GUI_FLAT_BAKSET:
+            case GUI_FLAT_BASKET:
                 return new GuiContainerFlatBasket(new ContainerFlatBasket(player, world.getTileEntity(new BlockPos(x, y, z))));
             case GUI_STOVE:
                 return new GuiContainerStove(new ContainerStove(player, world.getTileEntity(new BlockPos(x, y, z))));
+            case GUI_STONE_MILL:
+                return new GuiContainerStoneMill(new ContainerStoneMill(player, world.getTileEntity(new BlockPos(x, y, z))));
+            case GUI_WOODEN_BARREL:
+                return new GuiContainerWoodenBarrel(new ContainerWoodenBarrel(player, world.getTileEntity(new BlockPos(x, y, z))));
             default:
                 return null;
         }

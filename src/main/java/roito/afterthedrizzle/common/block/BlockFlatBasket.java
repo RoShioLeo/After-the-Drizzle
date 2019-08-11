@@ -40,7 +40,6 @@ public class BlockFlatBasket extends Block
         super(Material.WOOD);
         this.setHardness(0.5F);
         this.setSoundType(SoundType.WOOD);
-        this.setTranslationKey("flat_basket");
         this.setCreativeTab(AfterTheDrizzle.TAB_CRAFT);
     }
 
@@ -128,7 +127,7 @@ public class BlockFlatBasket extends Block
         }
         if (playerIn.isSneaking())
         {
-            int id = GuiElementsRegistry.GUI_FLAT_BAKSET;
+            int id = GuiElementsRegistry.GUI_FLAT_BASKET;
             playerIn.openGui(AfterTheDrizzle.getInstance(), id, worldIn, pos.getX(), pos.getY(), pos.getZ());
             return true;
         }

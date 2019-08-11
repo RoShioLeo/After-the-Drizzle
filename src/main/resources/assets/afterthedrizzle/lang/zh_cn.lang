@@ -22,6 +22,9 @@ tile.afterthedrizzle.flat_basket.name=竹篾匾
 tile.afterthedrizzle.stove.name=炉灶
 tile.afterthedrizzle.stove_dirt.name=土灶
 tile.afterthedrizzle.stove_stone.name=石灶
+tile.afterthedrizzle.stone_mill.name=石磨
+tile.afterthedrizzle.wooden_barrel.name=木桶
+tile.afterthedrizzle.wooden_frame.name=木架
 
 # Config
 afterthedrizzle.config.time=时间配置
