@@ -23,7 +23,7 @@ import roito.afterthedrizzle.registry.GuiElementsRegistry;
 
 public class BlockWoodenBarrel extends Block
 {
-    private static final AxisAlignedBB AABB = new AxisAlignedBB(0.0625D, 0.0D, 0.0625D, 1.0D, 1.0D, 1.0D);
+    private static final AxisAlignedBB AABB = new AxisAlignedBB(0.0625D, 0.0D, 0.0625D, 0.9375D, 1.0D, 0.9375D);
 
     public BlockWoodenBarrel()
     {

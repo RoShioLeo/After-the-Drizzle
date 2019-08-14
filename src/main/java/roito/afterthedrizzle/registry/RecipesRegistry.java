@@ -1,10 +1,13 @@
 package roito.afterthedrizzle.registry;
 
+import cn.mcmod.tofucraft.block.BlockLoader;
+import cn.mcmod.tofucraft.item.ItemLoader;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.LoaderState;
 import roito.afterthedrizzle.api.recipe.*;
 import roito.silveroakoutpost.helper.NonNullListHelper;
@@ -56,7 +59,10 @@ public final class RecipesRegistry
     private static void addStoneMillRecipes()
     {
         MANAGER_STONE_MILL.add(new StoneMillRecipe(new FluidStack(FluidRegistry.WATER, 100), new ItemStack(Blocks.STONE), NonNullListHelper.createNonNullList(new ItemStack(ItemsRegistry.ASH)), new FluidStack(FluidRegistry.LAVA, 100)));
-//        MANAGER_STONE_MILL.add(new StoneMillRecipe(new FluidStack(FluidRegistry.WATER, 100), new ItemStack(ItemLoader.soybeans), NonNullListHelper.createNonNullList(new ItemStack(ItemLoader.material, 1, 11)), new FluidStack(BlockLoader.SOYMILK_FLUID, 100)));
+        if (Loader.isModLoaded("tofucraft"))
+        {
+            MANAGER_STONE_MILL.add(new StoneMillRecipe(new FluidStack(FluidRegistry.WATER, 100), "cropSoybean", NonNullListHelper.createNonNullList(new ItemStack(ItemLoader.material, 1, 11)), new FluidStack(BlockLoader.SOYMILK_FLUID, 100)));
+        }
         MANAGER_STONE_MILL.add(new StoneMillRecipe(new ItemStack(Items.GOLD_INGOT), NonNullListHelper.createNonNullList(new ItemStack(Items.GOLD_NUGGET, 9))));
     }
 }
