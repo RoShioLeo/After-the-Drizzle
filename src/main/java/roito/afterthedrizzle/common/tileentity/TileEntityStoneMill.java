@@ -244,4 +244,10 @@ public class TileEntityStoneMill extends TileEntity implements ITickable
     {
         return this.getInput().isEmpty();
     }
+
+    public void markDirty()
+    {
+        super.markDirty();
+        this.syncToTrackingClients();
+    }
 }

@@ -147,7 +147,7 @@ public abstract class BlockStove extends BlockHorizontal implements IBlockStove
                 {
                     IItemHandler fuel = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
                     playerIn.setHeldItem(hand, fuel.insertItem(0, playerIn.getHeldItem(hand), false));
-                    ((TileEntityStove) te).mark();
+                    te.markDirty();
                     return true;
                 }
             }

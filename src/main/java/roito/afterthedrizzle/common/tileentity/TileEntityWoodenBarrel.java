@@ -1,10 +1,13 @@
 package roito.afterthedrizzle.common.tileentity;
 
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
+import net.minecraft.server.management.PlayerChunkMapEntry;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidTank;
@@ -85,5 +88,27 @@ public class TileEntityWoodenBarrel extends TileEntity
     public String getFluidTranslation()
     {
         return fluidTank.getFluid().getLocalizedName();
+    }
+
+    public void syncToTrackingClients()
+    {
+        if (!this.world.isRemote)
+        {
+            SPacketUpdateTileEntity packet = this.getUpdatePacket();
+            PlayerChunkMapEntry trackingEntry = ((WorldServer) this.world).getPlayerChunkMap().getEntry(this.pos.getX() >> 4, this.pos.getZ() >> 4);
+            if (trackingEntry != null)
+            {
+                for (EntityPlayerMP player : trackingEntry.getWatchingPlayers())
+                {
+                    player.connection.sendPacket(packet);
+                }
+            }
+        }
+    }
+
+    public void markDirty()
+    {
+        super.markDirty();
+        this.syncToTrackingClients();
     }
 }

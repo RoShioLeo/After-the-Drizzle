@@ -117,7 +117,7 @@ public class TileEntityStove extends TileEntity implements ITickable
             {
                 BlockStove.setState(false, this.world, this.pos, (IBlockStove) this.getBlockType());
             }
-            this.mark();
+            this.markDirty();
         }
     }
 
@@ -206,9 +206,9 @@ public class TileEntityStove extends TileEntity implements ITickable
         this.lit = true;
     }
 
-    public void mark()
+    public void markDirty()
     {
-        this.markDirty();
+        super.markDirty();
         this.refresh();
     }
 }
