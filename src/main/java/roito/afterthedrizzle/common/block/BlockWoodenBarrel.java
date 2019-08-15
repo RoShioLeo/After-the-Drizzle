@@ -76,14 +76,17 @@ public class BlockWoodenBarrel extends Block
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-        TileEntity te = worldIn.getTileEntity(pos);
-        IFluidHandlerItem handler = FluidUtil.getFluidHandler(ItemHandlerHelper.copyStackWithSize(playerIn.getHeldItem(hand), 1));
-        if (handler != null)
+        if (!worldIn.isRemote)
         {
-            return FluidUtil.interactWithFluidHandler(playerIn, hand, te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side));
+            TileEntity te = worldIn.getTileEntity(pos);
+            IFluidHandlerItem handler = FluidUtil.getFluidHandler(ItemHandlerHelper.copyStackWithSize(playerIn.getHeldItem(hand), 1));
+            if (handler != null)
+            {
+                return FluidUtil.interactWithFluidHandler(playerIn, hand, te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side));
+            }
+            int id = GuiElementsRegistry.GUI_WOODEN_BARREL;
+            playerIn.openGui(AfterTheDrizzle.getInstance(), id, worldIn, pos.getX(), pos.getY(), pos.getZ());
         }
-        int id = GuiElementsRegistry.GUI_WOODEN_BARREL;
-        playerIn.openGui(AfterTheDrizzle.getInstance(), id, worldIn, pos.getX(), pos.getY(), pos.getZ());
         return true;
     }
 }

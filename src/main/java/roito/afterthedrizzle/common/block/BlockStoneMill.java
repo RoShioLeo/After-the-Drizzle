@@ -117,58 +117,59 @@ public class BlockStoneMill extends BlockHorizontal
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-        TileEntity te = worldIn.getTileEntity(pos);
-        IFluidHandlerItem handler = FluidUtil.getFluidHandler(ItemHandlerHelper.copyStackWithSize(playerIn.getHeldItem(hand), 1));
-        if (handler != null)
+        if (!worldIn.isRemote)
         {
-            return FluidUtil.interactWithFluidHandler(playerIn, hand, te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side));
-        }
-        if (te instanceof TileEntityStoneMill)
-        {
-            if (!playerIn.isSneaking())
+            TileEntity te = worldIn.getTileEntity(pos);
+            IFluidHandlerItem handler = FluidUtil.getFluidHandler(ItemHandlerHelper.copyStackWithSize(playerIn.getHeldItem(hand), 1));
+            if (handler != null)
             {
-                if (!playerIn.getHeldItem(hand).isEmpty())
+                return FluidUtil.interactWithFluidHandler(playerIn, hand, te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side));
+            }
+            if (te instanceof TileEntityStoneMill)
+            {
+                if (!playerIn.isSneaking())
                 {
-                    IItemHandler container = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
-                    playerIn.setHeldItem(hand, container.insertItem(0, playerIn.getHeldItem(hand), false));
-                    te.markDirty();
-                    return true;
+                    if (!playerIn.getHeldItem(hand).isEmpty())
+                    {
+                        IItemHandler container = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
+                        playerIn.setHeldItem(hand, container.insertItem(0, playerIn.getHeldItem(hand), false));
+                        te.markDirty();
+                        return true;
+                    }
+                    else
+                    {
+                        IItemHandler container = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN);
+                        boolean flag = true;
+                        for (int i = 0; i <= 2; i++)
+                        {
+                            ItemStack itemStack = container.extractItem(i, container.getStackInSlot(0).getCount(), false);
+                            te.markDirty();
+                            if (!worldIn.isRemote && !itemStack.isEmpty())
+                            {
+                                worldIn.spawnEntity(new EntityItem(worldIn, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, itemStack));
+                                flag = false;
+                            }
+                        }
+                        if (flag && ((TileEntityStoneMill) te).isCompleted())
+                        {
+                            container = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
+                            ItemStack itemStack = container.extractItem(0, container.getStackInSlot(0).getCount(), false);
+                            te.markDirty();
+                            if (!worldIn.isRemote)
+                            {
+                                worldIn.spawnEntity(new EntityItem(worldIn, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, itemStack));
+                            }
+                        }
+                    }
                 }
                 else
                 {
-                    IItemHandler container = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN);
-                    boolean flag = true;
-                    for (int i = 0; i <= 2; i++)
-                    {
-                        ItemStack itemStack = container.extractItem(i, container.getStackInSlot(0).getCount(), false);
-                        te.markDirty();
-                        if (!worldIn.isRemote && !itemStack.isEmpty())
-                        {
-                            worldIn.spawnEntity(new EntityItem(worldIn, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, itemStack));
-                            flag = false;
-                        }
-                    }
-                    if (flag && ((TileEntityStoneMill) te).isCompleted())
-                    {
-                        container = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
-                        ItemStack itemStack = container.extractItem(0, container.getStackInSlot(0).getCount(), false);
-                        te.markDirty();
-                        if (!worldIn.isRemote)
-                        {
-                            worldIn.spawnEntity(new EntityItem(worldIn, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, itemStack));
-                        }
-                    }
-                    return true;
+                    int id = GuiElementsRegistry.GUI_STONE_MILL;
+                    playerIn.openGui(AfterTheDrizzle.getInstance(), id, worldIn, pos.getX(), pos.getY(), pos.getZ());
                 }
             }
-            else
-            {
-                int id = GuiElementsRegistry.GUI_STONE_MILL;
-                playerIn.openGui(AfterTheDrizzle.getInstance(), id, worldIn, pos.getX(), pos.getY(), pos.getZ());
-                return true;
-            }
         }
-        return false;
+        return true;
     }
 
     @Override

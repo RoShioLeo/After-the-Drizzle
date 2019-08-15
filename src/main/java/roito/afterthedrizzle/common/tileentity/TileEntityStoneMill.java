@@ -64,6 +64,7 @@ public class TileEntityStoneMill extends TileEntity implements ITickable
         }
         else if (CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.equals(capability))
         {
+            this.markDirty();
             return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(this.fluidTank);
         }
         return super.getCapability(capability, facing);
