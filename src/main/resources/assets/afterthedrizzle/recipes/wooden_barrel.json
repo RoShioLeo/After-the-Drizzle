@@ -1,0 +1,20 @@
+{
+    "type": "forge:ore_shaped",
+    "result": {
+        "item": "afterthedrizzle:wooden_barrel",
+        "count": 1
+    },
+    "pattern": [
+        "# #",
+        "# #",
+        "***"
+    ],
+    "key": {
+        "#": {
+            "item": "#plank_wood"
+        },
+        "*": {
+            "item": "#log_wood"
+        }
+    }
+}

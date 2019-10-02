@@ -1,0 +1,21 @@
+{
+    "type": "forge:ore_shaped",
+    "result": {
+        "item": "afterthedrizzle:stove_stone",
+        "count": 1
+    },
+    "pattern": [
+        "DDD",
+        "DSD",
+        "DDD"
+    ],
+    "key": {
+        "D": {
+            "item": "#cobblestone"
+        },
+        "S": {
+            "item": "afterthedrizzle:stove_dirt",
+            "data": 0
+        }
+    }
+}

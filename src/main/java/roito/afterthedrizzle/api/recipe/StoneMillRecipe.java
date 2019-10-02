@@ -19,10 +19,10 @@ public class StoneMillRecipe implements IStoneMillRecipe
 
     public StoneMillRecipe(FluidStack inputFluid, NonNullList<ItemStack> inputs, NonNullList<ItemStack> outputs, FluidStack outputFluid)
     {
-        this.inputFluid = inputFluid;
+        this.inputFluid = inputFluid == null ? new FluidStack(FluidRegistry.WATER, 0) : inputFluid;
         this.inputs = inputs;
         this.outputs = outputs;
-        this.outputFluid = outputFluid;
+        this.outputFluid = outputFluid == null ? new FluidStack(FluidRegistry.WATER, 0) : outputFluid;
     }
 
     public StoneMillRecipe(FluidStack inputFluid, String oreDicName, NonNullList<ItemStack> outputs, FluidStack outputFluid)

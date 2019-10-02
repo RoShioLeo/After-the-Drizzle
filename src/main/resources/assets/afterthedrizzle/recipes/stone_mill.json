@@ -1,0 +1,24 @@
+{
+    "type": "forge:ore_shaped",
+    "result": {
+        "item": "afterthedrizzle:stone_mill",
+        "count": 1
+    },
+    "pattern": [
+        " S ",
+        "CCC",
+        "TTT"
+    ],
+    "key": {
+        "S": {
+            "item": "#stick_wood"
+        },
+        "C": {
+            "item": "#cobblestone"
+        },
+        "T": {
+            "item": "minecraft:stone",
+            "data": 0
+        }
+    }
+}

@@ -144,7 +144,7 @@ public class BlockStoneMill extends BlockHorizontal
                         {
                             ItemStack itemStack = container.extractItem(i, container.getStackInSlot(0).getCount(), false);
                             te.markDirty();
-                            if (!worldIn.isRemote && !itemStack.isEmpty())
+                            if (!itemStack.isEmpty())
                             {
                                 worldIn.spawnEntity(new EntityItem(worldIn, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, itemStack));
                                 flag = false;
@@ -155,10 +155,7 @@ public class BlockStoneMill extends BlockHorizontal
                             container = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
                             ItemStack itemStack = container.extractItem(0, container.getStackInSlot(0).getCount(), false);
                             te.markDirty();
-                            if (!worldIn.isRemote)
-                            {
-                                worldIn.spawnEntity(new EntityItem(worldIn, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, itemStack));
-                            }
+                            worldIn.spawnEntity(new EntityItem(worldIn, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, itemStack));
                         }
                     }
                 }

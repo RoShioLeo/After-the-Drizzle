@@ -32,6 +32,8 @@ afterthedrizzle.config.time.outdoor_drying_basic=Outdoors Drying Basic Ticks
 afterthedrizzle.config.time.indoor_drying_basic=Indoors Drying Basic Ticks
 afterthedrizzle.config.time.fermentation_basic=Fermentation Basic Ticks
 afterthedrizzle.config.time.bake_basic=Bake Basic Ticks
+afterthedrizzle.config.blocks.wooden_barrel=Wooden Barrel Capacity
+afterthedrizzle.config.others.ash=Use Ash As Bone Meal
 
 #Mode
 afterthedrizzle.mode.flat_basket.in_rain=Wet Mode
@@ -39,3 +41,11 @@ afterthedrizzle.mode.flat_basket.outdoors=Outdoor Mode
 afterthedrizzle.mode.flat_basket.indoors=Indoor Mode
 afterthedrizzle.mode.flat_basket.bake=Bake Mode
 afterthedrizzle.mode.flat_basket.process=Process Mode
+
+#JEI
+afterthedrizzle.jei.flat_basket.in_rain=Wet
+afterthedrizzle.jei.flat_basket.sun=Outdoors
+afterthedrizzle.jei.flat_basket.indoor=Indoors
+afterthedrizzle.jei.flat_basket.bake=Bake
+afterthedrizzle.jei.flat_basket.process=Process
+afterthedrizzle.jei.stone_mill=Mill

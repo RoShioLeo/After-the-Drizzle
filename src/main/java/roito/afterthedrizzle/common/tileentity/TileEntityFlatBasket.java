@@ -126,7 +126,7 @@ public class TileEntityFlatBasket extends TileEntity implements ITickable
                 this.process(RecipesRegistry.MANAGER_BASKET_INDOORS);
                 return;
             case BAKE:
-                this.refreshTotalTicks(ConfigMain.time.BakeBasicTime);
+                this.refreshTotalTicks(ConfigMain.time.bakeBasicTime);
                 this.process(RecipesRegistry.MANAGER_BASKET_BAKE);
         }
     }

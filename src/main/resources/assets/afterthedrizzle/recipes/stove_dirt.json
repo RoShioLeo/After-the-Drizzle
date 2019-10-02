@@ -1,0 +1,18 @@
+{
+    "type": "forge:ore_shaped",
+    "result": {
+        "item": "afterthedrizzle:stove_dirt",
+        "count": 1
+    },
+    "pattern": [
+        "DDD",
+        "D D",
+        "DDD"
+    ],
+    "key": {
+        "D": {
+            "item": "minecraft:dirt",
+            "data": 32767
+        }
+    }
+}

@@ -11,6 +11,14 @@ public final class ConfigMain
     @Config.LangKey("afterthedrizzle.config.time")
     public static final Time time = new Time();
 
+    @Config.Name("Blocks")
+    @Config.LangKey("afterthedrizzle.config.blocks")
+    public static final Blocks blocks = new Blocks();
+
+    @Config.Name("Others")
+    @Config.LangKey("afterthedrizzle.config.others")
+    public static final Others others = new Others();
+
     public static final class Time
     {
         @Config.Comment("The ticks of drying per item outdoors. (1 second = 20 ticks)")
@@ -35,6 +43,23 @@ public final class ConfigMain
         @Config.LangKey("afterthedrizzle.config.time.bake_basic")
         @Config.Name("BakeBasicTime")
         @Config.RangeInt(min = 200, max = 12000)
-        public int BakeBasicTime = 300;
+        public int bakeBasicTime = 300;
+    }
+
+    public static final class Blocks
+    {
+        @Config.Comment("The capacity of wooden barrel. (mB)")
+        @Config.LangKey("afterthedrizzle.config.block.wooden_barrel")
+        @Config.Name("WoodenBarrelCapacity")
+        @Config.RangeInt(min = 100, max = 12000)
+        public int woodenBarrelCapacity = 4000;
+    }
+
+    public static final class Others
+    {
+        @Config.Comment("Can ash be used as bone meal?")
+        @Config.LangKey("afterthedrizzle.config.others.ash")
+        @Config.Name("UseAshAsBoneMeal")
+        public boolean useAshAsBoneMeal = true;
     }
 }

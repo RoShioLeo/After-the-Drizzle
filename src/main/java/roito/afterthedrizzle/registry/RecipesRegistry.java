@@ -1,19 +1,19 @@
 package roito.afterthedrizzle.registry;
 
-import cn.mcmod.tofucraft.block.BlockLoader;
-import cn.mcmod.tofucraft.item.ItemLoader;
-import net.minecraft.init.Blocks;
+import crafttweaker.CraftTweakerAPI;
+import crafttweaker.IAction;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.LoaderState;
+import roito.afterthedrizzle.AfterTheDrizzle;
 import roito.afterthedrizzle.api.recipe.*;
-import roito.silveroakoutpost.helper.NonNullListHelper;
+import roito.silveroakoutpost.helper.LogHelper;
 import roito.silveroakoutpost.recipe.ISingleInRecipeManager;
 import roito.silveroakoutpost.recipe.SingleInRecipe;
 import roito.silveroakoutpost.register.annotation.Load;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public final class RecipesRegistry
 {
@@ -23,6 +23,7 @@ public final class RecipesRegistry
     public final static ISingleInRecipeManager MANAGER_BASKET_BAKE = new BasketBakeManager();
     public final static IStoneMillRecipeManager MANAGER_STONE_MILL = new StoneMillRecipeManager();
 
+    private static List<IAction> actions = new ArrayList<IAction>();
 
     @Load(value = LoaderState.INITIALIZATION)
     private static void registerRecipes()
@@ -30,6 +31,26 @@ public final class RecipesRegistry
         addBasketDryingRecipes();
         addBasketWetRecipes();
         addStoneMillRecipes();
+        doDelayTask();
+        actions = null;
+    }
+
+    public static void addAction(IAction action)
+    {
+        actions.add(action);
+    }
+
+    public static void doDelayTask()
+    {
+        for (IAction act : actions)
+        {
+            CraftTweakerAPI.apply(act);
+            if (act.describe() != null)
+            {
+                LogHelper.info(AfterTheDrizzle.logger, act.describe());
+            }
+        }
+        actions.clear();
     }
 
     private static void addBasketDryingRecipes()
@@ -58,11 +79,6 @@ public final class RecipesRegistry
 
     private static void addStoneMillRecipes()
     {
-        MANAGER_STONE_MILL.add(new StoneMillRecipe(new FluidStack(FluidRegistry.WATER, 100), new ItemStack(Blocks.STONE), NonNullListHelper.createNonNullList(new ItemStack(ItemsRegistry.ASH)), new FluidStack(FluidRegistry.LAVA, 100)));
-        if (Loader.isModLoaded("tofucraft"))
-        {
-            MANAGER_STONE_MILL.add(new StoneMillRecipe(new FluidStack(FluidRegistry.WATER, 100), "cropSoybean", NonNullListHelper.createNonNullList(new ItemStack(ItemLoader.material, 1, 11)), new FluidStack(BlockLoader.SOYMILK_FLUID, 100)));
-        }
-        MANAGER_STONE_MILL.add(new StoneMillRecipe(new ItemStack(Items.GOLD_INGOT), NonNullListHelper.createNonNullList(new ItemStack(Items.GOLD_NUGGET, 9))));
+
     }
 }

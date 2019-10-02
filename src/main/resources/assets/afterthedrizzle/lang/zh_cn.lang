@@ -18,7 +18,7 @@ item.afterthedrizzle.dried_beetroot.name=甜菜干
 item.afterthedrizzle.ash.name=灰烬
 
 # Block
-tile.afterthedrizzle.flat_basket.name=竹篾匾
+tile.afterthedrizzle.flat_basket.name=竹筛
 tile.afterthedrizzle.stove.name=炉灶
 tile.afterthedrizzle.stove_dirt.name=土灶
 tile.afterthedrizzle.stove_stone.name=石灶
@@ -32,6 +32,8 @@ afterthedrizzle.config.time.outdoor_drying_basic=室外干燥基础时间
 afterthedrizzle.config.time.indoor_drying_basic=室内干燥基础时间
 afterthedrizzle.config.time.fermentation_basic=发酵基础时间
 afterthedrizzle.config.time.bake_basic=烘焙基础时间
+afterthedrizzle.config.blocks.wooden_barrel=木桶容量
+afterthedrizzle.config.others.ash=将灰烬用作骨粉
 
 # Mode
 afterthedrizzle.mode.flat_basket.in_rain=淋雨模式
@@ -39,3 +41,11 @@ afterthedrizzle.mode.flat_basket.outdoors=室外模式
 afterthedrizzle.mode.flat_basket.indoors=室内模式
 afterthedrizzle.mode.flat_basket.bake=烘焙模式
 afterthedrizzle.mode.flat_basket.process=加工模式
+
+# JEI
+afterthedrizzle.jei.flat_basket.in_rain=淋雨
+afterthedrizzle.jei.flat_basket.sun=室外
+afterthedrizzle.jei.flat_basket.indoor=室内
+afterthedrizzle.jei.flat_basket.bake=烘焙
+afterthedrizzle.jei.flat_basket.process=加工
+afterthedrizzle.jei.stone_mill=研磨

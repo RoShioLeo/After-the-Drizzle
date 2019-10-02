@@ -6,7 +6,6 @@ import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import roito.afterthedrizzle.common.tileentity.TileEntityFlatBasket;
 
@@ -46,17 +45,9 @@ public class TESRFlatBasket extends TileEntitySpecialRenderer<TileEntityFlatBask
             int seed = tile.getRandomSeed() + count * 4447;
 
             GlStateManager.scale(0.5, 0.5, 0.5);
-            if (stack.getItem() instanceof ItemBlock)
-            {
-                GlStateManager.translate(((seed % 100) - 50) / 150D, 0.15D + count / 256D, ((seed % 56) - 28) / 84D);
-                GlStateManager.rotate(360 * (seed % 943) / 943F, 0, 1, 0);
-            }
-            else
-            {
-                GlStateManager.translate(((seed % 100) - 50) / 150D, 0 + count / 16D, ((seed % 56) - 28) / 84D);
-                GlStateManager.rotate(360 * (seed % 943) / 943F, 0, 1, 0);
-                GlStateManager.rotate(90, 1, 0, 0);
-            }
+            GlStateManager.translate(((seed % 100) - 50) / 150D, 0 + count / 16D, ((seed % 56) - 28) / 84D);
+            GlStateManager.rotate(360 * (seed % 943) / 943F, 0, 1, 0);
+            GlStateManager.rotate(90, 1, 0, 0);
 
             RenderHelper.enableStandardItemLighting();
             renderItem.renderItem(stack, ItemCameraTransforms.TransformType.FIXED);

@@ -3,6 +3,7 @@ package roito.afterthedrizzle.plugin.jei;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.IModRegistry;
 import mezz.jei.api.JEIPlugin;
+import mezz.jei.api.ingredients.IIngredientBlacklist;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import net.minecraft.item.ItemStack;
 import roito.afterthedrizzle.api.recipe.IStoneMillRecipe;
@@ -62,5 +63,15 @@ public class JEICompat implements IModPlugin
 
         registry.addRecipeClickArea(GuiContainerFlatBasket.class, 77, 31, 22, 16, FLAT_BASKET_RAIN, FLAT_BASKET_SUN, FLAT_BASKET_INDOOR, FLAT_BASKET_BAKE);
         registry.addRecipeClickArea(GuiContainerStoneMill.class, 95, 37, 22, 16, STONE_MILL);
+
+        addIngredientToBlacklist(registry);
+    }
+
+    private final static void addIngredientToBlacklist(IModRegistry registry)
+    {
+        IIngredientBlacklist blacklist = registry.getJeiHelpers().getIngredientBlacklist();
+        blacklist.addIngredientToBlacklist(new ItemStack(BlocksRegistry.STONE_MILL_TOP));
+        blacklist.addIngredientToBlacklist(new ItemStack(BlocksRegistry.LIT_STOVE_DIRT));
+        blacklist.addIngredientToBlacklist(new ItemStack(BlocksRegistry.LIT_STOVE_STONE));
     }
 }

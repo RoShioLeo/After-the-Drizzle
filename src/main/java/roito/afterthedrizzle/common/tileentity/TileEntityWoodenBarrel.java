@@ -12,10 +12,18 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import roito.afterthedrizzle.common.config.ConfigMain;
 
 public class TileEntityWoodenBarrel extends TileEntity
 {
-    protected FluidTank fluidTank = new FluidTank(4000);
+    protected FluidTank fluidTank = new FluidTank(ConfigMain.blocks.woodenBarrelCapacity)
+    {
+        @Override
+        protected void onContentsChanged()
+        {
+            TileEntityWoodenBarrel.this.markDirty();
+        }
+    };
 
     @Override
     public boolean hasCapability(Capability<?> capability, EnumFacing facing)
@@ -32,7 +40,6 @@ public class TileEntityWoodenBarrel extends TileEntity
     {
         if (CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.equals(capability))
         {
-            this.markDirty();
             return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(this.fluidTank);
         }
         return super.getCapability(capability, facing);

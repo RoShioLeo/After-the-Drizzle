@@ -11,7 +11,7 @@ public class BlockStoveDirt extends BlockStove
     {
         super(light, 1, Material.GROUND);
         this.setHardness(0.5F);
-        this.setSoundType(SoundType.GROUND);
+        this.setSoundType(SoundType.STONE);
     }
 
     @Override

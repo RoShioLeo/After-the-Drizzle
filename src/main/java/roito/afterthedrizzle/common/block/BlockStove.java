@@ -11,6 +11,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
@@ -122,7 +123,7 @@ public abstract class BlockStove extends BlockHorizontal implements IBlockStove
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-        if (playerIn.isSneaking())
+        if (playerIn.getHeldItem(hand).isEmpty())
         {
             int id = GuiElementsRegistry.GUI_STOVE;
             playerIn.openGui(AfterTheDrizzle.getInstance(), id, worldIn, pos.getX(), pos.getY(), pos.getZ());
@@ -140,7 +141,7 @@ public abstract class BlockStove extends BlockHorizontal implements IBlockStove
                 }
                 return true;
             }
-            else if (!playerIn.getHeldItem(hand).isEmpty())
+            else if (TileEntityFurnace.getItemBurnTime(playerIn.getHeldItem(hand)) > 0)
             {
                 TileEntity te = worldIn.getTileEntity(pos);
                 if (te instanceof TileEntityStove)

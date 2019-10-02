@@ -1,0 +1,20 @@
+{
+    "type": "forge:ore_shaped",
+    "result": {
+        "item": "afterthedrizzle:wooden_frame",
+        "count": 1
+    },
+    "pattern": [
+        "###",
+        "***",
+        "* *"
+    ],
+    "key": {
+        "*": {
+            "item": "#stick_wood"
+        },
+        "#": {
+            "item": "#plank_wood"
+        }
+    }
+}

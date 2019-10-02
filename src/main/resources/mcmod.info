@@ -2,14 +2,15 @@
     {
         "modid": "afterthedrizzle",
         "name": "After the Drizzle",
-        "description": "Agricultural mod.",
+        "description": "An agricultural mod.",
         "version": "${version}",
         "mcversion": "${mcversion}",
         "url": "",
         "updateUrl": "",
         "authorList": [
             "RoitoLeonine",
-            "jihuayu"
+            "jihuayu",
+            "Gloridifice"
         ],
         "credits": "Lemon Slice Studio",
         "logoFile": "",

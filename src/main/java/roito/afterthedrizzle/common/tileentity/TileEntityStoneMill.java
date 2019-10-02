@@ -34,7 +34,14 @@ public class TileEntityStoneMill extends TileEntity implements ITickable
 
     protected ItemStackHandler inputInventory = new ItemStackHandler();
     protected ItemStackHandler outputInventory = new ItemStackHandler(3);
-    protected FluidTank fluidTank = new FluidTank(2000);
+    protected FluidTank fluidTank = new FluidTank(2000)
+    {
+        @Override
+        protected void onContentsChanged()
+        {
+            TileEntityStoneMill.this.markDirty();
+        }
+    };
 
     protected IStoneMillRecipe currentRecipe = new StoneMillRecipe(new FluidStack(FluidRegistry.WATER, 0), ItemStack.EMPTY, NonNullList.create(), new FluidStack(FluidRegistry.WATER, 0));
 
@@ -64,7 +71,6 @@ public class TileEntityStoneMill extends TileEntity implements ITickable
         }
         else if (CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.equals(capability))
         {
-            this.markDirty();
             return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(this.fluidTank);
         }
         return super.getCapability(capability, facing);
