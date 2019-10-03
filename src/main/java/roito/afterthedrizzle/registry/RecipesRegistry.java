@@ -4,7 +4,9 @@ import crafttweaker.CraftTweakerAPI;
 import crafttweaker.IAction;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.LoaderState;
+import net.minecraftforge.fml.common.Optional;
 import roito.afterthedrizzle.AfterTheDrizzle;
 import roito.afterthedrizzle.api.recipe.*;
 import roito.silveroakoutpost.helper.LogHelper;
@@ -31,7 +33,10 @@ public final class RecipesRegistry
         addBasketDryingRecipes();
         addBasketWetRecipes();
         addStoneMillRecipes();
-        doDelayTask();
+        if (Loader.isModLoaded("crafttweaker"))
+        {
+            doDelayTask();
+        }
         actions = null;
     }
 
@@ -40,6 +45,7 @@ public final class RecipesRegistry
         actions.add(action);
     }
 
+    @Optional.Method(modid = "crafttweaker")
     public static void doDelayTask()
     {
         for (IAction act : actions)
