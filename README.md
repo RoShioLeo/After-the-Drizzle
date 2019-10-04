@@ -1,4 +1,4 @@
-# After the Drizzle 细雨过后
+# After the Drizzle
 #### LICENSE 许可证
 
 For code: LGPL-2.1
