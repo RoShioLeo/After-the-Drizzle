@@ -18,10 +18,6 @@ public class TESRStove extends TileEntitySpecialRenderer<TileEntityStove>
     {
         super.render(tile, x, y, z, partialTicks, destroyStage, alpha);
         Minecraft mc = Minecraft.getMinecraft();
-        if (y > mc.player.eyeHeight)
-        {
-            return;
-        }
 
         List<ItemStack> list = tile.getContents();
 

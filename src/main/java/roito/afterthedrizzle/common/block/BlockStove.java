@@ -165,8 +165,27 @@ public abstract class BlockStove extends BlockHorizontal implements IBlockStove
             double d0 = pos.getX() + 0.5D;
             double d1 = pos.getY() + rand.nextDouble() * 6.0D / 16.0D;
             double d2 = pos.getZ() + 0.5D;
+
+            TileEntity te = worldIn.getTileEntity(pos);
+            int ash = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN).getStackInSlot(0).getCount();
+
+            if (ash < 32)
+            {
+                for (int i = 0; i < ash / 4 + 1; i++)
+                {
+                    double d4 = rand.nextDouble() * 0.6D - 0.3D;
+                    worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0 + d4, d1 + 1.0D, d2 + d4, 0.0D, 0.1D, 0.0D);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < ash / 5; i++)
+                {
+                    double d4 = rand.nextDouble() * 0.6D - 0.3D;
+                    worldIn.spawnParticle(EnumParticleTypes.SMOKE_LARGE, d0 + d4, d1 + 1.0D, d2 + d4, 0.0D, 0.1D, 0.0D);
+                }
+            }
             double d4 = rand.nextDouble() * 0.6D - 0.3D;
-            worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0 + d4, d1 + 1.0D, d2 + d4, 0.0D, 0.1D, 0.0D);
             worldIn.spawnParticle(EnumParticleTypes.FLAME, d0 + d4, d1, d2 + d4, 0.0D, 0.06D, 0.0D);
         }
     }
