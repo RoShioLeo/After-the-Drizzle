@@ -1,6 +1,5 @@
 package roito.afterthedrizzle.common.block;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
@@ -21,13 +20,13 @@ import roito.afterthedrizzle.AfterTheDrizzle;
 import roito.afterthedrizzle.common.tileentity.TileEntityWoodenBarrel;
 import roito.afterthedrizzle.registry.GuiElementsRegistry;
 
-public class BlockWoodenBarrel extends Block
+public class BlockWoodenBarrel extends BlockNormal
 {
     private static final AxisAlignedBB AABB = new AxisAlignedBB(0.0625D, 0.0D, 0.0625D, 0.9375D, 1.0D, 0.9375D);
 
     public BlockWoodenBarrel()
     {
-        super(Material.WOOD);
+        super("wooden_barrel", Material.WOOD);
         this.setSoundType(SoundType.WOOD);
         this.setHardness(0.5F);
         this.setCreativeTab(AfterTheDrizzle.TAB_CRAFT);

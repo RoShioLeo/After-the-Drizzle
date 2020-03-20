@@ -1,40 +1,27 @@
 package roito.afterthedrizzle.common.tileentity;
 
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.server.management.PlayerChunkMapEntry;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
-import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
-import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
-import roito.afterthedrizzle.api.recipe.IStoneMillRecipe;
-import roito.afterthedrizzle.api.recipe.StoneMillRecipe;
-import roito.afterthedrizzle.common.block.BlockStoneMill;
-import roito.afterthedrizzle.registry.RecipesRegistry;
 
-public class TileEntityStoneMill extends TileEntity implements ITickable
+public class TileEntityStoneMill extends TileEntitySingleFluidTank implements ITickable
 {
-    protected int angel = 0;
-    protected int processTicks = 0;
-    protected static int totalTicks = 200;
+    private int angel = 0;
+    private int processTicks = 0;
+    private static int totalTicks = 200;
 
-    protected ItemStackHandler inputInventory = new ItemStackHandler();
-    protected ItemStackHandler outputInventory = new ItemStackHandler(3);
-    protected FluidTank fluidTank = new FluidTank(2000)
+    private ItemStackHandler inputInventory = new ItemStackHandler();
+    private ItemStackHandler outputInventory = new ItemStackHandler(3);
+    private FluidTank fluidTank = new FluidTank(2000)
     {
         @Override
         protected void onContentsChanged()
@@ -42,8 +29,8 @@ public class TileEntityStoneMill extends TileEntity implements ITickable
             TileEntityStoneMill.this.markDirty();
         }
     };
-
-    protected IStoneMillRecipe currentRecipe = new StoneMillRecipe(new FluidStack(FluidRegistry.WATER, 0), ItemStack.EMPTY, NonNullList.create(), new FluidStack(FluidRegistry.WATER, 0));
+    private NonNullList<ItemStack> outputs = NonNullList.create();
+    private FluidStack outputFluid = null;
 
     @Override
     public boolean hasCapability(Capability<?> capability, EnumFacing facing)
@@ -99,94 +86,9 @@ public class TileEntityStoneMill extends TileEntity implements ITickable
     }
 
     @Override
-    public NBTTagCompound getUpdateTag()
-    {
-        return this.writeToNBT(new NBTTagCompound());
-    }
-
-    @Override
-    public SPacketUpdateTileEntity getUpdatePacket()
-    {
-        return new SPacketUpdateTileEntity(this.pos, 1, this.writeToNBT(new NBTTagCompound()));
-    }
-
-    @Override
-    public void onDataPacket(NetworkManager manager, SPacketUpdateTileEntity packet)
-    {
-        this.readFromNBT(packet.getNbtCompound());
-    }
-
-    public void syncToTrackingClients()
-    {
-        if (!this.world.isRemote)
-        {
-            SPacketUpdateTileEntity packet = this.getUpdatePacket();
-            PlayerChunkMapEntry trackingEntry = ((WorldServer) this.world).getPlayerChunkMap().getEntry(this.pos.getX() >> 4, this.pos.getZ() >> 4);
-            if (trackingEntry != null)
-            {
-                for (EntityPlayerMP player : trackingEntry.getWatchingPlayers())
-                {
-                    player.connection.sendPacket(packet);
-                }
-            }
-        }
-    }
-
-    @Override
     public void update()
     {
-        ItemStack input = getInput();
-        if (input.isEmpty())
-        {
-            this.processTicks = 0;
-            this.markDirty();
-        }
 
-        if (!this.currentRecipe.canWork(fluidTank.getFluid(), input))
-        {
-            this.currentRecipe = RecipesRegistry.MANAGER_STONE_MILL.getRecipe(fluidTank.getFluid(), input);
-        }
-        if (!this.currentRecipe.getOutputStacks().isEmpty())
-        {
-            boolean flag = true;
-            for (ItemStack out : this.currentRecipe.getOutputStacks())
-            {
-                if (!ItemHandlerHelper.insertItem(this.outputInventory, out, true).isEmpty())
-                {
-                    flag = false;
-                }
-            }
-            if (flag)
-            {
-                this.angel += 3;
-                this.angel %= 360;
-                if (++this.processTicks >= totalTicks)
-                {
-                    for (ItemStack out : this.currentRecipe.getOutputStacks())
-                    {
-                        ItemHandlerHelper.insertItem(this.outputInventory, out, false);
-                    }
-                    this.inputInventory.extractItem(0, 1, false);
-                    this.fluidTank.drain(currentRecipe.getFluidAmount(), true);
-                    if (this.currentRecipe.getOutputFluid() != null && this.currentRecipe.getOutputFluid().amount != 0)
-                    {
-                        IFluidHandler handler = FluidUtil.getFluidHandler(world, pos.down().offset(((BlockStoneMill) this.getBlockType()).getFacing(this.getBlockMetadata())), EnumFacing.UP);
-                        if (handler != null)
-                        {
-                            handler.fill(this.currentRecipe.getOutputFluid(), true);
-                            world.getTileEntity(pos.down().offset(((BlockStoneMill) this.getBlockType()).getFacing(this.getBlockMetadata()))).markDirty();
-                        }
-                    }
-                    this.processTicks = 0;
-                }
-                this.syncToTrackingClients();
-            }
-        }
-        else
-        {
-            this.processTicks = 0;
-        }
-        this.markDirty();
     }
 
     public float getAngel()
@@ -204,33 +106,18 @@ public class TileEntityStoneMill extends TileEntity implements ITickable
         return totalTicks;
     }
 
-    public int getFluidAmount()
-    {
-        return fluidTank.getFluidAmount();
-    }
-
-    public String getFluidName()
-    {
-        return FluidRegistry.getFluidName(this.fluidTank.getFluid());
-    }
-
     public String getOutputFluidName()
     {
-        if (this.currentRecipe.getOutputFluid().amount == 0)
+        if (this.outputFluid == null)
         {
             return null;
         }
-        return FluidRegistry.getFluidName(this.currentRecipe.getOutputFluid());
-    }
-
-    public String getFluidTranslation()
-    {
-        return fluidTank.getFluid().getLocalizedName();
+        return FluidRegistry.getFluidName(this.outputFluid);
     }
 
     public boolean isCompleted()
     {
-        return !this.currentRecipe.canWork(fluidTank.getFluid(), getInput());
+        return this.outputFluid != null || !this.outputs.isEmpty();
     }
 
     public ItemStack getInput()
@@ -252,9 +139,9 @@ public class TileEntityStoneMill extends TileEntity implements ITickable
         return this.getInput().isEmpty();
     }
 
-    public void markDirty()
+    @Override
+    public FluidTank getFluidTank()
     {
-        super.markDirty();
-        this.syncToTrackingClients();
+        return fluidTank;
     }
 }

@@ -5,9 +5,11 @@ import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import roito.afterthedrizzle.AfterTheDrizzle;
 import roito.afterthedrizzle.registry.ItemsRegistry;
 
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(value = Side.CLIENT, modid = AfterTheDrizzle.MODID)
 public final class EventHandlerOverlay
 {
     public final static ThermometerBarRenderer bar0 = new ThermometerBarRenderer(Minecraft.getMinecraft());

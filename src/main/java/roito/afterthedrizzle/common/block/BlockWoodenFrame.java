@@ -1,6 +1,5 @@
 package roito.afterthedrizzle.common.block;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
@@ -10,11 +9,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import roito.afterthedrizzle.AfterTheDrizzle;
 
-public class BlockWoodenFrame extends Block
+public class BlockWoodenFrame extends BlockNormal
 {
     public BlockWoodenFrame()
     {
-        super(Material.WOOD);
+        super("wooden_frame", Material.WOOD);
         this.setSoundType(SoundType.WOOD);
         this.setHardness(0.5F);
         this.setCreativeTab(AfterTheDrizzle.TAB_CRAFT);

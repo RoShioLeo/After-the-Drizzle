@@ -26,7 +26,7 @@ import roito.afterthedrizzle.registry.GuiElementsRegistry;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class BlockFlatBasket extends Block
+public class BlockFlatBasket extends BlockNormal
 {
     private static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.3125D, 1.0D);
     private static final AxisAlignedBB AABB_BOTTOM = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.0625D, 1.0D);
@@ -37,7 +37,7 @@ public class BlockFlatBasket extends Block
 
     public BlockFlatBasket()
     {
-        super(Material.WOOD);
+        super("flat_basket", Material.WOOD);
         this.setHardness(0.5F);
         this.setSoundType(SoundType.WOOD);
         this.setCreativeTab(AfterTheDrizzle.TAB_CRAFT);

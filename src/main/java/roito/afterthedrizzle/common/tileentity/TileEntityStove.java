@@ -15,8 +15,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
-import roito.afterthedrizzle.api.block.IBlockStove;
 import roito.afterthedrizzle.common.block.BlockStove;
+import roito.afterthedrizzle.common.block.inter.IBlockStove;
 import roito.afterthedrizzle.registry.ItemsRegistry;
 
 import static net.minecraft.tileentity.TileEntityFurnace.getItemBurnTime;

@@ -26,6 +26,9 @@ tile.afterthedrizzle.stone_mill.name=Stone Mill
 tile.afterthedrizzle.wooden_barrel.name=Wooden Barrel
 tile.afterthedrizzle.wooden_frame.name=Wooden Frame
 
+#Fluid
+fluid.sugary_water=Sugary Water
+
 # Config
 afterthedrizzle.config.time=Time Configuration
 afterthedrizzle.config.time.outdoor_drying_basic=Outdoors Drying Basic Ticks

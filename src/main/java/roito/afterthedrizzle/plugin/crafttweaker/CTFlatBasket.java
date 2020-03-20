@@ -7,10 +7,10 @@ import crafttweaker.api.item.IItemStack;
 import crafttweaker.api.minecraft.CraftTweakerMC;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
-import roito.afterthedrizzle.helper.CraftTweakerHelper;
+import roito.afterthedrizzle.common.recipe.normal.ISingleInRecipeManager;
+import roito.afterthedrizzle.common.recipe.normal.SingleInRecipe;
+import roito.afterthedrizzle.helper.ItemsHelper;
 import roito.afterthedrizzle.registry.RecipesRegistry;
-import roito.silveroakoutpost.recipe.ISingleInRecipeManager;
-import roito.silveroakoutpost.recipe.SingleInRecipe;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
@@ -21,7 +21,7 @@ public class CTFlatBasket
     @ZenMethod
     public static void addOutdoorRecipe(IIngredient itemInput, IItemStack itemsOutput)
     {
-        NonNullList<ItemStack> input = CraftTweakerHelper.getItemStacks(itemInput);
+        NonNullList<ItemStack> input = ItemsHelper.getItemStacks(itemInput);
         ItemStack output = CraftTweakerMC.getItemStack(itemsOutput);
         RecipesRegistry.addAction(new Addition(RecipesRegistry.MANAGER_BASKET_OUTDOORS, input, output));
     }
@@ -29,7 +29,7 @@ public class CTFlatBasket
     @ZenMethod
     public static void addIndoorRecipe(IIngredient itemInput, IItemStack itemsOutput)
     {
-        NonNullList<ItemStack> input = CraftTweakerHelper.getItemStacks(itemInput);
+        NonNullList<ItemStack> input = ItemsHelper.getItemStacks(itemInput);
         ItemStack output = CraftTweakerMC.getItemStack(itemsOutput);
         RecipesRegistry.addAction(new Addition(RecipesRegistry.MANAGER_BASKET_INDOORS, input, output));
     }
@@ -37,7 +37,7 @@ public class CTFlatBasket
     @ZenMethod
     public static void addWetRecipe(IIngredient itemInput, IItemStack itemsOutput)
     {
-        NonNullList<ItemStack> input = CraftTweakerHelper.getItemStacks(itemInput);
+        NonNullList<ItemStack> input = ItemsHelper.getItemStacks(itemInput);
         ItemStack output = CraftTweakerMC.getItemStack(itemsOutput);
         RecipesRegistry.addAction(new Addition(RecipesRegistry.MANAGER_BASKET_IN_RAIN, input, output));
     }
@@ -45,7 +45,7 @@ public class CTFlatBasket
     @ZenMethod
     public static void addBakeRecipe(IIngredient itemInput, IItemStack itemsOutput)
     {
-        NonNullList<ItemStack> input = CraftTweakerHelper.getItemStacks(itemInput);
+        NonNullList<ItemStack> input = ItemsHelper.getItemStacks(itemInput);
         ItemStack output = CraftTweakerMC.getItemStack(itemsOutput);
         RecipesRegistry.addAction(new Addition(RecipesRegistry.MANAGER_BASKET_BAKE, input, output));
     }

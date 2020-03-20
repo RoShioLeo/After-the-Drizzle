@@ -53,6 +53,12 @@ public final class ConfigMain
         @Config.Name("WoodenBarrelCapacity")
         @Config.RangeInt(min = 100, max = 12000)
         public int woodenBarrelCapacity = 4000;
+
+        @Config.Comment("The capacity of drink maker. (mB)")
+        @Config.LangKey("afterthedrizzle.config.block.drink_maker")
+        @Config.Name("DrinkMakerCapacity")
+        @Config.RangeInt(min = 100, max = 12000)
+        public int drinkMakerCapacity = 2000;
     }
 
     public static final class Others

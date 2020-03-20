@@ -1,29 +1,31 @@
 package roito.afterthedrizzle.common.tileentity;
 
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.server.management.PlayerChunkMapEntry;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import roito.afterthedrizzle.common.config.ConfigMain;
 
-public class TileEntityWoodenBarrel extends TileEntity
+public class TileEntityWoodenBarrel extends TileEntitySingleFluidTank
 {
-    protected FluidTank fluidTank = new FluidTank(ConfigMain.blocks.woodenBarrelCapacity)
+    private FluidTank fluidTank = new FluidTank(ConfigMain.blocks.woodenBarrelCapacity)
     {
         @Override
         protected void onContentsChanged()
         {
             TileEntityWoodenBarrel.this.markDirty();
+            TileEntityWoodenBarrel.this.updateHeight();
+        }
+
+        @Override
+        public boolean canFillFluidType(FluidStack fluid)
+        {
+            return !fluid.getFluid().isLighterThanAir() && fluid.getFluid().getTemperature() < 500;
         }
     };
+    private int heightAmount = 0;
 
     @Override
     public boolean hasCapability(Capability<?> capability, EnumFacing facing)
@@ -50,73 +52,49 @@ public class TileEntityWoodenBarrel extends TileEntity
     {
         super.readFromNBT(compound);
         this.fluidTank.readFromNBT(compound.getCompoundTag("FluidTank"));
+        this.heightAmount = compound.getInteger("HeightAmount");
     }
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound)
     {
         compound.setTag("FluidTank", this.fluidTank.writeToNBT(new NBTTagCompound()));
+        compound.setInteger("HeightAmount", this.heightAmount);
         return super.writeToNBT(compound);
     }
 
     @Override
-    public NBTTagCompound getUpdateTag()
+    public FluidTank getFluidTank()
     {
-        return this.writeToNBT(new NBTTagCompound());
+        return fluidTank;
     }
 
-    @Override
-    public void handleUpdateTag(NBTTagCompound data)
+    private void updateHeight()
     {
-        this.readFromNBT(data);
-    }
-
-    @Override
-    public SPacketUpdateTileEntity getUpdatePacket()
-    {
-        return new SPacketUpdateTileEntity(this.pos, 1, this.writeToNBT(new NBTTagCompound()));
-    }
-
-    @Override
-    public void onDataPacket(NetworkManager manager, SPacketUpdateTileEntity packet)
-    {
-        this.readFromNBT(packet.getNbtCompound());
-    }
-
-    public int getFluidAmount()
-    {
-        return fluidTank.getFluidAmount();
-    }
-
-    public String getFluidName()
-    {
-        return FluidRegistry.getFluidName(this.fluidTank.getFluid());
-    }
-
-    public String getFluidTranslation()
-    {
-        return fluidTank.getFluid().getLocalizedName();
-    }
-
-    public void syncToTrackingClients()
-    {
-        if (!this.world.isRemote)
+        if (this.world.isRemote)
         {
-            SPacketUpdateTileEntity packet = this.getUpdatePacket();
-            PlayerChunkMapEntry trackingEntry = ((WorldServer) this.world).getPlayerChunkMap().getEntry(this.pos.getX() >> 4, this.pos.getZ() >> 4);
-            if (trackingEntry != null)
+            if (this.getFluidAmount() != 0)
             {
-                for (EntityPlayerMP player : trackingEntry.getWatchingPlayers())
+                int viscosity = this.getFluidTank().getFluid().getFluid().getViscosity() / 50;
+                if (heightAmount > this.getFluidAmount())
                 {
-                    player.connection.sendPacket(packet);
+                    heightAmount -= Math.max(1, (heightAmount - this.getFluidAmount()) / viscosity);
+                }
+                else if (heightAmount < this.getFluidAmount())
+                {
+                    heightAmount += Math.max(1, (this.getFluidAmount() - heightAmount) / viscosity);
                 }
             }
         }
+        else
+        {
+            heightAmount = this.getFluidAmount();
+        }
     }
 
-    public void markDirty()
+    public double getHeight()
     {
-        super.markDirty();
-        this.syncToTrackingClients();
+        updateHeight();
+        return 0.0625 + 0.875 * this.heightAmount / ConfigMain.blocks.woodenBarrelCapacity;
     }
 }

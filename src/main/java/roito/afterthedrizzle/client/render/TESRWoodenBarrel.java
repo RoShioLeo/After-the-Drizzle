@@ -62,7 +62,7 @@ public class TESRWoodenBarrel extends TileEntitySpecialRenderer<TileEntityWooden
                 int b = color & 0xFF;
                 int a = color >> 24 & 0xFF;
 
-                double height = 0.0625 + 0.875 * tile.getFluidAmount() / 4000;
+                double height = tile.getHeight();
 
                 buffer.pos(0.125, height, 0.125).color(r, g, b, a).tex(still.getMinU(), still.getMinV()).lightmap(lx, ly).endVertex();
                 buffer.pos(0.125, height, 0.875).color(r, g, b, a).tex(still.getMinU(), still.getMaxV()).lightmap(lx, ly).endVertex();

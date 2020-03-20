@@ -26,10 +26,11 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemHandlerHelper;
 import roito.afterthedrizzle.AfterTheDrizzle;
+import roito.afterthedrizzle.common.block.inter.INormalRegister;
 import roito.afterthedrizzle.common.tileentity.TileEntityStoneMill;
 import roito.afterthedrizzle.registry.GuiElementsRegistry;
 
-public class BlockStoneMill extends BlockHorizontal
+public class BlockStoneMill extends BlockHorizontal implements INormalRegister
 {
     private static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5625D, 1.0D);
 
@@ -195,5 +196,11 @@ public class BlockStoneMill extends BlockHorizontal
                 }
             }
         }
+    }
+
+    @Override
+    public String getRegisterInfo()
+    {
+        return "stone_mill";
     }
 }

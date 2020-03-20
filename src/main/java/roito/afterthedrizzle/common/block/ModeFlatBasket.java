@@ -5,7 +5,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import roito.afterthedrizzle.api.block.IBlockStove;
+import roito.afterthedrizzle.common.block.inter.IBlockStove;
 
 public enum ModeFlatBasket
 {

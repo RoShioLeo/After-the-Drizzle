@@ -26,6 +26,9 @@ tile.afterthedrizzle.stone_mill.name=石磨
 tile.afterthedrizzle.wooden_barrel.name=木桶
 tile.afterthedrizzle.wooden_frame.name=木架
 
+# Fluid
+fluid.sugary_water=糖水
+
 # Config
 afterthedrizzle.config.time=时间配置
 afterthedrizzle.config.time.outdoor_drying_basic=室外干燥基础时间

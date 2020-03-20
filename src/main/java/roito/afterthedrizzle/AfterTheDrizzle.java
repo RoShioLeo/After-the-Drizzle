@@ -18,8 +18,7 @@ import roito.afterthedrizzle.common.tab.TabFood;
         name = AfterTheDrizzle.NAME,
         version = AfterTheDrizzle.VERSION,
         acceptedMinecraftVersions = "[1.12.2,1.13)",
-        dependencies = "required-after:forge@[14.23.5.2768,);" +
-                "required-after:silveroakoutpost;")
+        dependencies = "required-after:forge@[14.23.5.2768,);")
 public class AfterTheDrizzle
 {
     public static final String MODID = "afterthedrizzle";

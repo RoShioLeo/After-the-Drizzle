@@ -9,15 +9,14 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import roito.afterthedrizzle.AfterTheDrizzle;
 import roito.afterthedrizzle.common.config.ConfigMain;
-import roito.silveroakoutpost.item.SilveroakItem;
 
 import static net.minecraft.item.ItemDye.applyBonemeal;
 
-public class ItemAsh extends SilveroakItem
+public class ItemAsh extends ItemNormal
 {
     public ItemAsh()
     {
-        super(64, AfterTheDrizzle.TAB_CRAFT);
+        super("ash", 64, AfterTheDrizzle.TAB_CRAFT);
     }
 
     @Override

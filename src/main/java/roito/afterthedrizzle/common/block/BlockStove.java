@@ -25,18 +25,20 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import roito.afterthedrizzle.AfterTheDrizzle;
-import roito.afterthedrizzle.api.block.IBlockStove;
+import roito.afterthedrizzle.common.block.inter.IBlockStove;
+import roito.afterthedrizzle.common.block.inter.INormalRegister;
 import roito.afterthedrizzle.common.tileentity.TileEntityStove;
 import roito.afterthedrizzle.registry.GuiElementsRegistry;
 
 import java.util.Random;
 
-public abstract class BlockStove extends BlockHorizontal implements IBlockStove
+public abstract class BlockStove extends BlockHorizontal implements IBlockStove, INormalRegister
 {
+    private final String name;
     protected int efficiency;
     protected static boolean keepInventory = false;
 
-    public BlockStove(boolean light, int efficiency, Material material)
+    public BlockStove(String name, boolean light, int efficiency, Material material)
     {
         super(material);
         if (light)
@@ -49,6 +51,7 @@ public abstract class BlockStove extends BlockHorizontal implements IBlockStove
         }
         this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
         this.efficiency = efficiency;
+        this.name = name;
     }
 
     @Override
@@ -247,4 +250,11 @@ public abstract class BlockStove extends BlockHorizontal implements IBlockStove
     {
         return new ItemStack(getUnlit());
     }
+
+    @Override
+    public String getRegisterInfo()
+    {
+        return name;
+    }
+
 }

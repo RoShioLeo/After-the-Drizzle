@@ -5,7 +5,7 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 import roito.afterthedrizzle.AfterTheDrizzle;
-import roito.afterthedrizzle.api.environment.Temperature;
+import roito.afterthedrizzle.common.environment.Temperature;
 
 public class ThermometerBarRenderer extends Gui
 {

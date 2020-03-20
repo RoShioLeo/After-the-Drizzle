@@ -2,16 +2,16 @@ package roito.afterthedrizzle.client.gui;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import roito.afterthedrizzle.AfterTheDrizzle;
+import roito.afterthedrizzle.client.texture.TexturePos;
+import roito.afterthedrizzle.client.texture.TextureResource;
+import roito.afterthedrizzle.common.config.ConfigMain;
 import roito.afterthedrizzle.common.inventory.ContainerWoodenBarrel;
+import roito.afterthedrizzle.helper.GuiHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,14 +48,8 @@ public class GuiContainerWoodenBarrel extends GuiContainer
         mc.getTextureManager().bindTexture(TEXTURE);
         drawTexturedModalRect(offsetX, offsetY, 0, 0, xSize, ySize);
 
-        int height = 48 - (int) Math.ceil(48 * this.inventory.getTileEntity().getFluidAmount() / 4000);
-        if (height != 48)
-        {
-            this.drawTank(offsetX + 80, offsetY + 22, this.inventory.getTileEntity().getFluidName());
-        }
-        mc.getTextureManager().bindTexture(TEXTURE);
-        this.drawTexturedModalRect(offsetX + 80, offsetY + 22, 185, 0, 16, height);
-        this.drawTexturedModalRect(offsetX + 80, offsetY + 25, 176, 0, 9, 43);
+        int height = (int) Math.ceil(48 * this.inventory.getTileEntity().getFluidAmount() / ConfigMain.blocks.woodenBarrelCapacity);
+        GuiHelper.drawTank(this, offsetX + 80, offsetY + 22, new TextureResource(TEXTURE, new TexturePos(80, 22, 16, 48)), inventory.getTileEntity().getFluidName(), height);
     }
 
     @Override
@@ -79,24 +73,5 @@ public class GuiContainerWoodenBarrel extends GuiContainer
                 this.drawHoveringText(list, mouseX, mouseY);
             }
         }
-    }
-
-    protected void drawTank(int x, int y, String fluidID)
-    {
-        if (fluidID == null)
-        {
-            return;
-        }
-
-        Fluid fluid = FluidRegistry.getFluid(fluidID);
-        int color = fluid.getColor();
-        ResourceLocation fluidTexture = fluid.getStill();
-        TextureAtlasSprite sprite = this.mc.getTextureMapBlocks().getAtlasSprite(fluidTexture.toString());
-        this.mc.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-        GlStateManager.color((color >> 16 & 255) / 255.0F, (color >> 8 & 255) / 255.0F, (color & 255) / 255.0F, 1.0f);
-        this.drawTexturedModalRect(x, y, sprite, 16, 16);
-        this.drawTexturedModalRect(x, y + 16, sprite, 16, 16);
-        this.drawTexturedModalRect(x, y + 32, sprite, 16, 16);
-        GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
     }
 }

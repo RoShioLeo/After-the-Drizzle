@@ -2,19 +2,15 @@ package roito.afterthedrizzle.client.gui;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import roito.afterthedrizzle.AfterTheDrizzle;
+import roito.afterthedrizzle.client.texture.TexturePos;
+import roito.afterthedrizzle.client.texture.TextureResource;
 import roito.afterthedrizzle.common.inventory.ContainerStoneMill;
-
-import java.util.ArrayList;
-import java.util.List;
+import roito.afterthedrizzle.helper.GuiHelper;
 
 @SideOnly(Side.CLIENT)
 public class GuiContainerStoneMill extends GuiContainer
@@ -55,16 +51,10 @@ public class GuiContainerStoneMill extends GuiContainer
         {
             textureWidth = (int) Math.ceil(22 * processTicks / totalTicks);
         }
-        this.drawTexturedModalRect(offsetX + 95, offsetY + 37, 176, 48, textureWidth, 16);
+        this.drawTexturedModalRect(offsetX + 95, offsetY + 37, 176, 0, textureWidth, 16);
 
-        int height = 48 - (int) Math.ceil(48 * this.inventory.getTileEntity().getFluidAmount() / 2000);
-        if (height != 48)
-        {
-            this.drawTank(offsetX + 37, offsetY + 22, this.inventory.getTileEntity().getFluidName());
-        }
-        mc.getTextureManager().bindTexture(TEXTURE);
-        this.drawTexturedModalRect(offsetX + 37, offsetY + 22, 185, 0, 16, height);
-        this.drawTexturedModalRect(offsetX + 37, offsetY + 28, 176, 0, 9, 37);
+        int height = (int) Math.ceil(48 * this.inventory.getTileEntity().getFluidAmount() / 2000);
+        GuiHelper.drawTank(this, offsetX + 37, offsetY + 22, new TextureResource(TEXTURE, new TexturePos(37, 22, 16, 48)), inventory.getTileEntity().getFluidName(), height);
         this.inventory.detectAndSendChanges();
     }
 
@@ -79,34 +69,7 @@ public class GuiContainerStoneMill extends GuiContainer
     {
         super.renderHoveredToolTip(mouseX, mouseY);
         int offsetX = (width - xSize) / 2, offsetY = (height - ySize) / 2;
-        if (offsetX + 37 < mouseX && mouseX < offsetX + 53 && offsetY + 22 < mouseY && mouseY < offsetY + 70)
-        {
-            if (this.inventory.getTileEntity().getFluidAmount() != 0)
-            {
-                List<String> list = new ArrayList();
-                list.add(this.inventory.getTileEntity().getFluidTranslation());
-                list.add(this.inventory.getTileEntity().getFluidAmount() + "mB");
-                this.drawHoveringText(list, mouseX, mouseY);
-            }
-        }
-    }
 
-    protected void drawTank(int x, int y, String fluidID)
-    {
-        if (fluidID == null)
-        {
-            return;
-        }
-
-        Fluid fluid = FluidRegistry.getFluid(fluidID);
-        int color = fluid.getColor();
-        ResourceLocation fluidTexture = fluid.getStill();
-        TextureAtlasSprite sprite = this.mc.getTextureMapBlocks().getAtlasSprite(fluidTexture.toString());
-        this.mc.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-        GlStateManager.color((color >> 16 & 255) / 255.0F, (color >> 8 & 255) / 255.0F, (color & 255) / 255.0F, 1.0f);
-        this.drawTexturedModalRect(x, y, sprite, 16, 16);
-        this.drawTexturedModalRect(x, y + 16, sprite, 16, 16);
-        this.drawTexturedModalRect(x, y + 32, sprite, 16, 16);
-        GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
+        GuiHelper.drawFluidTooltip(this, mouseX, mouseY, offsetX + 37, offsetY + 22, 16, 48, this.inventory.getTileEntity().getFluidTranslation(), this.inventory.getTileEntity().getFluidAmount());
     }
 }

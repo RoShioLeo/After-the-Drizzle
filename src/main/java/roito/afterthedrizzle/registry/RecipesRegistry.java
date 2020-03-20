@@ -4,15 +4,20 @@ import crafttweaker.CraftTweakerAPI;
 import crafttweaker.IAction;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.LoaderState;
 import net.minecraftforge.fml.common.Optional;
-import roito.afterthedrizzle.AfterTheDrizzle;
-import roito.afterthedrizzle.api.recipe.*;
-import roito.silveroakoutpost.helper.LogHelper;
-import roito.silveroakoutpost.recipe.ISingleInRecipeManager;
-import roito.silveroakoutpost.recipe.SingleInRecipe;
-import roito.silveroakoutpost.register.annotation.Load;
+import roito.afterthedrizzle.common.drink.DrinkIngredientsRegistry;
+import roito.afterthedrizzle.common.recipe.BasketBakeManager;
+import roito.afterthedrizzle.common.recipe.BasketIndoorsManager;
+import roito.afterthedrizzle.common.recipe.BasketOutdoorsManager;
+import roito.afterthedrizzle.common.recipe.BasketWetManager;
+import roito.afterthedrizzle.common.recipe.drink.DrinkRecipeInput;
+import roito.afterthedrizzle.common.recipe.drink.DrinkRecipeManager;
+import roito.afterthedrizzle.common.recipe.normal.ISingleInRecipeManager;
+import roito.afterthedrizzle.common.recipe.normal.SingleInRecipe;
+import roito.afterthedrizzle.helper.LogHelper;
+import roito.afterthedrizzle.registry.fluid.FluidsRegistry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,16 +28,16 @@ public final class RecipesRegistry
     public final static ISingleInRecipeManager MANAGER_BASKET_INDOORS = new BasketIndoorsManager();
     public final static ISingleInRecipeManager MANAGER_BASKET_IN_RAIN = new BasketWetManager();
     public final static ISingleInRecipeManager MANAGER_BASKET_BAKE = new BasketBakeManager();
-    public final static IStoneMillRecipeManager MANAGER_STONE_MILL = new StoneMillRecipeManager();
+    public final static DrinkRecipeManager MANAGER_DRINK_MAKER = new DrinkRecipeManager();
 
     private static List<IAction> actions = new ArrayList<IAction>();
 
-    @Load(value = LoaderState.INITIALIZATION)
-    private static void registerRecipes()
+    public RecipesRegistry()
     {
         addBasketDryingRecipes();
         addBasketWetRecipes();
         addStoneMillRecipes();
+        addDrinkRecipes();
         if (Loader.isModLoaded("crafttweaker"))
         {
             doDelayTask();
@@ -53,7 +58,7 @@ public final class RecipesRegistry
             CraftTweakerAPI.apply(act);
             if (act.describe() != null)
             {
-                LogHelper.info(AfterTheDrizzle.logger, act.describe());
+                LogHelper.info(act.describe());
             }
         }
         actions.clear();
@@ -86,5 +91,11 @@ public final class RecipesRegistry
     private static void addStoneMillRecipes()
     {
 
+    }
+
+    private static void addDrinkRecipes()
+    {
+        DrinkIngredientsRegistry.registerIngredientItem(new ItemStack(Items.SUGAR), "sugar");
+        MANAGER_DRINK_MAKER.add(new DrinkRecipeInput("sugar"), new FluidStack(FluidsRegistry.SUGARY_WATER, 100));
     }
 }

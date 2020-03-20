@@ -7,9 +7,9 @@ import roito.afterthedrizzle.registry.BlocksRegistry;
 
 public class BlockStoveStone extends BlockStove
 {
-    public BlockStoveStone(boolean light)
+    public BlockStoveStone(String name, boolean light)
     {
-        super(light, 2, Material.ROCK);
+        super(name, light, 2, Material.ROCK);
         this.setHardness(3.5F);
         this.setSoundType(SoundType.STONE);
     }

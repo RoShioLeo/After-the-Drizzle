@@ -5,18 +5,18 @@ import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
-import roito.silveroakoutpost.helper.NonNullListHelper;
-import roito.silveroakoutpost.recipe.ISingleInRecipe;
-import roito.silveroakoutpost.recipe.ISingleInRecipeManager;
+import roito.afterthedrizzle.common.recipe.normal.ISingleInRecipeManager;
+import roito.afterthedrizzle.common.recipe.normal.SingleInRecipe;
+import roito.afterthedrizzle.helper.NonNullListHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RecipeFlatBasket implements IRecipeWrapper
 {
-    private final ISingleInRecipe recipe;
+    private final SingleInRecipe recipe;
 
-    public RecipeFlatBasket(ISingleInRecipe recipe)
+    public RecipeFlatBasket(SingleInRecipe recipe)
     {
         this.recipe = recipe;
     }
@@ -24,7 +24,7 @@ public class RecipeFlatBasket implements IRecipeWrapper
     public static List<RecipeFlatBasket> getWrappedRecipeList(ISingleInRecipeManager manager)
     {
         List<RecipeFlatBasket> recipesToReturn = new ArrayList<>();
-        for (ISingleInRecipe recipe : manager.getRecipes())
+        for (SingleInRecipe recipe : manager.getRecipes())
         {
             recipesToReturn.add(new RecipeFlatBasket(recipe));
         }

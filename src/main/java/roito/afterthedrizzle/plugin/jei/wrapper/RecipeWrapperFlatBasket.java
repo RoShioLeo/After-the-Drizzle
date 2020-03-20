@@ -2,14 +2,14 @@ package roito.afterthedrizzle.plugin.jei.wrapper;
 
 import mezz.jei.api.recipe.IRecipeWrapper;
 import mezz.jei.api.recipe.IRecipeWrapperFactory;
+import roito.afterthedrizzle.common.recipe.normal.SingleInRecipe;
 import roito.afterthedrizzle.plugin.jei.recipe.RecipeFlatBasket;
-import roito.silveroakoutpost.recipe.ISingleInRecipe;
 
-public class RecipeWrapperFlatBasket implements IRecipeWrapperFactory<ISingleInRecipe>
+public class RecipeWrapperFlatBasket implements IRecipeWrapperFactory<SingleInRecipe>
 {
     @Override
-    public IRecipeWrapper getRecipeWrapper(ISingleInRecipe iSingleInRecipe)
+    public IRecipeWrapper getRecipeWrapper(SingleInRecipe SingleInRecipe)
     {
-        return new RecipeFlatBasket(iSingleInRecipe);
+        return new RecipeFlatBasket(SingleInRecipe);
     }
 }

@@ -6,21 +6,16 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import roito.afterthedrizzle.AfterTheDrizzle;
-import roito.afterthedrizzle.client.gui.GuiContainerFlatBasket;
-import roito.afterthedrizzle.client.gui.GuiContainerStoneMill;
-import roito.afterthedrizzle.client.gui.GuiContainerStove;
-import roito.afterthedrizzle.client.gui.GuiContainerWoodenBarrel;
-import roito.afterthedrizzle.common.inventory.ContainerFlatBasket;
-import roito.afterthedrizzle.common.inventory.ContainerStoneMill;
-import roito.afterthedrizzle.common.inventory.ContainerStove;
-import roito.afterthedrizzle.common.inventory.ContainerWoodenBarrel;
+import roito.afterthedrizzle.client.gui.*;
+import roito.afterthedrizzle.common.inventory.*;
 
-public class GuiElementsRegistry implements IGuiHandler
+public final class GuiElementsRegistry implements IGuiHandler
 {
     public static final int GUI_FLAT_BASKET = 0;
     public static final int GUI_STOVE = 1;
     public static final int GUI_STONE_MILL = 2;
     public static final int GUI_WOODEN_BARREL = 3;
+    public static final int GUI_DRINK_MAKER = 4;
 
     public GuiElementsRegistry()
     {
@@ -40,6 +35,8 @@ public class GuiElementsRegistry implements IGuiHandler
                 return new ContainerStoneMill(player, world.getTileEntity(new BlockPos(x, y, z)));
             case GUI_WOODEN_BARREL:
                 return new ContainerWoodenBarrel(player, world.getTileEntity(new BlockPos(x, y, z)));
+            case GUI_DRINK_MAKER:
+                return new ContainerDrinkMaker(player, world.getTileEntity(new BlockPos(x, y, z)));
             default:
                 return null;
         }
@@ -59,6 +56,8 @@ public class GuiElementsRegistry implements IGuiHandler
                 return new GuiContainerStoneMill(new ContainerStoneMill(player, world.getTileEntity(new BlockPos(x, y, z))));
             case GUI_WOODEN_BARREL:
                 return new GuiContainerWoodenBarrel(new ContainerWoodenBarrel(player, world.getTileEntity(new BlockPos(x, y, z))));
+            case GUI_DRINK_MAKER:
+                return new GuiContainerDrinkMaker(new ContainerDrinkMaker(player, world.getTileEntity(new BlockPos(x, y, z))));
             default:
                 return null;
         }
