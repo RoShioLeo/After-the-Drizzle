@@ -1,0 +1,22 @@
+modLoader="javafml" #mandatory
+loaderVersion="[28,)" #mandatory (28 is current forge version)
+[[mods]] #mandatory
+modId="afterthedrizzle" #mandatory
+version="${file.jarVersion}" #mandatory
+displayName="After the Drizzle" #mandatory
+logoFile="atd.png" #optional
+credits="Lemon Slice Studio" #optional
+authors="RoitoLeonine, Gloridifice" #optional
+description=''' '''
+[[dependencies.afterthedrizzle]] #optional
+    modId="forge" #mandatory
+    mandatory=true #mandatory
+    versionRange="[28,)" #mandatory
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.afterthedrizzle]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.14.4]"
+    ordering="NONE"
+    side="BOTH"

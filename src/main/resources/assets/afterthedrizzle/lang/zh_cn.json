@@ -1,0 +1,23 @@
+{
+    "itemGroup.afterthedrizzle.craft": "细雨田园：工艺",
+    "itemGroup.afterthedrizzle.food": "细雨田园：食物",
+    "item.afterthedrizzle.ash": "灰烬",
+    "item.afterthedrizzle.dried_beetroot": "甜菜根干",
+    "item.afterthedrizzle.dried_carrot": "胡萝卜干",
+    "item.afterthedrizzle.beef_jerky": "牛肉干",
+    "item.afterthedrizzle.pork_jerky": "猪肉干",
+    "item.afterthedrizzle.chicken_jerky": "鸡肉干",
+    "item.afterthedrizzle.rabbit_jerky": "兔肉干",
+    "item.afterthedrizzle.mutton_jerky": "羊肉干",
+    "block.afterthedrizzle.wooden_frame": "木架",
+    "block.afterthedrizzle.dirt_stove": "土灶",
+    "block.afterthedrizzle.stone_stove": "石灶",
+    "block.afterthedrizzle.bamboo_tray": "竹匾",
+    "container.afterthedrizzle.stove": "炉灶",
+    "container.afterthedrizzle.bamboo_tray": "竹匾",
+    "i18n.afterthedrizzle.bamboo_tray.mode.in_rain": "淋雨模式",
+    "i18n.afterthedrizzle.bamboo_tray.mode.outdoors": "户外模式",
+    "i18n.afterthedrizzle.bamboo_tray.mode.indoors": "室内模式",
+    "i18n.afterthedrizzle.bamboo_tray.mode.bake": "烘焙模式",
+    "i18n.afterthedrizzle.bamboo_tray.mode.process": "加工模式"
+}

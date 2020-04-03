@@ -1,0 +1,23 @@
+{
+    "itemGroup.afterthedrizzle.craft": "After the Drizzle: Craft",
+    "itemGroup.afterthedrizzle.food": "After the Drizzle: Food",
+    "item.afterthedrizzle.ash": "Ash",
+    "item.afterthedrizzle.dried_beetroot": "Dried Beetroot",
+    "item.afterthedrizzle.dried_carrot": "Dried Carrot",
+    "item.afterthedrizzle.beef_jerky": "Beef Jerky",
+    "item.afterthedrizzle.pork_jerky": "Pork Jerky",
+    "item.afterthedrizzle.chicken_jerky": "Chicken Jerky",
+    "item.afterthedrizzle.rabbit_jerky": "Rabbit Jerky",
+    "item.afterthedrizzle.mutton_jerky": "Mutton Jerky",
+    "block.afterthedrizzle.wooden_frame": "Wooden Frame",
+    "block.afterthedrizzle.dirt_stove": "Dirt Stone",
+    "block.afterthedrizzle.stone_stove": "Stone Stove",
+    "block.afterthedrizzle.bamboo_tray": "Bamboo Tray",
+    "container.afterthedrizzle.stove": "Stove",
+    "container.afterthedrizzle.bamboo_tray": "Bamboo Tray",
+    "i18n.afterthedrizzle.bamboo_tray.mode.in_rain": "In-rain Mode",
+    "i18n.afterthedrizzle.bamboo_tray.mode.outdoors": "Outdoor Mode",
+    "i18n.afterthedrizzle.bamboo_tray.mode.indoors": "Indoor Mode",
+    "i18n.afterthedrizzle.bamboo_tray.mode.bake": "Bake Mode",
+    "i18n.afterthedrizzle.bamboo_tray.mode.process": "Process Mode"
+}
