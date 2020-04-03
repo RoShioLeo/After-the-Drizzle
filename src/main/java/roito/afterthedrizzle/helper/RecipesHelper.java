@@ -11,7 +11,7 @@ import java.util.List;
 
 public final class RecipesHelper
 {
-    public static IDrinkRecipe inventoryToRecipe(ItemStackHandler inventory, Fluid input)
+    public static IDrinkRecipe inventoryToDrinkRecipe(ItemStackHandler inventory, Fluid input)
     {
         List<String> ingredients = new ArrayList<>();
         for (int i = 0; i < inventory.getSlots(); i++)

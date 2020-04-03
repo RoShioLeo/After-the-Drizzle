@@ -97,7 +97,7 @@ public class TileEntityDrinkMaker extends TileEntitySingleFluidTank implements I
     {
         if (this.getFluidAmount() != 0)
         {
-            IDrinkRecipe inventoryRecipe = RecipesHelper.inventoryToRecipe(this.ingredientsInventory, this.getFluidTank().getFluid().getFluid());
+            IDrinkRecipe inventoryRecipe = RecipesHelper.inventoryToDrinkRecipe(this.ingredientsInventory, this.getFluidTank().getFluid().getFluid());
             FluidStack output = RecipesRegistry.MANAGER_DRINK_MAKER.getOutput(inventoryRecipe);
             if (output != null)
             {
