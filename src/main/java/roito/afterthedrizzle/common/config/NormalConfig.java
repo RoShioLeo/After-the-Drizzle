@@ -12,7 +12,6 @@ public final class NormalConfig
     public static final ForgeConfigSpec COMMON_CONFIG = new ForgeConfigSpec.Builder().configure(NormalConfig::new).getRight();
 
     public static ForgeConfigSpec.IntValue dryingOutdoorsBasicTime;
-    public static ForgeConfigSpec.IntValue dryingIndoorsBasicTime;
     public static ForgeConfigSpec.IntValue fermentationBasicTime;
     public static ForgeConfigSpec.IntValue bakeBasicTime;
     public static ForgeConfigSpec.IntValue woodenBarrelCapacity;
@@ -25,10 +24,6 @@ public final class NormalConfig
         dryingOutdoorsBasicTime = builder.comment("The ticks of drying per item outdoors. (1 second = 20 ticks)")
                 .translation("atd.config.time.outdoorDryingBasic")
                 .defineInRange("outdoorDryingBasic", 800, 200, Integer.MAX_VALUE);
-
-        dryingIndoorsBasicTime = builder.comment("The ticks of drying per item indoors. (1 second = 20 ticks)")
-                .translation("atd.config.time.indoorDryingBasic")
-                .defineInRange("indoorDryingBasic", 900, 200, Integer.MAX_VALUE);
 
         fermentationBasicTime = builder.comment("The ticks of fermentation per item. (1 second = 20 ticks)")
                 .translation("atd.config.time.fermentationBasic")

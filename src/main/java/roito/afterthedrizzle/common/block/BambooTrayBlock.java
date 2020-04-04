@@ -34,7 +34,7 @@ public class BambooTrayBlock extends NormalBlock
 
     public BambooTrayBlock()
     {
-        super("bamboo_tray", Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(0.5F));
+        super("bamboo_tray", Properties.create(Material.BAMBOO).sound(SoundType.BAMBOO).hardnessAndResistance(0.5F));
     }
 
     @Override
@@ -62,12 +62,6 @@ public class BambooTrayBlock extends NormalBlock
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
     {
         return SHAPE;
-    }
-
-    @Override
-    public boolean hasTileEntity(BlockState state)
-    {
-        return true;
     }
 
     @Override
@@ -157,9 +151,15 @@ public class BambooTrayBlock extends NormalBlock
     }
 
     @Override
+    public boolean hasTileEntity(BlockState state)
+    {
+        return true;
+    }
+
+    @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world)
     {
-        return TileEntityTypeRegistry.BAMBOO_TRAY_TILE_ENTITY_TYPE.create();
+        return TileEntityTypeRegistry.BAMBOO_TRAY.create();
     }
 
     public static Item.Properties getItemProperties()

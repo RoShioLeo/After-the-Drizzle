@@ -1,27 +1,27 @@
-package roito.afterthedrizzle.common.recipe;
+package roito.afterthedrizzle.common.recipe.bamboo_tray;
 
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
 
-public abstract class SingleInRecipeManager implements ISingleInRecipeManager
+public abstract class BambooTrayRecipeManager implements IBambooTrayRecipeManager
 {
     @Override
-    public boolean equal(SingleInRecipe recipe1, SingleInRecipe recipe2)
+    public boolean equal(BambooTaryRecipe recipe1, BambooTaryRecipe recipe2)
     {
         return recipe1.equals(recipe2);
     }
 
     @Override
-    public void add(SingleInRecipe recipe)
+    public void add(BambooTaryRecipe recipe)
     {
         getRecipes().add(recipe);
     }
 
     @Override
-    public void remove(SingleInRecipe recipe)
+    public void remove(BambooTaryRecipe recipe)
     {
-        java.util.Iterator<SingleInRecipe> iter = getRecipes().iterator();
+        java.util.Iterator<BambooTaryRecipe> iter = getRecipes().iterator();
         while (iter.hasNext())
         {
             if (iter.next().equals(recipe))
@@ -35,7 +35,7 @@ public abstract class SingleInRecipeManager implements ISingleInRecipeManager
     @Override
     public void remove(ItemStack in)
     {
-        SingleInRecipe recipe = getRecipe(in);
+        BambooTaryRecipe recipe = getRecipe(in);
         if (!recipe.getOutput().isEmpty())
         {
             remove(recipe);
@@ -50,15 +50,15 @@ public abstract class SingleInRecipeManager implements ISingleInRecipeManager
 
     @Nonnull
     @Override
-    public SingleInRecipe getRecipe(@Nonnull ItemStack input)
+    public BambooTaryRecipe getRecipe(@Nonnull ItemStack input)
     {
-        for (SingleInRecipe recipe : getRecipes())
+        for (BambooTaryRecipe recipe : getRecipes())
         {
             if (recipe.isTheSameInput(input))
             {
                 return recipe;
             }
         }
-        return new SingleInRecipe(input, ItemStack.EMPTY);
+        return new BambooTaryRecipe(input, ItemStack.EMPTY);
     }
 }

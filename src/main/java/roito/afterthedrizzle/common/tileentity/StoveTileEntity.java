@@ -23,7 +23,7 @@ import roito.afterthedrizzle.common.item.ItemsRegistry;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import static roito.afterthedrizzle.common.tileentity.TileEntityTypeRegistry.STOVE_TILE_ENTITY_TYPE;
+import static roito.afterthedrizzle.common.tileentity.TileEntityTypeRegistry.STOVE_TILE;
 
 public class StoveTileEntity extends NormalContainerTileEntity implements ITickableTileEntity
 {
@@ -38,7 +38,7 @@ public class StoveTileEntity extends NormalContainerTileEntity implements ITicka
 
     public StoveTileEntity()
     {
-        super(STOVE_TILE_ENTITY_TYPE);
+        super(STOVE_TILE);
     }
 
     @Override
@@ -103,8 +103,8 @@ public class StoveTileEntity extends NormalContainerTileEntity implements ITicka
             }
             else
             {
-                if (!((IStoveBlock) this.getBlockState().getBlock()).isBurning())
-                    StoveBlock.setState(false, this.world, this.pos, (IStoveBlock) this.getBlockState().getBlock());
+                if (!((IStoveBlock) this.getBlockState().getBlock()).isBurning(this.getBlockState()))
+                    StoveBlock.setState(false, this.world, this.pos, (StoveBlock) this.getBlockState().getBlock());
                 refresh();
             }
         }
@@ -136,7 +136,7 @@ public class StoveTileEntity extends NormalContainerTileEntity implements ITicka
                 }
                 this.ashInventory.orElse(new ItemStackHandler()).insertItem(0, new ItemStack(ItemsRegistry.ASH), false);
                 this.markDirty();
-                StoveBlock.setState(true, getWorld(), pos, (IStoveBlock) getBlockState().getBlock());
+                StoveBlock.setState(true, getWorld(), pos, (StoveBlock) getBlockState().getBlock());
                 this.lit = true;
                 return true;
             }

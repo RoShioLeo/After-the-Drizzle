@@ -17,9 +17,9 @@ import roito.afterthedrizzle.common.block.IStoveBlock;
 import roito.afterthedrizzle.common.config.NormalConfig;
 import roito.afterthedrizzle.common.environment.Humidity;
 import roito.afterthedrizzle.common.inventory.BambooTrayContainer;
-import roito.afterthedrizzle.common.recipe.ISingleInRecipeManager;
 import roito.afterthedrizzle.common.recipe.RecipesRegistry;
-import roito.afterthedrizzle.common.recipe.SingleInRecipe;
+import roito.afterthedrizzle.common.recipe.bamboo_tray.BambooTaryRecipe;
+import roito.afterthedrizzle.common.recipe.bamboo_tray.IBambooTrayRecipeManager;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -34,11 +34,11 @@ public class BambooTrayTileEntity extends NormalContainerTileEntity implements I
     private BambooTrayMode mode = BambooTrayMode.OUTDOORS;
 
     private LazyOptional<ItemStackHandler> containerInventory = LazyOptional.of(this::createHandler);
-    private SingleInRecipe currentRecipe = new SingleInRecipe(ItemStack.EMPTY, ItemStack.EMPTY);
+    private BambooTaryRecipe currentRecipe = new BambooTaryRecipe(ItemStack.EMPTY, ItemStack.EMPTY);
 
     public BambooTrayTileEntity()
     {
-        super(TileEntityTypeRegistry.BAMBOO_TRAY_TILE_ENTITY_TYPE);
+        super(TileEntityTypeRegistry.BAMBOO_TRAY);
     }
 
     @Override
@@ -87,14 +87,12 @@ public class BambooTrayTileEntity extends NormalContainerTileEntity implements I
                 return;
             case OUTDOORS:
                 this.refreshTotalTicks(Humidity.getHumid(rainfall, temp).getOutdoorDryingTicks());
-                if (!isWorldRaining())
-                {
+                if (!this.isWorldRaining())
                     this.process(RecipesRegistry.MANAGER_BAMBOO_TRAY_OUTDOORS);
-                }
                 this.mode = BambooTrayMode.OUTDOORS;
                 return;
             case INDOORS:
-                this.refreshTotalTicks(Humidity.getHumid(rainfall, temp).getIndoorDryingTicks());
+                this.refreshTotalTicks(Humidity.getHumid(rainfall, temp).getFermentationTicks());
                 this.process(RecipesRegistry.MANAGER_BAMBOO_TRAY_INDOORS);
                 this.mode = BambooTrayMode.INDOORS;
                 return;
@@ -105,6 +103,7 @@ public class BambooTrayTileEntity extends NormalContainerTileEntity implements I
                 return;
             case PROCESS:
                 //TODO
+                this.mode = BambooTrayMode.PROCESS;
         }
     }
 
@@ -125,7 +124,7 @@ public class BambooTrayTileEntity extends NormalContainerTileEntity implements I
         setToZero();
     }
 
-    private boolean process(ISingleInRecipeManager recipeManager)
+    private boolean process(IBambooTrayRecipeManager recipeManager)
     {
         ItemStack input = getInput();
         if (input.isEmpty())
@@ -133,7 +132,7 @@ public class BambooTrayTileEntity extends NormalContainerTileEntity implements I
             setToZero();
             return false;
         }
-        if (!this.currentRecipe.isTheSameInput(input) || mode != getMode())
+        if (!this.currentRecipe.isTheSameInput(input) || mode != BambooTrayMode.getMode(this.world, this.pos))
         {
             this.currentRecipe = recipeManager.getRecipe(input);
         }

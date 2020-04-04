@@ -44,24 +44,6 @@ public enum Humidity
         }
     }
 
-    public int getIndoorDryingTicks()
-    {
-        int basicTicks = NormalConfig.dryingIndoorsBasicTime.get();
-        switch (this)
-        {
-            case ARID:
-                return (int) (basicTicks * 0.5F);
-            case DRY:
-                return (int) (basicTicks * 0.75F);
-            case AVERAGE:
-                return basicTicks;
-            case MOIST:
-                return (int) (basicTicks * 1.25F);
-            default:
-                return (int) (basicTicks * 1.5F);
-        }
-    }
-
     public int getFermentationTicks()
     {
         int basicTicks = NormalConfig.fermentationBasicTime.get();

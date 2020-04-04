@@ -6,18 +6,17 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import roito.afterthedrizzle.AfterTheDrizzle;
-import roito.afterthedrizzle.common.inventory.BambooTrayContainer;
+import roito.afterthedrizzle.common.config.NormalConfig;
+import roito.afterthedrizzle.common.inventory.DrinkMakerContainer;
 import roito.afterthedrizzle.helper.GuiHelper;
 
-import java.util.Collections;
-
-public class BambooTrayGuiContainer extends ContainerScreen<BambooTrayContainer>
+public class DrinkMakerGuiContainer extends ContainerScreen<DrinkMakerContainer>
 {
-    private static final String TEXTURE_PATH = "textures/gui/container/gui_single_recipe.png";
+    private static final String TEXTURE_PATH = "textures/gui/container/gui_drink_maker.png";
     private static final ResourceLocation TEXTURE = new ResourceLocation(AfterTheDrizzle.MODID, TEXTURE_PATH);
-    private BambooTrayContainer container;
+    private DrinkMakerContainer container;
 
-    public BambooTrayGuiContainer(BambooTrayContainer container, PlayerInventory inv, ITextComponent name)
+    public DrinkMakerGuiContainer(DrinkMakerContainer container, PlayerInventory inv, ITextComponent name)
     {
         super(container, inv, name);
         this.container = container;
@@ -34,25 +33,24 @@ public class BambooTrayGuiContainer extends ContainerScreen<BambooTrayContainer>
     @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
     {
-        GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-
-        this.minecraft.getTextureManager().bindTexture(TEXTURE);
         int offsetX = (width - xSize) / 2, offsetY = (height - ySize) / 2;
 
+        GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+        minecraft.getTextureManager().bindTexture(TEXTURE);
         blit(offsetX, offsetY, 0, 0, xSize, ySize);
-        blit(offsetX + 51, offsetY + 29, 176, 107, 20, 20);
 
-        int totalTicks = container.getTileEntity().getTotalTicks();
-        int processTicks = container.getTileEntity().getProcessTicks();
+        int totalTicks = this.container.getTileEntity().getTotalTicks();
+        int processTicks = this.container.getTileEntity().getProcessTicks();
         int textureWidth = 0;
         if (totalTicks != 0)
         {
-            textureWidth = (int) Math.ceil(24 * processTicks / totalTicks);
+            textureWidth = (int) Math.ceil(22 * processTicks / totalTicks);
         }
-        blit(offsetX + 76, offsetY + 31, 176, 0, textureWidth, 17);
+        blit(offsetX + 104, offsetY + 37, 176, 0, textureWidth, 16);
 
-        int id = container.getTileEntity().getMode().ordinal();
-        blit(offsetX + 52, offsetY + 30, 176, 17 + id * 18, 18, 18);
+        int height = (int) Math.ceil(64 * this.container.getTileEntity().getFluidAmount() / NormalConfig.drinkMakerCapacity.get());
+        //GuiHelper.drawTank(this, offsetX + 134, offsetY + 14, new TextureResource(TEXTURE, new TexturePos(134, 14, 16, 64)), container.getTileEntity().getFluidTank().getFluid().getFluid(), height);
+        this.container.detectAndSendChanges();
     }
 
     @Override
@@ -66,6 +64,7 @@ public class BambooTrayGuiContainer extends ContainerScreen<BambooTrayContainer>
     {
         super.renderHoveredToolTip(mouseX, mouseY);
         int offsetX = (width - xSize) / 2, offsetY = (height - ySize) / 2;
-        GuiHelper.drawTooltip(this, mouseX, mouseY, offsetX + 52, offsetY + 30, 18, 18, Collections.singletonList(container.getTileEntity().getMode().getTranslationKey()));
+
+        GuiHelper.drawFluidTooltip(this, mouseX, mouseY, offsetX + 134, offsetY + 14, 16, 64, this.container.getTileEntity().getFluidTranslation(), this.container.getTileEntity().getFluidAmount());
     }
 }
