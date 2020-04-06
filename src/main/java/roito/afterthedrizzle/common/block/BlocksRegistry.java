@@ -36,6 +36,7 @@ public final class BlocksRegistry extends RegistryModule
     public static final FlowingFluidBlock HOT_WATER_80 = new HotWaterFlowingFluidBlock("hot_water_80", FluidsRegistry.HOT_WATER_80_STILL);
     public static final FlowingFluidBlock HOT_WATER_60 = new HotWaterFlowingFluidBlock("hot_water_60", FluidsRegistry.HOT_WATER_60_STILL);
     public static final FlowingFluidBlock WARM_WATER = new HotWaterFlowingFluidBlock("warm_water", FluidsRegistry.WARM_WATER_STILL);
+    public static final FlowingFluidBlock SUGARY_WATER = new NormalFlowingFluidBlock("sugary_water", FluidsRegistry.SUGARY_WATER_STILL, Block.Properties.create(Material.WATER).doesNotBlockMovement().hardnessAndResistance(100.0F).noDrops());
 
     public static final FlowingFluidBlock WATER = (FlowingFluidBlock) new FlowingFluidBlock(() -> Fluids.WATER, Block.Properties.create(Material.WATER).doesNotBlockMovement().hardnessAndResistance(100.0F).noDrops().tickRandomly())
     {

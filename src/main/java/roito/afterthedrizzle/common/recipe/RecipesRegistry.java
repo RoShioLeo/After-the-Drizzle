@@ -2,8 +2,13 @@ package roito.afterthedrizzle.common.recipe;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraftforge.fluids.FluidStack;
+import roito.afterthedrizzle.common.fluid.FluidsRegistry;
 import roito.afterthedrizzle.common.item.ItemsRegistry;
 import roito.afterthedrizzle.common.recipe.bamboo_tray.*;
+import roito.afterthedrizzle.common.recipe.drink.DrinkIngredientsRegistry;
+import roito.afterthedrizzle.common.recipe.drink.DrinkRecipeInput;
+import roito.afterthedrizzle.common.recipe.drink.DrinkRecipeManager;
 
 public final class RecipesRegistry
 {
@@ -11,12 +16,14 @@ public final class RecipesRegistry
     public final static IBambooTrayRecipeManager MANAGER_BAMBOO_TRAY_INDOORS = new BambooTrayIndoorsManager();
     public final static IBambooTrayRecipeManager MANAGER_BAMBOO_TRAY_IN_RAIN = new BambooTrayWetManager();
     public final static IBambooTrayRecipeManager MANAGER_BAMBOO_TRAY_BAKE = new BambooTrayBakeManager();
+    public final static DrinkRecipeManager MANAGER_DRINK_MAKER = new DrinkRecipeManager();
 
     public RecipesRegistry()
     {
         addBasketOutdoorsRecipes();
         addBasketIndoorsRecipes();
         addBasketWetRecipes();
+        addDrinkRecipes();
     }
 
     private static void addBasketOutdoorsRecipes()
@@ -47,5 +54,11 @@ public final class RecipesRegistry
         MANAGER_BAMBOO_TRAY_IN_RAIN.add(new BambooTaryRecipe(new ItemStack(ItemsRegistry.CHICKEN_JERKY), new ItemStack(Items.CHICKEN)));
         MANAGER_BAMBOO_TRAY_IN_RAIN.add(new BambooTaryRecipe(new ItemStack(ItemsRegistry.DRIED_CARROT), new ItemStack(Items.CARROT)));
         MANAGER_BAMBOO_TRAY_IN_RAIN.add(new BambooTaryRecipe(new ItemStack(ItemsRegistry.DRIED_BEETROOT), new ItemStack(Items.BEETROOT)));
+    }
+
+    private static void addDrinkRecipes()
+    {
+        DrinkIngredientsRegistry.registerIngredientItem(Items.SUGAR, "sugar");
+        MANAGER_DRINK_MAKER.add(new DrinkRecipeInput("sugar"), new FluidStack(FluidsRegistry.SUGARY_WATER_STILL.get(), 100));
     }
 }

@@ -14,6 +14,6 @@ public final class NormalTags
     public static final Tag<Item> FOOD_JERKY = ItemTags.getCollection().getOrCreate(new ResourceLocation("forge", "food/jerky"));
     public static final Tag<Item> DIRT = ItemTags.getCollection().getOrCreate(new ResourceLocation("forge", "dirt"));
 
-    public static final Tag<Fluid> WATER = FluidTags.getCollection().getOrCreate(new ResourceLocation("minecraft", "water"));
+//    public static final Tag<Fluid> WATER = FluidTags.getCollection().getOrCreate(new ResourceLocation("minecraft", "water"));
     public static final Tag<Fluid> HOT_WATER = FluidTags.getCollection().getOrCreate(new ResourceLocation("afterthedrizzle", "hot_water"));
 }

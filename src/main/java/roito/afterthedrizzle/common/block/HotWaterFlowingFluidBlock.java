@@ -19,7 +19,7 @@ import java.util.function.Supplier;
 
 public class HotWaterFlowingFluidBlock extends NormalFlowingFluidBlock
 {
-    public static final DamageSource BURNT = new DamageSource("burnt");
+    public static final DamageSource BOILING = new DamageSource("boiling");
 
     public HotWaterFlowingFluidBlock(String name, Supplier<? extends FlowingFluid> supplier)
     {
@@ -37,7 +37,10 @@ public class HotWaterFlowingFluidBlock extends NormalFlowingFluidBlock
         {
             worldIn.addParticle(ParticleTypes.BUBBLE, false, d0 + d4, d1, d2 + d4, 0.0D, 0.1D, 0.0D);
         }
-        worldIn.addParticle(ParticleTypes.CLOUD, false, d0 + d4, d1 + 1.5D, d2 + d4, 0.0D, 0.1D, 0.0D);
+        if ((this.getFluid().getAttributes().getTemperature() - 273) / 100F >= rand.nextFloat())
+        {
+            worldIn.addParticle(ParticleTypes.CLOUD, false, d0 + d4, d1 + 1.25D, d2 + d4, 0.0D, 0.1D, 0.0D);
+        }
     }
 
     public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn)
@@ -45,15 +48,15 @@ public class HotWaterFlowingFluidBlock extends NormalFlowingFluidBlock
         if (entityIn instanceof LivingEntity)
             if (this.getFluid().getAttributes().getTemperature() >= 373)
             {
-                entityIn.attackEntityFrom(BURNT, 5.0F);
+                entityIn.attackEntityFrom(BOILING, 8.0F);
             }
             else if (this.getFluid().getAttributes().getTemperature() >= 353)
             {
-                entityIn.attackEntityFrom(BURNT, 3.0F);
+                entityIn.attackEntityFrom(BOILING, 4.0F);
             }
             else if (this.getFluid().getAttributes().getTemperature() >= 318)
             {
-                entityIn.attackEntityFrom(BURNT, 1.0F);
+                entityIn.attackEntityFrom(BOILING, 2.0F);
             }
             else
             {
