@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.material.PushReaction;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.INamedContainerProvider;
@@ -16,8 +17,9 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -30,13 +32,16 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import roito.afterthedrizzle.common.tileentity.DrinkMakerTileEntity;
 import roito.afterthedrizzle.common.tileentity.TileEntityTypeRegistry;
 import roito.afterthedrizzle.helper.BlocksHelper;
-
-import javax.annotation.Nullable;
+import roito.afterthedrizzle.helper.VoxelShapeHelper;
 
 public class DrinkMakerBlock extends NormalHorizontalBlock
 {
     public static final BooleanProperty LEFT = BooleanProperty.create("left");
-    boolean flag = false;
+    private boolean flag = false;
+    private static final VoxelShape NORTH_LEFT = VoxelShapeHelper.createVoxelShape(1.0D, 0.0D, 1.0D, 15.0D, 4.0D, 14.0D);
+    private static final VoxelShape SOUTH_LEFT = VoxelShapeHelper.createVoxelShape(0.0D, 0.0D, 1.0D, 15.0D, 4.0D, 14.0D);
+    private static final VoxelShape WEST_LEFT = VoxelShapeHelper.createVoxelShape(1.0D, 0.0D, 0.0D, 14.0D, 4.0D, 15.0D);
+    private static final VoxelShape EAST_LEFT = VoxelShapeHelper.createVoxelShape(1.0D, 0.0D, 1.0D, 14.0D, 4.0D, 15.0D);
 
     protected DrinkMakerBlock()
     {
@@ -74,32 +79,65 @@ public class DrinkMakerBlock extends NormalHorizontalBlock
     @OnlyIn(Dist.CLIENT)
     public float getAmbientOcclusionLightValue(BlockState state, IBlockReader worldIn, BlockPos pos)
     {
-        return 0.5F;
+        return 0.8F;
     }
 
     @Override
     @SuppressWarnings("deprecation")
-    public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos)
+    public PushReaction getPushReaction(BlockState state)
     {
-        return worldIn.isAirBlock(pos.down());
+        return PushReaction.DESTROY;
     }
 
     @Override
-    public void harvestBlock(World worldIn, PlayerEntity player, BlockPos pos, BlockState state, @Nullable TileEntity te, ItemStack stack)
+    @SuppressWarnings("deprecation")
+    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
     {
-        super.harvestBlock(worldIn, player, pos, state, te, stack);
+        if (state.get(LEFT))
+        {
+            switch (state.get(HORIZONTAL_FACING))
+            {
+                case NORTH:
+                    return NORTH_LEFT;
+                case SOUTH:
+                    return SOUTH_LEFT;
+                case EAST:
+                    return EAST_LEFT;
+                default:
+                    return WEST_LEFT;
+            }
+        }
+        else
+        {
+            switch (state.get(HORIZONTAL_FACING))
+            {
+                case NORTH:
+                    return SOUTH_LEFT;
+                case SOUTH:
+                    return NORTH_LEFT;
+                case EAST:
+                    return WEST_LEFT;
+                default:
+                    return EAST_LEFT;
+            }
+        }
+    }
+
+    @Override
+    public void onBlockHarvested(World worldIn, BlockPos pos, BlockState state, PlayerEntity player)
+    {
         Direction enumfacing = state.get(HORIZONTAL_FACING);
 
         if (state.get(LEFT))
         {
             if (worldIn.getBlockState(pos.offset(BlocksHelper.getNextHorizontal(enumfacing))).getBlock() == this)
             {
-                worldIn.destroyBlock(pos.offset(BlocksHelper.getNextHorizontal(enumfacing)), true);
+                worldIn.destroyBlock(pos.offset(BlocksHelper.getNextHorizontal(enumfacing)), !player.isCreative());
             }
         }
         else if (worldIn.getBlockState(pos.offset(BlocksHelper.getPreviousHorizontal(enumfacing))).getBlock() == this)
         {
-            worldIn.destroyBlock(pos.offset(BlocksHelper.getPreviousHorizontal(enumfacing)), true);
+            worldIn.destroyBlock(pos.offset(BlocksHelper.getPreviousHorizontal(enumfacing)), !player.isCreative());
         }
     }
 
@@ -107,10 +145,26 @@ public class DrinkMakerBlock extends NormalHorizontalBlock
     @SuppressWarnings("deprecation")
     public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
     {
-        if (state.hasTileEntity() && !(newState.getBlock() == this))
+        if (newState.getBlock() != this)
         {
-            dropItems(worldIn, pos);
-            worldIn.removeTileEntity(pos);
+            if (state.hasTileEntity())
+            {
+                dropItems(worldIn, pos);
+                worldIn.removeTileEntity(pos);
+            }
+            Direction enumfacing = state.get(HORIZONTAL_FACING);
+
+            if (state.get(LEFT))
+            {
+                if (worldIn.getBlockState(pos.offset(BlocksHelper.getNextHorizontal(enumfacing))).getBlock() == this)
+                {
+                    worldIn.destroyBlock(pos.offset(BlocksHelper.getNextHorizontal(enumfacing)), false);
+                }
+            }
+            else if (worldIn.getBlockState(pos.offset(BlocksHelper.getPreviousHorizontal(enumfacing))).getBlock() == this)
+            {
+                worldIn.destroyBlock(pos.offset(BlocksHelper.getPreviousHorizontal(enumfacing)), true);
+            }
         }
     }
 
@@ -153,13 +207,8 @@ public class DrinkMakerBlock extends NormalHorizontalBlock
             }
             TileEntity te = worldIn.getTileEntity(pos);
             FluidUtil.getFluidHandler(ItemHandlerHelper.copyStackWithSize(player.getHeldItem(handIn), 1)).ifPresent(item ->
-            {
-                if (item.getContainer().isEmpty())
-                {
                     te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, hit.getFace()).ifPresent(fluid ->
-                            flag = FluidUtil.interactWithFluidHandler(player, handIn, fluid));
-                }
-            });
+                            flag = FluidUtil.interactWithFluidHandler(player, handIn, fluid)));
             if (flag) return true;
             if (te instanceof DrinkMakerTileEntity)
             {

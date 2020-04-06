@@ -17,6 +17,9 @@ import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
@@ -26,6 +29,7 @@ import net.minecraftforge.items.IItemHandlerModifiable;
 import roito.afterthedrizzle.AfterTheDrizzle;
 import roito.afterthedrizzle.common.tileentity.StoveTileEntity;
 import roito.afterthedrizzle.common.tileentity.TileEntityTypeRegistry;
+import roito.afterthedrizzle.helper.VoxelShapeHelper;
 
 import java.util.Random;
 
@@ -33,6 +37,7 @@ public abstract class StoveBlock extends NormalHorizontalBlock implements IStove
 {
     protected int efficiency;
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
+    private static final VoxelShape SHAPE;
 
     public StoveBlock(Properties properties, String name, int efficiency)
     {
@@ -50,7 +55,7 @@ public abstract class StoveBlock extends NormalHorizontalBlock implements IStove
     @Override
     public boolean isBurning(BlockState blockState)
     {
-        return getLightValue(blockState) != 0;
+        return blockState.get(LIT);
     }
 
     @Override
@@ -90,6 +95,13 @@ public abstract class StoveBlock extends NormalHorizontalBlock implements IStove
     public boolean isNormalCube(BlockState state, IBlockReader worldIn, BlockPos pos)
     {
         return false;
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
+    {
+        return SHAPE;
     }
 
     @Override
@@ -232,18 +244,18 @@ public abstract class StoveBlock extends NormalHorizontalBlock implements IStove
         }
     }
 
-    public static void setState(boolean active, World worldIn, BlockPos pos, StoveBlock stove)
+    public static void setState(boolean active, World worldIn, BlockPos pos)
     {
         BlockState iblockstate = worldIn.getBlockState(pos);
         TileEntity tileentity = worldIn.getTileEntity(pos);
 
         if (active)
         {
-            worldIn.setBlockState(pos, stove.getDefaultState().with(HORIZONTAL_FACING, iblockstate.get(HORIZONTAL_FACING)).with(LIT, true));
+            worldIn.setBlockState(pos, iblockstate.with(HORIZONTAL_FACING, iblockstate.get(HORIZONTAL_FACING)).with(LIT, true));
         }
         else
         {
-            worldIn.setBlockState(pos, stove.getDefaultState().with(HORIZONTAL_FACING, iblockstate.get(HORIZONTAL_FACING)).with(LIT, false));
+            worldIn.setBlockState(pos, iblockstate.with(HORIZONTAL_FACING, iblockstate.get(HORIZONTAL_FACING)).with(LIT, false));
         }
 
         if (tileentity != null)
@@ -262,5 +274,12 @@ public abstract class StoveBlock extends NormalHorizontalBlock implements IStove
     public static Item.Properties getItemProperties()
     {
         return new Item.Properties().group(AfterTheDrizzle.GROUP_CRAFT);
+    }
+
+    static
+    {
+        VoxelShape top = VoxelShapeHelper.createVoxelShape(0.0D, 14.0D, 0.0D, 16.0D, 2.0D, 16.0D);
+        VoxelShape body = VoxelShapeHelper.createVoxelShape(1.0D, 0.0D, 1.0D, 14.0D, 16.0D, 14.0D);
+        SHAPE = VoxelShapes.or(top, body);
     }
 }

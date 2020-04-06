@@ -1,0 +1,13 @@
+{
+    "replace": false,
+    "values": [
+        "afterthedrizzle:boiling_water",
+        "afterthedrizzle:boiling_water_flowing",
+        "afterthedrizzle:hot_water_80",
+        "afterthedrizzle:hot_water_80_flowing",
+        "afterthedrizzle:hot_water_60",
+        "afterthedrizzle:hot_water_60_flowing",
+        "afterthedrizzle:warm_water",
+        "afterthedrizzle:warm_water_flowing"
+    ]
+}

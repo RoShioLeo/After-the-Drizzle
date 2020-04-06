@@ -1,8 +1,8 @@
 {
     "credit": "Made with Blockbench",
     "textures": {
-        "0": "afterthedrizzle:blocks/bamboo_tray",
-        "particle": "afterthedrizzle:blocks/bamboo_tray"
+        "0": "afterthedrizzle:block/bamboo_tray",
+        "particle": "afterthedrizzle:block/bamboo_tray"
     },
     "elements": [
         {

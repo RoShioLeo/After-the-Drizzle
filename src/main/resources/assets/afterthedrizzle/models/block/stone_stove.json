@@ -2,8 +2,8 @@
     "credit": "MadewithBlockbench",
     "ambientocclusion": false,
     "textures": {
-        "0": "afterthedrizzle:blocks/stone_stove",
-        "particle": "afterthedrizzle:blocks/stone_stove"
+        "0": "afterthedrizzle:block/stone_stove",
+        "particle": "afterthedrizzle:block/stone_stove"
     },
     "elements": [
         {

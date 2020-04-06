@@ -9,6 +9,7 @@ import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -115,6 +116,12 @@ public class DrinkMakerTileEntity extends NormalContainerTileEntity implements I
                 DrinkMakerTileEntity.this.markDirty();
                 super.onContentsChanged();
             }
+
+            @Override
+            public boolean isFluidValid(FluidStack stack)
+            {
+                return !stack.getFluid().getAttributes().isLighterThanAir() && stack.getFluid().getAttributes().getTemperature() < 500;
+            }
         };
     }
 
@@ -142,7 +149,7 @@ public class DrinkMakerTileEntity extends NormalContainerTileEntity implements I
     @Nullable
     public String getFluidTranslation()
     {
-        return getFluidTank().getFluid().getTranslationKey();
+        return getFluidTank().getFluid().getDisplayName().getFormattedText();
     }
 
     public FluidTank getFluidTank()

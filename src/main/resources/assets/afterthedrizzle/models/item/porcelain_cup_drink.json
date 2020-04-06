@@ -1,0 +1,7 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "afterthedrizzle:item/porcelain_cup",
+        "layer1": "afterthedrizzle:item/porcelain_cup_overlay"
+    }
+}
