@@ -3,17 +3,16 @@ package roito.afterthedrizzle.common.recipe.drink;
 
 import net.minecraftforge.fluids.FluidStack;
 
-import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
 public class DrinkRecipeManager
 {
-    private static final Map<DrinkRecipeInput, FluidStack> RECIPES = new HashMap<>();
+    private static final Map<Integer, FluidStack> RECIPES = new HashMap<>();
 
     public void add(DrinkRecipeInput recipe, FluidStack output)
     {
-        getRecipes().put(recipe, output);
+        getRecipes().put(recipe.hashCode(), output);
     }
 
     public void remove(DrinkRecipeInput recipe)
@@ -26,14 +25,13 @@ public class DrinkRecipeManager
         getRecipes().clear();
     }
 
-    public Map<DrinkRecipeInput, FluidStack> getRecipes()
+    public Map<Integer, FluidStack> getRecipes()
     {
         return RECIPES;
     }
 
-    @Nullable
-    public FluidStack getOutput(DrinkRecipeInput recipeIn)
+    public FluidStack getOutput(DrinkRecipeInput inventoryRecipe)
     {
-        return getRecipes().getOrDefault(recipeIn, null);
+        return RECIPES.getOrDefault(inventoryRecipe.hashCode(), FluidStack.EMPTY);
     }
 }

@@ -30,6 +30,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemHandlerHelper;
 import roito.afterthedrizzle.common.tileentity.DrinkMakerTileEntity;
+import roito.afterthedrizzle.common.tileentity.NormalContainerTileEntity;
 import roito.afterthedrizzle.common.tileentity.TileEntityTypeRegistry;
 import roito.afterthedrizzle.helper.BlocksHelper;
 import roito.afterthedrizzle.helper.VoxelShapeHelper;
@@ -145,10 +146,11 @@ public class DrinkMakerBlock extends NormalHorizontalBlock
     @SuppressWarnings("deprecation")
     public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
     {
-        if (newState.getBlock() != this)
+        if (newState.getBlock() != this && !(newState.getBlock() == this))
         {
             if (state.hasTileEntity())
             {
+                ((NormalContainerTileEntity) worldIn.getTileEntity(pos)).prepareForRemove();
                 dropItems(worldIn, pos);
                 worldIn.removeTileEntity(pos);
             }

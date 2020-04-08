@@ -1,45 +1,47 @@
 package roito.afterthedrizzle.common.recipe.drink;
 
 import net.minecraft.fluid.Fluid;
+import net.minecraftforge.items.ItemStackHandler;
 import roito.afterthedrizzle.common.fluid.FluidsRegistry;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class DrinkRecipeInput
 {
-    Map<String, Integer> ingredients = new HashMap<>();
-    Fluid input;
+    public final Map<String, Integer> TAG_MAP = new HashMap<>();
+    public final Fluid INPUT;
 
-    public DrinkRecipeInput(Fluid input, String... ingredients)
+    public DrinkRecipeInput(List<String> tags, Fluid input)
     {
-        this.input = input;
-        for (String ingredient : ingredients)
+        for (String tag : tags)
         {
-            int j = this.ingredients.getOrDefault(ingredient, 0);
-            this.ingredients.put(ingredient, ++j);
+            int count = TAG_MAP.getOrDefault(tag, 0);
+            TAG_MAP.put(tag, ++count);
         }
+        this.INPUT = input;
     }
 
-    public DrinkRecipeInput(String... ingredients)
+    public DrinkRecipeInput(String... tags)
     {
-        this(FluidsRegistry.BOILING_WATER_STILL.get(), ingredients);
+        this(Arrays.asList(tags), FluidsRegistry.BOILING_WATER_STILL.get());
     }
 
-    public Map<String, Integer> getInputIngredients()
+    public static DrinkRecipeInput toRecipe(ItemStackHandler inventory, Fluid input)
     {
-        return ingredients;
-    }
-
-    public Fluid getInputFluid()
-    {
-        return input;
+        List<String> ingredients = new ArrayList<>();
+        for (int i = 0; i < inventory.getSlots(); i++)
+        {
+            if (!inventory.getStackInSlot(i).isEmpty())
+            {
+                ingredients.add(DrinkIngredientsManager.getIngredientName(inventory.getStackInSlot(i).getItem()));
+            }
+        }
+        return new DrinkRecipeInput(ingredients, input);
     }
 
     @Override
     public int hashCode()
     {
-        return Objects.hash(ingredients, input);
+        return Objects.hash(TAG_MAP, INPUT);
     }
 }

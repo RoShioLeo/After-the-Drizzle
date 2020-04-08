@@ -35,8 +35,8 @@ public class BambooTrayTESR extends TileEntityRenderer<BambooTrayTileEntity>
         GlStateManager.pushMatrix();
         int seed = tileEntityIn.getRandomSeed();
 
-        GlStateManager.scaled(0.5, 0.5, 0.5);
-        GlStateManager.translated(((seed % 100) - 50) / 200D, 0, ((seed % 56) - 28) / 112D);
+        GlStateManager.scaled(0.6, 0.6, 0.6);
+        GlStateManager.translated(((seed % 100) - 50) / 300D, 0, ((seed % 56) - 28) / 168D);
         GlStateManager.rotated(360 * (seed % 943) / 943F, 0, 1, 0);
         GlStateManager.rotated(90, 1, 0, 0);
 

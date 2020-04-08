@@ -6,7 +6,7 @@ import net.minecraftforge.fluids.FluidStack;
 import roito.afterthedrizzle.common.fluid.FluidsRegistry;
 import roito.afterthedrizzle.common.item.ItemsRegistry;
 import roito.afterthedrizzle.common.recipe.bamboo_tray.*;
-import roito.afterthedrizzle.common.recipe.drink.DrinkIngredientsRegistry;
+import roito.afterthedrizzle.common.recipe.drink.DrinkIngredientsManager;
 import roito.afterthedrizzle.common.recipe.drink.DrinkRecipeInput;
 import roito.afterthedrizzle.common.recipe.drink.DrinkRecipeManager;
 
@@ -16,6 +16,7 @@ public final class RecipesRegistry
     public final static IBambooTrayRecipeManager MANAGER_BAMBOO_TRAY_INDOORS = new BambooTrayIndoorsManager();
     public final static IBambooTrayRecipeManager MANAGER_BAMBOO_TRAY_IN_RAIN = new BambooTrayWetManager();
     public final static IBambooTrayRecipeManager MANAGER_BAMBOO_TRAY_BAKE = new BambooTrayBakeManager();
+    public final static IBambooTrayRecipeManager MANAGER_BAMBOO_TRAY_PROCESS = new BambooTrayProcessManager();
     public final static DrinkRecipeManager MANAGER_DRINK_MAKER = new DrinkRecipeManager();
 
     public RecipesRegistry()
@@ -58,7 +59,7 @@ public final class RecipesRegistry
 
     private static void addDrinkRecipes()
     {
-        DrinkIngredientsRegistry.registerIngredientItem(Items.SUGAR, "sugar");
-        MANAGER_DRINK_MAKER.add(new DrinkRecipeInput("sugar"), new FluidStack(FluidsRegistry.SUGARY_WATER_STILL.get(), 100));
+        DrinkIngredientsManager.registerIngredientItem(Items.SUGAR, "sugar");
+        MANAGER_DRINK_MAKER.add(new DrinkRecipeInput("sugar", "sugar", "sugar", "sugar"), new FluidStack(FluidsRegistry.SUGARY_WATER_STILL.get(), 250));
     }
 }

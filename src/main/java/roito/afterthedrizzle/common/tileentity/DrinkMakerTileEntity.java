@@ -3,6 +3,7 @@ package roito.afterthedrizzle.common.tileentity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
@@ -16,6 +17,8 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import roito.afterthedrizzle.common.config.NormalConfig;
 import roito.afterthedrizzle.common.inventory.DrinkMakerContainer;
+import roito.afterthedrizzle.common.recipe.RecipesRegistry;
+import roito.afterthedrizzle.common.recipe.drink.DrinkRecipeInput;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -81,7 +84,55 @@ public class DrinkMakerTileEntity extends NormalContainerTileEntity implements I
     @Override
     public void tick()
     {
-
+        if (this.getFluidAmount() != 0)
+        {
+            this.ingredientsInventory.ifPresent(inv ->
+                    this.fluidTank.ifPresent(fluid ->
+                    {
+                        DrinkRecipeInput inventoryRecipe = DrinkRecipeInput.toRecipe(inv, this.getFluidTank().getFluid().getFluid());
+                        FluidStack output = RecipesRegistry.MANAGER_DRINK_MAKER.getOutput(inventoryRecipe);
+                        if (!output.isEmpty())
+                        {
+                            int n = (int) Math.ceil(this.getFluidAmount() / output.getAmount());
+                            for (int i = 0; i < 4; i++)
+                            {
+                                if (!inv.getStackInSlot(i).isEmpty() && inv.getStackInSlot(i).getCount() < n)
+                                {
+                                    this.setToZero();
+                                    return;
+                                }
+                            }
+                            this.processTicks++;
+                            this.markDirty();
+                            if (this.processTicks >= totalTicks)
+                            {
+                                this.residuesInventory.ifPresent(h ->
+                                {
+                                    for (int i = 0; i < 4; i++)
+                                    {
+                                        ItemStack residue = inv.getStackInSlot(i).getContainerItem();
+                                        inv.extractItem(i, n, false);
+                                        if (!residue.isEmpty())
+                                        {
+                                            residue.setCount(n);
+                                            h.insertItem(i, residue, false);
+                                        }
+                                    }
+                                });
+                                fluid.setFluid(new FluidStack(output.getFluid(), this.getFluidAmount()));
+                                this.setToZero();
+                            }
+                        }
+                        else
+                        {
+                            this.setToZero();
+                        }
+                    }));
+        }
+        else
+        {
+            this.setToZero();
+        }
     }
 
     @Nullable

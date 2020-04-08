@@ -35,7 +35,7 @@ public class HotWaterFlowingFluidBlock extends NormalFlowingFluidBlock
         double d4 = rand.nextDouble() * 0.6D - 0.3D;
         if (this.getFluid().getAttributes().getTemperature() >= 373)
         {
-            worldIn.addParticle(ParticleTypes.BUBBLE, false, d0 + d4, d1, d2 + d4, 0.0D, 0.1D, 0.0D);
+            worldIn.addParticle(ParticleTypes.BUBBLE, false, d0 + d4, d1, d2 + d4, 0.0D, 0.5D, 0.0D);
         }
         if ((this.getFluid().getAttributes().getTemperature() - 273) / 100F >= rand.nextFloat())
         {
@@ -46,9 +46,10 @@ public class HotWaterFlowingFluidBlock extends NormalFlowingFluidBlock
     public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn)
     {
         if (entityIn instanceof LivingEntity)
+        {
             if (this.getFluid().getAttributes().getTemperature() >= 373)
             {
-                entityIn.attackEntityFrom(BOILING, 8.0F);
+                entityIn.attackEntityFrom(BOILING, 6.0F);
             }
             else if (this.getFluid().getAttributes().getTemperature() >= 353)
             {
@@ -62,6 +63,7 @@ public class HotWaterFlowingFluidBlock extends NormalFlowingFluidBlock
             {
                 ((LivingEntity) entityIn).addPotionEffect(new EffectInstance(Effects.REGENERATION, 40, 0));
             }
+        }
     }
 
     @Override
@@ -71,7 +73,7 @@ public class HotWaterFlowingFluidBlock extends NormalFlowingFluidBlock
         {
             return;
         }
-        else if (state.getFluidState().getLevel() == 8 && random.nextInt(8) == 0)
+        else if (state.getFluidState().getLevel() == 8 && random.nextInt(10) == 0)
         {
             if (state.getFluidState().getFluid().getAttributes().getTemperature() >= 373)
             {

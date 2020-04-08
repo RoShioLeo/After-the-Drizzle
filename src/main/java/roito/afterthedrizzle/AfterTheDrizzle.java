@@ -20,6 +20,7 @@ import roito.afterthedrizzle.client.gui.StoveGuiContainer;
 import roito.afterthedrizzle.common.CommonProxy;
 import roito.afterthedrizzle.common.block.BlocksRegistry;
 import roito.afterthedrizzle.common.config.NormalConfig;
+import roito.afterthedrizzle.common.drink.DrinkEffectsManager;
 import roito.afterthedrizzle.common.fluid.FluidsRegistry;
 import roito.afterthedrizzle.common.group.GroupCraft;
 import roito.afterthedrizzle.common.group.GroupFood;
@@ -29,7 +30,6 @@ import roito.afterthedrizzle.common.inventory.DrinkMakerContainer;
 import roito.afterthedrizzle.common.inventory.StoveContainer;
 import roito.afterthedrizzle.common.item.ItemsRegistry;
 import roito.afterthedrizzle.common.recipe.RecipesRegistry;
-import roito.afterthedrizzle.common.tag.NormalTags;
 import roito.afterthedrizzle.common.tileentity.TileEntityTypeRegistry;
 
 @Mod("afterthedrizzle")
@@ -55,8 +55,8 @@ public final class AfterTheDrizzle
 
     public void setup(FMLCommonSetupEvent event)
     {
-        new NormalTags();
         new RecipesRegistry();
+        new DrinkEffectsManager();
     }
 
     public void ClientSetup(FMLClientSetupEvent event)

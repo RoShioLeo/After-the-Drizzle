@@ -27,6 +27,7 @@ import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import roito.afterthedrizzle.AfterTheDrizzle;
+import roito.afterthedrizzle.common.tileentity.NormalContainerTileEntity;
 import roito.afterthedrizzle.common.tileentity.StoveTileEntity;
 import roito.afterthedrizzle.common.tileentity.TileEntityTypeRegistry;
 import roito.afterthedrizzle.helper.VoxelShapeHelper;
@@ -238,6 +239,7 @@ public abstract class StoveBlock extends NormalHorizontalBlock implements IStove
     {
         if (state.hasTileEntity() && newState.getBlock() != this)
         {
+            ((NormalContainerTileEntity) worldIn.getTileEntity(pos)).prepareForRemove();
             dropFuel(worldIn, pos);
             dropAsh(worldIn, pos);
             worldIn.removeTileEntity(pos);
