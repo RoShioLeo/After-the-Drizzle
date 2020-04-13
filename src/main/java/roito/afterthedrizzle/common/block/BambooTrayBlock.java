@@ -24,9 +24,7 @@ import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import roito.afterthedrizzle.AfterTheDrizzle;
-import roito.afterthedrizzle.common.recipe.bamboo_tray.BambooTaryRecipe;
 import roito.afterthedrizzle.common.tileentity.BambooTrayTileEntity;
-import roito.afterthedrizzle.common.tileentity.NormalContainerTileEntity;
 import roito.afterthedrizzle.common.tileentity.TileEntityTypeRegistry;
 import roito.afterthedrizzle.helper.VoxelShapeHelper;
 
@@ -36,7 +34,7 @@ public class BambooTrayBlock extends NormalBlock
 
     public BambooTrayBlock()
     {
-        super("bamboo_tray", Properties.create(Material.BAMBOO).sound(SoundType.BAMBOO).hardnessAndResistance(0.5F));
+        super("bamboo_tray", Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(0.5F));
     }
 
     @Override
@@ -64,6 +62,12 @@ public class BambooTrayBlock extends NormalBlock
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
     {
         return SHAPE;
+    }
+
+    @Override
+    public boolean hasTileEntity(BlockState state)
+    {
+        return true;
     }
 
     @Override
@@ -105,7 +109,6 @@ public class BambooTrayBlock extends NormalBlock
     {
         if (state.hasTileEntity() && !(newState.getBlock() == this))
         {
-            ((NormalContainerTileEntity) worldIn.getTileEntity(pos)).prepareForRemove();
             dropItems(worldIn, pos);
             worldIn.removeTileEntity(pos);
         }
@@ -121,33 +124,12 @@ public class BambooTrayBlock extends NormalBlock
             ((BambooTrayTileEntity) te).refreshSeed();
             if (!player.isSneaking())
             {
-                if (((BambooTrayTileEntity) te).isDoubleClick())
-                {
-                    if (!worldIn.isRemote)
-                    {
-                        dropItems(worldIn, pos);
-                    }
-                    return true;
-                }
                 if (!player.getHeldItem(handIn).isEmpty())
                 {
-                    if (!((BambooTrayTileEntity) te).isWorking())
-                    {
-                        if (!worldIn.isRemote)
-                        {
-                            dropItems(worldIn, pos);
-                        }
-                        te.markDirty();
-                    }
                     te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.UP).ifPresent(inv ->
                     {
-                        BambooTaryRecipe recipe = BambooTrayTileEntity.getRecipeManager(BambooTrayMode.getMode(worldIn, pos)).getRecipe(player.getHeldItem(handIn));
-                        if (!recipe.getOutput().isEmpty())
-                        {
-                            player.setHeldItem(handIn, inv.insertItem(0, player.getHeldItem(handIn), false));
-                            te.markDirty();
-                        }
-                        else ((BambooTrayTileEntity) te).singleClickStart();
+                        player.setHeldItem(handIn, inv.insertItem(0, player.getHeldItem(handIn), false));
+                        te.markDirty();
                     });
                     return true;
                 }
@@ -162,7 +144,6 @@ public class BambooTrayBlock extends NormalBlock
                         te.markDirty();
                         return true;
                     }
-                    else ((BambooTrayTileEntity) te).singleClickStart();
                 }
             }
             else
@@ -176,15 +157,9 @@ public class BambooTrayBlock extends NormalBlock
     }
 
     @Override
-    public boolean hasTileEntity(BlockState state)
-    {
-        return true;
-    }
-
-    @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world)
     {
-        return TileEntityTypeRegistry.BAMBOO_TRAY.create();
+        return TileEntityTypeRegistry.BAMBOO_TRAY_TILE_ENTITY_TYPE.create();
     }
 
     public static Item.Properties getItemProperties()

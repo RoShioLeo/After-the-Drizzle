@@ -1,8 +1,8 @@
 {
     "credit": "Made with Blockbench",
     "textures": {
-        "0": "afterthedrizzle:block/drink_maker",
-        "particle": "afterthedrizzle:block/drink_maker"
+        "0": "afterthedrizzle:blocks/drink_maker",
+        "particle": "afterthedrizzle:blocks/drink_maker"
     },
     "elements": [
         {
@@ -282,6 +282,26 @@
                     "uv": [7.5, 13, 9, 16],
                     "rotation": 90,
                     "texture": "#0"
+                },
+                "east": {
+                    "uv": [0, 0, 0, 3],
+                    "texture": "#missing"
+                },
+                "south": {
+                    "uv": [0, 0, 6, 3],
+                    "texture": "#missing"
+                },
+                "west": {
+                    "uv": [0, 0, 0, 3],
+                    "texture": "#missing"
+                },
+                "up": {
+                    "uv": [0, 0, 6, 0],
+                    "texture": "#missing"
+                },
+                "down": {
+                    "uv": [0, 0, 6, 0],
+                    "texture": "#missing"
                 }
             }
         }

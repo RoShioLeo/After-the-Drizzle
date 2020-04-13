@@ -45,7 +45,7 @@ public enum BambooTrayMode
     {
         if (world.getBlockState(pos.down()).getBlock() instanceof IStoveBlock)
         {
-            return ((IStoveBlock) world.getBlockState(pos.down()).getBlock()).isBurning(world.getBlockState(pos.down()));
+            return ((IStoveBlock) world.getBlockState(pos.down()).getBlock()).isBurning();
         }
         return false;
     }

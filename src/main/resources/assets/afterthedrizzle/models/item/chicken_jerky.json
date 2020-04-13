@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "afterthedrizzle:item/chicken_jerky"
+        "layer0": "afterthedrizzle:items/chicken_jerky"
     }
 }

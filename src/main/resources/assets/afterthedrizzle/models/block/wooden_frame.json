@@ -1,8 +1,8 @@
 {
     "credit": "Made with Blockbench",
     "textures": {
-        "0": "afterthedrizzle:block/wooden_frame",
-        "particle": "afterthedrizzle:block/wooden_frame"
+        "0": "afterthedrizzle:blocks/wooden_frame",
+        "particle": "afterthedrizzle:blocks/wooden_frame"
     },
     "elements": [
         {

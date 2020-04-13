@@ -15,6 +15,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import roito.afterthedrizzle.common.block.IStoveBlock;
 import roito.afterthedrizzle.common.block.StoveBlock;
 import roito.afterthedrizzle.common.inventory.StoveContainer;
 import roito.afterthedrizzle.common.item.ItemsRegistry;
@@ -22,8 +23,7 @@ import roito.afterthedrizzle.common.item.ItemsRegistry;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import static roito.afterthedrizzle.common.block.StoveBlock.LIT;
-import static roito.afterthedrizzle.common.tileentity.TileEntityTypeRegistry.STOVE_TILE;
+import static roito.afterthedrizzle.common.tileentity.TileEntityTypeRegistry.STOVE_TILE_ENTITY_TYPE;
 
 public class StoveTileEntity extends NormalContainerTileEntity implements ITickableTileEntity
 {
@@ -38,7 +38,7 @@ public class StoveTileEntity extends NormalContainerTileEntity implements ITicka
 
     public StoveTileEntity()
     {
-        super(STOVE_TILE);
+        super(STOVE_TILE_ENTITY_TYPE);
     }
 
     @Override
@@ -103,11 +103,9 @@ public class StoveTileEntity extends NormalContainerTileEntity implements ITicka
             }
             else
             {
-                if (!this.lit && this.getBlockState().get(LIT))
-                {
-                    StoveBlock.setState(false, this.world, this.pos);
-                    refresh();
-                }
+                if (!((IStoveBlock) this.getBlockState().getBlock()).isBurning())
+                    StoveBlock.setState(false, this.world, this.pos, (IStoveBlock) this.getBlockState().getBlock());
+                refresh();
             }
         }
     }
@@ -138,7 +136,7 @@ public class StoveTileEntity extends NormalContainerTileEntity implements ITicka
                 }
                 this.ashInventory.orElse(new ItemStackHandler()).insertItem(0, new ItemStack(ItemsRegistry.ASH), false);
                 this.markDirty();
-                StoveBlock.setState(true, getWorld(), pos);
+                StoveBlock.setState(true, getWorld(), pos, (IStoveBlock) getBlockState().getBlock());
                 this.lit = true;
                 return true;
             }

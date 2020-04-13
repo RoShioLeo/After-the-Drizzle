@@ -32,7 +32,7 @@ public enum Temperature
 
     public boolean isInTemperature(float temp)
     {
-        return min < temp && temp <= max;
+        return min <= temp && temp < max;
     }
 
     public float getMin()

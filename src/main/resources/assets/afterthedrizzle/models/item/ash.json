@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "afterthedrizzle:item/ash"
+        "layer0": "afterthedrizzle:items/ash"
     }
 }

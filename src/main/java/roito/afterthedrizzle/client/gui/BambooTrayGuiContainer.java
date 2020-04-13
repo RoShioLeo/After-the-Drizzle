@@ -7,9 +7,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import roito.afterthedrizzle.AfterTheDrizzle;
 import roito.afterthedrizzle.common.inventory.BambooTrayContainer;
-import roito.afterthedrizzle.helper.GuiHelper;
-
-import java.util.Collections;
 
 public class BambooTrayGuiContainer extends ContainerScreen<BambooTrayContainer>
 {
@@ -66,6 +63,9 @@ public class BambooTrayGuiContainer extends ContainerScreen<BambooTrayContainer>
     {
         super.renderHoveredToolTip(mouseX, mouseY);
         int offsetX = (width - xSize) / 2, offsetY = (height - ySize) / 2;
-        GuiHelper.drawTooltip(this, mouseX, mouseY, offsetX + 52, offsetY + 30, 18, 18, Collections.singletonList(container.getTileEntity().getMode().getTranslationKey()));
+        if (offsetX + 52 < mouseX && mouseX < offsetX + 70 && offsetY + 30 < mouseY && mouseY < offsetY + 48)
+        {
+            this.renderTooltip(container.getTileEntity().getMode().getTranslationKey(), mouseX, mouseY);
+        }
     }
 }

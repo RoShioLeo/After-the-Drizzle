@@ -4,7 +4,6 @@ import net.minecraft.block.Block;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.world.gen.feature.Feature;
 
 import java.lang.reflect.Field;
 
@@ -32,10 +31,6 @@ public class RegistryModule
                 else if (o instanceof ContainerType<?>)
                 {
                     RegisterManager.CONTAINER_TYPE.add((ContainerType<?>) o);
-                }
-                else if (o instanceof Feature<?>)
-                {
-                    RegisterManager.FEATURE.add((Feature<?>) o);
                 }
             }
             catch (Exception ignored)

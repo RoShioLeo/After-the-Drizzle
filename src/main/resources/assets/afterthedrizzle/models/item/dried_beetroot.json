@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "afterthedrizzle:item/dried_beetroot"
+        "layer0": "afterthedrizzle:items/dried_beetroot"
     }
 }

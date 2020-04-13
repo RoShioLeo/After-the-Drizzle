@@ -1,10 +1,14 @@
 package roito.afterthedrizzle.common.block;
 
-import net.minecraft.block.BlockState;
+import net.minecraft.block.Block;
 
 public interface IStoveBlock
 {
-    boolean isBurning(BlockState blockState);
+    boolean isBurning();
 
     int getFuelPower();
+
+    Block getLit();
+
+    Block getUnlit();
 }
