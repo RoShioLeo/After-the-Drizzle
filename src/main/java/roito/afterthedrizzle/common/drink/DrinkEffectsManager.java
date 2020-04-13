@@ -13,7 +13,7 @@ public final class DrinkEffectsManager
 
     public DrinkEffectsManager()
     {
-        registerDrinkEffects(FluidsRegistry.SUGARY_WATER_STILL.get(), new DrinkEffectAttribute(Effects.REGENERATION, 2, 0));
+        registerDrinkEffects(FluidsRegistry.SUGARY_WATER_STILL.get(), new DrinkEffectAttribute(Effects.SPEED, 2, 0));
     }
 
     public static void registerDrinkEffects(Fluid fluid, DrinkEffectAttribute... drinkEffects)

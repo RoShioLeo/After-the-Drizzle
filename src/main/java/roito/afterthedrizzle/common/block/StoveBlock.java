@@ -34,7 +34,7 @@ import roito.afterthedrizzle.helper.VoxelShapeHelper;
 
 import java.util.Random;
 
-public abstract class StoveBlock extends NormalHorizontalBlock implements IStoveBlock
+public class StoveBlock extends NormalHorizontalBlock implements IStoveBlock
 {
     protected int efficiency;
     public static final BooleanProperty LIT = BlockStateProperties.LIT;

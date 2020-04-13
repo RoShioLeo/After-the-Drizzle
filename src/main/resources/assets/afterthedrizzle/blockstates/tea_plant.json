@@ -1,0 +1,276 @@
+{
+    "variants": {
+        "age=0": [
+            {
+                "model": "afterthedrizzle:block/tea_plant_0"
+            },
+            {
+                "model": "afterthedrizzle:block/tea_plant_0",
+                "y": 90
+            },
+            {
+                "model": "afterthedrizzle:block/tea_plant_0",
+                "y": 180
+            },
+            {
+                "model": "afterthedrizzle:block/tea_plant_0",
+                "y": 270
+            }
+        ],
+        "age=1": [
+            {
+                "model": "afterthedrizzle:block/tea_plant_0"
+            },
+            {
+                "model": "afterthedrizzle:block/tea_plant_0",
+                "y": 90
+            },
+            {
+                "model": "afterthedrizzle:block/tea_plant_0",
+                "y": 180
+            },
+            {
+                "model": "afterthedrizzle:block/tea_plant_0",
+                "y": 270
+            }
+        ],
+        "age=2": [
+            {
+                "model": "afterthedrizzle:block/tea_plant_1"
+            },
+            {
+                "model": "afterthedrizzle:block/tea_plant_1",
+                "y": 90
+            },
+            {
+                "model": "afterthedrizzle:block/tea_plant_1",
+                "y": 180
+            },
+            {
+                "model": "afterthedrizzle:block/tea_plant_1",
+                "y": 270
+            }
+        ],
+        "age=3": [
+            {
+                "model": "afterthedrizzle:block/tea_plant_1"
+            },
+            {
+                "model": "afterthedrizzle:block/tea_plant_1",
+                "y": 90
+            },
+            {
+                "model": "afterthedrizzle:block/tea_plant_1",
+                "y": 180
+            },
+            {
+                "model": "afterthedrizzle:block/tea_plant_1",
+                "y": 270
+            }
+        ],
+        "age=4": [
+            {
+                "model": "afterthedrizzle:block/tea_plant_2"
+            },
+            {
+                "model": "afterthedrizzle:block/tea_plant_2",
+                "y": 90
+            },
+            {
+                "model": "afterthedrizzle:block/tea_plant_2",
+                "y": 180
+            },
+            {
+                "model": "afterthedrizzle:block/tea_plant_2",
+                "y": 270
+            }
+        ],
+        "age=5": [
+            {
+                "model": "afterthedrizzle:block/tea_plant_2"
+            },
+            {
+                "model": "afterthedrizzle:block/tea_plant_2",
+                "y": 90
+            },
+            {
+                "model": "afterthedrizzle:block/tea_plant_2",
+                "y": 180
+            },
+            {
+                "model": "afterthedrizzle:block/tea_plant_2",
+                "y": 270
+            }
+        ],
+        "age=6": [
+            {
+                "model": "afterthedrizzle:block/tea_plant_3"
+            },
+            {
+                "model": "afterthedrizzle:block/tea_plant_3",
+                "y": 90
+            },
+            {
+                "model": "afterthedrizzle:block/tea_plant_3",
+                "y": 180
+            },
+            {
+                "model": "afterthedrizzle:block/tea_plant_3",
+                "y": 270
+            }
+        ],
+        "age=7": [
+            {
+                "model": "afterthedrizzle:block/tea_plant_3"
+            },
+            {
+                "model": "afterthedrizzle:block/tea_plant_3",
+                "y": 90
+            },
+            {
+                "model": "afterthedrizzle:block/tea_plant_3",
+                "y": 180
+            },
+            {
+                "model": "afterthedrizzle:block/tea_plant_3",
+                "y": 270
+            }
+        ],
+        "age=8": [
+            {
+                "model": "afterthedrizzle:block/tea_plant_4"
+            },
+            {
+                "model": "afterthedrizzle:block/tea_plant_4",
+                "y": 90
+            },
+            {
+                "model": "afterthedrizzle:block/tea_plant_4",
+                "y": 180
+            },
+            {
+                "model": "afterthedrizzle:block/tea_plant_4",
+                "y": 270
+            }
+        ],
+        "age=9": [
+            {
+                "model": "afterthedrizzle:block/tea_plant_4"
+            },
+            {
+                "model": "afterthedrizzle:block/tea_plant_4",
+                "y": 90
+            },
+            {
+                "model": "afterthedrizzle:block/tea_plant_4",
+                "y": 180
+            },
+            {
+                "model": "afterthedrizzle:block/tea_plant_4",
+                "y": 270
+            }
+        ],
+        "age=10": [
+            {
+                "model": "afterthedrizzle:block/tea_plant_3"
+            },
+            {
+                "model": "afterthedrizzle:block/tea_plant_3",
+                "y": 90
+            },
+            {
+                "model": "afterthedrizzle:block/tea_plant_3",
+                "y": 180
+            },
+            {
+                "model": "afterthedrizzle:block/tea_plant_3",
+                "y": 270
+            }
+        ],
+        "age=11": [
+            {
+                "model": "afterthedrizzle:block/tea_plant_3"
+            },
+            {
+                "model": "afterthedrizzle:block/tea_plant_3",
+                "y": 90
+            },
+            {
+                "model": "afterthedrizzle:block/tea_plant_3",
+                "y": 180
+            },
+            {
+                "model": "afterthedrizzle:block/tea_plant_3",
+                "y": 270
+            }
+        ],
+        "age=12": [
+            {
+                "model": "afterthedrizzle:block/tea_plant_5"
+            },
+            {
+                "model": "afterthedrizzle:block/tea_plant_5",
+                "y": 90
+            },
+            {
+                "model": "afterthedrizzle:block/tea_plant_5",
+                "y": 180
+            },
+            {
+                "model": "afterthedrizzle:block/tea_plant_5",
+                "y": 270
+            }
+        ],
+        "age=13": [
+            {
+                "model": "afterthedrizzle:block/tea_plant_5"
+            },
+            {
+                "model": "afterthedrizzle:block/tea_plant_5",
+                "y": 90
+            },
+            {
+                "model": "afterthedrizzle:block/tea_plant_5",
+                "y": 180
+            },
+            {
+                "model": "afterthedrizzle:block/tea_plant_5",
+                "y": 270
+            }
+        ],
+        "age=14": [
+            {
+                "model": "afterthedrizzle:block/tea_plant_6"
+            },
+            {
+                "model": "afterthedrizzle:block/tea_plant_6",
+                "y": 90
+            },
+            {
+                "model": "afterthedrizzle:block/tea_plant_6",
+                "y": 180
+            },
+            {
+                "model": "afterthedrizzle:block/tea_plant_6",
+                "y": 270
+            }
+        ],
+        "age=15": [
+            {
+                "model": "afterthedrizzle:block/tea_plant_6"
+            },
+            {
+                "model": "afterthedrizzle:block/tea_plant_6",
+                "y": 90
+            },
+            {
+                "model": "afterthedrizzle:block/tea_plant_6",
+                "y": 180
+            },
+            {
+                "model": "afterthedrizzle:block/tea_plant_6",
+                "y": 270
+            }
+        ]
+    }
+}

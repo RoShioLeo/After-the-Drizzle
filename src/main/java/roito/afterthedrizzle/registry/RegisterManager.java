@@ -5,6 +5,7 @@ import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.NonNullList;
+import net.minecraft.world.gen.feature.Feature;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -18,6 +19,7 @@ public final class RegisterManager
     public static NonNullList<Block> BLOCKS = NonNullList.create();
     public static NonNullList<TileEntityType<?>> TILE_ENTITY = NonNullList.create();
     public static NonNullList<ContainerType<?>> CONTAINER_TYPE = NonNullList.create();
+    public static NonNullList<Feature<?>> FEATURE = NonNullList.create();
 
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event)
@@ -47,10 +49,18 @@ public final class RegisterManager
         LogHelper.info("Successfully registered %d Container Types.", CONTAINER_TYPE.size());
     }
 
+    @SubscribeEvent
+    public static void registerFeatures(RegistryEvent.Register<Feature<?>> event)
+    {
+        event.getRegistry().registerAll(FEATURE.toArray(new Feature<?>[0]));
+        LogHelper.info("Successfully registered %d Features.", FEATURE.size());
+    }
+
     public static void clearAll()
     {
         ITEMS = null;
         BLOCKS = null;
         TILE_ENTITY = null;
+        CONTAINER_TYPE = null;
     }
 }

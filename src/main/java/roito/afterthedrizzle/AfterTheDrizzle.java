@@ -23,6 +23,7 @@ import roito.afterthedrizzle.common.config.NormalConfig;
 import roito.afterthedrizzle.common.drink.DrinkEffectsManager;
 import roito.afterthedrizzle.common.fluid.FluidsRegistry;
 import roito.afterthedrizzle.common.group.GroupCraft;
+import roito.afterthedrizzle.common.group.GroupDrink;
 import roito.afterthedrizzle.common.group.GroupFood;
 import roito.afterthedrizzle.common.inventory.BambooTrayContainer;
 import roito.afterthedrizzle.common.inventory.ContainerTypeRegistry;
@@ -31,6 +32,9 @@ import roito.afterthedrizzle.common.inventory.StoveContainer;
 import roito.afterthedrizzle.common.item.ItemsRegistry;
 import roito.afterthedrizzle.common.recipe.RecipesRegistry;
 import roito.afterthedrizzle.common.tileentity.TileEntityTypeRegistry;
+import roito.afterthedrizzle.common.world.WorldGenManager;
+import roito.afterthedrizzle.common.world.feature.FeaturesRegistry;
+import roito.afterthedrizzle.registry.RegisterManager;
 
 @Mod("afterthedrizzle")
 public final class AfterTheDrizzle
@@ -51,12 +55,15 @@ public final class AfterTheDrizzle
         new ItemsRegistry();
         new TileEntityTypeRegistry();
         new ContainerTypeRegistry();
+        new FeaturesRegistry();
     }
 
     public void setup(FMLCommonSetupEvent event)
     {
         new RecipesRegistry();
         new DrinkEffectsManager();
+        new WorldGenManager();
+        RegisterManager.clearAll();
     }
 
     public void ClientSetup(FMLClientSetupEvent event)
@@ -68,5 +75,6 @@ public final class AfterTheDrizzle
     }
 
     public static final ItemGroup GROUP_CRAFT = new GroupCraft();
+    public static final ItemGroup GROUP_DRINK = new GroupDrink();
     public static final ItemGroup GROUP_FOOD = new GroupFood();
 }

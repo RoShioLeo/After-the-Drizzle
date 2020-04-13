@@ -16,10 +16,9 @@ import net.minecraft.world.World;
 import roito.afterthedrizzle.AfterTheDrizzle;
 import roito.afterthedrizzle.common.block.BlocksRegistry;
 import roito.afterthedrizzle.common.block.DrinkMakerBlock;
-import roito.afterthedrizzle.common.block.ItemBlock;
 import roito.afterthedrizzle.helper.BlocksHelper;
 
-public class DrinkMakerItem extends ItemBlock
+public class DrinkMakerItem extends NormalBlockItem
 {
     public DrinkMakerItem()
     {

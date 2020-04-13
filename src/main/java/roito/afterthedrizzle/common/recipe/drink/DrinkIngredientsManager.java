@@ -16,7 +16,7 @@ public final class DrinkIngredientsManager
         {
             LogHelper.info("%s already has the ingredient name \"%s\", now it changes to \"%s\"", item.getRegistryName(), INGREDIENTS.get(item.getRegistryName().toString()), ingredientName);
         }
-        INGREDIENTS.put(item.getRegistryName().toString(), ingredientName);
+        INGREDIENTS.put(item.getRegistryName().toString(), ingredientName.toLowerCase());
     }
 
     public static String getIngredientName(Item ingredient)
