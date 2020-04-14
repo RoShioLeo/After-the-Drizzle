@@ -20,7 +20,6 @@ import java.util.stream.Stream;
 public abstract class NormalContainerTileEntity extends TileEntity implements INamedContainerProvider
 {
     private boolean prepareForRemove = false;
-
     public NormalContainerTileEntity(TileEntityType<?> tileEntityType)
     {
         super(tileEntityType);

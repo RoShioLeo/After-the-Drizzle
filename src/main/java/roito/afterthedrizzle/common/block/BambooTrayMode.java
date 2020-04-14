@@ -45,7 +45,7 @@ public enum BambooTrayMode
     {
         if (world.getBlockState(pos.down()).getBlock() instanceof IStoveBlock)
         {
-            return ((IStoveBlock) world.getBlockState(pos.down()).getBlock()).isBurning();
+            return ((IStoveBlock) world.getBlockState(pos.down()).getBlock()).isBurning(world.getBlockState(pos.down()));
         }
         return false;
     }
@@ -73,6 +73,6 @@ public enum BambooTrayMode
 
     public String getTranslationKey()
     {
-        return I18n.format("info.afterthedrizzle.bamboo_tray.mode." + this.toString());
+        return I18n.format("i18n.afterthedrizzle.bamboo_tray.mode." + this.toString());
     }
 }
