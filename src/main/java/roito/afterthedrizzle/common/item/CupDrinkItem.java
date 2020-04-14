@@ -3,7 +3,9 @@ package roito.afterthedrizzle.common.item;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.UseAction;
 import net.minecraft.nbt.CompoundNBT;
@@ -21,6 +23,7 @@ import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.ItemFluidContainer;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
 import net.minecraftforge.items.ItemHandlerHelper;
+import roito.afterthedrizzle.AfterTheDrizzle;
 import roito.afterthedrizzle.common.drink.DrinkEffectAttribute;
 import roito.afterthedrizzle.common.drink.DrinkEffectsManager;
 
@@ -28,6 +31,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+
+import static net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack.FLUID_NBT_KEY;
 
 public class CupDrinkItem extends ItemFluidContainer
 {
@@ -64,10 +69,26 @@ public class CupDrinkItem extends ItemFluidContainer
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
     {
         super.addInformation(stack, worldIn, tooltip, flagIn);
-        if (stack.getChildTag(FluidHandlerItemStack.FLUID_NBT_KEY) != null)
+        if (stack.getChildTag(FLUID_NBT_KEY) != null)
         {
             FluidUtil.getFluidHandler(stack).ifPresent(f ->
                     tooltip.add(f.getFluidInTank(0).getDisplayName().appendText(String.format(": %d / %dmB", f.getFluidInTank(0).getAmount(), capacity)).applyTextStyle(TextFormatting.GRAY)));
+        }
+    }
+
+    @Override
+    public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items)
+    {
+        if (group == AfterTheDrizzle.GROUP_CORE)
+        {
+            for (Fluid fluid : FluidTags.getCollection().getOrCreate(new ResourceLocation("afterthedrizzle:drink")).getAllElements())
+            {
+                ItemStack itemStack = new ItemStack(this);
+                CompoundNBT fluidTag = new CompoundNBT();
+                new FluidStack(fluid, capacity).writeToNBT(fluidTag);
+                itemStack.getOrCreateTag().put(FLUID_NBT_KEY, fluidTag);
+                items.add(itemStack);
+            }
         }
     }
 
@@ -108,18 +129,18 @@ public class CupDrinkItem extends ItemFluidContainer
             worldIn.playSound(null, entityLiving.posX, entityLiving.posY, entityLiving.posZ, entityLiving.getEatSound(stack), SoundCategory.NEUTRAL, 1.0F, 1.0F + (worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) * 0.4F);
             for (EffectInstance effct : getEffects(stack))
                 entityLiving.addPotionEffect(effct);
-            stack.shrink(1);
             if (entityLiving instanceof PlayerEntity)
             {
                 ItemHandlerHelper.giveItemToPlayer((PlayerEntity) entityLiving, new ItemStack(this.getContainerItem()));
             }
+            stack.shrink(1);
         }
         return stack;
     }
 
     public static boolean canDrink(ItemStack stack)
     {
-        if (stack.getChildTag(FluidHandlerItemStack.FLUID_NBT_KEY) != null)
+        if (stack.getChildTag(FLUID_NBT_KEY) != null)
         {
             return FluidUtil.getFluidContained(stack).map(f -> FluidTags.getCollection().getOrCreate(new ResourceLocation("afterthedrizzle:drink")).contains(f.getFluid())).orElse(false);
         }
@@ -128,7 +149,7 @@ public class CupDrinkItem extends ItemFluidContainer
 
     public static List<EffectInstance> getEffects(ItemStack stack)
     {
-        if (stack.getChildTag(FluidHandlerItemStack.FLUID_NBT_KEY) != null)
+        if (stack.getChildTag(FLUID_NBT_KEY) != null)
         {
             return FluidUtil.getFluidContained(stack).map(f ->
             {

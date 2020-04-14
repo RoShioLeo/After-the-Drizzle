@@ -3,7 +3,9 @@ package roito.afterthedrizzle.registry;
 import net.minecraft.block.Block;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
+import net.minecraft.potion.Effect;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.world.gen.feature.Feature;
 
 import java.lang.reflect.Field;
 
@@ -26,11 +28,19 @@ public class RegistryModule
                 }
                 else if (o instanceof TileEntityType<?>)
                 {
-                    RegisterManager.TILE_ENTITY.add((TileEntityType<?>) o);
+                    RegisterManager.TILE_ENTITY_TYPES.add((TileEntityType<?>) o);
                 }
                 else if (o instanceof ContainerType<?>)
                 {
-                    RegisterManager.CONTAINER_TYPE.add((ContainerType<?>) o);
+                    RegisterManager.CONTAINER_TYPES.add((ContainerType<?>) o);
+                }
+                else if (o instanceof Effect)
+                {
+                    RegisterManager.EFFECTS.add((Effect) o);
+                }
+                else if (o instanceof Feature<?>)
+                {
+                    RegisterManager.FEATURES.add((Feature<?>) o);
                 }
             }
             catch (Exception ignored)

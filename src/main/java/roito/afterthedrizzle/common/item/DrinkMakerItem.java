@@ -22,10 +22,11 @@ public class DrinkMakerItem extends NormalBlockItem
 {
     public DrinkMakerItem()
     {
-        super(BlocksRegistry.DRINK_MAKER, new Properties().group(AfterTheDrizzle.GROUP_CRAFT));
+        super(BlocksRegistry.DRINK_MAKER, new Properties().group(AfterTheDrizzle.GROUP_CORE));
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public ActionResultType onItemUse(ItemUseContext context)
     {
         World worldIn = context.getWorld();

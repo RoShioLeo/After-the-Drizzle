@@ -10,7 +10,7 @@ public class AshItem extends NormalItem
 {
     public AshItem()
     {
-        super("ash", new Properties().group(AfterTheDrizzle.GROUP_CRAFT));
+        super("ash", new Properties().group(AfterTheDrizzle.GROUP_CORE));
     }
 
     @Override

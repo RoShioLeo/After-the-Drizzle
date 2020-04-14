@@ -1,7 +1,7 @@
 {
     "variants": {
-          "": {
+        "": {
             "model": "afterthedrizzle:block/bamboo_table"
-	 }
-}
+        }
+    }
 }

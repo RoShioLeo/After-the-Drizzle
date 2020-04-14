@@ -1,14 +1,14 @@
 package roito.afterthedrizzle.common.item.food;
 
 import net.minecraft.item.Food;
-import roito.afterthedrizzle.AfterTheDrizzle;
+import net.minecraft.item.ItemGroup;
 import roito.afterthedrizzle.common.item.NormalItem;
 
 public class FoodItem extends NormalItem
 {
     public FoodItem(String name, Properties properties)
     {
-        super(name, properties.group(AfterTheDrizzle.GROUP_FOOD));
+        super(name, properties.group(ItemGroup.FOOD));
     }
 
     public FoodItem(String name, Food food)

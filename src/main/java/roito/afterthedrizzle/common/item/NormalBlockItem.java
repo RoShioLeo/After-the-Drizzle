@@ -10,4 +10,10 @@ public class NormalBlockItem extends BlockItem
         super(blockIn, builder);
         this.setRegistryName(blockIn.getRegistryName());
     }
+
+    public NormalBlockItem(Block blockIn)
+    {
+        super(blockIn, NormalItem.getCoreItemProperties());
+        this.setRegistryName(blockIn.getRegistryName());
+    }
 }

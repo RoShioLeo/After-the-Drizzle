@@ -1,6 +1,7 @@
 package roito.afterthedrizzle.common.item;
 
 import net.minecraft.item.Item;
+import roito.afterthedrizzle.AfterTheDrizzle;
 
 public class NormalItem extends Item
 {
@@ -8,5 +9,16 @@ public class NormalItem extends Item
     {
         super(properties);
         this.setRegistryName(name);
+    }
+
+    public NormalItem(String name)
+    {
+        super(getCoreItemProperties());
+        this.setRegistryName(name);
+    }
+
+    public static Item.Properties getCoreItemProperties()
+    {
+        return new Item.Properties().group(AfterTheDrizzle.GROUP_CORE);
     }
 }

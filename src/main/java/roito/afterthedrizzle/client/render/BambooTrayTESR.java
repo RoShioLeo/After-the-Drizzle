@@ -12,6 +12,7 @@ import roito.afterthedrizzle.common.tileentity.BambooTrayTileEntity;
 public class BambooTrayTESR extends TileEntityRenderer<BambooTrayTileEntity>
 {
     @Override
+    @SuppressWarnings("deprecation")
     public void render(BambooTrayTileEntity tileEntityIn, double x, double y, double z, float partialTicks, int destroyStage)
     {
         super.render(tileEntityIn, x, y, z, partialTicks, destroyStage);
