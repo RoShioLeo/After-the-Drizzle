@@ -33,7 +33,7 @@ public class WoodenFrameBlock extends NormalBlock implements IWaterLoggable
     public WoodenFrameBlock()
     {
         super("wooden_frame", Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(0.5F).doesNotBlockMovement());
-        this.setDefaultState(this.stateContainer.getBaseState().with(WATERLOGGED, Boolean.valueOf(false)));
+        this.setDefaultState(this.stateContainer.getBaseState().with(WATERLOGGED, false));
     }
 
     @Override
