@@ -1,8 +1,8 @@
 {
     "credit": "Made with Blockbench",
     "textures": {
-        "0": "afterthedrizzle:blocks/stone_mill",
-        "particle": "afterthedrizzle:blocks/stone_mill"
+        "0": "afterthedrizzle:block/stone_mill",
+        "particle": "afterthedrizzle:block/stone_mill"
     },
     "elements": [
         {

@@ -1,8 +1,8 @@
 {
     "credit": "Made with Blockbench",
     "textures": {
-        "0": "afterthedrizzle:blocks/wooden_barrel",
-        "particle": "afterthedrizzle:blocks/wooden_barrel"
+        "0": "afterthedrizzle:block/wooden_barrel",
+        "particle": "afterthedrizzle:block/wooden_barrel"
     },
     "elements": [
         {
