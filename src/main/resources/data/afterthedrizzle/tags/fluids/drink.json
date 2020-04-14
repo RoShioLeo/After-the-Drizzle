@@ -1,6 +1,8 @@
 {
     "replace": false,
     "values": [
-        "afterthedrizzle:sugary_water"
+        "afterthedrizzle:sugary_water",
+        "afterthedrizzle:green_tea",
+        "afterthedrizzle:black_tea"
     ]
 }

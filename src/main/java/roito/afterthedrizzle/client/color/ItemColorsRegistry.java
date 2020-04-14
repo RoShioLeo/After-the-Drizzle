@@ -13,7 +13,11 @@ public final class ItemColorsRegistry
 
     public ItemColorsRegistry()
     {
-        Minecraft.getInstance().getItemColors().register(BUCKET_COLOR, FluidsRegistry.BOILING_WATER_BUCKET.get(), FluidsRegistry.HOT_WATER_80_BUCKET.get(), FluidsRegistry.HOT_WATER_60_BUCKET.get(), FluidsRegistry.WARM_WATER_BUCKET.get(), FluidsRegistry.SUGARY_WATER_BUCKET.get());
+        Minecraft.getInstance().getItemColors().register(BUCKET_COLOR,
+                FluidsRegistry.BOILING_WATER_BUCKET.get(), FluidsRegistry.HOT_WATER_80_BUCKET.get(),
+                FluidsRegistry.HOT_WATER_60_BUCKET.get(), FluidsRegistry.WARM_WATER_BUCKET.get(),
+                FluidsRegistry.SUGARY_WATER_BUCKET.get(), FluidsRegistry.GREEN_TEA_BUCKET.get(),
+                FluidsRegistry.BLACK_TEA_BUCKET.get());
         Minecraft.getInstance().getItemColors().register(CUP_COLOR, ItemsRegistry.PORCELAIN_CUP_DRINK);
         Minecraft.getInstance().getItemColors().register(BOTTLE_COLOR, ItemsRegistry.BOTTLE_DRINK);
     }

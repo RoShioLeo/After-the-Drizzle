@@ -1,10 +1,10 @@
 {
     "variants": {
-          "hanging=true": {
+        "hanging=true": {
             "model": "afterthedrizzle:block/bamboo_hanging_lantern"
-	 },
-	          "hanging=false": {
-           "model": "afterthedrizzle:block/bamboo_lantern"
-	 }
-}
+        },
+        "hanging=false": {
+            "model": "afterthedrizzle:block/bamboo_lantern"
+        }
+    }
 }

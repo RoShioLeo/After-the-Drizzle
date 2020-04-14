@@ -19,6 +19,8 @@ import java.util.stream.Stream;
 
 public abstract class NormalContainerTileEntity extends TileEntity implements INamedContainerProvider
 {
+    private boolean prepareForRemove = false;
+
     public NormalContainerTileEntity(TileEntityType<?> tileEntityType)
     {
         super(tileEntityType);
@@ -47,7 +49,7 @@ public abstract class NormalContainerTileEntity extends TileEntity implements IN
 
     public void refresh()
     {
-        if (this.hasWorld() && !this.world.isRemote)
+        if (this.hasWorld() && !this.world.isRemote && !prepareForRemove)
         {
             BlockState state = this.world.getBlockState(pos);
             this.world.markAndNotifyBlock(pos, null, state, state, 11);
@@ -59,6 +61,11 @@ public abstract class NormalContainerTileEntity extends TileEntity implements IN
                 player.connection.sendPacket(packet);
             }
         }
+    }
+
+    public void prepareForRemove()
+    {
+        this.prepareForRemove = true;
     }
 
     @Override

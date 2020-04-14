@@ -1,4 +1,4 @@
-package roito.afterthedrizzle.common.recipe.drink;
+package roito.afterthedrizzle.common.drink;
 
 import net.minecraft.item.Item;
 import roito.afterthedrizzle.helper.LogHelper;

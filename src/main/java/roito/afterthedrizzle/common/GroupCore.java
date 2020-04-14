@@ -1,20 +1,20 @@
-package roito.afterthedrizzle.common.group;
+package roito.afterthedrizzle.common;
 
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import roito.afterthedrizzle.AfterTheDrizzle;
 import roito.afterthedrizzle.common.item.ItemsRegistry;
 
-public class GroupFood extends ItemGroup
+public class GroupCore extends ItemGroup
 {
-    public GroupFood()
+    public GroupCore()
     {
-        super(AfterTheDrizzle.MODID + ".food");
+        super(AfterTheDrizzle.MODID + ".core");
     }
 
     @Override
     public ItemStack createIcon()
     {
-        return new ItemStack(ItemsRegistry.BEEF_JERKY);
+        return new ItemStack(ItemsRegistry.TEA_LEAVES);
     }
 }

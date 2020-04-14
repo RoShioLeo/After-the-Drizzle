@@ -7,21 +7,12 @@ public class DrinkEffectAttribute
     private final Effect potion;
     private final int duration;
     private final int level;
-    private final boolean extendTime;
-    private final boolean upgrade;
 
-    public DrinkEffectAttribute(Effect potionIn, int durationIn, int level, boolean extendTime, boolean upgrade)
+    public DrinkEffectAttribute(Effect potionIn, int durationIn, int level)
     {
         this.potion = potionIn;
         this.duration = durationIn;
         this.level = level;
-        this.extendTime = extendTime;
-        this.upgrade = upgrade;
-    }
-
-    public DrinkEffectAttribute(Effect potionIn, int durationIn, int level)
-    {
-        this(potionIn, durationIn, level, true, true);
     }
 
     public Effect getPotion()
@@ -37,15 +28,5 @@ public class DrinkEffectAttribute
     public int getLevel()
     {
         return level;
-    }
-
-    public boolean shouldExtendTime()
-    {
-        return extendTime;
-    }
-
-    public boolean shouldUpgrade()
-    {
-        return upgrade;
     }
 }

@@ -73,6 +73,6 @@ public enum BambooTrayMode
 
     public String getTranslationKey()
     {
-        return I18n.format("i18n.afterthedrizzle.bamboo_tray.mode." + this.toString());
+        return I18n.format("info.afterthedrizzle.bamboo_tray.mode." + this.toString());
     }
 }

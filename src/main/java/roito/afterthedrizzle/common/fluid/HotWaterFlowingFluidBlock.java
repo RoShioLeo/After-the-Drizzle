@@ -1,4 +1,4 @@
-package roito.afterthedrizzle.common.block;
+package roito.afterthedrizzle.common.fluid;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -13,6 +13,7 @@ import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import roito.afterthedrizzle.common.block.BlocksRegistry;
 
 import java.util.Random;
 import java.util.function.Supplier;
@@ -21,9 +22,9 @@ public class HotWaterFlowingFluidBlock extends NormalFlowingFluidBlock
 {
     public static final DamageSource BOILING = new DamageSource("boiling");
 
-    public HotWaterFlowingFluidBlock(String name, Supplier<? extends FlowingFluid> supplier)
+    public HotWaterFlowingFluidBlock(Supplier<? extends FlowingFluid> supplier)
     {
-        super(name, supplier, Block.Properties.create(Material.WATER).doesNotBlockMovement().hardnessAndResistance(100.0F).noDrops().tickRandomly());
+        super(supplier, Block.Properties.create(Material.WATER).doesNotBlockMovement().hardnessAndResistance(100.0F).noDrops().tickRandomly());
     }
 
     @Override
@@ -69,23 +70,22 @@ public class HotWaterFlowingFluidBlock extends NormalFlowingFluidBlock
     @Override
     public void randomTick(BlockState state, World worldIn, BlockPos pos, Random random)
     {
-        if (state.getBlock() == BlocksRegistry.WARM_WATER && worldIn.getBlockState(pos.down(2)).getBlock() instanceof CampfireBlock)
+        if (state.getBlock() == FluidsRegistry.WARM_WATER.get() && worldIn.getBlockState(pos.down(2)).getBlock() instanceof CampfireBlock)
         {
-            return;
         }
         else if (state.getFluidState().getLevel() == 8 && random.nextInt(10) == 0)
         {
             if (state.getFluidState().getFluid().getAttributes().getTemperature() >= 373)
             {
-                worldIn.setBlockState(pos, BlocksRegistry.HOT_WATER_80.getDefaultState());
+                worldIn.setBlockState(pos, FluidsRegistry.HOT_WATER_80.get().getDefaultState());
             }
             else if (state.getFluidState().getFluid().getAttributes().getTemperature() >= 353)
             {
-                worldIn.setBlockState(pos, BlocksRegistry.HOT_WATER_60.getDefaultState());
+                worldIn.setBlockState(pos, FluidsRegistry.HOT_WATER_60.get().getDefaultState());
             }
             else if (state.getFluidState().getFluid().getAttributes().getTemperature() >= 318)
             {
-                worldIn.setBlockState(pos, BlocksRegistry.WARM_WATER.getDefaultState());
+                worldIn.setBlockState(pos, FluidsRegistry.WARM_WATER.get().getDefaultState());
             }
             else
             {

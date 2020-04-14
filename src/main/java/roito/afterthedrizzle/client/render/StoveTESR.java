@@ -13,6 +13,7 @@ import roito.afterthedrizzle.common.tileentity.StoveTileEntity;
 public class StoveTESR extends TileEntityRenderer<StoveTileEntity>
 {
     @Override
+    @SuppressWarnings("deprecation")
     public void render(StoveTileEntity tileEntityIn, double x, double y, double z, float partialTicks, int destroyStage)
     {
         super.render(tileEntityIn, x, y, z, partialTicks, destroyStage);

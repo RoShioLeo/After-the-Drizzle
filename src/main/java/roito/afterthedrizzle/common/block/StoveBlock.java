@@ -5,37 +5,43 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
-import roito.afterthedrizzle.AfterTheDrizzle;
+import roito.afterthedrizzle.common.tileentity.NormalContainerTileEntity;
 import roito.afterthedrizzle.common.tileentity.StoveTileEntity;
 import roito.afterthedrizzle.common.tileentity.TileEntityTypeRegistry;
+import roito.afterthedrizzle.helper.VoxelShapeHelper;
 
 import java.util.Random;
 
-public abstract class StoveBlock extends NormalHorizontalBlock implements IStoveBlock
+public class StoveBlock extends NormalHorizontalBlock implements IStoveBlock
 {
     protected int efficiency;
-    protected static boolean keepInventory = false;
+    public static final BooleanProperty LIT = BlockStateProperties.LIT;
+    private static final VoxelShape SHAPE;
 
     public StoveBlock(Properties properties, String name, int efficiency)
     {
         super(properties, name);
-        this.setDefaultState(this.getStateContainer().getBaseState().with(HORIZONTAL_FACING, Direction.NORTH));
+        this.setDefaultState(this.getStateContainer().getBaseState().with(HORIZONTAL_FACING, Direction.NORTH).with(LIT, false));
         this.efficiency = efficiency;
     }
 
@@ -46,9 +52,16 @@ public abstract class StoveBlock extends NormalHorizontalBlock implements IStove
     }
 
     @Override
-    public boolean isBurning()
+    public boolean isBurning(BlockState blockState)
     {
-        return this.lightValue != 0;
+        return blockState.get(LIT);
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public int getLightValue(BlockState blockState)
+    {
+        return blockState.get(LIT) ? 14 : 0;
     }
 
     @Override
@@ -66,7 +79,7 @@ public abstract class StoveBlock extends NormalHorizontalBlock implements IStove
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder)
     {
-        builder.add(HORIZONTAL_FACING);
+        builder.add(HORIZONTAL_FACING, LIT);
     }
 
     @Override
@@ -78,15 +91,22 @@ public abstract class StoveBlock extends NormalHorizontalBlock implements IStove
 
     @Override
     @SuppressWarnings("deprecation")
-    public boolean isNormalCube(BlockState p_220081_1_, IBlockReader p_220081_2_, BlockPos p_220081_3_)
+    public boolean isNormalCube(BlockState state, IBlockReader worldIn, BlockPos pos)
     {
         return false;
     }
 
     @Override
+    @SuppressWarnings("deprecation")
+    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
+    {
+        return SHAPE;
+    }
+
+    @Override
     public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand)
     {
-        if (isBurning())
+        if (isBurning(stateIn))
         {
             double d0 = pos.getX() + 0.5D;
             double d1 = pos.getY() + rand.nextDouble() * 6.0D / 16.0D;
@@ -170,7 +190,7 @@ public abstract class StoveBlock extends NormalHorizontalBlock implements IStove
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world)
     {
-        return TileEntityTypeRegistry.STOVE_TILE_ENTITY_TYPE.create();
+        return TileEntityTypeRegistry.STOVE_TILE.create();
     }
 
     private void dropAsh(World worldIn, BlockPos pos)
@@ -215,26 +235,27 @@ public abstract class StoveBlock extends NormalHorizontalBlock implements IStove
     @SuppressWarnings("deprecation")
     public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
     {
-        if (state.hasTileEntity() && !(newState.getBlock() == this.getLit() || newState.getBlock() == this.getUnlit()))
+        if (state.hasTileEntity() && newState.getBlock() != this)
         {
+            ((NormalContainerTileEntity) worldIn.getTileEntity(pos)).prepareForRemove();
             dropFuel(worldIn, pos);
             dropAsh(worldIn, pos);
             worldIn.removeTileEntity(pos);
         }
     }
 
-    public static void setState(boolean active, World worldIn, BlockPos pos, IStoveBlock stove)
+    public static void setState(boolean active, World worldIn, BlockPos pos)
     {
         BlockState iblockstate = worldIn.getBlockState(pos);
         TileEntity tileentity = worldIn.getTileEntity(pos);
 
         if (active)
         {
-            worldIn.setBlockState(pos, stove.getLit().getDefaultState().with(HORIZONTAL_FACING, iblockstate.get(HORIZONTAL_FACING)));
+            worldIn.setBlockState(pos, iblockstate.with(HORIZONTAL_FACING, iblockstate.get(HORIZONTAL_FACING)).with(LIT, true));
         }
         else
         {
-            worldIn.setBlockState(pos, stove.getUnlit().getDefaultState().with(HORIZONTAL_FACING, iblockstate.get(HORIZONTAL_FACING)));
+            worldIn.setBlockState(pos, iblockstate.with(HORIZONTAL_FACING, iblockstate.get(HORIZONTAL_FACING)).with(LIT, false));
         }
 
         if (tileentity != null)
@@ -247,11 +268,13 @@ public abstract class StoveBlock extends NormalHorizontalBlock implements IStove
     @Override
     public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos, PlayerEntity player)
     {
-        return new ItemStack(getUnlit());
+        return new ItemStack(this);
     }
 
-    public static Item.Properties getItemProperties()
+    static
     {
-        return new Item.Properties().group(AfterTheDrizzle.GROUP_CRAFT);
+        VoxelShape top = VoxelShapeHelper.createVoxelShape(0.0D, 14.0D, 0.0D, 16.0D, 2.0D, 16.0D);
+        VoxelShape body = VoxelShapeHelper.createVoxelShape(1.0D, 0.0D, 1.0D, 14.0D, 16.0D, 14.0D);
+        SHAPE = VoxelShapes.or(top, body);
     }
 }

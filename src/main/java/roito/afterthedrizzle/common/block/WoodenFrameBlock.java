@@ -9,7 +9,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.Item;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -24,7 +23,6 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import roito.afterthedrizzle.AfterTheDrizzle;
 import roito.afterthedrizzle.helper.VoxelShapeHelper;
 
 public class WoodenFrameBlock extends NormalBlock implements IWaterLoggable
@@ -130,10 +128,5 @@ public class WoodenFrameBlock extends NormalBlock implements IWaterLoggable
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder)
     {
         builder.add(WATERLOGGED);
-    }
-
-    public static Item.Properties getItemProperties()
-    {
-        return new Item.Properties().group(AfterTheDrizzle.GROUP_CRAFT);
     }
 }

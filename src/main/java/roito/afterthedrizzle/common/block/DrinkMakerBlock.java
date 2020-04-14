@@ -154,19 +154,6 @@ public class DrinkMakerBlock extends NormalHorizontalBlock
                 dropItems(worldIn, pos);
                 worldIn.removeTileEntity(pos);
             }
-            Direction enumfacing = state.get(HORIZONTAL_FACING);
-
-            if (state.get(LEFT))
-            {
-                if (worldIn.getBlockState(pos.offset(BlocksHelper.getNextHorizontal(enumfacing))).getBlock() == this)
-                {
-                    worldIn.destroyBlock(pos.offset(BlocksHelper.getNextHorizontal(enumfacing)), false);
-                }
-            }
-            else if (worldIn.getBlockState(pos.offset(BlocksHelper.getPreviousHorizontal(enumfacing))).getBlock() == this)
-            {
-                worldIn.destroyBlock(pos.offset(BlocksHelper.getPreviousHorizontal(enumfacing)), true);
-            }
         }
     }
 
