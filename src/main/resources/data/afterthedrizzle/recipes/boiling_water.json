@@ -1,0 +1,9 @@
+{
+    "type": "minecraft:smelting",
+    "ingredient": {
+        "item": "minecraft:water_bucket"
+    },
+    "result": "afterthedrizzle:boiling_water",
+    "experience": 0.35,
+    "cookingtime": 200
+}

@@ -79,7 +79,7 @@ public class CupDrinkItem extends ItemFluidContainer
     @Override
     public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items)
     {
-        if (group == AfterTheDrizzle.GROUP_CORE)
+        if (group == AfterTheDrizzle.GROUP_DRINK)
         {
             for (Fluid fluid : FluidTags.getCollection().getOrCreate(new ResourceLocation("afterthedrizzle:drink")).getAllElements())
             {

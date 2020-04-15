@@ -2,19 +2,18 @@
     "type": "minecraft:crafting_shaped",
     "group": "afterthedrizzle",
     "pattern": [
-        "#x#",
-        "x#x",
-        "x x"
+        "# #",
+        "#x#"
     ],
     "key": {
         "x": {
-            "tag": "forge:rods/wooden"
+            "item": "afterthedrizzle:bamboo_plank"
         },
         "#": {
-            "tag": "minecraft:planks"
+            "item": "minecraft:bamboo"
         }
     },
     "result": {
-        "item": "afterthedrizzle:wooden_frame"
+        "item": "afterthedrizzle:bamboo_tray"
     }
 }

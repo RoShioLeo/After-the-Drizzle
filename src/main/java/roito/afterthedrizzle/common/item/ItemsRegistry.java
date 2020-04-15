@@ -44,6 +44,7 @@ public final class ItemsRegistry extends RegistryModule
     public static final Item ASH = new AshItem();
 
     // DRINK 饮品
+    public static final Item CLAY_CUP = new NormalItem("clay_cup");
     public static final Item PORCELAIN_CUP = new ItemFluidContainer(NormalItem.getCoreItemProperties(), 250)
     {
         @Override

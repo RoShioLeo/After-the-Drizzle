@@ -43,14 +43,14 @@ public final class RecipesRegistry
         MANAGER_BAMBOO_TRAY_OUTDOORS.add(new BambooTaryRecipe(Items.BEETROOT, ItemsRegistry.DRIED_BEETROOT));
         MANAGER_BAMBOO_TRAY_OUTDOORS.add(new BambooTaryRecipe(Items.CARROT, ItemsRegistry.DRIED_CARROT));
         MANAGER_BAMBOO_TRAY_OUTDOORS.add(new BambooTaryRecipe("forge:food/jerky", Items.LEATHER));
-        MANAGER_BAMBOO_TRAY_OUTDOORS.add(new BambooTaryRecipe("forge:crops/tealeaf", ItemsRegistry.GREEN_TEA_LEAVES));
+        MANAGER_BAMBOO_TRAY_OUTDOORS.add(new BambooTaryRecipe("forge:crops/tea_leaves", ItemsRegistry.GREEN_TEA_LEAVES));
     }
 
     private static void addBasketIndoorsRecipes()
     {
         MANAGER_BAMBOO_TRAY_INDOORS.add(new BambooTaryRecipe("forge:food/meat", Items.ROTTEN_FLESH));
         MANAGER_BAMBOO_TRAY_INDOORS.add(new BambooTaryRecipe(Items.SPIDER_EYE, Items.FERMENTED_SPIDER_EYE));
-        MANAGER_BAMBOO_TRAY_INDOORS.add(new BambooTaryRecipe("forge:crops/tealeaf", ItemsRegistry.BLACK_TEA_LEAVES));
+        MANAGER_BAMBOO_TRAY_INDOORS.add(new BambooTaryRecipe("forge:crops/tea_leaves", ItemsRegistry.BLACK_TEA_LEAVES));
     }
 
     private static void addBasketWetRecipes()

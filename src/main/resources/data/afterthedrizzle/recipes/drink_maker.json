@@ -2,9 +2,8 @@
     "type": "minecraft:crafting_shaped",
     "group": "afterthedrizzle",
     "pattern": [
-        "#x#",
-        "x#x",
-        "x x"
+        "x x",
+        "###"
     ],
     "key": {
         "x": {
@@ -15,6 +14,6 @@
         }
     },
     "result": {
-        "item": "afterthedrizzle:wooden_frame"
+        "item": "afterthedrizzle:drink_maker"
     }
 }

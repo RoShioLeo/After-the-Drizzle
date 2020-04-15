@@ -2,19 +2,18 @@
     "type": "minecraft:crafting_shaped",
     "group": "afterthedrizzle",
     "pattern": [
-        "#x#",
-        "x#x",
-        "x x"
+        "x x",
+        " # "
     ],
     "key": {
         "x": {
-            "tag": "forge:rods/wooden"
+            "item": "minecraft:clay_ball"
         },
         "#": {
-            "tag": "minecraft:planks"
+            "item": "minecraft:clay"
         }
     },
     "result": {
-        "item": "afterthedrizzle:wooden_frame"
+        "item": "afterthedrizzle:drink_maker"
     }
 }

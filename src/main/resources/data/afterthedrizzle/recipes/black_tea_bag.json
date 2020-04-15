@@ -1,0 +1,15 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "group": "afterthedrizzle",
+    "ingredients": [
+        {
+            "item": "afterthedrizzle:empty_tea_bag"
+        },
+        {
+            "tag": "forge:crops/black_tea_leaves"
+        }
+    ],
+    "result": {
+        "item": "afterthedrizzle:black_tea_bag"
+    }
+}

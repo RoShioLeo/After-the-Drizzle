@@ -18,11 +18,12 @@ import roito.afterthedrizzle.client.gui.BambooTrayGuiContainer;
 import roito.afterthedrizzle.client.gui.DrinkMakerGuiContainer;
 import roito.afterthedrizzle.client.gui.StoveGuiContainer;
 import roito.afterthedrizzle.common.CommonProxy;
-import roito.afterthedrizzle.common.GroupCore;
 import roito.afterthedrizzle.common.block.BlocksRegistry;
 import roito.afterthedrizzle.common.config.NormalConfig;
 import roito.afterthedrizzle.common.entity.EntityTypesRegistry;
 import roito.afterthedrizzle.common.fluid.FluidsRegistry;
+import roito.afterthedrizzle.common.group.GroupCore;
+import roito.afterthedrizzle.common.group.GroupDrink;
 import roito.afterthedrizzle.common.inventory.BambooTrayContainer;
 import roito.afterthedrizzle.common.inventory.ContainerTypesRegistry;
 import roito.afterthedrizzle.common.inventory.DrinkMakerContainer;
@@ -76,4 +77,5 @@ public final class AfterTheDrizzle
     }
 
     public static final ItemGroup GROUP_CORE = new GroupCore();
+    public static final ItemGroup GROUP_DRINK = new GroupDrink();
 }

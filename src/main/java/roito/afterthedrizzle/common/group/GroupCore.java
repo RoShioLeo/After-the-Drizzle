@@ -1,4 +1,4 @@
-package roito.afterthedrizzle.common;
+package roito.afterthedrizzle.common.group;
 
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
