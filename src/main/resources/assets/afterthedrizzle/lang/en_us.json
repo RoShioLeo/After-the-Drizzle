@@ -1,5 +1,6 @@
 {
-    "itemGroup.afterthedrizzle.core": "After the Drizzle",
+    "itemGroup.afterthedrizzle.core": "After the Drizzle: Core",
+    "itemGroup.afterthedrizzle.drink": "After the Drizzle: Drink",
     "item.afterthedrizzle.ash": "Ash",
     "item.afterthedrizzle.dried_beetroot": "Dried Beetroot",
     "item.afterthedrizzle.dried_carrot": "Dried Carrot",
@@ -8,6 +9,7 @@
     "item.afterthedrizzle.chicken_jerky": "Chicken Jerky",
     "item.afterthedrizzle.rabbit_jerky": "Rabbit Jerky",
     "item.afterthedrizzle.mutton_jerky": "Mutton Jerky",
+    "item.afterthedrizzle.clay_cup": "Clay Cup",
     "item.afterthedrizzle.porcelain_cup": "Porcelain Cup",
     "item.afterthedrizzle.porcelain_cup_drink": "Porcelain Cup With Drink",
     "item.afterthedrizzle.bottle": "Bottle",

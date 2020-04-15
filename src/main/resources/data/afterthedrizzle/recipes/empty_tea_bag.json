@@ -11,7 +11,7 @@
             "item": "minecraft:paper"
         },
         "/": {
-            "tag": "minecraft:string"
+            "item": "minecraft:string"
         }
     },
     "result": {

@@ -1,5 +1,6 @@
 {
-    "itemGroup.afterthedrizzle.core": "细雨田园",
+    "itemGroup.afterthedrizzle.core": "细雨田园·核心",
+    "itemGroup.afterthedrizzle.drink": "细雨田园·茶饮",
     "item.afterthedrizzle.ash": "灰烬",
     "item.afterthedrizzle.dried_beetroot": "甜菜根干",
     "item.afterthedrizzle.dried_carrot": "胡萝卜干",
@@ -8,6 +9,7 @@
     "item.afterthedrizzle.chicken_jerky": "鸡肉干",
     "item.afterthedrizzle.rabbit_jerky": "兔肉干",
     "item.afterthedrizzle.mutton_jerky": "羊肉干",
+    "item.afterthedrizzle.clay_cup": "粘土杯坯",
     "item.afterthedrizzle.porcelain_cup": "白瓷杯",
     "item.afterthedrizzle.porcelain_cup_drink": "装有饮料的白瓷杯",
     "item.afterthedrizzle.bottle": "水杯",

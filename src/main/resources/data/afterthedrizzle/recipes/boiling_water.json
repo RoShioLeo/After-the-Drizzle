@@ -3,7 +3,7 @@
     "ingredient": {
         "item": "minecraft:water_bucket"
     },
-    "result": "afterthedrizzle:boiling_water",
+    "result": "afterthedrizzle:boiling_water_bucket",
     "experience": 0.35,
     "cookingtime": 200
 }
