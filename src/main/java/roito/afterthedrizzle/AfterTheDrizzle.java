@@ -21,7 +21,6 @@ import roito.afterthedrizzle.common.CommonProxy;
 import roito.afterthedrizzle.common.GroupCore;
 import roito.afterthedrizzle.common.block.BlocksRegistry;
 import roito.afterthedrizzle.common.config.NormalConfig;
-import roito.afterthedrizzle.common.drink.DrinkEffectsManager;
 import roito.afterthedrizzle.common.entity.EntityTypesRegistry;
 import roito.afterthedrizzle.common.fluid.FluidsRegistry;
 import roito.afterthedrizzle.common.inventory.BambooTrayContainer;
@@ -63,8 +62,7 @@ public final class AfterTheDrizzle
 
     public void setup(FMLCommonSetupEvent event)
     {
-        new RecipesRegistry();
-        new DrinkEffectsManager();
+        RecipesRegistry.init();
         new WorldGenManager();
         RegisterManager.clearAll();
     }

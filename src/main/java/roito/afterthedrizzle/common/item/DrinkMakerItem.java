@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 import roito.afterthedrizzle.AfterTheDrizzle;
 import roito.afterthedrizzle.common.block.BlocksRegistry;
 import roito.afterthedrizzle.common.block.DrinkMakerBlock;
-import roito.afterthedrizzle.helper.BlocksHelper;
+import roito.afterthedrizzle.helper.BlockHelper;
 
 public class DrinkMakerItem extends NormalBlockItem
 {
@@ -55,7 +55,7 @@ public class DrinkMakerItem extends NormalBlockItem
             {
                 int i = MathHelper.floor((double) (player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
                 Direction enumfacing = Direction.byHorizontalIndex(i);
-                BlockPos blockpos = pos.offset(BlocksHelper.getNextHorizontal(enumfacing));
+                BlockPos blockpos = pos.offset(BlockHelper.getNextHorizontal(enumfacing));
                 boolean left = false, right = false;
                 if (player.canPlayerEdit(blockpos, context.getFace(), itemstack) && (worldIn.getBlockState(blockpos).getBlock().isReplaceable(worldIn.getBlockState(blockpos), new BlockItemUseContext(context)) || worldIn.isAirBlock(blockpos)) && worldIn.getBlockState(blockpos.down()).isTopSolid(worldIn, blockpos.down(), player))
                 {
@@ -63,7 +63,7 @@ public class DrinkMakerItem extends NormalBlockItem
                 }
                 else
                 {
-                    blockpos = pos.offset(BlocksHelper.getPreviousHorizontal(enumfacing));
+                    blockpos = pos.offset(BlockHelper.getPreviousHorizontal(enumfacing));
                     if (player.canPlayerEdit(blockpos, context.getFace(), itemstack) && (worldIn.getBlockState(blockpos).getBlock().isReplaceable(worldIn.getBlockState(blockpos), new BlockItemUseContext(context)) || worldIn.isAirBlock(blockpos)) && worldIn.getBlockState(blockpos.down()).isTopSolid(worldIn, blockpos.down(), player))
                     {
                         right = true;

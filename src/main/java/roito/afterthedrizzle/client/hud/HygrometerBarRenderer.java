@@ -39,11 +39,11 @@ public class HygrometerBarRenderer extends AbstractGui
         {
             if (level > this.humidity)
             {
-                this.humidity += 0.001F;
+                this.humidity += 0.005F;
             }
             else if (level < this.humidity)
             {
-                this.humidity -= 0.001F;
+                this.humidity -= 0.005F;
             }
         }
 

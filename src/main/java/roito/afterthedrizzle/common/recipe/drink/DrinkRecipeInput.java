@@ -22,6 +22,11 @@ public class DrinkRecipeInput
         this.INPUT = input;
     }
 
+    public DrinkRecipeInput(Fluid input, String... tags)
+    {
+        this(Arrays.asList(tags), input);
+    }
+
     public DrinkRecipeInput(String... tags)
     {
         this(Arrays.asList(tags), FluidsRegistry.BOILING_WATER_STILL.get());

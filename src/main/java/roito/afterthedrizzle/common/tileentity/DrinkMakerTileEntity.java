@@ -1,5 +1,6 @@
 package roito.afterthedrizzle.common.tileentity;
 
+import net.minecraft.block.HorizontalBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -22,6 +23,8 @@ import roito.afterthedrizzle.common.recipe.drink.DrinkRecipeInput;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DrinkMakerTileEntity extends NormalContainerTileEntity implements ITickableTileEntity
 {
@@ -206,5 +209,21 @@ public class DrinkMakerTileEntity extends NormalContainerTileEntity implements I
     public FluidTank getFluidTank()
     {
         return this.fluidTank.orElse(new FluidTank(0));
+    }
+
+    public List<ItemStack> getContent()
+    {
+        List<ItemStack> list = new ArrayList<>();
+        for (int i = 0; i < 4; i++)
+        {
+            int index = i;
+            ingredientsInventory.ifPresent(h -> list.add(h.getStackInSlot(index)));
+        }
+        return list;
+    }
+
+    public Direction getFacing()
+    {
+        return this.getBlockState().get(HorizontalBlock.HORIZONTAL_FACING);
     }
 }

@@ -2,8 +2,9 @@ package roito.afterthedrizzle.client.color;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.color.IItemColor;
-import roito.afterthedrizzle.common.fluid.FluidsRegistry;
 import roito.afterthedrizzle.common.item.ItemsRegistry;
+
+import static roito.afterthedrizzle.common.fluid.FluidsRegistry.ITEMS;
 
 public final class ItemColorsRegistry
 {
@@ -13,11 +14,7 @@ public final class ItemColorsRegistry
 
     public ItemColorsRegistry()
     {
-        Minecraft.getInstance().getItemColors().register(BUCKET_COLOR,
-                FluidsRegistry.BOILING_WATER_BUCKET.get(), FluidsRegistry.HOT_WATER_80_BUCKET.get(),
-                FluidsRegistry.HOT_WATER_60_BUCKET.get(), FluidsRegistry.WARM_WATER_BUCKET.get(),
-                FluidsRegistry.SUGARY_WATER_BUCKET.get(), FluidsRegistry.GREEN_TEA_BUCKET.get(),
-                FluidsRegistry.BLACK_TEA_BUCKET.get());
+        ITEMS.getEntries().forEach(e -> Minecraft.getInstance().getItemColors().register(BUCKET_COLOR, e.get()));
         Minecraft.getInstance().getItemColors().register(CUP_COLOR, ItemsRegistry.PORCELAIN_CUP_DRINK);
         Minecraft.getInstance().getItemColors().register(BOTTLE_COLOR, ItemsRegistry.BOTTLE_DRINK);
     }

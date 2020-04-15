@@ -3,7 +3,7 @@ package roito.afterthedrizzle.helper;
 
 import net.minecraft.util.Direction;
 
-public final class BlocksHelper
+public final class BlockHelper
 {
     public static Direction getNextHorizontal(Direction facing)
     {

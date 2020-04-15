@@ -31,7 +31,7 @@ public enum Rainfall
 
     public boolean isInRainfall(float rainfall)
     {
-        return min <= rainfall && rainfall < max;
+        return min < rainfall && rainfall <= max;
     }
 
     public float getMin()

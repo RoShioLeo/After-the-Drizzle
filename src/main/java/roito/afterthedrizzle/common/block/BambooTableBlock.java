@@ -16,6 +16,7 @@ public class BambooTableBlock extends NormalBlock
 {
     public static final VoxelShape SHAPE;
 
+    //TODO 考虑日后添加连接模型
     public BambooTableBlock()
     {
         super("bamboo_table", Properties.create(Material.BAMBOO).sound(SoundType.BAMBOO).hardnessAndResistance(0.5F));

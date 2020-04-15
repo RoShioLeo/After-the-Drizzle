@@ -32,7 +32,7 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import roito.afterthedrizzle.common.tileentity.DrinkMakerTileEntity;
 import roito.afterthedrizzle.common.tileentity.NormalContainerTileEntity;
 import roito.afterthedrizzle.common.tileentity.TileEntityTypesRegistry;
-import roito.afterthedrizzle.helper.BlocksHelper;
+import roito.afterthedrizzle.helper.BlockHelper;
 import roito.afterthedrizzle.helper.VoxelShapeHelper;
 
 public class DrinkMakerBlock extends NormalHorizontalBlock
@@ -131,14 +131,14 @@ public class DrinkMakerBlock extends NormalHorizontalBlock
 
         if (state.get(LEFT))
         {
-            if (worldIn.getBlockState(pos.offset(BlocksHelper.getNextHorizontal(enumfacing))).getBlock() == this)
+            if (worldIn.getBlockState(pos.offset(BlockHelper.getNextHorizontal(enumfacing))).getBlock() == this)
             {
-                worldIn.destroyBlock(pos.offset(BlocksHelper.getNextHorizontal(enumfacing)), !player.isCreative());
+                worldIn.destroyBlock(pos.offset(BlockHelper.getNextHorizontal(enumfacing)), !player.isCreative());
             }
         }
-        else if (worldIn.getBlockState(pos.offset(BlocksHelper.getPreviousHorizontal(enumfacing))).getBlock() == this)
+        else if (worldIn.getBlockState(pos.offset(BlockHelper.getPreviousHorizontal(enumfacing))).getBlock() == this)
         {
-            worldIn.destroyBlock(pos.offset(BlocksHelper.getPreviousHorizontal(enumfacing)), !player.isCreative());
+            worldIn.destroyBlock(pos.offset(BlockHelper.getPreviousHorizontal(enumfacing)), !player.isCreative());
         }
     }
 
@@ -192,7 +192,7 @@ public class DrinkMakerBlock extends NormalHorizontalBlock
             flag = false;
             if (!state.get(LEFT))
             {
-                pos = pos.offset(BlocksHelper.getPreviousHorizontal(state.get(HORIZONTAL_FACING)));
+                pos = pos.offset(BlockHelper.getPreviousHorizontal(state.get(HORIZONTAL_FACING)));
             }
             TileEntity te = worldIn.getTileEntity(pos);
             FluidUtil.getFluidHandler(ItemHandlerHelper.copyStackWithSize(player.getHeldItem(handIn), 1)).ifPresent(item ->

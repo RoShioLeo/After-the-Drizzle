@@ -11,9 +11,17 @@
         "afterthedrizzle:warm_water_flowing",
         "afterthedrizzle:sugary_water",
         "afterthedrizzle:sugary_water_flowing",
+        "afterthedrizzle:weak_green_tea",
+        "afterthedrizzle:weak_green_tea_flowing",
+        "afterthedrizzle:weak_black_tea",
+        "afterthedrizzle:weak_black_tea_flowing",
         "afterthedrizzle:green_tea",
         "afterthedrizzle:green_tea_flowing",
         "afterthedrizzle:black_tea",
-        "afterthedrizzle:black_tea_flowing"
+        "afterthedrizzle:black_tea_flowing",
+        "afterthedrizzle:strong_green_tea",
+        "afterthedrizzle:strong_green_tea_flowing",
+        "afterthedrizzle:strong_black_tea",
+        "afterthedrizzle:strong_black_tea_flowing"
     ]
 }

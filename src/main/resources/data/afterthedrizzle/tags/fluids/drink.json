@@ -2,7 +2,11 @@
     "replace": false,
     "values": [
         "afterthedrizzle:sugary_water",
+        "afterthedrizzle:weak_green_tea",
+        "afterthedrizzle:weak_black_tea",
         "afterthedrizzle:green_tea",
-        "afterthedrizzle:black_tea"
+        "afterthedrizzle:black_tea",
+        "afterthedrizzle:strong_green_tea",
+        "afterthedrizzle:strong_black_tea"
     ]
 }
