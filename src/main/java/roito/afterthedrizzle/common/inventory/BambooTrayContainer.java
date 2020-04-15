@@ -13,7 +13,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import roito.afterthedrizzle.common.tileentity.BambooTrayTileEntity;
 
-import static roito.afterthedrizzle.common.inventory.ContainerTypeRegistry.BAMBOO_TRAY_CONTAINER;
+import static roito.afterthedrizzle.common.inventory.ContainerTypesRegistry.BAMBOO_TRAY_CONTAINER;
 
 public class BambooTrayContainer extends Container
 {

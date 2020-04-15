@@ -13,7 +13,7 @@ import net.minecraftforge.items.SlotItemHandler;
 import roito.afterthedrizzle.common.block.BlocksRegistry;
 import roito.afterthedrizzle.common.tileentity.DrinkMakerTileEntity;
 
-import static roito.afterthedrizzle.common.inventory.ContainerTypeRegistry.DRINK_MAKER_CONTAINER;
+import static roito.afterthedrizzle.common.inventory.ContainerTypesRegistry.DRINK_MAKER_CONTAINER;
 
 public class DrinkMakerContainer extends NormalContainer
 {

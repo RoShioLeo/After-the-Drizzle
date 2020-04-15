@@ -22,15 +22,16 @@ import roito.afterthedrizzle.common.GroupCore;
 import roito.afterthedrizzle.common.block.BlocksRegistry;
 import roito.afterthedrizzle.common.config.NormalConfig;
 import roito.afterthedrizzle.common.drink.DrinkEffectsManager;
+import roito.afterthedrizzle.common.entity.EntityTypesRegistry;
 import roito.afterthedrizzle.common.fluid.FluidsRegistry;
 import roito.afterthedrizzle.common.inventory.BambooTrayContainer;
-import roito.afterthedrizzle.common.inventory.ContainerTypeRegistry;
+import roito.afterthedrizzle.common.inventory.ContainerTypesRegistry;
 import roito.afterthedrizzle.common.inventory.DrinkMakerContainer;
 import roito.afterthedrizzle.common.inventory.StoveContainer;
 import roito.afterthedrizzle.common.item.ItemsRegistry;
 import roito.afterthedrizzle.common.potion.EffectsRegistry;
 import roito.afterthedrizzle.common.recipe.RecipesRegistry;
-import roito.afterthedrizzle.common.tileentity.TileEntityTypeRegistry;
+import roito.afterthedrizzle.common.tileentity.TileEntityTypesRegistry;
 import roito.afterthedrizzle.common.world.WorldGenManager;
 import roito.afterthedrizzle.common.world.feature.FeaturesRegistry;
 import roito.afterthedrizzle.registry.RegisterManager;
@@ -54,8 +55,9 @@ public final class AfterTheDrizzle
         new BlocksRegistry();
         new ItemsRegistry();
         new EffectsRegistry();
-        new TileEntityTypeRegistry();
-        new ContainerTypeRegistry();
+        new TileEntityTypesRegistry();
+        new EntityTypesRegistry();
+        new ContainerTypesRegistry();
         new FeaturesRegistry();
     }
 
@@ -70,9 +72,9 @@ public final class AfterTheDrizzle
     public void ClientSetup(FMLClientSetupEvent event)
     {
         new ItemColorsRegistry();
-        ScreenManager.registerFactory((ContainerType<StoveContainer>) ContainerTypeRegistry.STOVE_CONTAINER, StoveGuiContainer::new);
-        ScreenManager.registerFactory((ContainerType<BambooTrayContainer>) ContainerTypeRegistry.BAMBOO_TRAY_CONTAINER, BambooTrayGuiContainer::new);
-        ScreenManager.registerFactory((ContainerType<DrinkMakerContainer>) ContainerTypeRegistry.DRINK_MAKER_CONTAINER, DrinkMakerGuiContainer::new);
+        ScreenManager.registerFactory((ContainerType<StoveContainer>) ContainerTypesRegistry.STOVE_CONTAINER, StoveGuiContainer::new);
+        ScreenManager.registerFactory((ContainerType<BambooTrayContainer>) ContainerTypesRegistry.BAMBOO_TRAY_CONTAINER, BambooTrayGuiContainer::new);
+        ScreenManager.registerFactory((ContainerType<DrinkMakerContainer>) ContainerTypesRegistry.DRINK_MAKER_CONTAINER, DrinkMakerGuiContainer::new);
     }
 
     public static final ItemGroup GROUP_CORE = new GroupCore();

@@ -34,7 +34,7 @@ public class DrinkMakerTileEntity extends NormalContainerTileEntity implements I
 
     public DrinkMakerTileEntity()
     {
-        super(TileEntityTypeRegistry.DRINK_MAKER);
+        super(TileEntityTypesRegistry.DRINK_MAKER);
     }
 
     @Nonnull

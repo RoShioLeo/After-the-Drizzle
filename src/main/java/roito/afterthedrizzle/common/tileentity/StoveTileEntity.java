@@ -23,7 +23,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import static roito.afterthedrizzle.common.block.StoveBlock.LIT;
-import static roito.afterthedrizzle.common.tileentity.TileEntityTypeRegistry.STOVE_TILE;
+import static roito.afterthedrizzle.common.tileentity.TileEntityTypesRegistry.STOVE_TILE;
 
 public class StoveTileEntity extends NormalContainerTileEntity implements ITickableTileEntity
 {

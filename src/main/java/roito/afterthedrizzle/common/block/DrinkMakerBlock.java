@@ -31,7 +31,7 @@ import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemHandlerHelper;
 import roito.afterthedrizzle.common.tileentity.DrinkMakerTileEntity;
 import roito.afterthedrizzle.common.tileentity.NormalContainerTileEntity;
-import roito.afterthedrizzle.common.tileentity.TileEntityTypeRegistry;
+import roito.afterthedrizzle.common.tileentity.TileEntityTypesRegistry;
 import roito.afterthedrizzle.helper.BlocksHelper;
 import roito.afterthedrizzle.helper.VoxelShapeHelper;
 
@@ -216,6 +216,6 @@ public class DrinkMakerBlock extends NormalHorizontalBlock
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world)
     {
-        return TileEntityTypeRegistry.DRINK_MAKER.create();
+        return TileEntityTypesRegistry.DRINK_MAKER.create();
     }
 }

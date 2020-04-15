@@ -27,7 +27,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import roito.afterthedrizzle.common.tileentity.NormalContainerTileEntity;
 import roito.afterthedrizzle.common.tileentity.StoveTileEntity;
-import roito.afterthedrizzle.common.tileentity.TileEntityTypeRegistry;
+import roito.afterthedrizzle.common.tileentity.TileEntityTypesRegistry;
 import roito.afterthedrizzle.helper.VoxelShapeHelper;
 
 import java.util.Random;
@@ -190,7 +190,7 @@ public class StoveBlock extends NormalHorizontalBlock implements IStoveBlock
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world)
     {
-        return TileEntityTypeRegistry.STOVE_TILE.create();
+        return TileEntityTypesRegistry.STOVE_TILE.create();
     }
 
     private void dropAsh(World worldIn, BlockPos pos)

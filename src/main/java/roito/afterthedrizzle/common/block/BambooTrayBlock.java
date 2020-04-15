@@ -25,7 +25,7 @@ import net.minecraftforge.items.IItemHandlerModifiable;
 import roito.afterthedrizzle.common.recipe.bamboo_tray.BambooTaryRecipe;
 import roito.afterthedrizzle.common.tileentity.BambooTrayTileEntity;
 import roito.afterthedrizzle.common.tileentity.NormalContainerTileEntity;
-import roito.afterthedrizzle.common.tileentity.TileEntityTypeRegistry;
+import roito.afterthedrizzle.common.tileentity.TileEntityTypesRegistry;
 import roito.afterthedrizzle.helper.VoxelShapeHelper;
 
 public class BambooTrayBlock extends NormalBlock
@@ -182,7 +182,7 @@ public class BambooTrayBlock extends NormalBlock
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world)
     {
-        return TileEntityTypeRegistry.BAMBOO_TRAY.create();
+        return TileEntityTypesRegistry.BAMBOO_TRAY.create();
     }
 
     static

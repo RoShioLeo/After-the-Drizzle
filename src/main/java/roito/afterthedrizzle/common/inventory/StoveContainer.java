@@ -13,7 +13,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import roito.afterthedrizzle.common.tileentity.StoveTileEntity;
 
-import static roito.afterthedrizzle.common.inventory.ContainerTypeRegistry.STOVE_CONTAINER;
+import static roito.afterthedrizzle.common.inventory.ContainerTypesRegistry.STOVE_CONTAINER;
 
 public class StoveContainer extends Container
 {

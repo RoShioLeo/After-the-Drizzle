@@ -40,7 +40,7 @@ public class BambooTrayTileEntity extends NormalContainerTileEntity implements I
 
     public BambooTrayTileEntity()
     {
-        super(TileEntityTypeRegistry.BAMBOO_TRAY);
+        super(TileEntityTypesRegistry.BAMBOO_TRAY);
     }
 
     @Override

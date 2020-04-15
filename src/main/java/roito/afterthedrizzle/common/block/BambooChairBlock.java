@@ -4,14 +4,19 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.state.StateContainer;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.World;
+import roito.afterthedrizzle.common.entity.SeatEntity;
 import roito.afterthedrizzle.helper.VoxelShapeHelper;
 
 public class BambooChairBlock extends NormalHorizontalBlock
@@ -42,6 +47,28 @@ public class BambooChairBlock extends NormalHorizontalBlock
             default:
                 return SOUTH_SHAPE;
         }
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit)
+    {
+        double x = 0, z = 0;
+        switch (state.get(HORIZONTAL_FACING))
+        {
+            case NORTH:
+                z = 0.25;
+                break;
+            case SOUTH:
+                z = -0.25;
+                break;
+            case EAST:
+                x = -0.25;
+                break;
+            default:
+                x = 0.25;
+        }
+        return SeatEntity.createSeat(worldIn, pos, player, 0.25, x, z);
     }
 
     @Override

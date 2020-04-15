@@ -1,6 +1,7 @@
 package roito.afterthedrizzle.registry;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
 import net.minecraft.potion.Effect;
@@ -33,6 +34,10 @@ public class RegistryModule
                 else if (o instanceof ContainerType<?>)
                 {
                     RegisterManager.CONTAINER_TYPES.add((ContainerType<?>) o);
+                }
+                else if (o instanceof EntityType<?>)
+                {
+                    RegisterManager.ENTITY_TYPES.add((EntityType<?>) o);
                 }
                 else if (o instanceof Effect)
                 {

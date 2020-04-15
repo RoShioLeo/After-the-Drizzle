@@ -1,5 +1,6 @@
 package roito.afterthedrizzle.common.recipe.bamboo_tray;
 
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import roito.afterthedrizzle.common.recipe.InputType;
@@ -14,18 +15,26 @@ public class BambooTaryRecipe
     private final ItemStack OUTPUT;
     public final InputType TYPE;
 
+    public BambooTaryRecipe(Item input, Item output)
+    {
+        this.ITEM_INPUT = new ItemStack(input);
+        this.OUTPUT = new ItemStack(output);
+        this.TYPE = InputType.ITEM_STACK;
+    }
+
+    public BambooTaryRecipe(String tag, Item output)
+    {
+        this.TAG_INPUT = tag;
+        this.OUTPUT = new ItemStack(output);
+        ;
+        this.TYPE = InputType.TAG;
+    }
+
     public BambooTaryRecipe(ItemStack input, ItemStack output)
     {
         this.ITEM_INPUT = input;
         this.OUTPUT = output;
         this.TYPE = InputType.ITEM_STACK;
-    }
-
-    public BambooTaryRecipe(String tag, ItemStack output)
-    {
-        this.TAG_INPUT = tag;
-        this.OUTPUT = output;
-        this.TYPE = InputType.TAG;
     }
 
     public ItemStack getOutput()
