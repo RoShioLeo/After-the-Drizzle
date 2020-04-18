@@ -23,7 +23,7 @@ public enum Humidity
 
     public String getTranslation()
     {
-        return I18n.format("i18n.afterthedrizzle.environment.humidity." + getName());
+        return I18n.format("info.afterthedrizzle.environment.humidity." + getName());
     }
 
     public int getOutdoorDryingTicks()

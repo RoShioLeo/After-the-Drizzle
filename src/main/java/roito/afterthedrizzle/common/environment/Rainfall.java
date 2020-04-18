@@ -46,7 +46,7 @@ public enum Rainfall
 
     public String getTranslation()
     {
-        return I18n.format("i18n.afterthedrizzle.environment.rainfall." + getName());
+        return I18n.format("info.afterthedrizzle.environment.rainfall." + getName());
     }
 
     public static Rainfall getRainfallLevel(float rainfall)

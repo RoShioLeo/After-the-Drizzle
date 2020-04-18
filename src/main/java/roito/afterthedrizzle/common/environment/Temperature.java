@@ -52,7 +52,7 @@ public enum Temperature
 
     public String getTranslation()
     {
-        return I18n.format("i18n.afterthedrizzle.environment.temperature." + getName());
+        return I18n.format("info.afterthedrizzle.environment.temperature." + getName());
     }
 
     public static Temperature getTemperatureLevel(float temp)
