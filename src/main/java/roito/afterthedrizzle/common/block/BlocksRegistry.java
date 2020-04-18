@@ -49,6 +49,10 @@ public final class BlocksRegistry extends RegistryModule
 
     public static final BlockItem WILD_TEA_PLANT_ITEM = new NormalBlockItem(WILD_TEA_PLANT);
 
+    // FLOWERS 花朵
+    public static final Block CHRYSANTHEMUM = new HybridizableFlowerBlock("chrysanthemum");
+    public static final BlockItem CHRYSANTHEMUM_ITEM = new NormalBlockItem(CHRYSANTHEMUM);
+
     // MISC 杂项
     public static final FlowingFluidBlock WATER = (FlowingFluidBlock) new FlowingFluidBlock(() -> Fluids.WATER, NormalFlowingFluidBlock.getProperties().tickRandomly())
     {
