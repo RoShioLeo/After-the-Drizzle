@@ -43,6 +43,7 @@
     "block.afterthedrizzle.bamboo_table": "Bamboo Table",
     "block.afterthedrizzle.bamboo_lantern": "Bamboo Lantern",
     "block.afterthedrizzle.bamboo_chair": "Bamboo Chair",
+    "block.afterthedrizzle.chrysanthemum": "Chrysanthemum",
     "fluid.afterthedrizzle.boiling_water": "Boiling Water",
     "fluid.afterthedrizzle.hot_water_80": "Hot Water (80℃)",
     "fluid.afterthedrizzle.hot_water_60": "Hot Water (60℃)",
@@ -68,5 +69,13 @@
     "info.afterthedrizzle.bamboo_tray.mode.bake": "Bake Mode",
     "info.afterthedrizzle.bamboo_tray.mode.process": "Process Mode",
     "info.afterthedrizzle.bed.excited": "You're too excited to go to sleep now.",
+    "info.afterthedrizzle.hyb.flower.color.yellow": "Yellow",
+    "info.afterthedrizzle.hyb.flower.color.red": "Red",
+    "info.afterthedrizzle.hyb.flower.color.blue": "Blue",
+    "info.afterthedrizzle.hyb.flower.color.white": "White",
+    "info.afterthedrizzle.hyb.flower.color.pink": "Pink",
+    "info.afterthedrizzle.hyb.flower.color.gold": "Gold",
+    "info.afterthedrizzle.hyb.flower.color.black": "Black",
+    "info.afterthedrizzle.hyb.flower.color.orange": "Orange",
     "death.attack.boiling": "%1$s was scalded by boiling water"
 }

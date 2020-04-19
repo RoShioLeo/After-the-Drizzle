@@ -8,6 +8,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import roito.afterthedrizzle.common.fluid.NormalFlowingFluidBlock;
 import roito.afterthedrizzle.common.item.DrinkMakerItem;
+import roito.afterthedrizzle.common.item.HybridizableFlowerBlockItem;
 import roito.afterthedrizzle.common.item.NormalBlockItem;
 import roito.afterthedrizzle.registry.RegistryModule;
 
@@ -51,7 +52,7 @@ public final class BlocksRegistry extends RegistryModule
 
     // FLOWERS 花朵
     public static final Block CHRYSANTHEMUM = new HybridizableFlowerBlock("chrysanthemum");
-    public static final BlockItem CHRYSANTHEMUM_ITEM = new NormalBlockItem(CHRYSANTHEMUM);
+    public static final BlockItem CHRYSANTHEMUM_ITEM = new HybridizableFlowerBlockItem(CHRYSANTHEMUM);
 
     // MISC 杂项
     public static final FlowingFluidBlock WATER = (FlowingFluidBlock) new FlowingFluidBlock(() -> Fluids.WATER, NormalFlowingFluidBlock.getProperties().tickRandomly())
