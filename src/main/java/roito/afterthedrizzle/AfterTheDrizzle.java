@@ -14,6 +14,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import roito.afterthedrizzle.client.ClientProxy;
 import roito.afterthedrizzle.client.color.ItemColorsRegistry;
+import roito.afterthedrizzle.client.color.block.BlockColorsRegistry;
 import roito.afterthedrizzle.client.gui.BambooTrayGuiContainer;
 import roito.afterthedrizzle.client.gui.DrinkMakerGuiContainer;
 import roito.afterthedrizzle.client.gui.StoveGuiContainer;
@@ -71,6 +72,7 @@ public final class AfterTheDrizzle
     public void ClientSetup(FMLClientSetupEvent event)
     {
         new ItemColorsRegistry();
+        new BlockColorsRegistry();
         ScreenManager.registerFactory((ContainerType<StoveContainer>) ContainerTypesRegistry.STOVE_CONTAINER, StoveGuiContainer::new);
         ScreenManager.registerFactory((ContainerType<BambooTrayContainer>) ContainerTypesRegistry.BAMBOO_TRAY_CONTAINER, BambooTrayGuiContainer::new);
         ScreenManager.registerFactory((ContainerType<DrinkMakerContainer>) ContainerTypesRegistry.DRINK_MAKER_CONTAINER, DrinkMakerGuiContainer::new);

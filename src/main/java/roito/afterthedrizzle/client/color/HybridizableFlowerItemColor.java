@@ -3,15 +3,15 @@ package roito.afterthedrizzle.client.color;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.item.ItemStack;
 
-public class HybridizableFlowerColor implements IItemColor {
-    public int WHITE = 0xFFFFFF;
-    public int RED = 0xFF5151;
-    public int YELLOW = 0xFFD800;
-    public int PINK = 0xFF9B9B;
-    public int GOLD = 0xFFE884;
-    public int ORANGE = 0xFF9047;
-    public int BLUE = 0x379CE5;
-    public int BLACK = 0x606060;
+public class HybridizableFlowerItemColor implements IItemColor {
+    public static int WHITE = 0xFFFFFF;
+    public static int RED = 0xFF5151;
+    public static int YELLOW = 0xFFD800;
+    public static int PINK = 0xFF9B9B;
+    public static int GOLD = 0xFFE884;
+    public static int ORANGE = 0xFF9047;
+    public static int BLUE = 0x379CE5;
+    public static int BLACK = 0x606060;
     @Override
     public int getColor(ItemStack itemStack, int tintIndex) {
         int color = 0xFFFFFF;
