@@ -12,17 +12,19 @@ import static roito.afterthedrizzle.client.color.HybridizableFlowerItemColor.*;
 
 public class HybridizableFlowerBlockColor implements IBlockColor {
     @Override
-    public int getColor(BlockState state, @Nullable IEnviromentBlockReader p_getColor_2_, @Nullable BlockPos p_getColor_3_, int p_getColor_4_) {
+    public int getColor(BlockState state, @Nullable IEnviromentBlockReader world, @Nullable BlockPos pos, int index)
+    {
         //if (p_getColor_4_ == 1){
-            int color = WHITE;
-            switch (state.get(HybridizableFlowerBlock.FLOWER_COLOR).getName()){
-                case "white":
-                    color = WHITE;
-                    break;
-                case "red":
-                    color = RED;
-                    break;
-                case "yellow":
+        int color = WHITE;
+        switch (state.get(HybridizableFlowerBlock.FLOWER_COLOR).getName())
+        {
+            case "white":
+                color = WHITE;
+                break;
+            case "red":
+                color = RED;
+                break;
+            case "yellow":
                     color = YELLOW;
                     break;
                 case "orange":
