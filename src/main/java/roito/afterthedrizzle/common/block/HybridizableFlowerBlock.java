@@ -256,14 +256,8 @@ public class HybridizableFlowerBlock extends BushBlock implements IGrowable {
             return name;
         }
 
-        public static Collection<FlowerColor> getColors() {
-            Collection<FlowerColor> colors = new ArrayList<>();
-            Collections.addAll(colors, FlowerColor.BLACK, FlowerColor.BLUE, FlowerColor.RED, FlowerColor.WHITE, FlowerColor.YELLOW, FlowerColor.ORANGE, FlowerColor.GOLD, FlowerColor.PINK);
-            return colors;
-        }
-
         public static FlowerColor getColorFromName(String name) {
-            for (FlowerColor color : getColors()) {
+            for (FlowerColor color : FlowerColor.values()) {
                 if (color.getName().equals(name)) {
                     return color;
                 }

@@ -24,7 +24,7 @@ public class HybridizableFlowerBlockItem extends NormalBlockItem {
     @Override
     public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
         if (group == AfterTheDrizzle.GROUP_CORE) {
-            for (HybridizableFlowerBlock.FlowerColor c : HybridizableFlowerBlock.FlowerColor.getColors()) {
+            for (HybridizableFlowerBlock.FlowerColor c : HybridizableFlowerBlock.FlowerColor.values()) {
                 ItemStack stack = new ItemStack(this.getItem());
                 CompoundNBT nbt = new CompoundNBT();
                 nbt.put("color", new StringNBT(c.getName()));
