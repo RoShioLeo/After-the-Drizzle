@@ -110,6 +110,9 @@ public class HybridizableFlowerBlock extends BushBlock implements IGrowable {
                 hybFlowersPos.add(p);
             }
         }
+        if (hybFlowersPos.size() >= 2){
+            hybFlowersPos.remove(pos);
+        }
         final double randomD2 = Math.random();
         final int hybPosI = (int) (randomD2 * hybFlowersPos.size());
 
