@@ -1,4 +1,4 @@
-package roito.afterthedrizzle.client.color;
+package roito.afterthedrizzle.client.color.item;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.color.IItemColor;

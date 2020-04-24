@@ -50,15 +50,15 @@ public enum Humidity
         switch (this)
         {
             case ARID:
-                return (int) (basicTicks * 0.5F);
+                return (int) (basicTicks * 1.5F);
             case DRY:
-                return (int) (basicTicks * 0.75F);
+                return (int) (basicTicks * 1.25F);
             case AVERAGE:
                 return basicTicks;
             case MOIST:
-                return (int) (basicTicks * 1.25F);
+                return (int) (basicTicks * 0.75F);
             default:
-                return (int) (basicTicks * 1.5F);
+                return (int) (basicTicks * 0.5F);
         }
     }
 

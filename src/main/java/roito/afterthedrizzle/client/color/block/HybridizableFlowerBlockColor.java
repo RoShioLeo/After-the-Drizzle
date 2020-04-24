@@ -9,12 +9,14 @@ import roito.afterthedrizzle.common.environment.FlowerColor;
 
 import javax.annotation.Nullable;
 
-public class HybridizableFlowerBlockColor implements IBlockColor {
+public class HybridizableFlowerBlockColor implements IBlockColor
+{
     @Override
     public int getColor(BlockState state, @Nullable IEnviromentBlockReader world, @Nullable BlockPos pos, int index)
     {
-        if (index == 0){
-            return state.has(HybridizableFlowerBlock.FLOWER_COLOR) ? FlowerColor.getColorFromName(state.get(HybridizableFlowerBlock.FLOWER_COLOR).getName()).getColorValue() : -1;
+        if (index == 0)
+        {
+            return FlowerColor.getFlowerColor(state.get(HybridizableFlowerBlock.FLOWER_COLOR).getName()).getColorValue();
         }
         return -1;
     }
