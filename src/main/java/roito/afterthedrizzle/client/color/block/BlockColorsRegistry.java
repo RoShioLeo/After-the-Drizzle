@@ -12,6 +12,7 @@ public final class BlockColorsRegistry
     public BlockColorsRegistry()
     {
         Minecraft.getInstance().getBlockColors().register(HYBRIDIZABLE_FLOWER_COLOR, BlocksRegistry.CHRYSANTHEMUM);
+        Minecraft.getInstance().getBlockColors().register(HYBRIDIZABLE_FLOWER_COLOR, BlocksRegistry.HYACINTH);
         Minecraft.getInstance().getBlockColors().register(TEAPOT_COLOR, BlocksRegistry.TEAPOT);
     }
 }
