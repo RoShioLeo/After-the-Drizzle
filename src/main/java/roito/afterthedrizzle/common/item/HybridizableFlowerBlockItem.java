@@ -8,9 +8,8 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.StringNBT;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.Style;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import roito.afterthedrizzle.AfterTheDrizzle;
 import roito.afterthedrizzle.common.environment.FlowerColor;
@@ -44,13 +43,9 @@ public class HybridizableFlowerBlockItem extends NormalBlockItem
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
     {
-        if (stack.hasTag() && stack.getTag().contains("color"))
+        if (stack.getOrCreateTag().contains("color"))
         {
-            ITextComponent info = new TranslationTextComponent("info.afterthedrizzle.hyb.flower.color." + stack.getTag().getString("color"));
-            Style style = new Style();
-            style.setColor(TextFormatting.GRAY);
-            info.setStyle(style);
-            tooltip.add(info);
+            tooltip.add(new StringTextComponent(FlowerColor.getFlowerColor(stack.getOrCreateTag().getString("color")).getTranslation()).applyTextStyle(TextFormatting.ITALIC).applyTextStyle(TextFormatting.GRAY));
         }
     }
 

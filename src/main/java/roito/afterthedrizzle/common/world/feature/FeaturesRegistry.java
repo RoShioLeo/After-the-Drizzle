@@ -8,4 +8,5 @@ public final class FeaturesRegistry extends RegistryModule
 {
     // TODO 菊花的地形生成
     public static final Feature<NoFeatureConfig> TEA_PLANT = new TeaPlantsFeature(NoFeatureConfig::deserialize);
+    public static final Feature<NoFeatureConfig> HYBRIDIZABLE_FLOWER = new HybridizableFlowersFeature(NoFeatureConfig::deserialize);
 }

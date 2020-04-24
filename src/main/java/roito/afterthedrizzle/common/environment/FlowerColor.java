@@ -1,5 +1,6 @@
 package roito.afterthedrizzle.common.environment;
 
+import net.minecraft.client.resources.I18n;
 import net.minecraft.util.IStringSerializable;
 
 public enum FlowerColor implements IStringSerializable
@@ -38,6 +39,11 @@ public enum FlowerColor implements IStringSerializable
     public static FlowerColor getFlowerColor(String name)
     {
         return FlowerColor.valueOf(name.toUpperCase());
+    }
+
+    public String getTranslation()
+    {
+        return I18n.format("info.afterthedrizzle.hyb.flower.color." + getName());
     }
 
     public static FlowerColor getHybColor(FlowerColor color1, FlowerColor color2)

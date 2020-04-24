@@ -52,6 +52,7 @@ public final class BlocksRegistry extends RegistryModule
 
     // FLOWERS 花朵
     public static final Block CHRYSANTHEMUM = new HybridizableFlowerBlock("chrysanthemum");
+
     public static final BlockItem CHRYSANTHEMUM_ITEM = new HybridizableFlowerBlockItem(CHRYSANTHEMUM);
 
     // MISC 杂项
