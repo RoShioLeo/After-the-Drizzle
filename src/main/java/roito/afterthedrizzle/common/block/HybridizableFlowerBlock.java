@@ -28,7 +28,6 @@ import java.util.Random;
 
 public class HybridizableFlowerBlock extends BushBlock implements IGrowable
 {
-    //TODO 随机刻生长
     public static final EnumProperty<FlowerColor> FLOWER_COLOR = EnumProperty.create("color", FlowerColor.class);
     protected static final VoxelShape SHAPE = Block.makeCuboidShape(5.0D, 0.0D, 5.0D, 11.0D, 12.0D, 11.0D);
 
@@ -51,11 +50,11 @@ public class HybridizableFlowerBlock extends BushBlock implements IGrowable
     @SuppressWarnings("deprecation")
     public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder)
     {
-        ItemStack stack = new ItemStack(BlocksRegistry.CHRYSANTHEMUM_ITEM);
+        List<ItemStack> list = super.getDrops(state, builder);
+        ItemStack stack = new ItemStack(this);
         CompoundNBT nbt = new CompoundNBT();
         nbt.put("color", new StringNBT(state.get(FLOWER_COLOR).getName()));
         stack.setTag(nbt);
-        List<ItemStack> list = new ArrayList();
         list.add(stack);
         return list;
     }

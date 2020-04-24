@@ -14,13 +14,13 @@ public class TeapotBlockColor implements IBlockColor
     @Override
     public int getColor(BlockState state, @Nullable IEnviromentBlockReader world, @Nullable BlockPos pos, int index)
     {
-        if (index == 1)
+        if (index == 1 && world != null & pos != null)
         {
             TileEntity tileEntity = world.getTileEntity(pos);
             if (tileEntity instanceof TeapotTileEntity)
             {
-                int color = ((TeapotTileEntity) tileEntity).getFluidTank().getFluid().getFluid().getAttributes().getColor();
-                return color == 0 ? -1 : color;
+                int color = ((TeapotTileEntity) tileEntity).getFluid().getAttributes().getColor();
+                return color != 0 ? color : -1;
             }
         }
         return -1;

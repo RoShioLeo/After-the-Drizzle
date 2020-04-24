@@ -6,8 +6,10 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
+import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.FluidTags;
@@ -41,13 +43,19 @@ public class TeapotItem extends NormalBlockItem
 
     public TeapotItem()
     {
-        super(BlocksRegistry.TEAPOT, new Properties().group(AfterTheDrizzle.GROUP_CORE));
+        super(BlocksRegistry.TEAPOT, new Properties().group(AfterTheDrizzle.GROUP_CORE).maxStackSize(1));
     }
 
     @Override
     public ICapabilityProvider initCapabilities(@Nonnull ItemStack stack, @Nullable CompoundNBT nbt)
     {
         return new FluidHandlerItemStack(stack, CAPACITY);
+    }
+
+    @Override
+    public ActionResultType onItemUse(ItemUseContext context)
+    {
+        return this.onItemRightClick(context.getWorld(), context.getPlayer(), context.getHand()).getType() != ActionResultType.SUCCESS ? this.tryPlace(new BlockItemUseContext(context)) : ActionResultType.SUCCESS;
     }
 
     @Override

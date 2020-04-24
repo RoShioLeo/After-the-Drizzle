@@ -2,17 +2,23 @@ package roito.afterthedrizzle.common.tileentity;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.fluid.Fluid;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import roito.afterthedrizzle.common.config.NormalConfig;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -21,8 +27,6 @@ import static roito.afterthedrizzle.common.tileentity.TileEntityTypesRegistry.TE
 
 public class TeapotTileEntity extends TileEntity
 {
-    private boolean prepareForRemove = false;
-
     private LazyOptional<FluidTank> fluidTank = LazyOptional.of(this::createFluidHandler);
 
     public TeapotTileEntity()
@@ -49,6 +53,20 @@ public class TeapotTileEntity extends TileEntity
         CompoundNBT nbtTag = new CompoundNBT();
         this.write(nbtTag);
         return new SUpdateTileEntityPacket(getPos(), 1, nbtTag);
+    }
+
+    @Nonnull
+    @Override
+    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side)
+    {
+        if (!this.removed)
+        {
+            if (CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.equals(cap))
+            {
+                return fluidTank.cast();
+            }
+        }
+        return super.getCapability(cap, side);
     }
 
     @Override
@@ -90,6 +108,11 @@ public class TeapotTileEntity extends TileEntity
         return this.fluidTank.orElse(new FluidTank(0));
     }
 
+    public Fluid getFluid()
+    {
+        return this.fluidTank.map(f -> f.getFluid().getFluid()).orElse(Fluids.EMPTY);
+    }
+
     public int getFluidAmount()
     {
         return getFluidTank().getFluidAmount();
@@ -100,9 +123,15 @@ public class TeapotTileEntity extends TileEntity
         this.fluidTank.ifPresent(f -> f.setFluid(stack));
     }
 
+    public void setFluid(Fluid fluid)
+    {
+        this.fluidTank.ifPresent(f -> f.setFluid(new FluidStack(fluid, getFluidAmount())));
+        this.refresh();
+    }
+
     public void refresh()
     {
-        if (this.hasWorld() && !this.world.isRemote && !prepareForRemove)
+        if (this.hasWorld() && !this.world.isRemote)
         {
             BlockState state = this.world.getBlockState(pos);
             this.world.markAndNotifyBlock(pos, null, state, state, 11);
