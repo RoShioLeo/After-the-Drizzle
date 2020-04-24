@@ -1,0 +1,19 @@
+{
+    "variants": {
+        "facing=north": {
+            "model": "afterthedrizzle:block/porcelain_teapot"
+        },
+        "facing=south": {
+            "model": "afterthedrizzle:block/porcelain_teapot",
+            "y": 180
+        },
+        "facing=west": {
+            "model": "afterthedrizzle:block/porcelain_teapot",
+            "y": 270
+        },
+        "facing=east": {
+            "model": "afterthedrizzle:block/porcelain_teapot",
+            "y": 90
+        }
+    }
+}

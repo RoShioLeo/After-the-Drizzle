@@ -24,6 +24,7 @@ public final class BlocksRegistry extends RegistryModule
     public static final Block DIRT_STOVE = new StoveBlock(Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(3.5F), "dirt_stove", 1);
     public static final Block STONE_STOVE = new StoveBlock(Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(3.5F), "stone_stove", 2);
     public static final Block WOODEN_FRAME = new WoodenFrameBlock();
+    public static final Block TEAPOT = new TeapotBlock();
 
     public static final BlockItem BAMBOO_TRAY_ITEM = new NormalBlockItem(BAMBOO_TRAY);
     public static final BlockItem DRINK_MAKER_ITEM = new DrinkMakerItem();
@@ -31,7 +32,7 @@ public final class BlocksRegistry extends RegistryModule
     public static final BlockItem STONE_STOVE_ITEM = new NormalBlockItem(STONE_STOVE);
     public static final BlockItem WOODEN_FRAME_ITEM = new NormalBlockItem(WOODEN_FRAME);
 
-    //DECORATIONS 装饰
+    // DECORATIONS 装饰
     public static final Block BAMBOO_TABLE = new BambooTableBlock();
     public static final Block BAMBOO_CHAIR = new BambooChairBlock();
     public static final Block BAMBOO_LANTERN = new LanternBlock(Block.Properties.create(Material.BAMBOO).sound(SoundType.BAMBOO).hardnessAndResistance(0.5F).lightValue(15)).setRegistryName("bamboo_lantern");

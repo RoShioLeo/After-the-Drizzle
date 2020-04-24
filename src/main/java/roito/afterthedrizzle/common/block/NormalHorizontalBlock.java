@@ -2,12 +2,7 @@ package roito.afterthedrizzle.common.block;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalBlock;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-
-import javax.annotation.Nullable;
+import net.minecraft.item.BlockItemUseContext;
 
 public class NormalHorizontalBlock extends HorizontalBlock
 {
@@ -18,11 +13,12 @@ public class NormalHorizontalBlock extends HorizontalBlock
     }
 
     @Override
-    public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack)
+    public BlockState getStateForPlacement(BlockItemUseContext context)
     {
-        if (placer != null)
+        if (context.getPlayer() != null)
         {
-            worldIn.setBlockState(pos, state.with(HORIZONTAL_FACING, placer.getHorizontalFacing().getOpposite()), 2);
+            return getDefaultState().with(HORIZONTAL_FACING, context.getPlayer().getHorizontalFacing().getOpposite());
         }
+        return getDefaultState();
     }
 }

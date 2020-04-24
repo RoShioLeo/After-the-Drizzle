@@ -64,5 +64,4 @@ public final class ItemsRegistry extends RegistryModule
     public static final Item PORCELAIN_TEAPOT = new TeapotItem();
     public static final Item PORCELAIN_CUP_DRINK = new CupDrinkItem(250, PORCELAIN_CUP, "porcelain_cup_drink");
     public static final Item BOTTLE_DRINK = new CupDrinkItem(500, BOTTLE, "bottle_drink");
-    public static final Item PORCELAIN_TEAPOT_DRINK = new TeapotDrinkItem();
 }
