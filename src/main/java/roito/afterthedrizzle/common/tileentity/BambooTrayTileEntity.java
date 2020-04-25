@@ -35,7 +35,7 @@ public class BambooTrayTileEntity extends NormalContainerTileEntity implements I
 
     private BambooTrayMode mode = BambooTrayMode.OUTDOORS;
 
-    private LazyOptional<ItemStackHandler> containerInventory = LazyOptional.of(this::createHandler);
+    private final LazyOptional<ItemStackHandler> containerInventory = LazyOptional.of(this::createHandler);
     private BambooTaryRecipe currentRecipe = new BambooTaryRecipe(ItemStack.EMPTY, ItemStack.EMPTY);
 
     public BambooTrayTileEntity()

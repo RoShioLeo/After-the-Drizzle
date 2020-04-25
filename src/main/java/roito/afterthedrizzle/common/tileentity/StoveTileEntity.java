@@ -13,7 +13,6 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import roito.afterthedrizzle.common.block.StoveBlock;
 import roito.afterthedrizzle.common.inventory.StoveContainer;
@@ -33,8 +32,8 @@ public class StoveTileEntity extends NormalContainerTileEntity implements ITicka
 
     private int doubleClickTicks = 0;
 
-    private LazyOptional<IItemHandler> fuelInventory = LazyOptional.of(this::createFuelHandler);
-    private LazyOptional<IItemHandler> ashInventory = LazyOptional.of(this::createAshHandler);
+    private final LazyOptional<ItemStackHandler> fuelInventory = LazyOptional.of(this::createFuelHandler);
+    private final LazyOptional<ItemStackHandler> ashInventory = LazyOptional.of(this::createAshHandler);
 
     public StoveTileEntity()
     {
@@ -124,8 +123,8 @@ public class StoveTileEntity extends NormalContainerTileEntity implements ITicka
             ItemStack itemFuel = this.fuelInventory.orElse(new ItemStackHandler()).extractItem(0, 1, true);
             if (ForgeHooks.getBurnTime(itemFuel) > 0)
             {
-                this.fuelTicks = ForgeHooks.getBurnTime(itemFuel);
-                this.remainTicks = ForgeHooks.getBurnTime(itemFuel);
+                this.fuelTicks = ForgeHooks.getBurnTime(itemFuel) * 2;
+                this.remainTicks = ForgeHooks.getBurnTime(itemFuel) * 2;
                 ItemStack cItem = this.fuelInventory.orElse(new ItemStackHandler()).getStackInSlot(0).getContainerItem();
                 if (!cItem.isEmpty())
                 {
@@ -196,7 +195,7 @@ public class StoveTileEntity extends NormalContainerTileEntity implements ITicka
         return doubleClickTicks > 0;
     }
 
-    private IItemHandler createAshHandler()
+    private ItemStackHandler createAshHandler()
     {
         return new ItemStackHandler()
         {
@@ -208,7 +207,7 @@ public class StoveTileEntity extends NormalContainerTileEntity implements ITicka
         };
     }
 
-    private IItemHandler createFuelHandler()
+    private ItemStackHandler createFuelHandler()
     {
         return new ItemStackHandler()
         {

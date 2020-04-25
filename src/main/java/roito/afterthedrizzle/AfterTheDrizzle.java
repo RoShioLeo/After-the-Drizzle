@@ -32,6 +32,7 @@ import roito.afterthedrizzle.common.inventory.StoveContainer;
 import roito.afterthedrizzle.common.item.ItemsRegistry;
 import roito.afterthedrizzle.common.potion.EffectsRegistry;
 import roito.afterthedrizzle.common.recipe.RecipesRegistry;
+import roito.afterthedrizzle.common.recipe.type.RecipeSerializersRegistry;
 import roito.afterthedrizzle.common.tileentity.TileEntityTypesRegistry;
 import roito.afterthedrizzle.common.world.WorldGenManager;
 import roito.afterthedrizzle.common.world.feature.FeaturesRegistry;
@@ -53,6 +54,7 @@ public final class AfterTheDrizzle
         FluidsRegistry.FLUIDS.register(FMLJavaModLoadingContext.get().getModEventBus());
         FluidsRegistry.BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
         FluidsRegistry.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
+        RecipeSerializersRegistry.RECIPE_SERIALIZERS.register(FMLJavaModLoadingContext.get().getModEventBus());
         new BlocksRegistry();
         new ItemsRegistry();
         new EffectsRegistry();

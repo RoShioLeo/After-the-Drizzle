@@ -29,7 +29,11 @@ public final class WorldGenManager
             Rainfall rainfall = Rainfall.getRainfallLevel(rain);
             if (temperature.getId() <= 4 && rainfall.getId() >= 2 && rainfall.getId() <= 4)
             {
-                biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(FeaturesRegistry.HYBRIDIZABLE_FLOWER, IFeatureConfig.NO_FEATURE_CONFIG, Placement.COUNT_HEIGHTMAP_DOUBLE, new FrequencyConfig(1)));
+                biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(FeaturesRegistry.COLD_FLOWER, IFeatureConfig.NO_FEATURE_CONFIG, Placement.COUNT_HEIGHTMAP_DOUBLE, new FrequencyConfig(1)));
+            }
+            else if (temperature.getId() >= 3 && temperature.getId() <= 5 && rainfall.getId() >= 2)
+            {
+                biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(FeaturesRegistry.WARM_FLOWER, IFeatureConfig.NO_FEATURE_CONFIG, Placement.COUNT_HEIGHTMAP_DOUBLE, new FrequencyConfig(1)));
             }
         });
     }

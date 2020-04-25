@@ -7,5 +7,6 @@ import roito.afterthedrizzle.registry.RegistryModule;
 public final class FeaturesRegistry extends RegistryModule
 {
     public static final Feature<NoFeatureConfig> TEA_PLANT = new TeaPlantsFeature(NoFeatureConfig::deserialize);
-    public static final Feature<NoFeatureConfig> HYBRIDIZABLE_FLOWER = new HybridizableFlowersFeature(NoFeatureConfig::deserialize);
+    public static final Feature<NoFeatureConfig> COLD_FLOWER = new ColdWarmFlowersFeature(NoFeatureConfig::deserialize);
+    public static final Feature<NoFeatureConfig> WARM_FLOWER = new WarmFlowersFeature(NoFeatureConfig::deserialize);
 }

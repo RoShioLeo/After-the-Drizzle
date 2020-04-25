@@ -38,12 +38,14 @@ public final class BlocksRegistry extends RegistryModule
     public static final Block BAMBOO_LANTERN = new LanternBlock(Block.Properties.create(Material.BAMBOO).sound(SoundType.BAMBOO).hardnessAndResistance(0.5F).lightValue(15)).setRegistryName("bamboo_lantern");
     public static final Block BAMBOO_DOOR = new BambooDoorBlock("bamboo_door");
     public static final Block BAMBOO_GLASS_DOOR = new BambooDoorBlock("bamboo_glass_door");
+//    public static final Block BAMBOO_GLASS_WINDOW = new BambooGlassWindow();
 
     public static final BlockItem BAMBOO_TABLE_ITEM = new NormalBlockItem(BAMBOO_TABLE);
     public static final BlockItem BAMBOO_CHAIR_ITEM = new NormalBlockItem(BAMBOO_CHAIR);
     public static final BlockItem BAMBOO_LANTERN_ITEM = new NormalBlockItem(BAMBOO_LANTERN);
     public static final BlockItem BAMBOO_DOOR_ITEM = new NormalBlockItem(BAMBOO_DOOR);
     public static final BlockItem BAMBOO_GLASS_DOOR_ITEM = new NormalBlockItem(BAMBOO_GLASS_DOOR);
+//    public static final BlockItem BAMBOO_GLASS_WINDOW_ITEM = new NormalBlockItem(BAMBOO_GLASS_WINDOW);
 
     // CROPS 作物
     public static final Block TEA_PLANT = new TeaPlantBlock();
@@ -53,10 +55,11 @@ public final class BlocksRegistry extends RegistryModule
 
     // FLOWERS 花朵
     public static final Block CHRYSANTHEMUM = new HybridizableFlowerBlock("chrysanthemum");
-    public static final BlockItem CHRYSANTHEMUM_ITEM = new HybridizableFlowerBlockItem(CHRYSANTHEMUM);
     public static final Block HYACINTH = new HybridizableFlowerBlock("hyacinth");
-    public static final BlockItem HYACINTH_ITEM = new HybridizableFlowerBlockItem(HYACINTH);
     public static final Block ZINNIA = new HybridizableFlowerBlock("zinnia");
+
+    public static final BlockItem CHRYSANTHEMUM_ITEM = new HybridizableFlowerBlockItem(CHRYSANTHEMUM);
+    public static final BlockItem HYACINTH_ITEM = new HybridizableFlowerBlockItem(HYACINTH);
     public static final BlockItem ZINNIA_ITEM = new HybridizableFlowerBlockItem(ZINNIA);
 
     // MISC 杂项
