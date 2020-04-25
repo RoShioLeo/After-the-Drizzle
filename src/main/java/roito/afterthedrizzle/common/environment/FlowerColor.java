@@ -1,29 +1,33 @@
 package roito.afterthedrizzle.common.environment;
 
 import net.minecraft.client.resources.I18n;
+import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraft.util.IStringSerializable;
 
 public enum FlowerColor implements IStringSerializable
 {
     //一级花:自然生成
-    YELLOW(0xFFD82B),
-    RED(0xFF5151),
-    WHITE(0xFFFFFF),
+    YELLOW(0xFFD82B, Items.YELLOW_DYE),
+    RED(0xFF5151, Items.RED_DYE),
+    WHITE(0xFFFFFF, Items.WHITE_DYE),
 
     //二级花: Orange=yellow+red; Pink=white+red; Gold=yellow+white
-    ORANGE(0xFF9047),
-    PINK(0xFF9B9B),
-    GOLD(0xFFE993),
+    ORANGE(0xFF9047, Items.ORANGE_DYE),
+    PINK(0xFF9B9B, Items.PINK_DYE),
+    GOLD(0xFFE993, null),
 
     //三级花: Black=2+2; Blue=2+1
-    BLACK(0x606060),
-    BLUE(0x5AAAE2);
+    BLACK(0x606060, Items.BLACK_DYE),
+    BLUE(0x5AAAE2, Items.BLUE_DYE);
 
     private final int color;
+    private final Item dye;
 
-    FlowerColor(int colorValue)
+    FlowerColor(int colorValue, Item dye)
     {
         this.color = colorValue;
+        this.dye = dye;
     }
 
     public String getName()
@@ -39,6 +43,11 @@ public enum FlowerColor implements IStringSerializable
     public static FlowerColor getFlowerColor(String name)
     {
         return FlowerColor.valueOf(name.toUpperCase());
+    }
+
+    public Item getDye()
+    {
+        return dye;
     }
 
     public String getTranslation()

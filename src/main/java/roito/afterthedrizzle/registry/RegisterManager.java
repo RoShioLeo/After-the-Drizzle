@@ -6,24 +6,26 @@ import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
 import net.minecraft.potion.Effect;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.NonNullList;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import roito.afterthedrizzle.helper.LogHelper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public final class RegisterManager
 {
-    public static NonNullList<Item> ITEMS = NonNullList.create();
-    public static NonNullList<Block> BLOCKS = NonNullList.create();
-    public static NonNullList<TileEntityType<?>> TILE_ENTITY_TYPES = NonNullList.create();
-    public static NonNullList<EntityType<?>> ENTITY_TYPES = NonNullList.create();
-    public static NonNullList<Effect> EFFECTS = NonNullList.create();
-    public static NonNullList<ContainerType<?>> CONTAINER_TYPES = NonNullList.create();
-    public static NonNullList<Feature<?>> FEATURES = NonNullList.create();
+    public static List<Item> ITEMS = new ArrayList<>();
+    public static List<Block> BLOCKS = new ArrayList<>();
+    public static List<TileEntityType<?>> TILE_ENTITY_TYPES = new ArrayList<>();
+    public static List<EntityType<?>> ENTITY_TYPES = new ArrayList<>();
+    public static List<Effect> EFFECTS = new ArrayList<>();
+    public static List<ContainerType<?>> CONTAINER_TYPES = new ArrayList<>();
+    public static List<Feature<?>> FEATURES = new ArrayList<>();
 
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event)

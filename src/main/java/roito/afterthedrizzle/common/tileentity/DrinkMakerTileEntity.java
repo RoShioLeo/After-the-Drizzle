@@ -28,12 +28,12 @@ import java.util.List;
 
 public class DrinkMakerTileEntity extends NormalContainerTileEntity implements ITickableTileEntity
 {
-    private LazyOptional<ItemStackHandler> ingredientsInventory = LazyOptional.of(this::createItemHandler);
-    private LazyOptional<ItemStackHandler> residuesInventory = LazyOptional.of(this::createItemHandler);
-    private LazyOptional<FluidTank> fluidTank = LazyOptional.of(this::createFluidHandler);
+    private final LazyOptional<ItemStackHandler> ingredientsInventory = LazyOptional.of(this::createItemHandler);
+    private final LazyOptional<ItemStackHandler> residuesInventory = LazyOptional.of(this::createItemHandler);
+    private final LazyOptional<FluidTank> fluidTank = LazyOptional.of(this::createFluidHandler);
 
     private int processTicks = 0;
-    private static int totalTicks = 200;
+    private static final int totalTicks = 200;
 
     public DrinkMakerTileEntity()
     {

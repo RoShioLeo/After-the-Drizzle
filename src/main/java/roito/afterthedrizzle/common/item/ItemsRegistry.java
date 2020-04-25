@@ -61,6 +61,7 @@ public final class ItemsRegistry extends RegistryModule
             return super.initCapabilities(new ItemStack(ItemsRegistry.BOTTLE_DRINK), nbt);
         }
     }.setRegistryName("bottle");
+    public static final Item CLAY_TEAPOT = new NormalItem("clay_teapot");
     public static final Item PORCELAIN_TEAPOT = new TeapotItem();
     public static final Item PORCELAIN_CUP_DRINK = new CupDrinkItem(250, PORCELAIN_CUP, "porcelain_cup_drink");
     public static final Item BOTTLE_DRINK = new CupDrinkItem(500, BOTTLE, "bottle_drink");

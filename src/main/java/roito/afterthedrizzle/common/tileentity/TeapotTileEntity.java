@@ -27,7 +27,7 @@ import static roito.afterthedrizzle.common.tileentity.TileEntityTypesRegistry.TE
 
 public class TeapotTileEntity extends TileEntity
 {
-    private LazyOptional<FluidTank> fluidTank = LazyOptional.of(this::createFluidHandler);
+    private final LazyOptional<FluidTank> fluidTank = LazyOptional.of(this::createFluidHandler);
 
     public TeapotTileEntity()
     {
