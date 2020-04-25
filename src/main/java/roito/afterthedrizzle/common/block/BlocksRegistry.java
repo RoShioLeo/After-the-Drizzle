@@ -56,6 +56,8 @@ public final class BlocksRegistry extends RegistryModule
     public static final BlockItem CHRYSANTHEMUM_ITEM = new HybridizableFlowerBlockItem(CHRYSANTHEMUM);
     public static final Block HYACINTH = new HybridizableFlowerBlock("hyacinth");
     public static final BlockItem HYACINTH_ITEM = new HybridizableFlowerBlockItem(HYACINTH);
+    public static final Block ZINNIA = new HybridizableFlowerBlock("zinnia");
+    public static final BlockItem ZINNIA_ITEM = new HybridizableFlowerBlockItem(ZINNIA);
 
     // MISC 杂项
     public static final FlowingFluidBlock WATER = (FlowingFluidBlock) new FlowingFluidBlock(() -> Fluids.WATER, NormalFlowingFluidBlock.getProperties().tickRandomly())
