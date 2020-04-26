@@ -13,7 +13,7 @@ import roito.afterthedrizzle.AfterTheDrizzle;
 import roito.afterthedrizzle.common.potion.EffectsRegistry;
 
 @Mod.EventBusSubscriber(modid = AfterTheDrizzle.MODID)
-public final class EventHandler
+public final class CommonEventHandler
 {
     @SubscribeEvent
     public static void onLivingHurt(LivingHurtEvent event)

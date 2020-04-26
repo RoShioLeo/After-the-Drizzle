@@ -10,7 +10,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Hand;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.math.BlockPos;
@@ -19,22 +18,22 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
+import net.minecraft.world.storage.loot.LootContext;
+import net.minecraftforge.common.PlantType;
 import roito.afterthedrizzle.common.environment.Humidity;
 import roito.afterthedrizzle.common.item.ItemsRegistry;
 
+import java.util.List;
 import java.util.Random;
 
 public class TeaPlantBlock extends BushBlock implements IGrowable
 {
-    public static final IntegerProperty AGE = BlockStateProperties.AGE_0_15;
+    public static final IntegerProperty AGE = IntegerProperty.create("age", 0, 11);
     private static final VoxelShape[] SHAPE_BY_AGE = new VoxelShape[]{
             Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 3.0D, 16.0D), Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 3.0D, 16.0D),
             Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 8.0D, 16.0D), Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 8.0D, 16.0D),
             Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 13.0D, 16.0D), Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 13.0D, 16.0D),
-            Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D), Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D),
-            Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D), Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D),
             Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D), Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D),
             Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D), Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D),
             Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D), Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D)};
@@ -53,11 +52,6 @@ public class TeaPlantBlock extends BushBlock implements IGrowable
         return SHAPE_BY_AGE[state.get(this.getAgeProperty())];
     }
 
-    protected boolean isValidGround(BlockState state, IBlockReader worldIn, BlockPos pos)
-    {
-        return state.getBlock() instanceof FarmlandBlock;
-    }
-
     public IntegerProperty getAgeProperty()
     {
         return AGE;
@@ -65,7 +59,7 @@ public class TeaPlantBlock extends BushBlock implements IGrowable
 
     public int getMaxAge()
     {
-        return 15;
+        return 11;
     }
 
     protected int getAge(BlockState state)
@@ -84,26 +78,26 @@ public class TeaPlantBlock extends BushBlock implements IGrowable
     }
 
     @Override
-    public void onBlockHarvested(World worldIn, BlockPos pos, BlockState state, PlayerEntity player)
+    @SuppressWarnings("deprecation")
+    public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder)
     {
-        if (!worldIn.isRemote && !player.isCreative())
+        List<ItemStack> list = super.getDrops(state, builder);
+        list.add(new ItemStack(ItemsRegistry.TEA_SEEDS));
+        int age = state.get(AGE);
+        if (age >= 2)
         {
-            worldIn.addEntity(new ItemEntity(worldIn, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, new ItemStack(ItemsRegistry.TEA_SEEDS)));
-            int age = state.get(AGE);
-            if (age >= 2)
-            {
-                worldIn.addEntity(new ItemEntity(worldIn, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, new ItemStack(Items.STICK, 2)));
-            }
-            if (age >= 6 && age <= 13)
-            {
-                worldIn.addEntity(new ItemEntity(worldIn, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, new ItemStack(ItemsRegistry.TEA_LEAVES, 4)));
-            }
-            if (age >= 14)
-            {
-                worldIn.addEntity(new ItemEntity(worldIn, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, new ItemStack(ItemsRegistry.TEA_SEEDS, 4)));
-            }
+            list.add(new ItemStack(Items.STICK, 2));
         }
-        super.onBlockHarvested(worldIn, pos, state, player);
+        if (age >= 6 && age <= 10)
+        {
+            list.add(new ItemStack(ItemsRegistry.TEA_LEAVES, 2));
+        }
+        else if (age >= 11)
+        {
+            list.add(new ItemStack(ItemsRegistry.TEA_LEAVES, 1));
+            list.add(new ItemStack(ItemsRegistry.TEA_SEEDS, 4));
+        }
+        return list;
     }
 
     @Override
@@ -123,40 +117,21 @@ public class TeaPlantBlock extends BushBlock implements IGrowable
                 f = 1.0F - (4 - env.getId()) * 0.2F;
             }
 
-            if (i < this.getMaxAge())
+            if (i < this.getMaxAge() && i != 8)
             {
                 f *= getGrowthChance(this, worldIn, pos);
                 if (net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, pos, state, random.nextInt((int) (25.0F / f) + 1) == 0))
                 {
-                    if (i < 11 || (i > 11 && i < 15))
-                    {
-                        worldIn.setBlockState(pos, state.with(AGE, i + 1), 2);
-                    }
-                    else
-                    {
-                        worldIn.setBlockState(pos, state.with(AGE, 6), 2);
-                    }
+                    worldIn.setBlockState(pos, state.with(AGE, i + 1), 2);
                     net.minecraftforge.common.ForgeHooks.onCropsGrowPost(worldIn, pos, state);
                 }
             }
         }
     }
 
-    public void grow(World worldIn, BlockPos pos, BlockState state)
-    {
-        int i = this.getAge(state) + this.getBonemealAgeIncrease(worldIn);
-        int j = this.getMaxAge();
-        if (i > j)
-        {
-            i = j;
-        }
-
-        worldIn.setBlockState(pos, this.withAge(i), 2);
-    }
-
     protected int getBonemealAgeIncrease(World worldIn)
     {
-        return 1;
+        return 2;
     }
 
     protected static float getGrowthChance(Block blockIn, IBlockReader worldIn, BlockPos pos)
@@ -211,6 +186,12 @@ public class TeaPlantBlock extends BushBlock implements IGrowable
     }
 
     @Override
+    public PlantType getPlantType(IBlockReader world, BlockPos pos)
+    {
+        return PlantType.Crop;
+    }
+
+    @Override
     @SuppressWarnings("deprecation")
     public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit)
     {
@@ -219,14 +200,13 @@ public class TeaPlantBlock extends BushBlock implements IGrowable
             switch (this.getAge(state))
             {
                 case 8:
-                case 9:
-                    worldIn.setBlockState(pos, this.getDefaultState().with(AGE, 10));
+                    worldIn.setBlockState(pos, this.getDefaultState().with(AGE, worldIn.rand.nextInt(3) + 4));
                     worldIn.addEntity(new ItemEntity(worldIn, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, new ItemStack(ItemsRegistry.TEA_LEAVES, worldIn.rand.nextInt(5) + 1)));
                     return true;
-                case 14:
-                case 15:
-                    worldIn.setBlockState(pos, this.getDefaultState().with(AGE, 6));
+                case 11:
+                    worldIn.setBlockState(pos, this.getDefaultState().with(AGE, worldIn.rand.nextInt(3) + 4));
                     worldIn.addEntity(new ItemEntity(worldIn, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, new ItemStack(ItemsRegistry.TEA_SEEDS, worldIn.rand.nextInt(5) + 1)));
+                    worldIn.addEntity(new ItemEntity(worldIn, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, new ItemStack(ItemsRegistry.TEA_LEAVES, 1)));
                     return true;
             }
             return false;
@@ -238,9 +218,9 @@ public class TeaPlantBlock extends BushBlock implements IGrowable
     }
 
     @Override
-    public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos)
+    protected boolean isValidGround(BlockState state, IBlockReader worldIn, BlockPos pos)
     {
-        return (worldIn.getLightSubtracted(pos, 0) >= 8 || worldIn.isSkyLightMax(pos)) && super.isValidPosition(state, worldIn, pos);
+        return state.getBlock() instanceof FarmlandBlock;
     }
 
     @Override
@@ -269,7 +249,7 @@ public class TeaPlantBlock extends BushBlock implements IGrowable
     @Override
     public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient)
     {
-        return !this.isMaxAge(state);
+        return !this.isMaxAge(state) && state.get(this.getAgeProperty()) != 8;
     }
 
     @Override
@@ -281,7 +261,19 @@ public class TeaPlantBlock extends BushBlock implements IGrowable
     @Override
     public void grow(World worldIn, Random rand, BlockPos pos, BlockState state)
     {
-        this.grow(worldIn, pos, state);
+        int i = this.getAge(state);
+        if (i == 6)
+        {
+            worldIn.setBlockState(pos, this.withAge(9), 2);
+            return;
+        }
+        else
+        {
+            i += this.getBonemealAgeIncrease(worldIn);
+        }
+        i = Math.min(i, this.getMaxAge());
+
+        worldIn.setBlockState(pos, this.withAge(i), 2);
     }
 
     @Override

@@ -2,12 +2,17 @@ package roito.afterthedrizzle.common.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -49,12 +54,6 @@ public class StoveBlock extends NormalHorizontalBlock implements IStoveBlock
     public BlockRenderLayer getRenderLayer()
     {
         return BlockRenderLayer.CUTOUT;
-    }
-
-    @Override
-    public boolean isBurning(BlockState blockState)
-    {
-        return blockState.get(LIT);
     }
 
     @Override
@@ -106,7 +105,7 @@ public class StoveBlock extends NormalHorizontalBlock implements IStoveBlock
     @Override
     public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand)
     {
-        if (isBurning(stateIn))
+        if (IStoveBlock.isBurning(stateIn))
         {
             double d0 = pos.getX() + 0.5D;
             double d1 = pos.getY() + rand.nextDouble() * 6.0D / 16.0D;
@@ -263,6 +262,20 @@ public class StoveBlock extends NormalHorizontalBlock implements IStoveBlock
             tileentity.validate();
             worldIn.setTileEntity(pos, tileentity);
         }
+    }
+
+    @Override
+    public void onEntityWalk(World worldIn, BlockPos pos, Entity entityIn)
+    {
+        if (entityIn instanceof LivingEntity)
+        {
+            if (worldIn.rand.nextBoolean() && !entityIn.isImmuneToFire() && IStoveBlock.isBurning(worldIn, pos) && !EnchantmentHelper.hasFrostWalker((LivingEntity) entityIn))
+            {
+                entityIn.attackEntityFrom(DamageSource.IN_FIRE, 1.0F);
+            }
+            ((LivingEntity) entityIn).addPotionEffect(new EffectInstance(Effects.BLINDNESS, 60));
+        }
+        super.onEntityWalk(worldIn, pos, entityIn);
     }
 
     @Override

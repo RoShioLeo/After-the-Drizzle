@@ -115,7 +115,7 @@ public class TeapotBlock extends NormalHorizontalBlock
                 TileEntity tileentity = worldIn.getTileEntity(pos);
                 if (tileentity instanceof TeapotTileEntity)
                 {
-                    if (BambooTrayMode.hasHeat(worldIn, pos) && FluidTags.getCollection().getOrCreate(new ResourceLocation("water")).contains(((TeapotTileEntity) tileentity).getFluid()))
+                    if (IStoveBlock.isBurning(worldIn, pos.down()) && FluidTags.getCollection().getOrCreate(new ResourceLocation("water")).contains(((TeapotTileEntity) tileentity).getFluid()))
                     {
                         ((TeapotTileEntity) tileentity).setFluid(FluidsRegistry.BOILING_WATER_STILL.get());
                     }

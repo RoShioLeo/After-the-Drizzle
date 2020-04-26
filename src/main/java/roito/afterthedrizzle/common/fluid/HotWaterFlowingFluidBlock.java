@@ -11,8 +11,12 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import roito.afterthedrizzle.common.block.BlocksRegistry;
 
 import java.util.Random;
@@ -20,14 +24,15 @@ import java.util.function.Supplier;
 
 public class HotWaterFlowingFluidBlock extends NormalFlowingFluidBlock
 {
-    public static final DamageSource BOILING = new DamageSource("boiling");
+    public static final DamageSource BOILING = new DamageSource("boiling").setFireDamage();
 
     public HotWaterFlowingFluidBlock(Supplier<? extends FlowingFluid> supplier)
     {
-        super(supplier, Block.Properties.create(Material.WATER).doesNotBlockMovement().hardnessAndResistance(100.0F).noDrops().tickRandomly());
+        super(supplier, Block.Properties.create(Material.LAVA).doesNotBlockMovement().hardnessAndResistance(100.0F).noDrops().tickRandomly());
     }
 
     @Override
+    @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand)
     {
         double d0 = pos.getX() + 0.5D;
@@ -37,13 +42,18 @@ public class HotWaterFlowingFluidBlock extends NormalFlowingFluidBlock
         if (this.getFluid().getAttributes().getTemperature() >= 373)
         {
             worldIn.addParticle(ParticleTypes.BUBBLE, false, d0 + d4, d1, d2 + d4, 0.0D, 0.5D, 0.0D);
+            if (rand.nextInt(64) == 0)
+            {
+                worldIn.playSound((double) pos.getX() + 0.5D, (double) pos.getY() + 0.5D, (double) pos.getZ() + 0.5D, SoundEvents.BLOCK_BUBBLE_COLUMN_UPWARDS_AMBIENT, SoundCategory.BLOCKS, rand.nextFloat() * 0.25F + 0.75F, 0.1F, false);
+            }
         }
-        if ((this.getFluid().getAttributes().getTemperature() - 273) / 100F >= rand.nextFloat())
+        if (worldIn.isAirBlock(pos.up()) && (this.getFluid().getAttributes().getTemperature() - 273) / 100F >= rand.nextFloat())
         {
             worldIn.addParticle(ParticleTypes.CLOUD, false, d0 + d4, d1 + 1.25D, d2 + d4, 0.0D, 0.1D, 0.0D);
         }
     }
 
+    @Override
     public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn)
     {
         if (entityIn instanceof LivingEntity)

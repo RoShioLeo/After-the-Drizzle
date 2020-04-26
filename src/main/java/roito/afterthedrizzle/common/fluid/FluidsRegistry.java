@@ -8,7 +8,6 @@ import net.minecraft.item.BucketItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.Items;
-import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
@@ -17,7 +16,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import roito.afterthedrizzle.AfterTheDrizzle;
 
-public class FluidsRegistry
+public final class FluidsRegistry
 {
     public static final Item.Properties BUCKET_PROPERTIES = new Item.Properties().containerItem(Items.BUCKET).maxStackSize(1).group(ItemGroup.MISC);
 
@@ -80,10 +79,10 @@ public class FluidsRegistry
     public static final ForgeFlowingFluid.Properties HOT_WATER_60_PROPERTIES = new ForgeFlowingFluid.Properties(HOT_WATER_60_STILL, HOT_WATER_60_FLOW, FluidAttributes.builder(WATER_STILL_TEXTURE, WATER_FLOW_TEXTURE).color(0xFF4989E3).temperature(333)).bucket(HOT_WATER_60_BUCKET).block(FluidsRegistry.HOT_WATER_60).explosionResistance(100F);
     public static final ForgeFlowingFluid.Properties WARM_WATER_PROPERTIES = new ForgeFlowingFluid.Properties(WARM_WATER_STILL, WARM_WATER_FLOW, FluidAttributes.builder(WATER_STILL_TEXTURE, WATER_FLOW_TEXTURE).color(0xFF4989E3).temperature(308)).bucket(WARM_WATER_BUCKET).block(FluidsRegistry.WARM_WATER).explosionResistance(100F);
     public static final ForgeFlowingFluid.Properties SUGARY_WATER_PROPERTIES = new ForgeFlowingFluid.Properties(SUGARY_WATER_STILL, SUGARY_WATER_FLOW, FluidAttributes.builder(WATER_STILL_TEXTURE, WATER_FLOW_TEXTURE).color(0xFF5AB4E6)).bucket(SUGARY_WATER_BUCKET).block(FluidsRegistry.SUGARY_WATER).explosionResistance(100F);
-    public static final ForgeFlowingFluid.Properties WEAK_GREEN_TEA_PROPERTIES = new ForgeFlowingFluid.Properties(WEAK_GREEN_TEA_STILL, WEAK_GREEN_TEA_FLOW, FluidAttributes.builder(WATER_STILL_TEXTURE, WATER_FLOW_TEXTURE).color(0xA0AAB919)).bucket(WEAK_GREEN_TEA_BUCKET).block(FluidsRegistry.WEAK_GREEN_TEA).explosionResistance(100F);
-    public static final ForgeFlowingFluid.Properties WEAK_BLACK_TEA_PROPERTIES = new ForgeFlowingFluid.Properties(WEAK_BLACK_TEA_STILL, WEAK_BLACK_TEA_FLOW, FluidAttributes.builder(WATER_STILL_TEXTURE, WATER_FLOW_TEXTURE).color(0xA0CD511E)).bucket(WEAK_BLACK_TEA_BUCKET).block(FluidsRegistry.WEAK_BLACK_TEA).explosionResistance(100F);
-    public static final ForgeFlowingFluid.Properties GREEN_TEA_PROPERTIES = new ForgeFlowingFluid.Properties(GREEN_TEA_STILL, GREEN_TEA_FLOW, FluidAttributes.builder(WATER_STILL_TEXTURE, WATER_FLOW_TEXTURE).color(0xFFAAB919)).bucket(GREEN_TEA_BUCKET).block(FluidsRegistry.GREEN_TEA).explosionResistance(100F);
-    public static final ForgeFlowingFluid.Properties BLACK_TEA_PROPERTIES = new ForgeFlowingFluid.Properties(BLACK_TEA_STILL, BLACK_TEA_FLOW, FluidAttributes.builder(WATER_STILL_TEXTURE, WATER_FLOW_TEXTURE).color(0xFFCD511E)).bucket(BLACK_TEA_BUCKET).block(FluidsRegistry.BLACK_TEA).explosionResistance(100F);
-    public static final ForgeFlowingFluid.Properties STRONG_GREEN_TEA_PROPERTIES = new ForgeFlowingFluid.Properties(STRONG_GREEN_TEA_STILL, STRONG_GREEN_TEA_FLOW, FluidAttributes.builder(WATER_STILL_TEXTURE, WATER_FLOW_TEXTURE).color(0xFFAAB919)).renderLayer(BlockRenderLayer.CUTOUT).bucket(STRONG_GREEN_TEA_BUCKET).block(FluidsRegistry.STRONG_GREEN_TEA).explosionResistance(100F);
-    public static final ForgeFlowingFluid.Properties STRONG_BLACK_TEA_PROPERTIES = new ForgeFlowingFluid.Properties(STRONG_BLACK_TEA_STILL, STRONG_BLACK_TEA_FLOW, FluidAttributes.builder(WATER_STILL_TEXTURE, WATER_FLOW_TEXTURE).color(0xFFCD511E)).renderLayer(BlockRenderLayer.CUTOUT).bucket(STRONG_BLACK_TEA_BUCKET).block(FluidsRegistry.STRONG_BLACK_TEA).explosionResistance(100F);
+    public static final ForgeFlowingFluid.Properties WEAK_GREEN_TEA_PROPERTIES = new ForgeFlowingFluid.Properties(WEAK_GREEN_TEA_STILL, WEAK_GREEN_TEA_FLOW, FluidAttributes.builder(WATER_STILL_TEXTURE, WATER_FLOW_TEXTURE).color(0x7FAAB919)).bucket(WEAK_GREEN_TEA_BUCKET).block(FluidsRegistry.WEAK_GREEN_TEA).explosionResistance(100F);
+    public static final ForgeFlowingFluid.Properties WEAK_BLACK_TEA_PROPERTIES = new ForgeFlowingFluid.Properties(WEAK_BLACK_TEA_STILL, WEAK_BLACK_TEA_FLOW, FluidAttributes.builder(WATER_STILL_TEXTURE, WATER_FLOW_TEXTURE).color(0x7FCD511E)).bucket(WEAK_BLACK_TEA_BUCKET).block(FluidsRegistry.WEAK_BLACK_TEA).explosionResistance(100F);
+    public static final ForgeFlowingFluid.Properties GREEN_TEA_PROPERTIES = new ForgeFlowingFluid.Properties(GREEN_TEA_STILL, GREEN_TEA_FLOW, FluidAttributes.builder(WATER_STILL_TEXTURE, WATER_FLOW_TEXTURE).color(0xBFAAB919)).bucket(GREEN_TEA_BUCKET).block(FluidsRegistry.GREEN_TEA).explosionResistance(100F);
+    public static final ForgeFlowingFluid.Properties BLACK_TEA_PROPERTIES = new ForgeFlowingFluid.Properties(BLACK_TEA_STILL, BLACK_TEA_FLOW, FluidAttributes.builder(WATER_STILL_TEXTURE, WATER_FLOW_TEXTURE).color(0xBFCD511E)).bucket(BLACK_TEA_BUCKET).block(FluidsRegistry.BLACK_TEA).explosionResistance(100F);
+    public static final ForgeFlowingFluid.Properties STRONG_GREEN_TEA_PROPERTIES = new ForgeFlowingFluid.Properties(STRONG_GREEN_TEA_STILL, STRONG_GREEN_TEA_FLOW, FluidAttributes.builder(WATER_STILL_TEXTURE, WATER_FLOW_TEXTURE).color(0xFFAAB919)).bucket(STRONG_GREEN_TEA_BUCKET).block(FluidsRegistry.STRONG_GREEN_TEA).explosionResistance(100F);
+    public static final ForgeFlowingFluid.Properties STRONG_BLACK_TEA_PROPERTIES = new ForgeFlowingFluid.Properties(STRONG_BLACK_TEA_STILL, STRONG_BLACK_TEA_FLOW, FluidAttributes.builder(WATER_STILL_TEXTURE, WATER_FLOW_TEXTURE).color(0xFFCD511E)).bucket(STRONG_BLACK_TEA_BUCKET).block(FluidsRegistry.STRONG_BLACK_TEA).explosionResistance(100F);
 }

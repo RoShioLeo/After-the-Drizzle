@@ -53,10 +53,9 @@ public class SeatEntity extends Entity
                 SeatEntity seat = new SeatEntity(world, pos, height, x, z);
                 world.addEntity(seat);
                 player.startRiding(seat, false);
-                return true;
             }
         }
-        return false;
+        return true;
     }
 
     @Override

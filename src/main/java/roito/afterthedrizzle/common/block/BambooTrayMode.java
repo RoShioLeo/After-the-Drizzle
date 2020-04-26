@@ -43,11 +43,7 @@ public enum BambooTrayMode
 
     public static boolean hasHeat(World world, BlockPos pos)
     {
-        if (world.getBlockState(pos.down()).getBlock() instanceof IStoveBlock)
-        {
-            return ((IStoveBlock) world.getBlockState(pos.down()).getBlock()).isBurning(world.getBlockState(pos.down()));
-        }
-        return false;
+        return IStoveBlock.isBurning(world, pos.down());
     }
 
     public static boolean isInSun(World world, BlockPos pos)
