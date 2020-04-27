@@ -269,11 +269,12 @@ public class StoveBlock extends NormalHorizontalBlock implements IStoveBlock
     {
         if (entityIn instanceof LivingEntity)
         {
-            if (worldIn.rand.nextBoolean() && !entityIn.isImmuneToFire() && IStoveBlock.isBurning(worldIn, pos) && !EnchantmentHelper.hasFrostWalker((LivingEntity) entityIn))
+            if (!entityIn.isImmuneToFire() && IStoveBlock.isBurning(worldIn, pos) && !EnchantmentHelper.hasFrostWalker((LivingEntity) entityIn))
             {
-                entityIn.attackEntityFrom(DamageSource.IN_FIRE, 1.0F);
+                if (worldIn.rand.nextBoolean())
+                    entityIn.attackEntityFrom(DamageSource.IN_FIRE, 1.0F);
+                ((LivingEntity) entityIn).addPotionEffect(new EffectInstance(Effects.BLINDNESS, 60));
             }
-            ((LivingEntity) entityIn).addPotionEffect(new EffectInstance(Effects.BLINDNESS, 60));
         }
         super.onEntityWalk(worldIn, pos, entityIn);
     }

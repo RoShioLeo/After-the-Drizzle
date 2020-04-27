@@ -6,11 +6,11 @@ import net.minecraft.util.ActionResultType;
 import roito.afterthedrizzle.AfterTheDrizzle;
 import roito.afterthedrizzle.common.config.NormalConfig;
 
-public class AshItem extends NormalItem
+public class FertilizerItem extends NormalItem
 {
-    public AshItem()
+    public FertilizerItem(String name)
     {
-        super("ash", new Properties().group(AfterTheDrizzle.GROUP_CORE));
+        super(name, new Properties().group(AfterTheDrizzle.GROUP_CORE));
     }
 
     @Override

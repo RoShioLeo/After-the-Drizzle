@@ -42,7 +42,7 @@ public class HotWaterFlowingFluidBlock extends NormalFlowingFluidBlock
         if (this.getFluid().getAttributes().getTemperature() >= 373)
         {
             worldIn.addParticle(ParticleTypes.BUBBLE, false, d0 + d4, d1, d2 + d4, 0.0D, 0.5D, 0.0D);
-            if (rand.nextInt(64) == 0)
+            if (rand.nextInt(32) == 0)
             {
                 worldIn.playSound((double) pos.getX() + 0.5D, (double) pos.getY() + 0.5D, (double) pos.getZ() + 0.5D, SoundEvents.BLOCK_BUBBLE_COLUMN_UPWARDS_AMBIENT, SoundCategory.BLOCKS, rand.nextFloat() * 0.25F + 0.75F, 0.1F, false);
             }
@@ -60,15 +60,15 @@ public class HotWaterFlowingFluidBlock extends NormalFlowingFluidBlock
         {
             if (this.getFluid().getAttributes().getTemperature() >= 373)
             {
-                entityIn.attackEntityFrom(BOILING, 6.0F);
+                entityIn.attackEntityFrom(BOILING, 4.0F);
             }
             else if (this.getFluid().getAttributes().getTemperature() >= 353)
             {
-                entityIn.attackEntityFrom(BOILING, 4.0F);
+                entityIn.attackEntityFrom(BOILING, 2.0F);
             }
             else if (this.getFluid().getAttributes().getTemperature() >= 318)
             {
-                entityIn.attackEntityFrom(BOILING, 2.0F);
+                entityIn.attackEntityFrom(BOILING, 1.0F);
             }
             else
             {

@@ -1,8 +1,11 @@
 package roito.afterthedrizzle;
 
+import net.minecraft.block.Blocks;
+import net.minecraft.block.FireBlock;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.item.Items;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -18,6 +21,7 @@ import roito.afterthedrizzle.client.color.item.ItemColorsRegistry;
 import roito.afterthedrizzle.client.gui.BambooTrayGuiContainer;
 import roito.afterthedrizzle.client.gui.DrinkMakerGuiContainer;
 import roito.afterthedrizzle.client.gui.StoveGuiContainer;
+import roito.afterthedrizzle.client.sound.SoundEventsRegistry;
 import roito.afterthedrizzle.common.CommonProxy;
 import roito.afterthedrizzle.common.block.BlocksRegistry;
 import roito.afterthedrizzle.common.config.NormalConfig;
@@ -37,6 +41,8 @@ import roito.afterthedrizzle.common.tileentity.TileEntityTypesRegistry;
 import roito.afterthedrizzle.common.world.WorldGenManager;
 import roito.afterthedrizzle.common.world.feature.FeaturesRegistry;
 import roito.afterthedrizzle.registry.RegisterManager;
+
+import static net.minecraft.block.ComposterBlock.CHANCES;
 
 @Mod("afterthedrizzle")
 public final class AfterTheDrizzle
@@ -62,22 +68,53 @@ public final class AfterTheDrizzle
         new EntityTypesRegistry();
         new ContainerTypesRegistry();
         new FeaturesRegistry();
+        new SoundEventsRegistry();
     }
 
     public void setup(FMLCommonSetupEvent event)
     {
         RecipesRegistry.init();
-        new WorldGenManager();
+        WorldGenManager.init();
         RegisterManager.clearAll();
+        registerCompostable();
+        registerFireInfo();
     }
 
     public void ClientSetup(FMLClientSetupEvent event)
     {
-        new ItemColorsRegistry();
-        new BlockColorsRegistry();
+        ItemColorsRegistry.init();
+        BlockColorsRegistry.init();
         ScreenManager.registerFactory((ContainerType<StoveContainer>) ContainerTypesRegistry.STOVE_CONTAINER, StoveGuiContainer::new);
         ScreenManager.registerFactory((ContainerType<BambooTrayContainer>) ContainerTypesRegistry.BAMBOO_TRAY_CONTAINER, BambooTrayGuiContainer::new);
         ScreenManager.registerFactory((ContainerType<DrinkMakerContainer>) ContainerTypesRegistry.DRINK_MAKER_CONTAINER, DrinkMakerGuiContainer::new);
+    }
+
+    private static void registerCompostable()
+    {
+        CHANCES.put(ItemsRegistry.TEA_SEEDS, 0.3F);
+        CHANCES.put(ItemsRegistry.TEA_LEAVES, 0.15F);
+        CHANCES.put(ItemsRegistry.GREEN_TEA_LEAVES, 0.3F);
+        CHANCES.put(ItemsRegistry.BLACK_TEA_LEAVES, 0.4F);
+        CHANCES.put(ItemsRegistry.TEA_RESIDUES, 0.5F);
+        CHANCES.put(BlocksRegistry.CHRYSANTHEMUM_ITEM, 0.3F);
+        CHANCES.put(BlocksRegistry.ZINNIA_ITEM, 0.3F);
+        CHANCES.put(BlocksRegistry.HYACINTH_ITEM, 0.3F);
+        CHANCES.put(Items.POISONOUS_POTATO, 0.3F);
+    }
+
+    private static void registerFireInfo()
+    {
+        FireBlock fireblock = (FireBlock) Blocks.FIRE;
+        fireblock.setFireInfo(BlocksRegistry.WOODEN_FRAME, 5, 20);
+        fireblock.setFireInfo(BlocksRegistry.BAMBOO_CHAIR, 60, 60);
+        fireblock.setFireInfo(BlocksRegistry.BAMBOO_DOOR, 60, 60);
+        fireblock.setFireInfo(BlocksRegistry.BAMBOO_GLASS_DOOR, 60, 60);
+        fireblock.setFireInfo(BlocksRegistry.BAMBOO_LANTERN, 60, 60);
+        fireblock.setFireInfo(BlocksRegistry.BAMBOO_TABLE, 60, 60);
+        fireblock.setFireInfo(BlocksRegistry.BAMBOO_TRAY, 60, 60);
+        fireblock.setFireInfo(BlocksRegistry.HYACINTH, 60, 100);
+        fireblock.setFireInfo(BlocksRegistry.CHRYSANTHEMUM, 60, 100);
+        fireblock.setFireInfo(BlocksRegistry.ZINNIA, 60, 100);
     }
 
     public static final ItemGroup GROUP_CORE = new GroupCore();

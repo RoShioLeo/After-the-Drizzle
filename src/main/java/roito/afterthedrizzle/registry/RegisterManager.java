@@ -6,6 +6,7 @@ import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
 import net.minecraft.potion.Effect;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -26,6 +27,7 @@ public final class RegisterManager
     public static List<Effect> EFFECTS = new ArrayList<>();
     public static List<ContainerType<?>> CONTAINER_TYPES = new ArrayList<>();
     public static List<Feature<?>> FEATURES = new ArrayList<>();
+    public static List<SoundEvent> SOUNDS = new ArrayList<>();
 
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event)
@@ -76,6 +78,13 @@ public final class RegisterManager
         LogHelper.info("Successfully registered %d Feature(s).", FEATURES.size());
     }
 
+    @SubscribeEvent
+    public static void registerSounds(RegistryEvent.Register<SoundEvent> event)
+    {
+        event.getRegistry().registerAll(SOUNDS.toArray(new SoundEvent[0]));
+        LogHelper.info("Successfully registered %d Sound(s).", SOUNDS.size());
+    }
+
     public static void clearAll()
     {
         ITEMS = null;
@@ -85,5 +94,6 @@ public final class RegisterManager
         CONTAINER_TYPES = null;
         EFFECTS = null;
         FEATURES = null;
+        SOUNDS = null;
     }
 }

@@ -13,7 +13,8 @@ public final class ItemColorsRegistry
     private final static IItemColor CUP_COLOR = new CupItemColors();
     private final static IItemColor BOTTLE_COLOR = new BottleItemColors();
     private final static IItemColor HYBRIDIZABLE_FLOWER_COLOR = new HybridizableFlowerItemColor();
-    public ItemColorsRegistry()
+
+    public static void init()
     {
         ITEMS.getEntries().forEach(e -> Minecraft.getInstance().getItemColors().register(BUCKET_COLOR, e.get()));
         Minecraft.getInstance().getItemColors().register(CUP_COLOR, ItemsRegistry.PORCELAIN_CUP_DRINK);

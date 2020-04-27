@@ -5,8 +5,11 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.FlowingFluid;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
@@ -16,6 +19,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -28,6 +32,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
+import roito.afterthedrizzle.client.sound.SoundEventsRegistry;
 import roito.afterthedrizzle.common.fluid.FluidsRegistry;
 import roito.afterthedrizzle.common.tileentity.TeapotTileEntity;
 import roito.afterthedrizzle.common.tileentity.TileEntityTypesRegistry;
@@ -122,6 +127,24 @@ public class TeapotBlock extends NormalHorizontalBlock
                 }
             }
         }
+    }
+
+    @Override
+    public void onEntityWalk(World worldIn, BlockPos pos, Entity entityIn)
+    {
+        if (!worldIn.isRemote && worldIn.rand.nextInt(128) == 0)
+        {
+            TileEntity te = worldIn.getTileEntity(pos);
+            if (te instanceof TeapotTileEntity)
+            {
+                worldIn.destroyBlock(pos, false);
+                Fluid fluid = ((TeapotTileEntity) te).getFluid();
+                if (fluid instanceof FlowingFluid)
+                    worldIn.setBlockState(pos, ((FlowingFluid) fluid).getFlowingFluid().getDefaultState().getBlockState());
+                worldIn.playSound(null, pos, SoundEventsRegistry.CUP_BROKEN, SoundCategory.BLOCKS, 0.5F, 0.9F);
+            }
+        }
+        super.onEntityWalk(worldIn, pos, entityIn);
     }
 
     @Override

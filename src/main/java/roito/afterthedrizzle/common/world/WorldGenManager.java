@@ -13,7 +13,7 @@ import roito.afterthedrizzle.common.world.feature.FeaturesRegistry;
 
 public final class WorldGenManager
 {
-    public WorldGenManager()
+    public static void init()
     {
         ForgeRegistries.BIOMES.forEach(biome ->
         {

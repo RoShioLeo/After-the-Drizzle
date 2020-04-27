@@ -3,6 +3,7 @@ package roito.afterthedrizzle.common.block;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.monster.RavagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -15,10 +16,12 @@ import net.minecraft.util.IItemProvider;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraftforge.common.PlantType;
 import roito.afterthedrizzle.common.environment.Humidity;
@@ -105,7 +108,7 @@ public class TeaPlantBlock extends BushBlock implements IGrowable
     public void tick(BlockState state, World worldIn, BlockPos pos, Random random)
     {
         super.tick(state, worldIn, pos, random);
-        if (!worldIn.isAreaLoaded(pos, 1))
+        if (!worldIn.isAreaLoaded(pos, 1) || worldIn.getDimension().getType() == DimensionType.THE_NETHER || worldIn.getDimension().getType() == DimensionType.THE_NETHER)
             return;
         if (worldIn.getLightSubtracted(pos, 0) >= 9)
         {
@@ -231,6 +234,10 @@ public class TeaPlantBlock extends BushBlock implements IGrowable
         {
             worldIn.destroyBlock(pos, true);
         }
+        if (entityIn instanceof LivingEntity)
+        {
+            entityIn.setMotionMultiplier(state, new Vec3d(0.8F, 0.75D, 0.8F));
+        }
 
         super.onEntityCollision(state, worldIn, pos, entityIn);
     }
@@ -261,6 +268,10 @@ public class TeaPlantBlock extends BushBlock implements IGrowable
     @Override
     public void grow(World worldIn, Random rand, BlockPos pos, BlockState state)
     {
+        if (worldIn.getDimension().getType() == DimensionType.THE_NETHER || worldIn.getDimension().getType() == DimensionType.THE_NETHER)
+        {
+            return;
+        }
         int i = this.getAge(state);
         if (i == 6)
         {

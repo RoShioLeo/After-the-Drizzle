@@ -14,6 +14,9 @@ import roito.afterthedrizzle.registry.RegistryModule;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import static roito.afterthedrizzle.common.item.NormalItem.getCoreItemProperties;
+import static roito.afterthedrizzle.common.item.NormalItem.getTeaLeavesItemProperties;
+
 public final class ItemsRegistry extends RegistryModule
 {
     // FOOD 食物
@@ -26,26 +29,28 @@ public final class ItemsRegistry extends RegistryModule
     public static final Item MUTTON_JERKY = new FoodItem("mutton_jerky", NormalFoods.MUTTON_JERKY);
 
     // ENVIRONMENT 环境
-    public static final Item THERMOMETER = new NormalItem("thermometer", NormalItem.getCoreItemProperties());
+    public static final Item THERMOMETER = new NormalItem("thermometer", getCoreItemProperties());
     public static final Item RAIN_GAUGE = new NormalItem("rain_gauge");
     public static final Item HYGROMETER = new NormalItem("hygrometer");
 
-    // INGREDIENTS 原料
-    public static final Item TEA_SEEDS = new BlockNamedItem(BlocksRegistry.TEA_PLANT, NormalItem.getCoreItemProperties()).setRegistryName("tea_seeds");
-    public static final Item TEA_LEAVES = new NormalItem("tea_leaves");
-    public static final Item GREEN_TEA_LEAVES = new NormalItem("green_tea_leaves");
-    public static final Item BLACK_TEA_LEAVES = new NormalItem("black_tea_leaves");
-    public static final Item EMPTY_TEA_BAG = new NormalItem("empty_tea_bag");
-    public static final Item GREEN_TEA_BAG = new NormalItem("green_tea_bag");
-    public static final Item BLACK_TEA_BAG = new NormalItem("black_tea_bag");
-
     // MISC 杂项
     public static final Item BAMBOO_PLANK = new NormalItem("bamboo_plank");
-    public static final Item ASH = new AshItem();
+    public static final Item ASH = new FertilizerItem("ash");
+    public static final Item TEA_RESIDUES = new NormalItem("tea_residues");
+
+    // INGREDIENTS 原料
+    public static final Item TEA_SEEDS = new BlockNamedItem(BlocksRegistry.TEA_PLANT, getCoreItemProperties()).setRegistryName("tea_seeds");
+    public static final Item TEA_LEAVES = new NormalItem("tea_leaves");
+    public static final Item GREEN_TEA_LEAVES = new NormalItem("green_tea_leaves", getTeaLeavesItemProperties());
+    public static final Item BLACK_TEA_LEAVES = new NormalItem("black_tea_leaves", getTeaLeavesItemProperties());
+    public static final Item WHITE_TEA_LEAVES = new NormalItem("white_tea_leaves", getTeaLeavesItemProperties());
+    public static final Item EMPTY_TEA_BAG = new NormalItem("empty_tea_bag", getTeaLeavesItemProperties());
+    public static final Item GREEN_TEA_BAG = new NormalItem("green_tea_bag", getTeaLeavesItemProperties());
+    public static final Item BLACK_TEA_BAG = new NormalItem("black_tea_bag", getTeaLeavesItemProperties());
 
     // DRINK 饮品
     public static final Item CLAY_CUP = new NormalItem("clay_cup");
-    public static final Item PORCELAIN_CUP = new ItemFluidContainer(NormalItem.getCoreItemProperties(), 250)
+    public static final Item PORCELAIN_CUP = new ItemFluidContainer(getCoreItemProperties(), 250)
     {
         @Override
         public ICapabilityProvider initCapabilities(@Nonnull ItemStack stack, @Nullable CompoundNBT nbt)
@@ -53,7 +58,7 @@ public final class ItemsRegistry extends RegistryModule
             return super.initCapabilities(new ItemStack(ItemsRegistry.PORCELAIN_CUP_DRINK), nbt);
         }
     }.setRegistryName("porcelain_cup");
-    public static final Item BOTTLE = new ItemFluidContainer(NormalItem.getCoreItemProperties(), 500)
+    public static final Item BOTTLE = new ItemFluidContainer(getCoreItemProperties(), 500)
     {
         @Override
         public ICapabilityProvider initCapabilities(@Nonnull ItemStack stack, @Nullable CompoundNBT nbt)

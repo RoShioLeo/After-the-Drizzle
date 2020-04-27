@@ -26,6 +26,7 @@ public final class RecipesRegistry
     {
         addBasketOutdoorsRecipes();
         addBasketIndoorsRecipes();
+
         addBasketWetRecipes();
         registerDrinkIngredients();
         registerDrinkEffects();
@@ -62,6 +63,7 @@ public final class RecipesRegistry
         MANAGER_BAMBOO_TRAY_IN_RAIN.add(new BambooTaryRecipe(ItemsRegistry.CHICKEN_JERKY, Items.CHICKEN));
         MANAGER_BAMBOO_TRAY_IN_RAIN.add(new BambooTaryRecipe(ItemsRegistry.DRIED_CARROT, Items.CARROT));
         MANAGER_BAMBOO_TRAY_IN_RAIN.add(new BambooTaryRecipe(ItemsRegistry.DRIED_BEETROOT, Items.BEETROOT));
+        MANAGER_BAMBOO_TRAY_IN_RAIN.add(new BambooTaryRecipe(ItemsRegistry.GREEN_TEA_LEAVES, ItemsRegistry.TEA_LEAVES));
     }
 
     private static void registerDrinkIngredients()
@@ -69,6 +71,7 @@ public final class RecipesRegistry
         DrinkIngredientsManager.registerIngredientItem(Items.SUGAR, "sugar");
         DrinkIngredientsManager.registerIngredientItem(ItemsRegistry.GREEN_TEA_LEAVES, "green_tea_leaves");
         DrinkIngredientsManager.registerIngredientItem(ItemsRegistry.BLACK_TEA_LEAVES, "black_tea_leaves");
+        DrinkIngredientsManager.registerIngredientItem(ItemsRegistry.WHITE_TEA_LEAVES, "white_tea_leaves");
         DrinkIngredientsManager.registerIngredientItem(ItemsRegistry.GREEN_TEA_BAG, "green_tea_bag");
         DrinkIngredientsManager.registerIngredientItem(ItemsRegistry.BLACK_TEA_BAG, "black_tea_bag");
     }
@@ -78,10 +81,13 @@ public final class RecipesRegistry
         DrinkEffectsManager.registerDrinkEffects(FluidsRegistry.SUGARY_WATER_STILL.get(), new DrinkEffectAttribute(Effects.SPEED, 2, 0));
         DrinkEffectsManager.registerDrinkEffects(FluidsRegistry.WEAK_GREEN_TEA_STILL.get(), new DrinkEffectAttribute(EffectsRegistry.AGILITY, 2, 0));
         DrinkEffectsManager.registerDrinkEffects(FluidsRegistry.WEAK_BLACK_TEA_STILL.get(), new DrinkEffectAttribute(Effects.HEALTH_BOOST, 4, 0));
+        DrinkEffectsManager.registerDrinkEffects(FluidsRegistry.WEAK_WHITE_TEA_STILL.get(), new DrinkEffectAttribute(Effects.HASTE, 2, 0));
         DrinkEffectsManager.registerDrinkEffects(FluidsRegistry.GREEN_TEA_STILL.get(), new DrinkEffectAttribute(EffectsRegistry.AGILITY, 2, 1), new DrinkEffectAttribute(EffectsRegistry.EXCITEMENT, 2, 0));
         DrinkEffectsManager.registerDrinkEffects(FluidsRegistry.BLACK_TEA_STILL.get(), new DrinkEffectAttribute(Effects.HEALTH_BOOST, 4, 1), new DrinkEffectAttribute(EffectsRegistry.EXCITEMENT, 4, 0));
+        DrinkEffectsManager.registerDrinkEffects(FluidsRegistry.WHITE_TEA_STILL.get(), new DrinkEffectAttribute(Effects.HASTE, 2, 1), new DrinkEffectAttribute(EffectsRegistry.EXCITEMENT, 2, 0));
         DrinkEffectsManager.registerDrinkEffects(FluidsRegistry.STRONG_GREEN_TEA_STILL.get(), new DrinkEffectAttribute(EffectsRegistry.AGILITY, 2, 2), new DrinkEffectAttribute(EffectsRegistry.EXCITEMENT, 4, 0));
         DrinkEffectsManager.registerDrinkEffects(FluidsRegistry.STRONG_BLACK_TEA_STILL.get(), new DrinkEffectAttribute(Effects.HEALTH_BOOST, 4, 2), new DrinkEffectAttribute(EffectsRegistry.EXCITEMENT, 8, 0));
+        DrinkEffectsManager.registerDrinkEffects(FluidsRegistry.STRONG_WHITE_TEA_STILL.get(), new DrinkEffectAttribute(Effects.HASTE, 2, 2), new DrinkEffectAttribute(EffectsRegistry.EXCITEMENT, 4, 0));
     }
 
     private static void addDrinkRecipes()
@@ -101,5 +107,10 @@ public final class RecipesRegistry
         MANAGER_DRINK_MAKER.add(new DrinkRecipeInput("black_tea_bag"), new FluidStack(FluidsRegistry.BLACK_TEA_STILL.get(), 500));
         MANAGER_DRINK_MAKER.add(new DrinkRecipeInput("black_tea_bag", "black_tea_bag"), new FluidStack(FluidsRegistry.STRONG_BLACK_TEA_STILL.get(), 500));
         MANAGER_DRINK_MAKER.add(new DrinkRecipeInput(FluidsRegistry.BLACK_TEA_STILL.get(), "black_tea_leaves", "black_tea_leaves", "black_tea_leaves", "black_tea_leaves"), new FluidStack(FluidsRegistry.STRONG_BLACK_TEA_STILL.get(), 500));
+
+        MANAGER_DRINK_MAKER.add(new DrinkRecipeInput("white_tea_leaves", "white_tea_leaves"), new FluidStack(FluidsRegistry.WEAK_WHITE_TEA_STILL.get(), 500));
+        MANAGER_DRINK_MAKER.add(new DrinkRecipeInput(FluidsRegistry.WEAK_WHITE_TEA_STILL.get(), "white_tea_leaves", "white_tea_leaves", "white_tea_leaves"), new FluidStack(FluidsRegistry.WHITE_TEA_STILL.get(), 500));
+        MANAGER_DRINK_MAKER.add(new DrinkRecipeInput("white_tea_leaves", "white_tea_leaves", "white_tea_leaves", "white_tea_leaves"), new FluidStack(FluidsRegistry.WHITE_TEA_STILL.get(), 500));
+        MANAGER_DRINK_MAKER.add(new DrinkRecipeInput(FluidsRegistry.WHITE_TEA_STILL.get(), "white_tea_leaves", "white_tea_leaves", "white_tea_leaves", "white_tea_leaves"), new FluidStack(FluidsRegistry.STRONG_WHITE_TEA_STILL.get(), 500));
     }
 }

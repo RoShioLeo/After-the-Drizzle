@@ -6,6 +6,7 @@ import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
 import net.minecraft.potion.Effect;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.world.gen.feature.Feature;
 
 import java.lang.reflect.Field;
@@ -46,6 +47,10 @@ public class RegistryModule
                 else if (o instanceof Feature<?>)
                 {
                     RegisterManager.FEATURES.add((Feature<?>) o);
+                }
+                else if (o instanceof SoundEvent)
+                {
+                    RegisterManager.SOUNDS.add((SoundEvent) o);
                 }
             }
             catch (Exception ignored)

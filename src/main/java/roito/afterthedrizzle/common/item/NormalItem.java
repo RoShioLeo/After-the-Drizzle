@@ -21,4 +21,9 @@ public class NormalItem extends Item
     {
         return new Item.Properties().group(AfterTheDrizzle.GROUP_CORE);
     }
+
+    public static Item.Properties getTeaLeavesItemProperties()
+    {
+        return new Item.Properties().group(AfterTheDrizzle.GROUP_CORE).containerItem(ItemsRegistry.TEA_RESIDUES);
+    }
 }
