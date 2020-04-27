@@ -130,9 +130,9 @@ public class TeapotBlock extends NormalHorizontalBlock
     }
 
     @Override
-    public void onEntityWalk(World worldIn, BlockPos pos, Entity entityIn)
+    public void onFallenUpon(World worldIn, BlockPos pos, Entity entityIn, float fallDistance)
     {
-        if (!worldIn.isRemote && worldIn.rand.nextInt(128) == 0)
+        if (!worldIn.isRemote)
         {
             TileEntity te = worldIn.getTileEntity(pos);
             if (te instanceof TeapotTileEntity)
@@ -144,7 +144,8 @@ public class TeapotBlock extends NormalHorizontalBlock
                 worldIn.playSound(null, pos, SoundEventsRegistry.CUP_BROKEN, SoundCategory.BLOCKS, 0.5F, 0.9F);
             }
         }
-        super.onEntityWalk(worldIn, pos, entityIn);
+
+        super.onFallenUpon(worldIn, pos, entityIn, fallDistance);
     }
 
     @Override

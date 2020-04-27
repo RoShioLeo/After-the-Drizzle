@@ -78,41 +78,38 @@ public class BambooTrayTileEntity extends NormalContainerTileEntity implements I
     @Override
     public void tick()
     {
-        if (!world.isRemote)
+        if (doubleClickTicks > 0)
         {
-            if (doubleClickTicks > 0)
-            {
-                doubleClickTicks--;
-            }
-            float temp = this.world.getBiome(pos).getTemperature(pos);
-            float rainfall = this.world.getBiome(pos).getDownfall();
-            switch (BambooTrayMode.getMode(this.world, this.pos))
-            {
-                case IN_RAIN:
-                    this.refreshTotalTicks(0);
-                    this.getWet();
-                    this.mode = BambooTrayMode.IN_RAIN;
-                    return;
-                case OUTDOORS:
-                    this.refreshTotalTicks(Humidity.getHumid(rainfall, temp).getOutdoorDryingTicks());
-                    if (!this.isWorldRaining())
-                        this.process(RecipesRegistry.MANAGER_BAMBOO_TRAY_OUTDOORS);
-                    this.mode = BambooTrayMode.OUTDOORS;
-                    return;
-                case INDOORS:
-                    this.refreshTotalTicks(Humidity.getHumid(rainfall, temp).getFermentationTicks());
-                    this.process(RecipesRegistry.MANAGER_BAMBOO_TRAY_INDOORS);
-                    this.mode = BambooTrayMode.INDOORS;
-                    return;
-                case BAKE:
-                    this.refreshTotalTicks(NormalConfig.bakeBasicTime.get());
-                    this.process(RecipesRegistry.MANAGER_BAMBOO_TRAY_BAKE);
-                    this.mode = BambooTrayMode.BAKE;
-                    return;
-                case PROCESS:
-                    //TODO
-                    this.mode = BambooTrayMode.PROCESS;
-            }
+            doubleClickTicks--;
+        }
+        float temp = this.world.getBiome(pos).getTemperature(pos);
+        float rainfall = this.world.getBiome(pos).getDownfall();
+        switch (BambooTrayMode.getMode(this.world, this.pos))
+        {
+            case IN_RAIN:
+                this.refreshTotalTicks(0);
+                this.getWet();
+                this.mode = BambooTrayMode.IN_RAIN;
+                return;
+            case OUTDOORS:
+                this.refreshTotalTicks(Humidity.getHumid(rainfall, temp).getOutdoorDryingTicks());
+                if (!this.isWorldRaining())
+                    this.process(RecipesRegistry.MANAGER_BAMBOO_TRAY_OUTDOORS);
+                this.mode = BambooTrayMode.OUTDOORS;
+                return;
+            case INDOORS:
+                this.refreshTotalTicks(Humidity.getHumid(rainfall, temp).getFermentationTicks());
+                this.process(RecipesRegistry.MANAGER_BAMBOO_TRAY_INDOORS);
+                this.mode = BambooTrayMode.INDOORS;
+                return;
+            case BAKE:
+                this.refreshTotalTicks(NormalConfig.bakeBasicTime.get());
+                this.process(RecipesRegistry.MANAGER_BAMBOO_TRAY_BAKE);
+                this.mode = BambooTrayMode.BAKE;
+                return;
+            case PROCESS:
+                //TODO
+                this.mode = BambooTrayMode.PROCESS;
         }
     }
 

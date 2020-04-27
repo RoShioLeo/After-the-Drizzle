@@ -116,27 +116,25 @@ public class BambooTrayBlock extends NormalBlock
         TileEntity te = worldIn.getTileEntity(pos);
         if (te instanceof BambooTrayTileEntity)
         {
-            ((BambooTrayTileEntity) te).refreshSeed();
+            if (worldIn.isRemote)
+            {
+                ((BambooTrayTileEntity) te).refreshSeed();
+                return true;
+            }
             if (!player.isSneaking())
             {
                 if (((BambooTrayTileEntity) te).isDoubleClick())
                 {
-                    if (!worldIn.isRemote)
-                    {
-                        dropItems(worldIn, pos);
-                    }
+                    dropItems(worldIn, pos);
                     return true;
+                }
+                if (!((BambooTrayTileEntity) te).isWorking())
+                {
+                    dropItems(worldIn, pos);
+                    te.markDirty();
                 }
                 if (!player.getHeldItem(handIn).isEmpty())
                 {
-                    if (!((BambooTrayTileEntity) te).isWorking())
-                    {
-                        if (!worldIn.isRemote)
-                        {
-                            dropItems(worldIn, pos);
-                        }
-                        te.markDirty();
-                    }
                     te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.UP).ifPresent(inv ->
                     {
                         BambooTaryRecipe recipe = BambooTrayTileEntity.getRecipeManager(BambooTrayMode.getMode(worldIn, pos)).getRecipe(player.getHeldItem(handIn));
@@ -151,23 +149,15 @@ public class BambooTrayBlock extends NormalBlock
                 }
                 else
                 {
-                    if (!((BambooTrayTileEntity) te).isWorking())
+                    if (((BambooTrayTileEntity) te).isWorking())
                     {
-                        if (!worldIn.isRemote)
-                        {
-                            dropItems(worldIn, pos);
-                        }
-                        te.markDirty();
-                        return true;
+                        ((BambooTrayTileEntity) te).singleClickStart();
                     }
-                    else ((BambooTrayTileEntity) te).singleClickStart();
                 }
             }
             else
             {
-                if (!worldIn.isRemote)
-                    NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) te, te.getPos());
-                return true;
+                NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) te, te.getPos());
             }
         }
         return false;

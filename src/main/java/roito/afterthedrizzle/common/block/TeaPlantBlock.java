@@ -24,7 +24,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraftforge.common.PlantType;
-import roito.afterthedrizzle.common.environment.Humidity;
 import roito.afterthedrizzle.common.item.ItemsRegistry;
 
 import java.util.List;
@@ -113,16 +112,10 @@ public class TeaPlantBlock extends BushBlock implements IGrowable
         if (worldIn.getLightSubtracted(pos, 0) >= 9)
         {
             int i = this.getAge(state);
-            Humidity env = Humidity.getHumid(worldIn.getBiome(pos).getDownfall(), worldIn.getBiome(pos).getTemperature(pos));
-            float f = 1.0F;
-            if (env.getId() <= 3)
-            {
-                f = 1.0F - (4 - env.getId()) * 0.2F;
-            }
 
             if (i < this.getMaxAge() && i != 8)
             {
-                f *= getGrowthChance(this, worldIn, pos);
+                float f = getGrowthChance(this, worldIn, pos);
                 if (net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, pos, state, random.nextInt((int) (25.0F / f) + 1) == 0))
                 {
                     worldIn.setBlockState(pos, state.with(AGE, i + 1), 2);

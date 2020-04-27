@@ -1,15 +1,24 @@
 package roito.afterthedrizzle.common.environment;
 
-import net.minecraft.client.resources.I18n;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import roito.afterthedrizzle.common.config.NormalConfig;
 
 public enum Humidity
 {
-    ARID,
-    DRY,
-    AVERAGE,
-    MOIST,
-    HUMID;
+    ARID(TextFormatting.RED),
+    DRY(TextFormatting.GOLD),
+    AVERAGE(TextFormatting.WHITE),
+    MOIST(TextFormatting.BLUE),
+    HUMID(TextFormatting.DARK_GREEN);
+
+    private final TextFormatting color;
+
+    Humidity(TextFormatting color)
+    {
+        this.color = color;
+    }
 
     public int getId()
     {
@@ -21,9 +30,9 @@ public enum Humidity
         return this.toString().toLowerCase();
     }
 
-    public String getTranslation()
+    public ITextComponent getTranslation()
     {
-        return I18n.format("info.afterthedrizzle.environment.humidity." + getName());
+        return new TranslationTextComponent("info.afterthedrizzle.environment.humidity." + getName()).applyTextStyle(color);
     }
 
     public int getOutdoorDryingTicks()

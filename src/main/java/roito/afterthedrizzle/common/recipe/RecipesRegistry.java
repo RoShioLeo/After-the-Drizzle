@@ -26,7 +26,7 @@ public final class RecipesRegistry
     {
         addBasketOutdoorsRecipes();
         addBasketIndoorsRecipes();
-
+        addBasketBakeRecipes();
         addBasketWetRecipes();
         registerDrinkIngredients();
         registerDrinkEffects();
@@ -52,6 +52,11 @@ public final class RecipesRegistry
         MANAGER_BAMBOO_TRAY_INDOORS.add(new BambooTaryRecipe("forge:food/meat", Items.ROTTEN_FLESH));
         MANAGER_BAMBOO_TRAY_INDOORS.add(new BambooTaryRecipe(Items.SPIDER_EYE, Items.FERMENTED_SPIDER_EYE));
         MANAGER_BAMBOO_TRAY_INDOORS.add(new BambooTaryRecipe("forge:crops/tea_leaves", ItemsRegistry.BLACK_TEA_LEAVES));
+    }
+
+    private static void addBasketBakeRecipes()
+    {
+        MANAGER_BAMBOO_TRAY_BAKE.add(new BambooTaryRecipe("forge:crops/tea_leaves", ItemsRegistry.WHITE_TEA_LEAVES));
     }
 
     private static void addBasketWetRecipes()

@@ -1,7 +1,7 @@
 package roito.afterthedrizzle.common.item;
 
 import net.minecraft.block.BlockState;
-import net.minecraft.block.IBucketPickupHandler;
+import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluid;
@@ -78,11 +78,12 @@ public class TeapotItem extends NormalBlockItem
             if (worldIn.isBlockModifiable(playerIn, blockpos) && playerIn.canPlayerEdit(blockpos, blockraytraceresult.getFace(), itemStack))
             {
                 BlockState blockstate1 = worldIn.getBlockState(blockpos);
-                if (blockstate1.getBlock() instanceof IBucketPickupHandler)
+                if (blockstate1.getBlock() instanceof FlowingFluidBlock)
                 {
-                    Fluid fluid = ((IBucketPickupHandler) blockstate1.getBlock()).pickupFluid(worldIn, blockpos, blockstate1);
+                    Fluid fluid = ((FlowingFluidBlock) blockstate1.getBlock()).getFluid();
                     if (fluid != Fluids.EMPTY && fluid.isIn(FluidTags.WATER))
                     {
+                        ((FlowingFluidBlock) blockstate1.getBlock()).pickupFluid(worldIn, blockpos, blockstate1);
                         playerIn.addStat(Stats.ITEM_USED.get(this));
 
                         SoundEvent soundevent = SoundEvents.ITEM_BOTTLE_FILL;
