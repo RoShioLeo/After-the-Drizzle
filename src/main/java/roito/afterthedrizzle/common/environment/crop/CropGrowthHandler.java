@@ -18,17 +18,22 @@ public final class CropGrowthHandler
         IWorld world = event.getWorld();
         BlockPos pos = event.getPos();
         Humidity env = Humidity.getHumid(world.getBiome(pos).getDownfall(), world.getBiome(pos).getTemperature(pos));
-        CropInfo info = CropInfoManager.getInfo(event.getState().getBlock().asItem());
+        CropInfo info = CropInfoManager.getInfo(event.getState().getBlock());
         if (info != null)
         {
-            float f = Math.max(0, info.getGrowChance(env));
+            float f = info.getGrowChance(env);
+            System.out.println(f);
             if (f == 0)
             {
                 event.setResult(Event.Result.DENY);
             }
+            else if (f == 1.0F)
+            {
+                event.setResult(Event.Result.DEFAULT);
+            }
             else
             {
-                if (world.getRandom().nextInt(1000) <= 1000 * f)
+                if (world.getRandom().nextInt(1000) < 1000 * f)
                 {
                     event.setResult(Event.Result.DEFAULT);
                 }

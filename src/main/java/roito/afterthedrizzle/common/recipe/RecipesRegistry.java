@@ -44,19 +44,19 @@ public final class RecipesRegistry
         MANAGER_BAMBOO_TRAY_OUTDOORS.add(new BambooTaryRecipe(Items.BEETROOT, ItemsRegistry.DRIED_BEETROOT));
         MANAGER_BAMBOO_TRAY_OUTDOORS.add(new BambooTaryRecipe(Items.CARROT, ItemsRegistry.DRIED_CARROT));
         MANAGER_BAMBOO_TRAY_OUTDOORS.add(new BambooTaryRecipe("forge:food/jerky", Items.LEATHER));
-        MANAGER_BAMBOO_TRAY_OUTDOORS.add(new BambooTaryRecipe("forge:crops/tea_leaves", ItemsRegistry.GREEN_TEA_LEAVES));
+        MANAGER_BAMBOO_TRAY_OUTDOORS.add(new BambooTaryRecipe("forge:crops/tea_leaf", ItemsRegistry.GREEN_TEA_LEAVES));
     }
 
     private static void addBasketIndoorsRecipes()
     {
         MANAGER_BAMBOO_TRAY_INDOORS.add(new BambooTaryRecipe("forge:food/meat", Items.ROTTEN_FLESH));
         MANAGER_BAMBOO_TRAY_INDOORS.add(new BambooTaryRecipe(Items.SPIDER_EYE, Items.FERMENTED_SPIDER_EYE));
-        MANAGER_BAMBOO_TRAY_INDOORS.add(new BambooTaryRecipe("forge:crops/tea_leaves", ItemsRegistry.BLACK_TEA_LEAVES));
+        MANAGER_BAMBOO_TRAY_INDOORS.add(new BambooTaryRecipe("forge:crops/tea_leaf", ItemsRegistry.BLACK_TEA_LEAVES));
     }
 
     private static void addBasketBakeRecipes()
     {
-        MANAGER_BAMBOO_TRAY_BAKE.add(new BambooTaryRecipe("forge:crops/tea_leaves", ItemsRegistry.WHITE_TEA_LEAVES));
+        MANAGER_BAMBOO_TRAY_BAKE.add(new BambooTaryRecipe("forge:crops/tea_leaf", ItemsRegistry.WHITE_TEA_LEAVES));
     }
 
     private static void addBasketWetRecipes()
@@ -74,9 +74,9 @@ public final class RecipesRegistry
     private static void registerDrinkIngredients()
     {
         DrinkIngredientsManager.registerIngredientItem(Items.SUGAR, "sugar");
-        DrinkIngredientsManager.registerIngredientItem(ItemsRegistry.GREEN_TEA_LEAVES, "green_tea_leaves");
-        DrinkIngredientsManager.registerIngredientItem(ItemsRegistry.BLACK_TEA_LEAVES, "black_tea_leaves");
-        DrinkIngredientsManager.registerIngredientItem(ItemsRegistry.WHITE_TEA_LEAVES, "white_tea_leaves");
+        DrinkIngredientsManager.registerIngredientItem(ItemsRegistry.GREEN_TEA_LEAVES, "green_tea_leaf");
+        DrinkIngredientsManager.registerIngredientItem(ItemsRegistry.BLACK_TEA_LEAVES, "black_tea_leaf");
+        DrinkIngredientsManager.registerIngredientItem(ItemsRegistry.WHITE_TEA_LEAVES, "white_tea_leaf");
         DrinkIngredientsManager.registerIngredientItem(ItemsRegistry.GREEN_TEA_BAG, "green_tea_bag");
         DrinkIngredientsManager.registerIngredientItem(ItemsRegistry.BLACK_TEA_BAG, "black_tea_bag");
     }
@@ -99,23 +99,23 @@ public final class RecipesRegistry
     {
         MANAGER_DRINK_MAKER.add(new DrinkRecipeInput("sugar", "sugar", "sugar", "sugar"), new FluidStack(FluidsRegistry.SUGARY_WATER_STILL.get(), 500));
 
-        MANAGER_DRINK_MAKER.add(new DrinkRecipeInput("green_tea_leaves", "green_tea_leaves"), new FluidStack(FluidsRegistry.WEAK_GREEN_TEA_STILL.get(), 500));
-        MANAGER_DRINK_MAKER.add(new DrinkRecipeInput(FluidsRegistry.WEAK_GREEN_TEA_STILL.get(), "green_tea_leaves", "green_tea_leaves", "green_tea_leaves"), new FluidStack(FluidsRegistry.GREEN_TEA_STILL.get(), 500));
-        MANAGER_DRINK_MAKER.add(new DrinkRecipeInput("green_tea_leaves", "green_tea_leaves", "green_tea_leaves", "green_tea_leaves"), new FluidStack(FluidsRegistry.GREEN_TEA_STILL.get(), 500));
+        MANAGER_DRINK_MAKER.add(new DrinkRecipeInput("green_tea_leaf", "green_tea_leaf"), new FluidStack(FluidsRegistry.WEAK_GREEN_TEA_STILL.get(), 500));
+        MANAGER_DRINK_MAKER.add(new DrinkRecipeInput(FluidsRegistry.WEAK_GREEN_TEA_STILL.get(), "green_tea_leaf", "green_tea_leaf", "green_tea_leaf"), new FluidStack(FluidsRegistry.GREEN_TEA_STILL.get(), 500));
+        MANAGER_DRINK_MAKER.add(new DrinkRecipeInput("green_tea_leaf", "green_tea_leaf", "green_tea_leaf", "green_tea_leaf"), new FluidStack(FluidsRegistry.GREEN_TEA_STILL.get(), 500));
         MANAGER_DRINK_MAKER.add(new DrinkRecipeInput("green_tea_bag"), new FluidStack(FluidsRegistry.GREEN_TEA_STILL.get(), 500));
         MANAGER_DRINK_MAKER.add(new DrinkRecipeInput("green_tea_bag", "green_tea_bag"), new FluidStack(FluidsRegistry.STRONG_GREEN_TEA_STILL.get(), 500));
-        MANAGER_DRINK_MAKER.add(new DrinkRecipeInput(FluidsRegistry.GREEN_TEA_STILL.get(), "green_tea_leaves", "green_tea_leaves", "green_tea_leaves", "green_tea_leaves"), new FluidStack(FluidsRegistry.STRONG_GREEN_TEA_STILL.get(), 500));
+        MANAGER_DRINK_MAKER.add(new DrinkRecipeInput(FluidsRegistry.GREEN_TEA_STILL.get(), "green_tea_leaf", "green_tea_leaf", "green_tea_leaf", "green_tea_leaf"), new FluidStack(FluidsRegistry.STRONG_GREEN_TEA_STILL.get(), 500));
 
-        MANAGER_DRINK_MAKER.add(new DrinkRecipeInput("black_tea_leaves", "black_tea_leaves"), new FluidStack(FluidsRegistry.WEAK_BLACK_TEA_STILL.get(), 500));
-        MANAGER_DRINK_MAKER.add(new DrinkRecipeInput(FluidsRegistry.WEAK_BLACK_TEA_STILL.get(), "black_tea_leaves", "black_tea_leaves", "black_tea_leaves"), new FluidStack(FluidsRegistry.BLACK_TEA_STILL.get(), 500));
-        MANAGER_DRINK_MAKER.add(new DrinkRecipeInput("black_tea_leaves", "black_tea_leaves", "black_tea_leaves", "black_tea_leaves"), new FluidStack(FluidsRegistry.BLACK_TEA_STILL.get(), 500));
+        MANAGER_DRINK_MAKER.add(new DrinkRecipeInput("black_tea_leaf", "black_tea_leaf"), new FluidStack(FluidsRegistry.WEAK_BLACK_TEA_STILL.get(), 500));
+        MANAGER_DRINK_MAKER.add(new DrinkRecipeInput(FluidsRegistry.WEAK_BLACK_TEA_STILL.get(), "black_tea_leaf", "black_tea_leaf", "black_tea_leaf"), new FluidStack(FluidsRegistry.BLACK_TEA_STILL.get(), 500));
+        MANAGER_DRINK_MAKER.add(new DrinkRecipeInput("black_tea_leaf", "black_tea_leaf", "black_tea_leaf", "black_tea_leaf"), new FluidStack(FluidsRegistry.BLACK_TEA_STILL.get(), 500));
         MANAGER_DRINK_MAKER.add(new DrinkRecipeInput("black_tea_bag"), new FluidStack(FluidsRegistry.BLACK_TEA_STILL.get(), 500));
         MANAGER_DRINK_MAKER.add(new DrinkRecipeInput("black_tea_bag", "black_tea_bag"), new FluidStack(FluidsRegistry.STRONG_BLACK_TEA_STILL.get(), 500));
-        MANAGER_DRINK_MAKER.add(new DrinkRecipeInput(FluidsRegistry.BLACK_TEA_STILL.get(), "black_tea_leaves", "black_tea_leaves", "black_tea_leaves", "black_tea_leaves"), new FluidStack(FluidsRegistry.STRONG_BLACK_TEA_STILL.get(), 500));
+        MANAGER_DRINK_MAKER.add(new DrinkRecipeInput(FluidsRegistry.BLACK_TEA_STILL.get(), "black_tea_leaf", "black_tea_leaf", "black_tea_leaf", "black_tea_leaf"), new FluidStack(FluidsRegistry.STRONG_BLACK_TEA_STILL.get(), 500));
 
-        MANAGER_DRINK_MAKER.add(new DrinkRecipeInput("white_tea_leaves", "white_tea_leaves"), new FluidStack(FluidsRegistry.WEAK_WHITE_TEA_STILL.get(), 500));
-        MANAGER_DRINK_MAKER.add(new DrinkRecipeInput(FluidsRegistry.WEAK_WHITE_TEA_STILL.get(), "white_tea_leaves", "white_tea_leaves", "white_tea_leaves"), new FluidStack(FluidsRegistry.WHITE_TEA_STILL.get(), 500));
-        MANAGER_DRINK_MAKER.add(new DrinkRecipeInput("white_tea_leaves", "white_tea_leaves", "white_tea_leaves", "white_tea_leaves"), new FluidStack(FluidsRegistry.WHITE_TEA_STILL.get(), 500));
-        MANAGER_DRINK_MAKER.add(new DrinkRecipeInput(FluidsRegistry.WHITE_TEA_STILL.get(), "white_tea_leaves", "white_tea_leaves", "white_tea_leaves", "white_tea_leaves"), new FluidStack(FluidsRegistry.STRONG_WHITE_TEA_STILL.get(), 500));
+        MANAGER_DRINK_MAKER.add(new DrinkRecipeInput("white_tea_leaf", "white_tea_leaf"), new FluidStack(FluidsRegistry.WEAK_WHITE_TEA_STILL.get(), 500));
+        MANAGER_DRINK_MAKER.add(new DrinkRecipeInput(FluidsRegistry.WEAK_WHITE_TEA_STILL.get(), "white_tea_leaf", "white_tea_leaf", "white_tea_leaf"), new FluidStack(FluidsRegistry.WHITE_TEA_STILL.get(), 500));
+        MANAGER_DRINK_MAKER.add(new DrinkRecipeInput("white_tea_leaf", "white_tea_leaf", "white_tea_leaf", "white_tea_leaf"), new FluidStack(FluidsRegistry.WHITE_TEA_STILL.get(), 500));
+        MANAGER_DRINK_MAKER.add(new DrinkRecipeInput(FluidsRegistry.WHITE_TEA_STILL.get(), "white_tea_leaf", "white_tea_leaf", "white_tea_leaf", "white_tea_leaf"), new FluidStack(FluidsRegistry.STRONG_WHITE_TEA_STILL.get(), 500));
     }
 }

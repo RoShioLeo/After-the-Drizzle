@@ -26,7 +26,6 @@ import roito.afterthedrizzle.common.CommonProxy;
 import roito.afterthedrizzle.common.block.BlocksRegistry;
 import roito.afterthedrizzle.common.config.NormalConfig;
 import roito.afterthedrizzle.common.entity.EntityTypesRegistry;
-import roito.afterthedrizzle.common.environment.crop.CropInfoManager;
 import roito.afterthedrizzle.common.fluid.FluidsRegistry;
 import roito.afterthedrizzle.common.group.GroupCore;
 import roito.afterthedrizzle.common.group.GroupDrink;
@@ -79,7 +78,6 @@ public final class AfterTheDrizzle
         RegisterManager.clearAll();
         registerCompostable();
         registerFireInfo();
-        CropInfoManager.init();
     }
 
     public void ClientSetup(FMLClientSetupEvent event)

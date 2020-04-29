@@ -20,6 +20,12 @@ public class CropInfo
         this.max = max;
     }
 
+    public CropInfo(Humidity env)
+    {
+        this.min = env;
+        this.max = env;
+    }
+
     public boolean isSuitable(Humidity env)
     {
         return min.getId() <= env.getId() && env.getId() <= max.getId();
@@ -33,11 +39,11 @@ public class CropInfo
         }
         else if (env.getId() < min.getId())
         {
-            return 1.0F - 0.3F * (min.getId() - env.getId());
+            return Math.max(0, 1.0F - 0.2F * (min.getId() - env.getId()) * (min.getId() - env.getId()));
         }
         else
         {
-            return 1.0F - 0.3F * (env.getId() - max.getId());
+            return Math.max(0, 1.0F - 0.2F * (env.getId() - max.getId()) * (env.getId() - max.getId()));
         }
     }
 

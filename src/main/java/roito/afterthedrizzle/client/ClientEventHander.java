@@ -1,6 +1,7 @@
 package roito.afterthedrizzle.client;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.item.BlockItem;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
@@ -17,9 +18,9 @@ public final class ClientEventHander
     @SubscribeEvent
     public static void addCropTooltips(ItemTooltipEvent event)
     {
-        if (CropInfoManager.getCrops().contains(event.getItemStack().getItem()))
+        if (event.getItemStack().getItem() instanceof BlockItem && CropInfoManager.getCrops().contains(((BlockItem) event.getItemStack().getItem()).getBlock()))
         {
-            CropInfo info = CropInfoManager.getInfo(event.getItemStack().getItem());
+            CropInfo info = CropInfoManager.getInfo(((BlockItem) event.getItemStack().getItem()).getBlock());
             event.getToolTip().addAll(info.getTooltip());
         }
     }
