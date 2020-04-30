@@ -39,11 +39,11 @@ public class CropInfo
         }
         else if (env.getId() < min.getId())
         {
-            return Math.max(0, 1.0F - 0.2F * (min.getId() - env.getId()) * (min.getId() - env.getId()));
+            return Math.max(0, 1.0F - 0.5F * (min.getId() - env.getId()) * (min.getId() - env.getId()));
         }
         else
         {
-            return Math.max(0, 1.0F - 0.2F * (env.getId() - max.getId()) * (env.getId() - max.getId()));
+            return Math.max(0, 1.0F - 0.5F * (env.getId() - max.getId()) * (env.getId() - max.getId()));
         }
     }
 

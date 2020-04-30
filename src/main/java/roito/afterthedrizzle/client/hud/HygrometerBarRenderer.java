@@ -10,7 +10,6 @@ import roito.afterthedrizzle.common.environment.Humidity;
 public class HygrometerBarRenderer extends AbstractGui
 {
     private final static ResourceLocation OVERLAY_BAR = new ResourceLocation(AfterTheDrizzle.MODID, "textures/gui/hud/env.png");
-    private final static ResourceLocation DEFAULT = new ResourceLocation("minecraft", "textures/gui/icons.png");
 
     private final static int WIDTH = 31;
     private final static int HEIGHT = 5;
@@ -54,6 +53,6 @@ public class HygrometerBarRenderer extends AbstractGui
 
         blit(offsetX + 1, offsetY + 1, 1, 20, width, HEIGHT - 2);
         blit(offsetX, offsetY, 0, 24, WIDTH, HEIGHT);
-        mc.getTextureManager().bindTexture(DEFAULT);
+        mc.getTextureManager().bindTexture(OverlayEventHandler.DEFAULT);
     }
 }

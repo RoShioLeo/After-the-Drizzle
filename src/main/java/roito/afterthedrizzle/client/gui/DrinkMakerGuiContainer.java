@@ -37,6 +37,7 @@ public class DrinkMakerGuiContainer extends ContainerScreen<DrinkMakerContainer>
         int offsetX = (width - xSize) / 2, offsetY = (height - ySize) / 2;
 
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.enableAlphaTest();
         minecraft.getTextureManager().bindTexture(TEXTURE);
         blit(offsetX, offsetY, 0, 0, xSize, ySize);
 

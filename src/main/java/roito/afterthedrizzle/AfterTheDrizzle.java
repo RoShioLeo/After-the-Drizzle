@@ -24,6 +24,7 @@ import roito.afterthedrizzle.client.gui.StoveGuiContainer;
 import roito.afterthedrizzle.client.sound.SoundEventsRegistry;
 import roito.afterthedrizzle.common.CommonProxy;
 import roito.afterthedrizzle.common.block.BlocksRegistry;
+import roito.afterthedrizzle.common.capability.CapabilitiesRegistry;
 import roito.afterthedrizzle.common.config.NormalConfig;
 import roito.afterthedrizzle.common.entity.EntityTypesRegistry;
 import roito.afterthedrizzle.common.fluid.FluidsRegistry;
@@ -34,6 +35,7 @@ import roito.afterthedrizzle.common.inventory.ContainerTypesRegistry;
 import roito.afterthedrizzle.common.inventory.DrinkMakerContainer;
 import roito.afterthedrizzle.common.inventory.StoveContainer;
 import roito.afterthedrizzle.common.item.ItemsRegistry;
+import roito.afterthedrizzle.common.network.SimpleNetworkHandler;
 import roito.afterthedrizzle.common.potion.EffectsRegistry;
 import roito.afterthedrizzle.common.recipe.RecipesRegistry;
 import roito.afterthedrizzle.common.recipe.type.RecipeSerializersRegistry;
@@ -49,6 +51,7 @@ public final class AfterTheDrizzle
 {
     public static final String MODID = "afterthedrizzle";
     public static final Logger LOGGER = LogManager.getLogger();
+    public static final String NETWORK_VERSION = "1";
 
     public static final CommonProxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 
@@ -78,6 +81,8 @@ public final class AfterTheDrizzle
         RegisterManager.clearAll();
         registerCompostable();
         registerFireInfo();
+        CapabilitiesRegistry.init();
+        SimpleNetworkHandler.init();
     }
 
     public void ClientSetup(FMLClientSetupEvent event)

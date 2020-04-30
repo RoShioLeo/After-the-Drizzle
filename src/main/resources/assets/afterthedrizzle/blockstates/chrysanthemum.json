@@ -1,28 +1,21 @@
 {
     "variants": {
-        "color=white": {
-            "model": "afterthedrizzle:block/chrysanthemum"
-        },
-        "color=yellow": {
-            "model": "afterthedrizzle:block/chrysanthemum"
-        },
-        "color=red": {
-            "model": "afterthedrizzle:block/chrysanthemum"
-        },
-        "color=orange": {
-            "model": "afterthedrizzle:block/chrysanthemum"
-        },
-		 "color=pink": {
-            "model": "afterthedrizzle:block/chrysanthemum"
-        },
-        "color=gold": {
-            "model": "afterthedrizzle:block/chrysanthemum"
-        },
-        "color=blue": {
-            "model": "afterthedrizzle:block/chrysanthemum"
-        },
-        "color=black": {
-            "model": "afterthedrizzle:block/chrysanthemum"
-        }
+        "": [
+            {
+                "model": "afterthedrizzle:block/chrysanthemum"
+            },
+            {
+                "model": "afterthedrizzle:block/chrysanthemum",
+                "y": 90
+            },
+            {
+                "model": "afterthedrizzle:block/chrysanthemum",
+                "y": 180
+            },
+            {
+                "model": "afterthedrizzle:block/chrysanthemum",
+                "y": 270
+            }
+        ]
     }
 }

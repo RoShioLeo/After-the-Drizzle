@@ -80,7 +80,7 @@ public class CatapultBoardBlock extends NormalHorizontalBlock
         if (!state.get(ENABLED) && worldIn.isBlockPowered(pos))
         {
             worldIn.setBlockState(pos, state.cycle(ENABLED), 2);
-            worldIn.getPendingBlockTicks().scheduleTick(pos, this, 1);
+            worldIn.getPendingBlockTicks().scheduleTick(pos, this, 2);
             Vec3d vec3d;
             switch (state.get(HORIZONTAL_FACING))
             {
@@ -102,6 +102,7 @@ public class CatapultBoardBlock extends NormalHorizontalBlock
                 default:
                     vec3d = new Vec3d(0, 0.4, 0.4);
             }
+            entityIn.fallDistance = 0.0F;
             entityIn.setMotion(vec3d);
         }
     }

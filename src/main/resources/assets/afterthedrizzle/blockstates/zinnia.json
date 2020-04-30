@@ -1,28 +1,21 @@
 {
     "variants": {
-        "color=white": {
-            "model": "afterthedrizzle:block/zinnia"
-        },
-        "color=yellow": {
-            "model": "afterthedrizzle:block/zinnia"
-        },
-        "color=red": {
-            "model": "afterthedrizzle:block/zinnia"
-        },
-        "color=orange": {
-            "model": "afterthedrizzle:block/zinnia"
-        },
-		 "color=pink": {
-            "model": "afterthedrizzle:block/zinnia"
-        },
-        "color=gold": {
-            "model": "afterthedrizzle:block/zinnia"
-        },
-        "color=blue": {
-            "model": "afterthedrizzle:block/zinnia"
-        },
-        "color=black": {
-            "model": "afterthedrizzle:block/zinnia"
-        }
+        "": [
+            {
+                "model": "afterthedrizzle:block/zinnia"
+            },
+            {
+                "model": "afterthedrizzle:block/zinnia",
+                "y": 90
+            },
+            {
+                "model": "afterthedrizzle:block/zinnia",
+                "y": 180
+            },
+            {
+                "model": "afterthedrizzle:block/zinnia",
+                "y": 270
+            }
+        ]
     }
 }
