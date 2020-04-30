@@ -21,7 +21,7 @@ import roito.afterthedrizzle.common.item.ItemsRegistry;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import static roito.afterthedrizzle.common.block.StoveBlock.LIT;
+import static net.minecraft.state.properties.BlockStateProperties.LIT;
 import static roito.afterthedrizzle.common.tileentity.TileEntityTypesRegistry.STOVE_TILE;
 
 public class StoveTileEntity extends NormalContainerTileEntity implements ITickableTileEntity

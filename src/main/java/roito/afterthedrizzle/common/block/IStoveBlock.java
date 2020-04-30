@@ -4,7 +4,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import static roito.afterthedrizzle.common.block.StoveBlock.LIT;
+import static net.minecraft.state.properties.BlockStateProperties.LIT;
 
 public interface IStoveBlock
 {

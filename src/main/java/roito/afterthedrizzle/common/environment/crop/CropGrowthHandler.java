@@ -22,7 +22,6 @@ public final class CropGrowthHandler
         if (info != null)
         {
             float f = info.getGrowChance(env);
-            System.out.println(f);
             if (f == 0)
             {
                 event.setResult(Event.Result.DENY);

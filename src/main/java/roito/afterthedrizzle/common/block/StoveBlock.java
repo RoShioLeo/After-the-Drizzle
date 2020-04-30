@@ -40,7 +40,7 @@ import java.util.Random;
 public class StoveBlock extends NormalHorizontalBlock implements IStoveBlock
 {
     protected int efficiency;
-    public static final BooleanProperty LIT = BlockStateProperties.LIT;
+    private static final BooleanProperty LIT = BlockStateProperties.LIT;
     private static final VoxelShape SHAPE;
 
     public StoveBlock(Properties properties, String name, int efficiency)
