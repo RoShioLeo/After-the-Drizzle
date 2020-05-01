@@ -36,7 +36,7 @@ public final class OverlayEventHandler
                 {
                     float temp = playerEntity.getEntityWorld().getBiome(playerEntity.getPosition()).getTemperature(playerEntity.getPosition());
                     Humidity h = Humidity.getHumid(playerEntity.getEntityWorld().getBiome(playerEntity.getPosition()).getDownfall(), temp);
-                    double env = EnvHelper.getEnvDailyTemp(playerEntity.getEntityWorld().getBiome(playerEntity.getPosition()).getTemperature(playerEntity.getPosition()), h, playerEntity.getEntityWorld().getDayTime());
+                    double env = EnvHelper.getEnvDailyTemp(playerEntity.getEntityWorld().getBiome(playerEntity.getPosition()).getTemperature(playerEntity.getPosition()), h, playerEntity.getEntityWorld().getDayTime(), playerEntity.getEntityWorld().isRaining());
                     BAR_0.renderStatusBar(event.getWindow().getScaledWidth(), event.getWindow().getScaledHeight(), (float) env);
                 }
                 else if (playerEntity.getHeldItemMainhand().getItem().equals(ItemsRegistry.RAIN_GAUGE))
@@ -52,7 +52,7 @@ public final class OverlayEventHandler
             {
                 float temp = playerEntity.getEntityWorld().getBiome(playerEntity.getPosition()).getTemperature(playerEntity.getPosition());
                 Humidity h = Humidity.getHumid(playerEntity.getEntityWorld().getBiome(playerEntity.getPosition()).getDownfall(), temp);
-                double env = EnvHelper.getEnvDailyTemp(playerEntity.getEntityWorld().getBiome(playerEntity.getPosition()).getTemperature(playerEntity.getPosition()), h, playerEntity.getEntityWorld().getDayTime());
+                double env = EnvHelper.getEnvDailyTemp(playerEntity.getEntityWorld().getBiome(playerEntity.getPosition()).getTemperature(playerEntity.getPosition()), h, playerEntity.getEntityWorld().getDayTime(), playerEntity.getEntityWorld().isRaining());
                 BAR_3.renderStatusBar(event.getWindow().getScaledWidth(), event.getWindow().getScaledHeight(), t.getPlayerTemperature(), env);
             });
         }
