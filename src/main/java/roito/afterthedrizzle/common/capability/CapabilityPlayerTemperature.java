@@ -53,9 +53,9 @@ public class CapabilityPlayerTemperature
             this.temperature = temp;
         }
 
-        public int getTemperatureLevel()
+        public int getTemperature()
         {
-            return temperature / 8 + 1;
+            return temperature;
         }
 
     }

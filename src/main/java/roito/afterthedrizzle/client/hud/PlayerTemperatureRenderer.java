@@ -15,10 +15,11 @@ public class PlayerTemperatureRenderer extends AbstractGui
         this.mc = mc;
     }
 
-    public void renderStatusBar(int screenWidth, int screenHeight, int temp)
+    public void renderStatusBar(int screenWidth, int screenHeight, int temp, double env)
     {
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.drawString(mc.fontRenderer, String.valueOf(temp), screenWidth / 2 - mc.fontRenderer.getStringWidth(String.valueOf(temp)) / 2, 6, 4210752);
+        this.drawString(mc.fontRenderer, String.valueOf(env), screenWidth / 2 - mc.fontRenderer.getStringWidth(String.valueOf(env)) / 2, 12, 4210752);
         mc.getTextureManager().bindTexture(OverlayEventHandler.DEFAULT);
     }
 }

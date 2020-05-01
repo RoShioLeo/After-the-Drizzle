@@ -5,11 +5,14 @@ import net.minecraft.block.FireBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.fluid.Fluid;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.LightType;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
@@ -27,13 +30,14 @@ import roito.afterthedrizzle.AfterTheDrizzle;
 import roito.afterthedrizzle.common.block.TeaPlantBlock;
 import roito.afterthedrizzle.common.capability.CapabilityPlayerTemperature;
 import roito.afterthedrizzle.common.config.NormalConfig;
+import roito.afterthedrizzle.common.environment.ApparentTemperature;
 import roito.afterthedrizzle.common.environment.Humidity;
-import roito.afterthedrizzle.common.environment.Rainfall;
 import roito.afterthedrizzle.common.environment.Temperature;
 import roito.afterthedrizzle.common.item.ItemsRegistry;
 import roito.afterthedrizzle.common.network.PlayerTemperatureMessage;
 import roito.afterthedrizzle.common.network.SimpleNetworkHandler;
 import roito.afterthedrizzle.common.potion.EffectsRegistry;
+import roito.afterthedrizzle.helper.EnvHelper;
 
 import static roito.afterthedrizzle.common.block.TeaPlantBlock.AGE;
 
@@ -139,22 +143,62 @@ public final class CommonEventHandler
     @SubscribeEvent
     public static void onPlayTick(TickEvent.PlayerTickEvent event)
     {
-        if (event.player instanceof ServerPlayerEntity && event.player.getEntityWorld().getDayTime() % 100 == 0)
+        PlayerEntity player = event.player;
+        if (event.phase == TickEvent.Phase.START && player instanceof ServerPlayerEntity && player.getEntityWorld().getDayTime() % 50 == 0)
         {
-            event.player.getCapability(CapabilityPlayerTemperature.PLAYER_TEMP).ifPresent(t ->
+            player.getCapability(CapabilityPlayerTemperature.PLAYER_TEMP).ifPresent(t ->
             {
-                Biome biome = event.player.getEntityWorld().getBiomeBody(event.player.getPosition());
-                Temperature temp = Temperature.getTemperatureLevel(biome.getTemperature(event.player.getPosition()));
-                Humidity humidity = Humidity.getHumid(Rainfall.getRainfallLevel(biome.getDownfall()), temp);
-                if (temp.getId() > t.getTemperatureLevel())
+                Biome biome = player.getEntityWorld().getBiomeBody(player.getPosition());
+                float temp = biome.getTemperature(player.getPosition());
+                Humidity humidity = Humidity.getHumid(biome.getDownfall(), temp);
+                Fluid f = player.getEntityWorld().getFluidState(player.getPosition()).getFluid();
+                if (player.getEntityWorld().isRainingAt(player.getPosition()))
                 {
-                    t.addPlayerTemperature(1);
+                    int id = humidity.ordinal() == 4 ? 4 : humidity.getId();
+                    humidity = Humidity.values()[id];
+                }
+                if (f != Fluids.EMPTY)
+                {
+                    int ATemp = EnvHelper.getFluidApparentTemp(f.getAttributes().getTemperature());
+
+                    if (ATemp > t.getTemperature())
+                    {
+                        t.addPlayerTemperature(1);
+                    }
+                    else
+                    {
+                        t.addPlayerTemperature(-1);
+                    }
                 }
                 else
                 {
-                    t.addPlayerTemperature(-1);
+                    ApparentTemperature ATemp;
+                    if (player.posY < 40 && player.getEntityWorld().canBlockSeeSky(player.getPosition()))
+                    {
+                        ATemp = ApparentTemperature.COOL;
+                    }
+                    else
+                    {
+                        float apparent = EnvHelper.getEnvDailyTemp(temp, humidity, player.getEntityWorld().getDayTime(), player.getEntityWorld().isRaining());
+                        ATemp = ApparentTemperature.getApparentTemp(Temperature.getTemperatureLevel(apparent));
+                    }
+                    if (player.getEntityWorld().getLightFor(LightType.BLOCK, player.getPosition()) >= 8)
+                    {
+                        if (ATemp.ordinal() <= 3)
+                        {
+                            ATemp = ApparentTemperature.WARM;
+                        }
+                    }
+                    if (ATemp.getMiddle() > t.getTemperature())
+                    {
+                        t.addPlayerTemperature(1);
+                    }
+                    else
+                    {
+                        t.addPlayerTemperature(-1);
+                    }
                 }
-                SimpleNetworkHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.player), new PlayerTemperatureMessage(t.getPlayerTemperature()));
+                SimpleNetworkHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PlayerTemperatureMessage(t.getPlayerTemperature()));
             });
         }
     }

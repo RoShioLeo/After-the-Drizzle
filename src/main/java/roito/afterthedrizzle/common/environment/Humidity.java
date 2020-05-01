@@ -7,17 +7,19 @@ import roito.afterthedrizzle.common.config.NormalConfig;
 
 public enum Humidity
 {
-    ARID(TextFormatting.RED),
-    DRY(TextFormatting.GOLD),
-    AVERAGE(TextFormatting.WHITE),
-    MOIST(TextFormatting.BLUE),
-    HUMID(TextFormatting.DARK_GREEN);
+    ARID(TextFormatting.RED, 0.9F),
+    DRY(TextFormatting.GOLD, 0.95F),
+    AVERAGE(TextFormatting.WHITE, 1.0F),
+    MOIST(TextFormatting.BLUE, 1.1F),
+    HUMID(TextFormatting.DARK_GREEN, 1.2F);
 
     private final TextFormatting color;
+    private final float tempCoefficient;
 
-    Humidity(TextFormatting color)
+    Humidity(TextFormatting color, float tempCoefficient)
     {
         this.color = color;
+        this.tempCoefficient = tempCoefficient;
     }
 
     public int getId()
@@ -33,6 +35,11 @@ public enum Humidity
     public ITextComponent getTranslation()
     {
         return new TranslationTextComponent("info.afterthedrizzle.environment.humidity." + getName()).applyTextStyle(color);
+    }
+
+    public float getCoefficient()
+    {
+        return tempCoefficient;
     }
 
     public int getOutdoorDryingTicks()
