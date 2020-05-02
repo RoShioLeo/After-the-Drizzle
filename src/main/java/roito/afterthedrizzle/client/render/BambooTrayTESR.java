@@ -7,6 +7,7 @@ import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.item.ItemStack;
+import roito.afterthedrizzle.common.block.CatapultBoardBlockWithTray;
 import roito.afterthedrizzle.common.tileentity.BambooTrayTileEntity;
 
 public class BambooTrayTESR extends TileEntityRenderer<BambooTrayTileEntity>
@@ -31,7 +32,12 @@ public class BambooTrayTESR extends TileEntityRenderer<BambooTrayTileEntity>
         RenderHelper.disableStandardItemLighting();
         GlStateManager.disableLighting();
 
-        GlStateManager.translated(x + 0.5, y + 0.13, z + 0.5);
+        double h = 0.125;
+        if (tileEntityIn.getBlockState().getBlock() instanceof CatapultBoardBlockWithTray)
+        {
+            h += 0.125;
+        }
+        GlStateManager.translated(x + 0.5, y + h, z + 0.5);
 
         GlStateManager.pushMatrix();
         int seed = tileEntityIn.getRandomSeed();

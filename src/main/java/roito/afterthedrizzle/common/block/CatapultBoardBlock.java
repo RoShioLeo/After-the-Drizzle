@@ -2,14 +2,18 @@ package roito.afterthedrizzle.common.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.material.Material;
+import net.minecraft.block.SoundType;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
@@ -23,11 +27,13 @@ public class CatapultBoardBlock extends NormalHorizontalBlock
 {
     private static final VoxelShape SHAPE = VoxelShapeHelper.createVoxelShape(0, 0, 0, 16, 2, 16);
     private static final BooleanProperty ENABLED = BlockStateProperties.ENABLED;
+    private final float motion;
 
-    public CatapultBoardBlock()
+    public CatapultBoardBlock(float motion, String name, Properties properties)
     {
-        super(Block.Properties.create(Material.BAMBOO), "catapult_board");
+        super(properties, name);
         this.setDefaultState(this.getStateContainer().getBaseState().with(HORIZONTAL_FACING, Direction.NORTH).with(ENABLED, false));
+        this.motion = motion;
     }
 
     @Override
@@ -67,40 +73,51 @@ public class CatapultBoardBlock extends NormalHorizontalBlock
     @SuppressWarnings("deprecation")
     public void tick(BlockState state, World worldIn, BlockPos pos, Random random)
     {
-        if (state.get(ENABLED))
+        worldIn.setBlockState(pos, state.with(ENABLED, false), 2);
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit)
+    {
+        if (player.getHeldItem(handIn).getItem() == BlocksRegistry.BAMBOO_TRAY.asItem())
         {
-            worldIn.setBlockState(pos, state.cycle(ENABLED), 2);
+            worldIn.setBlockState(pos, BlocksRegistry.STONE_CATAPULT_BOARD_WITH_TRAY.getDefaultState().with(HORIZONTAL_FACING, state.get(HORIZONTAL_FACING)));
+            SoundType soundtype = BlocksRegistry.BAMBOO_TRAY.getDefaultState().getSoundType(worldIn, pos, player);
+            worldIn.playSound(player, pos, soundtype.getPlaceSound(), SoundCategory.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
+            return true;
         }
+        else return false;
     }
 
     @Override
     @SuppressWarnings("deprecation")
     public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn)
     {
-        if (!state.get(ENABLED) && worldIn.isBlockPowered(pos))
+        if (worldIn.isBlockPowered(pos))
         {
-            worldIn.setBlockState(pos, state.cycle(ENABLED), 2);
-            worldIn.getPendingBlockTicks().scheduleTick(pos, this, 2);
+            worldIn.setBlockState(pos, state.with(ENABLED, true), 2);
+            worldIn.getPendingBlockTicks().scheduleTick(pos, this, 5);
             Vec3d vec3d;
             switch (state.get(HORIZONTAL_FACING))
             {
                 case SOUTH:
                 {
-                    vec3d = new Vec3d(0, 0.4, -0.4);
+                    vec3d = new Vec3d(0, motion, -motion);
                     break;
                 }
                 case EAST:
                 {
-                    vec3d = new Vec3d(-0.4, 0.4, 0);
+                    vec3d = new Vec3d(-motion, motion, 0);
                     break;
                 }
                 case WEST:
                 {
-                    vec3d = new Vec3d(0.4, 0.4, 0);
+                    vec3d = new Vec3d(motion, motion, 0);
                     break;
                 }
                 default:
-                    vec3d = new Vec3d(0, 0.4, 0.4);
+                    vec3d = new Vec3d(0, motion, motion);
             }
             entityIn.fallDistance = 0.0F;
             entityIn.setMotion(vec3d);

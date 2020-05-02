@@ -1,15 +1,26 @@
 package roito.afterthedrizzle.common.environment;
 
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
+
 public enum ApparentTemperature
 {
-    UNDER_FREEZING,
-    FREEZING,
-    COLD,
-    COOL,
-    WARM,
-    HOT,
-    HEAT,
-    OVER_HEAT;
+    UNDER_FREEZING(TextFormatting.DARK_BLUE),
+    FREEZING(TextFormatting.DARK_BLUE),
+    COLD(TextFormatting.BLUE),
+    COOL(TextFormatting.AQUA),
+    WARM(TextFormatting.GOLD),
+    HOT(TextFormatting.RED),
+    HEAT(TextFormatting.DARK_RED),
+    OVER_HEAT(TextFormatting.DARK_RED);
+
+    private final TextFormatting color;
+
+    ApparentTemperature(TextFormatting color)
+    {
+        this.color = color;
+    }
 
     public int getMin()
     {
@@ -33,9 +44,38 @@ public enum ApparentTemperature
         }
     }
 
+    public String getName()
+    {
+        return this.toString().toLowerCase();
+    }
+
+    public ITextComponent getTranslation()
+    {
+        return new TranslationTextComponent("info.afterthedrizzle.environment.temperature." + getName()).applyTextStyle(color);
+    }
+
+    public TextFormatting getColor()
+    {
+        return color;
+    }
+
     public boolean isInRange(int temp)
     {
         return getMin() <= temp && temp <= getMax();
+    }
+
+    public int getIndex()
+    {
+        if (ordinal() <= 1)
+        {
+            return 1;
+        }
+        else if (ordinal() >= 6)
+        {
+            return 6;
+        }
+        else
+            return ordinal();
     }
 
     public static ApparentTemperature getTemperature(int temp)

@@ -15,8 +15,13 @@ public final class NormalConfig
     public static ForgeConfigSpec.IntValue dryingIndoorsBasicTime;
     public static ForgeConfigSpec.IntValue fermentationBasicTime;
     public static ForgeConfigSpec.IntValue bakeBasicTime;
+
     public static ForgeConfigSpec.IntValue woodenBarrelCapacity;
     public static ForgeConfigSpec.IntValue drinkMakerCapacity;
+
+    public static ForgeConfigSpec.IntValue playerTemperatureX;
+    public static ForgeConfigSpec.IntValue playerTemperatureY;
+
     public static ForgeConfigSpec.BooleanValue canUseBoneMeal;
     public static ForgeConfigSpec.BooleanValue useAshAsBoneMeal;
 
@@ -47,6 +52,15 @@ public final class NormalConfig
         drinkMakerCapacity = builder.comment("The capacity of drink maker. (mB)")
                 .translation("atd.config.blocks.drink_maker_capacity")
                 .defineInRange("DrinkMakerCapacity", 2000, 100, Integer.MAX_VALUE);
+        builder.pop();
+
+        builder.push("HUD");
+        playerTemperatureX = builder.comment("The position X of Player Temperature HUD")
+                .translation("atd.config.hud.player_temperature_x")
+                .defineInRange("PlayerTemperatureX", 10, Integer.MIN_VALUE, Integer.MAX_VALUE);
+        playerTemperatureY = builder.comment("The position Y of Player Temperature HUD")
+                .translation("atd.config.hud.player_temperature_y")
+                .defineInRange("PlayerTemperatureY", 200, Integer.MIN_VALUE, Integer.MAX_VALUE);
         builder.pop();
 
         builder.push("Others");

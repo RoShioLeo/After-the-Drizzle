@@ -66,7 +66,7 @@ public class FlowerDyeRecipe extends SpecialRecipe
         FlowerColor color = FlowerColor.getFlowerColor(itemstack.getOrCreateTag().getString("color"));
         if (color.getDye() != null)
         {
-            return new ItemStack(color.getDye());
+            return new ItemStack(color.getDye(), 2);
         }
         return ItemStack.EMPTY;
     }

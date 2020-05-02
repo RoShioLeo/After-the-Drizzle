@@ -27,6 +27,6 @@ public class WarmFlowersFeature extends FlowersFeature
     public BlockState getRandomFlower(Random random, BlockPos pos)
     {
         double d = MathHelper.clamp((1.0D + Biome.INFO_NOISE.getValue((double) pos.getX() / 48.0D, (double) pos.getZ() / 48.0D)) / 2.0D, 0.0D, 0.9999D);
-        return BlocksRegistry.ZINNIA.getDefaultState().with(FLOWER_COLOR, FlowerColor.values()[(int) (d * 3)]);
+        return BlocksRegistry.ZINNIA.getDefaultState().with(FLOWER_COLOR, FlowerColor.values()[(int) (d * 4)]);
     }
 }

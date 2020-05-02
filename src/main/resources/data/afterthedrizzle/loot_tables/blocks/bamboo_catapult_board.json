@@ -6,7 +6,7 @@
             "entries": [
                 {
                     "type": "minecraft:item",
-                    "name": "afterthedrizzle:catapult_board"
+                    "name": "afterthedrizzle:bamboo_catapult_board"
                 }
             ],
             "conditions": [

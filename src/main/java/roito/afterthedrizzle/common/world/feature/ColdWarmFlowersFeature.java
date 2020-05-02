@@ -31,9 +31,9 @@ public class ColdWarmFlowersFeature extends FlowersFeature
         switch (i)
         {
             case 0:
-                return BlocksRegistry.CHRYSANTHEMUM.getDefaultState().with(FLOWER_COLOR, FlowerColor.values()[(int) (d * 3)]);
+                return BlocksRegistry.CHRYSANTHEMUM.getDefaultState().with(FLOWER_COLOR, FlowerColor.values()[(int) (d * 4)]);
             default:
-                return BlocksRegistry.HYACINTH.getDefaultState().with(FLOWER_COLOR, FlowerColor.values()[(int) (d * 3)]);
+                return BlocksRegistry.HYACINTH.getDefaultState().with(FLOWER_COLOR, FlowerColor.values()[(int) (d * 4)]);
         }
     }
 }

@@ -10,8 +10,8 @@ import net.minecraftforge.fml.common.Mod;
 import roito.afterthedrizzle.AfterTheDrizzle;
 import roito.afterthedrizzle.common.capability.CapabilityPlayerTemperature;
 import roito.afterthedrizzle.common.environment.Humidity;
+import roito.afterthedrizzle.common.handler.PlayerTemperatureHandler;
 import roito.afterthedrizzle.common.item.ItemsRegistry;
-import roito.afterthedrizzle.helper.EnvHelper;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT, modid = AfterTheDrizzle.MODID)
 public final class OverlayEventHandler
@@ -25,7 +25,7 @@ public final class OverlayEventHandler
 
 
     @SubscribeEvent(receiveCanceled = true)
-    public static void onEvent(RenderGameOverlayEvent.Pre event)
+    public static void onEvent(RenderGameOverlayEvent.Post event)
     {
         ClientPlayerEntity playerEntity = Minecraft.getInstance().player;
         if (playerEntity != null)
@@ -36,7 +36,7 @@ public final class OverlayEventHandler
                 {
                     float temp = playerEntity.getEntityWorld().getBiome(playerEntity.getPosition()).getTemperature(playerEntity.getPosition());
                     Humidity h = Humidity.getHumid(playerEntity.getEntityWorld().getBiome(playerEntity.getPosition()).getDownfall(), temp);
-                    double env = EnvHelper.getEnvDailyTemp(playerEntity.getEntityWorld().getBiome(playerEntity.getPosition()).getTemperature(playerEntity.getPosition()), h, playerEntity.getEntityWorld().getDayTime(), playerEntity.getEntityWorld().isRaining());
+                    double env = PlayerTemperatureHandler.getEnvOriginTemp(playerEntity.getEntityWorld().getBiome(playerEntity.getPosition()).getTemperature(playerEntity.getPosition()), h, playerEntity.getEntityWorld().getDayTime(), playerEntity.getEntityWorld().isRaining());
                     BAR_0.renderStatusBar(event.getWindow().getScaledWidth(), event.getWindow().getScaledHeight(), (float) env);
                 }
                 else if (playerEntity.getHeldItemMainhand().getItem().equals(ItemsRegistry.RAIN_GAUGE))
@@ -48,13 +48,16 @@ public final class OverlayEventHandler
                     BAR_2.renderStatusBar(event.getWindow().getScaledWidth(), event.getWindow().getScaledHeight(), playerEntity.getEntityWorld().getBiome(playerEntity.getPosition()).getTemperature(playerEntity.getPosition()), playerEntity.getEntityWorld().getBiome(playerEntity.getPosition()).getDownfall());
                 }
             }
-            playerEntity.getCapability(CapabilityPlayerTemperature.PLAYER_TEMP).ifPresent(t ->
+            if (!playerEntity.isSpectator())
             {
-                float temp = playerEntity.getEntityWorld().getBiome(playerEntity.getPosition()).getTemperature(playerEntity.getPosition());
-                Humidity h = Humidity.getHumid(playerEntity.getEntityWorld().getBiome(playerEntity.getPosition()).getDownfall(), temp);
-                double env = EnvHelper.getEnvDailyTemp(playerEntity.getEntityWorld().getBiome(playerEntity.getPosition()).getTemperature(playerEntity.getPosition()), h, playerEntity.getEntityWorld().getDayTime(), playerEntity.getEntityWorld().isRaining());
-                BAR_3.renderStatusBar(event.getWindow().getScaledWidth(), event.getWindow().getScaledHeight(), t.getPlayerTemperature(), env);
-            });
+                playerEntity.getCapability(CapabilityPlayerTemperature.PLAYER_TEMP).ifPresent(t ->
+                {
+                    float temp = playerEntity.getEntityWorld().getBiome(playerEntity.getPosition()).getTemperature(playerEntity.getPosition());
+                    Humidity h = Humidity.getHumid(playerEntity.getEntityWorld().getBiome(playerEntity.getPosition()).getDownfall(), temp);
+                    double env = PlayerTemperatureHandler.getEnvOriginTemp(playerEntity.getEntityWorld().getBiome(playerEntity.getPosition()).getTemperature(playerEntity.getPosition()), h, playerEntity.getEntityWorld().getDayTime(), playerEntity.getEntityWorld().isRaining());
+                    BAR_3.renderStatusBar(event.getWindow().getScaledWidth(), event.getWindow().getScaledHeight(), t.getTemperature(), env);
+                });
+            }
         }
     }
 }

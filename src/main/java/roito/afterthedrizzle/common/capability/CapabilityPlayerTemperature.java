@@ -7,6 +7,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
+import roito.afterthedrizzle.common.environment.ApparentTemperature;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -23,7 +24,7 @@ public class CapabilityPlayerTemperature
         public INBT writeNBT(Capability<Data> capability, Data instance, Direction side)
         {
             CompoundNBT compound = new CompoundNBT();
-            compound.putInt("PlayerTemperature", instance.getPlayerTemperature());
+            compound.putInt("PlayerTemperature", instance.getTemperature());
             return compound;
         }
 
@@ -36,11 +37,11 @@ public class CapabilityPlayerTemperature
 
     public static class Data
     {
-        private int temperature = 12;
+        private int temperature = 0;
 
-        public int getPlayerTemperature()
+        public ApparentTemperature getApparentTemperature()
         {
-            return temperature;
+            return ApparentTemperature.getTemperature(temperature);
         }
 
         public void addPlayerTemperature(int add)

@@ -25,14 +25,19 @@ public final class BlocksRegistry extends RegistryModule
     public static final Block STONE_STOVE = new StoveBlock(Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(3.5F), "stone_stove", 2);
     public static final Block WOODEN_FRAME = new WoodenFrameBlock();
     public static final Block TEAPOT = new TeapotBlock();
-    public static final Block CATAPULT_BOARD = new CatapultBoardBlock();
+    public static final Block STONE_CATAPULT_BOARD = new CatapultBoardBlock(0.2F, "stone_catapult_board", Block.Properties.create(Material.ROCK).sound(SoundType.STONE));
+    public static final Block STONE_CATAPULT_BOARD_WITH_TRAY = new CatapultBoardBlockWithTray("stone_catapult_board_with_tray", Block.Properties.create(Material.ROCK).sound(SoundType.BAMBOO));
+    public static final Block BAMBOO_CATAPULT_BOARD = new CatapultBoardBlock(0.4F, "bamboo_catapult_board", Block.Properties.create(Material.BAMBOO).sound(SoundType.BAMBOO));
+    public static final Block IRON_CATAPULT_BOARD = new CatapultBoardBlock(0.6F, "iron_catapult_board", Block.Properties.create(Material.IRON).sound(SoundType.STONE));
 
     public static final BlockItem BAMBOO_TRAY_ITEM = new NormalBlockItem(BAMBOO_TRAY);
     public static final BlockItem DRINK_MAKER_ITEM = new DrinkMakerItem();
     public static final BlockItem DIRT_STOVE_ITEM = new NormalBlockItem(DIRT_STOVE);
     public static final BlockItem STONE_STOVE_ITEM = new NormalBlockItem(STONE_STOVE);
     public static final BlockItem WOODEN_FRAME_ITEM = new NormalBlockItem(WOODEN_FRAME);
-    public static final BlockItem CATAPULT_BOARD_ITEM = new NormalBlockItem(CATAPULT_BOARD);
+    public static final BlockItem STONE_CATAPULT_BOARD_ITEM = new NormalBlockItem(STONE_CATAPULT_BOARD);
+    public static final BlockItem BAMBOO_CATAPULT_BOARD_ITEM = new NormalBlockItem(BAMBOO_CATAPULT_BOARD);
+    public static final BlockItem IRON_CATAPULT_BOARD_ITEM = new NormalBlockItem(IRON_CATAPULT_BOARD);
 
     // DECORATIONS 装饰
     public static final Block BAMBOO_TABLE = new BambooTableBlock();

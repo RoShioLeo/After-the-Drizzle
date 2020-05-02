@@ -13,6 +13,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import roito.afterthedrizzle.common.block.BambooTrayMode;
+import roito.afterthedrizzle.common.block.CatapultBoardBlockWithTray;
 import roito.afterthedrizzle.common.block.IStoveBlock;
 import roito.afterthedrizzle.common.config.NormalConfig;
 import roito.afterthedrizzle.common.environment.Humidity;
@@ -24,6 +25,8 @@ import roito.afterthedrizzle.common.recipe.bamboo_tray.IBambooTrayRecipeManager;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Random;
+
+import static net.minecraft.state.properties.BlockStateProperties.ENABLED;
 
 public class BambooTrayTileEntity extends NormalContainerTileEntity implements ITickableTileEntity
 {
@@ -69,7 +72,6 @@ public class BambooTrayTileEntity extends NormalContainerTileEntity implements I
     {
         if (!this.removed && side != null && CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.equals(cap))
         {
-            if (side != Direction.DOWN || !this.isWorking())
                 return containerInventory.cast();
         }
         return super.getCapability(cap, side);
@@ -159,6 +161,12 @@ public class BambooTrayTileEntity extends NormalContainerTileEntity implements I
                 this.containerInventory.ifPresent(inv ->
                         inv.setStackInSlot(0, output));
                 this.processTicks = 0;
+                if (this.getBlockState().getBlock() instanceof CatapultBoardBlockWithTray && world.isBlockPowered(pos))
+                {
+                    world.setBlockState(pos, this.getBlockState().with(ENABLED, true));
+                    CatapultBoardBlockWithTray.shoot(world, pos);
+                    world.getPendingBlockTicks().scheduleTick(pos, this.getBlockState().getBlock(), 5);
+                }
             }
             this.markDirty();
             return true;
