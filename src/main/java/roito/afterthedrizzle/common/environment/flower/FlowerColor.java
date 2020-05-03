@@ -1,6 +1,5 @@
-package roito.afterthedrizzle.common.environment;
+package roito.afterthedrizzle.common.environment.flower;
 
-import javafx.util.Pair;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
@@ -13,7 +12,7 @@ public enum FlowerColor implements IStringSerializable
 {
     //一级花:自然生成
     YELLOW(16701501, Items.YELLOW_DYE),
-    RED(11546150, Items.RED_DYE),
+    RED(0xFF5151, Items.RED_DYE),
     BLUE(3949738, Items.BLUE_DYE),
     WHITE(16383998, Items.WHITE_DYE),
     ORANGE(16351261, Items.ORANGE_DYE),
@@ -26,10 +25,10 @@ public enum FlowerColor implements IStringSerializable
     CYAN(1481884, Items.CYAN_DYE),
     PURPLE(8991416, Items.PURPLE_DYE),
     BROWN(8606770, Items.BROWN_DYE),
-    GREEN(61921500, Items.GREEN_DYE),
+    GREEN(43520, Items.GREEN_DYE),
     BLACK(1908001, Items.BLACK_DYE);
 
-    private static final Map<Pair<FlowerColor, FlowerColor>, FlowerColor> COLOR_MAP;
+    private static final Map<FlowerColorPair, FlowerColor> COLOR_MAP;
 
     private final int color;
     private final Item dye;
@@ -71,13 +70,12 @@ public enum FlowerColor implements IStringSerializable
         {
             return color1;
         }
-        return COLOR_MAP.getOrDefault(new Pair<>(color1, color2), BLACK);
+        return COLOR_MAP.getOrDefault(new FlowerColorPair(color1, color2), BLACK);
     }
 
     private static void registerColorRecipe(FlowerColor in1, FlowerColor in2, FlowerColor out)
     {
-        COLOR_MAP.put(new Pair<>(in1, in2), out);
-        COLOR_MAP.put(new Pair<>(in2, in1), out);
+        COLOR_MAP.put(new FlowerColorPair(in1, in2), out);
     }
 
     static

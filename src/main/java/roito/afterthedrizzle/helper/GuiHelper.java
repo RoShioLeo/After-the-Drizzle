@@ -1,6 +1,7 @@
 package roito.afterthedrizzle.helper;
 
 import com.mojang.blaze3d.platform.GlStateManager;
+import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -33,11 +34,11 @@ public final class GuiHelper
                 int count = 0;
                 while (fluidHeight > 16)
                 {
-                    gui.blit(tankX + j * 16, tankY + pos.getV() - (count + 1) * 16, 176, 16, 16, sprite);
+                    AbstractGui.blit(tankX + j * 16, tankY + pos.getV() - (count + 1) * 16, 176, 16, 16, sprite);
                     fluidHeight -= 16;
                     count++;
                 }
-                gui.blit(tankX + j * 16, tankY + pos.getV() - count * 16 - fluidHeight, 176, 16, fluidHeight, sprite);
+                AbstractGui.blit(tankX + j * 16, tankY + pos.getV() - count * 16 - fluidHeight, 176, 16, fluidHeight, sprite);
             }
         }
     }

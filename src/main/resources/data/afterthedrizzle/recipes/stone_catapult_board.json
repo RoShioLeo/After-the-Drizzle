@@ -1,0 +1,23 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "group": "afterthedrizzle",
+    "pattern": [
+        "xxx",
+        "xxx",
+        "#*#"
+    ],
+    "key": {
+        "x": {
+            "item": "minecraft:stone"
+        },
+        "#": {
+            "tag": "forge:stone"
+        },
+        "*": {
+            "tag": "forge:dusts/redstone"
+        }
+    },
+    "result": {
+        "item": "afterthedrizzle:stone_catapult_board"
+    }
+}

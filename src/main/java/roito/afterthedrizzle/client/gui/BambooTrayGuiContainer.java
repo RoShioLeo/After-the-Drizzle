@@ -10,7 +10,7 @@ import roito.afterthedrizzle.common.inventory.BambooTrayContainer;
 
 public class BambooTrayGuiContainer extends ContainerScreen<BambooTrayContainer>
 {
-    private static final String TEXTURE_PATH = "textures/gui/container/gui_single_recipe.png";
+    private static final String TEXTURE_PATH = "textures/gui/container/gui_bamboo_tray.png";
     private static final ResourceLocation TEXTURE = new ResourceLocation(AfterTheDrizzle.MODID, TEXTURE_PATH);
     private BambooTrayContainer container;
 

@@ -17,7 +17,7 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.loot.LootContext;
-import roito.afterthedrizzle.common.environment.FlowerColor;
+import roito.afterthedrizzle.common.environment.flower.FlowerColor;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ import java.util.Random;
 public class HybridizableFlowerBlock extends BushBlock implements IGrowable
 {
     public static final EnumProperty<FlowerColor> FLOWER_COLOR = EnumProperty.create("color", FlowerColor.class);
-    protected static final VoxelShape SHAPE = Block.makeCuboidShape(5.0D, 0.0D, 5.0D, 11.0D, 12.0D, 11.0D);
+    protected static final VoxelShape SHAPE = Block.makeCuboidShape(3.0D, 0.0D, 3.0D, 13.0D, 14.0D, 13.0D);
 
     public HybridizableFlowerBlock(String name)
     {
@@ -142,7 +142,7 @@ public class HybridizableFlowerBlock extends BushBlock implements IGrowable
     @Override
     public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos, PlayerEntity player)
     {
-        ItemStack stack = new ItemStack(BlocksRegistry.CHRYSANTHEMUM_ITEM);
+        ItemStack stack = new ItemStack(this);
         CompoundNBT nbt = new CompoundNBT();
         nbt.put("color", new StringNBT(state.get(FLOWER_COLOR).getName()));
         stack.setTag(nbt);

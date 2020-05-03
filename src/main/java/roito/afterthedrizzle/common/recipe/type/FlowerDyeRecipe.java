@@ -6,7 +6,7 @@ import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.SpecialRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import roito.afterthedrizzle.common.environment.FlowerColor;
+import roito.afterthedrizzle.common.environment.flower.FlowerColor;
 import roito.afterthedrizzle.common.item.HybridizableFlowerBlockItem;
 
 public class FlowerDyeRecipe extends SpecialRecipe

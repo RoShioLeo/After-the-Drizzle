@@ -68,7 +68,10 @@ public final class RecipesRegistry
         MANAGER_BAMBOO_TRAY_IN_RAIN.add(new BambooTaryRecipe(ItemsRegistry.CHICKEN_JERKY, Items.CHICKEN));
         MANAGER_BAMBOO_TRAY_IN_RAIN.add(new BambooTaryRecipe(ItemsRegistry.DRIED_CARROT, Items.CARROT));
         MANAGER_BAMBOO_TRAY_IN_RAIN.add(new BambooTaryRecipe(ItemsRegistry.DRIED_BEETROOT, Items.BEETROOT));
-        MANAGER_BAMBOO_TRAY_IN_RAIN.add(new BambooTaryRecipe(ItemsRegistry.GREEN_TEA_LEAVES, ItemsRegistry.TEA_LEAVES));
+        MANAGER_BAMBOO_TRAY_IN_RAIN.add(new BambooTaryRecipe("forge:crops/tea_leaf", ItemsRegistry.TEA_RESIDUES));
+        MANAGER_BAMBOO_TRAY_IN_RAIN.add(new BambooTaryRecipe("forge:crops/black_tea_leaf", ItemsRegistry.TEA_RESIDUES));
+        MANAGER_BAMBOO_TRAY_IN_RAIN.add(new BambooTaryRecipe("forge:crops/green_tea_leaf", ItemsRegistry.TEA_RESIDUES));
+        MANAGER_BAMBOO_TRAY_IN_RAIN.add(new BambooTaryRecipe("forge:crops/white_tea_leaf", ItemsRegistry.TEA_RESIDUES));
     }
 
     private static void registerDrinkIngredients()

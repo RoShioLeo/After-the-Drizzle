@@ -10,6 +10,8 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.common.IPlantable;
+import net.minecraftforge.common.PlantType;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
@@ -100,11 +102,12 @@ public final class CommonEventHandler
                     event.setCanceled(true);
                 }
             }
-            else if (event.getBlock().getBlock() instanceof HybridizableFlowerBlock)
+            else if (event.getBlock().getBlock() instanceof IPlantable && ((IPlantable) event.getBlock().getBlock()).getPlantType(event.getWorld(), event.getPos()) == PlantType.Crop)
             {
-                event.setResult(Event.Result.DEFAULT);
+                event.setCanceled(true);
             }
-            else event.setCanceled(true);
+            else
+                event.setResult(Event.Result.DEFAULT);
         }
     }
 

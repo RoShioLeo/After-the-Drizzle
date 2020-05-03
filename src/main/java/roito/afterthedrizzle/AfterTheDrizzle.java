@@ -117,6 +117,7 @@ public final class AfterTheDrizzle
         fireblock.setFireInfo(BlocksRegistry.BAMBOO_LANTERN, 60, 60);
         fireblock.setFireInfo(BlocksRegistry.BAMBOO_TABLE, 60, 60);
         fireblock.setFireInfo(BlocksRegistry.BAMBOO_TRAY, 60, 60);
+        fireblock.setFireInfo(BlocksRegistry.BAMBOO_CATAPULT_BOARD, 60, 60);
         fireblock.setFireInfo(BlocksRegistry.HYACINTH, 60, 100);
         fireblock.setFireInfo(BlocksRegistry.CHRYSANTHEMUM, 60, 100);
         fireblock.setFireInfo(BlocksRegistry.ZINNIA, 60, 100);

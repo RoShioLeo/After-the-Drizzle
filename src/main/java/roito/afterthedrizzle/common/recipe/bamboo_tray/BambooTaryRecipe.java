@@ -2,11 +2,14 @@ package roito.afterthedrizzle.common.recipe.bamboo_tray;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
 import roito.afterthedrizzle.common.recipe.InputType;
 import roito.afterthedrizzle.helper.MatchHelper;
 
 import javax.annotation.Nonnull;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class BambooTaryRecipe
 {
@@ -51,6 +54,18 @@ public class BambooTaryRecipe
         else
         {
             return MatchHelper.containsMatch(input, new ResourceLocation(this.TAG_INPUT));
+        }
+    }
+
+    public List<ItemStack> getInputs()
+    {
+        if (this.TYPE == InputType.ITEM_STACK)
+        {
+            return Collections.singletonList(ITEM_INPUT);
+        }
+        else
+        {
+            return ItemTags.getCollection().getOrCreate(new ResourceLocation(this.TAG_INPUT)).getAllElements().stream().map(ItemStack::new).collect(Collectors.toList());
         }
     }
 }

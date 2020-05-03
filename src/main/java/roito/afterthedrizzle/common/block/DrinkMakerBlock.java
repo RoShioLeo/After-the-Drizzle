@@ -125,20 +125,22 @@ public class DrinkMakerBlock extends NormalHorizontalBlock
     }
 
     @Override
-    public void onBlockHarvested(World worldIn, BlockPos pos, BlockState state, PlayerEntity player)
+    @SuppressWarnings("deprecation")
+    public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving)
     {
+        super.neighborChanged(state, worldIn, pos, blockIn, fromPos, isMoving);
         Direction enumfacing = state.get(HORIZONTAL_FACING);
 
         if (state.get(LEFT))
         {
-            if (worldIn.getBlockState(pos.offset(BlockHelper.getNextHorizontal(enumfacing))).getBlock() == this)
+            if (worldIn.getBlockState(pos.offset(BlockHelper.getNextHorizontal(enumfacing))).getBlock() != this)
             {
-                worldIn.destroyBlock(pos.offset(BlockHelper.getNextHorizontal(enumfacing)), !player.isCreative());
+                worldIn.destroyBlock(pos, true);
             }
         }
-        else if (worldIn.getBlockState(pos.offset(BlockHelper.getPreviousHorizontal(enumfacing))).getBlock() == this)
+        else if (worldIn.getBlockState(pos.offset(BlockHelper.getPreviousHorizontal(enumfacing))).getBlock() != this)
         {
-            worldIn.destroyBlock(pos.offset(BlockHelper.getPreviousHorizontal(enumfacing)), !player.isCreative());
+            worldIn.destroyBlock(pos, true);
         }
     }
 

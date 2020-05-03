@@ -12,7 +12,7 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import roito.afterthedrizzle.AfterTheDrizzle;
-import roito.afterthedrizzle.common.environment.FlowerColor;
+import roito.afterthedrizzle.common.environment.flower.FlowerColor;
 
 import javax.annotation.Nullable;
 import java.util.List;

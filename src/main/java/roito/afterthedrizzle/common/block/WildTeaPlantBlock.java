@@ -5,10 +5,15 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.BushBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.monster.RavagerEntity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.World;
 
 public class WildTeaPlantBlock extends BushBlock
 {
@@ -25,5 +30,17 @@ public class WildTeaPlantBlock extends BushBlock
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
     {
         return SHAPE;
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn)
+    {
+        if (entityIn instanceof LivingEntity)
+        {
+            entityIn.setMotionMultiplier(state, new Vec3d(0.8F, 0.75D, 0.8F));
+        }
+
+        super.onEntityCollision(state, worldIn, pos, entityIn);
     }
 }

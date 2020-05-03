@@ -56,9 +56,9 @@ public final class PlayerTemperatureHandler
             else
             {
                 ApparentTemperature ATemp;
-                if (player.posY < 40 && world.canBlockSeeSky(pos))
+                if (player.posY < 45 && !world.canBlockSeeSky(pos))
                 {
-                    // Y轴高度低于40，环境处于恒温状态。
+                    // Y轴高度低于45，环境处于恒温状态。
                     ATemp = ApparentTemperature.COOL;
                 }
                 else

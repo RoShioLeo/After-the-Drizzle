@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IEnviromentBlockReader;
 import roito.afterthedrizzle.common.block.HybridizableFlowerBlock;
-import roito.afterthedrizzle.common.environment.FlowerColor;
+import roito.afterthedrizzle.common.environment.flower.FlowerColor;
 
 import javax.annotation.Nullable;
 

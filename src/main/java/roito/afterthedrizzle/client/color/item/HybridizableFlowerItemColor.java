@@ -2,7 +2,7 @@ package roito.afterthedrizzle.client.color.item;
 
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.item.ItemStack;
-import roito.afterthedrizzle.common.environment.FlowerColor;
+import roito.afterthedrizzle.common.environment.flower.FlowerColor;
 
 public class HybridizableFlowerItemColor implements IItemColor {
 

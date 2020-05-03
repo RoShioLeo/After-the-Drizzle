@@ -6,10 +6,6 @@
         "minecraft:beef",
         "minecraft:mutton",
         "minecraft:chicken",
-        "afterthedrizzle:beef_jerky",
-        "afterthedrizzle:pork_jerky",
-        "afterthedrizzle:chicken_jerky",
-        "afterthedrizzle:rabbit_jerky",
-        "afterthedrizzle:mutton_jerky"
+        "#forge:food/jerky"
     ]
 }
