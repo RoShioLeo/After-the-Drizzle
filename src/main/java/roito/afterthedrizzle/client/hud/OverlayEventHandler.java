@@ -25,7 +25,7 @@ public final class OverlayEventHandler
 
 
     @SubscribeEvent(receiveCanceled = true)
-    public static void onEvent(RenderGameOverlayEvent.Post event)
+    public static void onEvent(RenderGameOverlayEvent.Pre event)
     {
         ClientPlayerEntity playerEntity = Minecraft.getInstance().player;
         if (playerEntity != null)

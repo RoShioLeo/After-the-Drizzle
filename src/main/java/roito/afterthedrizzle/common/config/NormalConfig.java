@@ -60,7 +60,7 @@ public final class NormalConfig
                 .defineInRange("PlayerTemperatureX", 10, Integer.MIN_VALUE, Integer.MAX_VALUE);
         playerTemperatureY = builder.comment("The position Y of Player Temperature HUD")
                 .translation("atd.config.hud.player_temperature_y")
-                .defineInRange("PlayerTemperatureY", 200, Integer.MIN_VALUE, Integer.MAX_VALUE);
+                .defineInRange("PlayerTemperatureY", 40, Integer.MIN_VALUE, Integer.MAX_VALUE);
         builder.pop();
 
         builder.push("Others");

@@ -51,6 +51,7 @@ public class ThermometerBarRenderer extends AbstractGui
 
         blit(offsetX + 1, offsetY + 1, 1, 10, width, HEIGHT - 2);
         blit(offsetX, offsetY, 0, 14, WIDTH, HEIGHT);
+        GlStateManager.disableAlphaTest();
         mc.getTextureManager().bindTexture(OverlayEventHandler.DEFAULT);
     }
 

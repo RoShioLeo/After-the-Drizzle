@@ -30,9 +30,10 @@ public class PlayerTemperatureRenderer extends AbstractGui
 
         mc.getTextureManager().bindTexture(OVERLAY_BAR);
         ApparentTemperature temperature = ApparentTemperature.getTemperature(temp);
-        blit(NormalConfig.playerTemperatureX.get(), NormalConfig.playerTemperatureY.get(), (temperature.getIndex() - 1) * 30, 0, 30, 30);
-        this.drawString(mc.fontRenderer, temperature.getTranslation().getFormattedText(), NormalConfig.playerTemperatureX.get() + 34, NormalConfig.playerTemperatureY.get() + 22, temperature.getColor().getColor());
+        blit((NormalConfig.playerTemperatureX.get()), screenHeight - NormalConfig.playerTemperatureY.get(), (temperature.getIndex() - 1) * 30, 0, 30, 30);
+        this.drawString(mc.fontRenderer, temperature.getTranslation().getFormattedText(), NormalConfig.playerTemperatureX.get() + 34, screenHeight - NormalConfig.playerTemperatureY.get() + 22, temperature.getColor().getColor());
 
+        GlStateManager.disableAlphaTest();
         mc.getTextureManager().bindTexture(OverlayEventHandler.DEFAULT);
     }
 }

@@ -53,6 +53,7 @@ public class HygrometerBarRenderer extends AbstractGui
 
         blit(offsetX + 1, offsetY + 1, 1, 20, width, HEIGHT - 2);
         blit(offsetX, offsetY, 0, 24, WIDTH, HEIGHT);
+        GlStateManager.disableAlphaTest();
         mc.getTextureManager().bindTexture(OverlayEventHandler.DEFAULT);
     }
 }

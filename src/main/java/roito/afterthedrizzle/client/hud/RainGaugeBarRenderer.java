@@ -51,6 +51,7 @@ public class RainGaugeBarRenderer extends AbstractGui
 
         blit(offsetX + 1, offsetY + 1, 1, 0, width, HEIGHT - 2);
         blit(offsetX, offsetY, 0, 4, WIDTH, HEIGHT);
+        GlStateManager.disableAlphaTest();
         mc.getTextureManager().bindTexture(OverlayEventHandler.DEFAULT);
     }
 
