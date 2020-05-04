@@ -1,13 +1,13 @@
 {
-	"credit": "Made with Blockbench",
-	"textures": {
-		"0": "afterthedrizzle:block/tea_plant_3",
-		"1": "afterthedrizzle:block/tea_plant_2",
-		"2": "afterthedrizzle:block/tea_plant_3_2",
-		"particle": "afterthedrizzle:block/tea_plant_3"
-	},
-	"elements": [
-		{
+    "credit": "Made with Blockbench",
+    "textures": {
+        "0": "afterthedrizzle:block/tea_plant_3",
+        "1": "afterthedrizzle:block/tea_plant_2",
+        "2": "afterthedrizzle:block/tea_plant_3_2",
+        "particle": "afterthedrizzle:block/tea_plant_3"
+    },
+    "elements": [
+        {
             "from": [1, 1, 1],
             "to": [15, 15, 15],
             "faces": {
@@ -553,27 +553,28 @@
                 }
             }
         }
-	],
-	"groups": [0, 1, 2, 3, 4, 5,
-		{
-			"name": "group",
-			"origin": [8, 8, 8],
-			"children": [6, 7, 8]
-		},
-		{
-			"name": "group",
-			"origin": [8, 8, 8],
-			"children": [9, 10, 11]
-		},
-		{
-			"name": "group",
-			"origin": [8, 8, 8],
-			"children": [12, 13, 14]
-		},
-		{
-			"name": "group",
-			"origin": [8, 8, 8],
-			"children": [15, 16, 17]
-		}
-	]
+    ],
+    "groups": [
+        0, 1, 2, 3, 4, 5,
+        {
+            "name": "group",
+            "origin": [8, 8, 8],
+            "children": [6, 7, 8]
+        },
+        {
+            "name": "group",
+            "origin": [8, 8, 8],
+            "children": [9, 10, 11]
+        },
+        {
+            "name": "group",
+            "origin": [8, 8, 8],
+            "children": [12, 13, 14]
+        },
+        {
+            "name": "group",
+            "origin": [8, 8, 8],
+            "children": [15, 16, 17]
+        }
+    ]
 }

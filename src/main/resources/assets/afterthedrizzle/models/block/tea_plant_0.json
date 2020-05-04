@@ -1,10 +1,10 @@
 {
-	"credit": "Made with Blockbench",
-	"textures": {
+    "credit": "Made with Blockbench",
+    "textures": {
         "1": "afterthedrizzle:block/tea_plant_0",
         "particle": "afterthedrizzle:block/tea_plant_0"
     },
-	"elements": [
+    "elements": [
         {
             "from": [0, -1, 5],
             "to": [16, 15, 5],
@@ -77,5 +77,5 @@
                 }
             }
         }
-	]
+    ]
 }

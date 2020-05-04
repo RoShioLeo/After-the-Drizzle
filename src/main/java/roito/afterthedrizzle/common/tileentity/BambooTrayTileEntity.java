@@ -72,7 +72,7 @@ public class BambooTrayTileEntity extends NormalContainerTileEntity implements I
     {
         if (!this.removed && side != null && CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.equals(cap))
         {
-                return containerInventory.cast();
+            return containerInventory.cast();
         }
         return super.getCapability(cap, side);
     }

@@ -5,15 +5,9 @@ import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.registration.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import org.lwjgl.system.CallbackI;
 import roito.afterthedrizzle.client.gui.BambooTrayGuiContainer;
 import roito.afterthedrizzle.common.block.BlocksRegistry;
-import roito.afterthedrizzle.common.environment.flower.FlowerColor;
-import roito.afterthedrizzle.common.environment.flower.FlowerColorPair;
 import roito.afterthedrizzle.common.recipe.RecipesRegistry;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static roito.afterthedrizzle.AfterTheDrizzle.MODID;
 
@@ -37,10 +31,10 @@ public class JEICompat implements IModPlugin
     public void registerCategories(IRecipeCategoryRegistration registry)
     {
         registry.addRecipeCategories(
-                new BambooTrayCategory(registry.getJeiHelpers().getGuiHelper(), IN_RAIN, new ResourceLocation(MODID,"textures/gui/jei/bamboo_tray.png"), 0),
-                new BambooTrayCategory(registry.getJeiHelpers().getGuiHelper(), OUTDOORS, new ResourceLocation(MODID,"textures/gui/jei/bamboo_tray.png"), 1),
-                new BambooTrayCategory(registry.getJeiHelpers().getGuiHelper(), INDOORS, new ResourceLocation(MODID,"textures/gui/jei/bamboo_tray.png"), 2),
-                new BambooTrayCategory(registry.getJeiHelpers().getGuiHelper(), BAKE, new ResourceLocation(MODID,"textures/gui/jei/bamboo_tray.png"), 3)
+                new BambooTrayCategory(registry.getJeiHelpers().getGuiHelper(), IN_RAIN, new ResourceLocation(MODID, "textures/gui/jei/bamboo_tray.png"), 0),
+                new BambooTrayCategory(registry.getJeiHelpers().getGuiHelper(), OUTDOORS, new ResourceLocation(MODID, "textures/gui/jei/bamboo_tray.png"), 1),
+                new BambooTrayCategory(registry.getJeiHelpers().getGuiHelper(), INDOORS, new ResourceLocation(MODID, "textures/gui/jei/bamboo_tray.png"), 2),
+                new BambooTrayCategory(registry.getJeiHelpers().getGuiHelper(), BAKE, new ResourceLocation(MODID, "textures/gui/jei/bamboo_tray.png"), 3)
         );
         registry.addRecipeCategories(
                 new DrinkMakerCategory(registry.getJeiHelpers().getGuiHelper())

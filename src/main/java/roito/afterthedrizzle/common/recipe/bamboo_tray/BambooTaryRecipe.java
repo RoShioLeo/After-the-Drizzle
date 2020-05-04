@@ -8,7 +8,8 @@ import roito.afterthedrizzle.common.recipe.InputType;
 import roito.afterthedrizzle.helper.MatchHelper;
 
 import javax.annotation.Nonnull;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class BambooTaryRecipe

@@ -8,7 +8,6 @@ import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
-import mezz.jei.config.Constants;
 import mezz.jei.plugins.vanilla.ingredients.fluid.FluidStackRenderer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
@@ -17,7 +16,6 @@ import net.minecraftforge.fluids.FluidStack;
 import roito.afterthedrizzle.common.block.BlocksRegistry;
 import roito.afterthedrizzle.common.drink.DrinkIngredientsManager;
 import roito.afterthedrizzle.common.recipe.RecipesRegistry;
-import roito.afterthedrizzle.common.recipe.bamboo_tray.BambooTaryRecipe;
 import roito.afterthedrizzle.common.recipe.drink.DrinkRecipeInput;
 
 import java.util.ArrayList;
@@ -75,7 +73,7 @@ public class DrinkMakerCategory implements IRecipeCategory<DrinkRecipeInput>
         for (String name : recipe.TAG_MAP.keySet())
         {
             int i = recipe.TAG_MAP.get(name);
-            while(i-- > 0)
+            while (i-- > 0)
             {
                 itemsIn.add(DrinkIngredientsManager.getIngredientItems(name));
             }
@@ -104,9 +102,9 @@ public class DrinkMakerCategory implements IRecipeCategory<DrinkRecipeInput>
         guiItemStacks.init(3, true, 93, 29);
         guiItemStacks.set(3, ingredients.getInputs(VanillaTypes.ITEM).get(3));
         IGuiFluidStackGroup fluidStackGroup = recipeLayout.getFluidStacks();
-        fluidStackGroup.init(4, true, new FluidStackRenderer(2000, true, 16, 64, (IDrawable)null), 6, 6, 16, 64, 0, 0);
+        fluidStackGroup.init(4, true, new FluidStackRenderer(2000, true, 16, 64, (IDrawable) null), 6, 6, 16, 64, 0, 0);
         fluidStackGroup.set(4, ingredients.getInputs(VanillaTypes.FLUID).get(0));
-        fluidStackGroup.init(5, true, new FluidStackRenderer(2000, true, 16, 64, (IDrawable)null), 127, 6, 16, 64, 0, 0);
+        fluidStackGroup.init(5, true, new FluidStackRenderer(2000, true, 16, 64, (IDrawable) null), 127, 6, 16, 64, 0, 0);
         fluidStackGroup.set(5, ingredients.getOutputs(VanillaTypes.FLUID).get(0));
     }
 }

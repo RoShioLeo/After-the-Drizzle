@@ -1,12 +1,12 @@
 {
-	"credit": "Made with Blockbench",
-	"textures": {
-		"0": "afterthedrizzle:block/tea_plant_3",
-		"1": "afterthedrizzle:block/tea_plant_1",
-		"particle": "afterthedrizzle:block/tea_plant_3"
-	},
-	"elements": [
-		{
+    "credit": "Made with Blockbench",
+    "textures": {
+        "0": "afterthedrizzle:block/tea_plant_3",
+        "1": "afterthedrizzle:block/tea_plant_1",
+        "particle": "afterthedrizzle:block/tea_plant_3"
+    },
+    "elements": [
+        {
             "from": [2, 1, 2],
             "to": [14, 14, 14],
             "faces": {
@@ -138,5 +138,5 @@
                 }
             }
         }
-	]
+    ]
 }
