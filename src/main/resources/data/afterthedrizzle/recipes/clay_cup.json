@@ -3,14 +3,11 @@
     "group": "afterthedrizzle",
     "pattern": [
         "x x",
-        " # "
+        " x "
     ],
     "key": {
         "x": {
             "item": "minecraft:clay_ball"
-        },
-        "#": {
-            "item": "minecraft:clay"
         }
     },
     "result": {
