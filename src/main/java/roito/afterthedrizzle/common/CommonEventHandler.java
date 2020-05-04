@@ -25,7 +25,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.network.PacketDistributor;
 import roito.afterthedrizzle.AfterTheDrizzle;
-import roito.afterthedrizzle.common.block.HybridizableFlowerBlock;
 import roito.afterthedrizzle.common.block.TeaPlantBlock;
 import roito.afterthedrizzle.common.capability.CapabilityPlayerTemperature;
 import roito.afterthedrizzle.common.config.NormalConfig;
@@ -53,8 +52,7 @@ public final class CommonEventHandler
                     event.setCanceled(true);
                 }
             }
-            effect = event.getEntityLiving().getActivePotionEffect(EffectsRegistry.DEFENCE);
-            if (effect != null)
+            if (event.getEntityLiving().getActivePotionEffect(EffectsRegistry.DEFENCE) != null)
             {
                 event.getEntityLiving().playSound(SoundEvents.ITEM_SHIELD_BREAK, 1.0F, 1.0F);
                 event.setCanceled(true);
@@ -65,8 +63,21 @@ public final class CommonEventHandler
     @SubscribeEvent
     public static void onLivingAttack(LivingAttackEvent event)
     {
-        EffectInstance effect2 = event.getEntityLiving().getActivePotionEffect(EffectsRegistry.DEFENCE);
-        if (effect2 != null)
+        if (event.getEntityLiving().isServerWorld())
+        {
+            EffectInstance effect = event.getEntityLiving().getActivePotionEffect(EffectsRegistry.LIFE_DRAIN);
+            if (effect != null)
+            {
+                int level = effect.getAmplifier() + 1;
+                float r = event.getEntityLiving().getRNG().nextFloat();
+                float health = event.getEntityLiving().getHealth();
+                if (health < event.getEntityLiving().getMaxHealth() && r <= level * 0.2F)
+                {
+                    event.getEntityLiving().heal(4.0F - 6.0F / (level + 1.0F));
+                }
+            }
+        }
+        if (event.getEntityLiving().getActivePotionEffect(EffectsRegistry.DEFENCE) != null)
         {
             event.setCanceled(true);
         }
