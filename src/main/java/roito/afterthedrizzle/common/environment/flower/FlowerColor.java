@@ -11,10 +11,10 @@ import java.util.Map;
 public enum FlowerColor implements IStringSerializable
 {
     //一级花:自然生成
-    YELLOW(16701501, Items.YELLOW_DYE),
-    RED(0xFF5151, Items.RED_DYE),
-    BLUE(3949738, Items.BLUE_DYE),
     WHITE(16383998, Items.WHITE_DYE),
+    RED(0xFF5151, Items.RED_DYE),
+    YELLOW(16701501, Items.YELLOW_DYE),
+    BLUE(3949738, Items.BLUE_DYE),
     ORANGE(16351261, Items.ORANGE_DYE),
     PINK(15961002, Items.PINK_DYE),
     MAGENTA(13061821, Items.MAGENTA_DYE),
