@@ -2,6 +2,7 @@ package roito.afterthedrizzle.common.fluid;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.CampfireBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
@@ -17,7 +18,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import roito.afterthedrizzle.common.block.BlocksRegistry;
 
 import java.util.Random;
 import java.util.function.Supplier;
@@ -28,7 +28,7 @@ public class HotWaterFlowingFluidBlock extends NormalFlowingFluidBlock
 
     public HotWaterFlowingFluidBlock(Supplier<? extends FlowingFluid> supplier)
     {
-        super(supplier, Block.Properties.create(Material.LAVA).doesNotBlockMovement().hardnessAndResistance(100.0F).noDrops().tickRandomly());
+        super(supplier, Block.Properties.create(Material.WATER).doesNotBlockMovement().hardnessAndResistance(100.0F).noDrops().tickRandomly());
     }
 
     @Override
@@ -99,7 +99,7 @@ public class HotWaterFlowingFluidBlock extends NormalFlowingFluidBlock
             }
             else
             {
-                worldIn.setBlockState(pos, BlocksRegistry.WATER.getDefaultState());
+                worldIn.setBlockState(pos, Blocks.WATER.getDefaultState());
             }
         }
     }

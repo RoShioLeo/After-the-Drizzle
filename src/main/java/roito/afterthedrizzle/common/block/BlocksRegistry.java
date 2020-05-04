@@ -1,20 +1,14 @@
 package roito.afterthedrizzle.common.block;
 
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.LanternBlock;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.fluid.Fluids;
 import net.minecraft.item.BlockItem;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import roito.afterthedrizzle.common.fluid.NormalFlowingFluidBlock;
 import roito.afterthedrizzle.common.item.DrinkMakerItem;
 import roito.afterthedrizzle.common.item.HybridizableFlowerBlockItem;
 import roito.afterthedrizzle.common.item.NormalBlockItem;
 import roito.afterthedrizzle.registry.RegistryModule;
-
-import java.util.Random;
-
-import static roito.afterthedrizzle.common.fluid.FluidsRegistry.WARM_WATER;
 
 public final class BlocksRegistry extends RegistryModule
 {
@@ -68,21 +62,4 @@ public final class BlocksRegistry extends RegistryModule
     public static final BlockItem CHRYSANTHEMUM_ITEM = new HybridizableFlowerBlockItem(CHRYSANTHEMUM);
     public static final BlockItem HYACINTH_ITEM = new HybridizableFlowerBlockItem(HYACINTH);
     public static final BlockItem ZINNIA_ITEM = new HybridizableFlowerBlockItem(ZINNIA);
-
-    // MISC 杂项
-    public static final FlowingFluidBlock WATER = (FlowingFluidBlock) new FlowingFluidBlock(() -> Fluids.WATER, NormalFlowingFluidBlock.getProperties().tickRandomly())
-    {
-        @Override
-        public void randomTick(BlockState state, World worldIn, BlockPos pos, Random random)
-        {
-            super.randomTick(state, worldIn, pos, random);
-            if (random.nextInt(4) == 0 && worldIn.getBlockState(pos.down(2)).getBlock() instanceof CampfireBlock)
-            {
-                if (state.getFluidState().getLevel() == 8)
-                {
-                    worldIn.setBlockState(pos, WARM_WATER.get().getDefaultState());
-                }
-            }
-        }
-    }.setRegistryName("minecraft:water");
 }

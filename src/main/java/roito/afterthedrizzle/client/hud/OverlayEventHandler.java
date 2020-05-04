@@ -23,7 +23,6 @@ public final class OverlayEventHandler
     private final static HygrometerBarRenderer BAR_2 = new HygrometerBarRenderer(Minecraft.getInstance());
     private final static PlayerTemperatureRenderer BAR_3 = new PlayerTemperatureRenderer(Minecraft.getInstance());
 
-
     @SubscribeEvent(receiveCanceled = true)
     public static void onEvent(RenderGameOverlayEvent.Pre event)
     {
