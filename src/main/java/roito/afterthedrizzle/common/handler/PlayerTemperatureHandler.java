@@ -63,8 +63,12 @@ public final class PlayerTemperatureHandler
                 }
                 else
                 {
-                    // 获取初步体感倾向温度。
-                    float apparent = getEnvOriginTemp(temp, humidity, world.getDayTime(), world.isRaining());
+                    // 获取初步体感倾向温度，末地与下界禁用气温变化。
+                    float apparent = temp;
+                    if (world.getDimension().getType().hasSkyLight())
+                    {
+                        apparent = getEnvOriginTemp(temp, humidity, world.getDayTime(), world.isRaining());
+                    }
                     ATemp = ApparentTemperature.getApparentTemp(Temperature.getTemperatureLevel(apparent));
                 }
 
@@ -102,8 +106,8 @@ public final class PlayerTemperatureHandler
         int id = humidity.getId();
         // 雨天波动减半
         double sd = (6 - id) * (6 - id) * 0.02D * Math.abs((double) biomeTemp) * (isRaining ? 0.5D : 1);
-        double standard = (double) biomeTemp - 0.8D * sd;
-        double actual = 5.2949520303E-13 * t * t * t * t * t * t - 4.7792602196E-10 * t * t * t * t * t + 1.6265346695E-07 * t * t * t * t - 2.4656510933E-05 * t * t * t + 1.3615435330E-03 * t * t + 8.9827606380E-03 * t - 1.0177384557;
+        double standard = (double) biomeTemp - sd * sd;
+        double actual = -4.0706867802E-14 * t * t * t * t * t * t - 6.6491872724E-11 * t * t * t * t * t + 5.5361084324E-08 * t * t * t * t - 1.2584165083E-05 * t * t * t + 8.4482896013E-04 * t * t + 9.6706499996E-03 * t - 7.3983503027E-01;
         return (float) (sd * actual + standard);
     }
 

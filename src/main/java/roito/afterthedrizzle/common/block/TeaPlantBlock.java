@@ -107,7 +107,7 @@ public class TeaPlantBlock extends BushBlock implements IGrowable
     public void tick(BlockState state, World worldIn, BlockPos pos, Random random)
     {
         super.tick(state, worldIn, pos, random);
-        if (!worldIn.isAreaLoaded(pos, 1) || worldIn.getDimension().getType() == DimensionType.THE_NETHER || worldIn.getDimension().getType() == DimensionType.THE_NETHER)
+        if (!worldIn.isAreaLoaded(pos, 1) || !worldIn.getDimension().getType().hasSkyLight())
             return;
         if (worldIn.getLightSubtracted(pos, 0) >= 9)
         {
