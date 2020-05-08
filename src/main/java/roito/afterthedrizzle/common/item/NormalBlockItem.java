@@ -13,7 +13,7 @@ public class NormalBlockItem extends BlockItem
 
     public NormalBlockItem(Block blockIn)
     {
-        super(blockIn, NormalItem.getCoreItemProperties());
+        super(blockIn, NormalItem.getNormalItemProperties());
         this.setRegistryName(blockIn.getRegistryName());
     }
 }

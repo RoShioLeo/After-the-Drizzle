@@ -23,6 +23,7 @@ public final class WorldGenManager
             if (humidity.getId() >= 4)
             {
                 biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(FeaturesRegistry.TEA_PLANT, IFeatureConfig.NO_FEATURE_CONFIG, Placement.COUNT_HEIGHTMAP_DOUBLE, new FrequencyConfig(1)));
+                biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(FeaturesRegistry.BAMBOO_DIRT, IFeatureConfig.NO_FEATURE_CONFIG, Placement.COUNT_HEIGHTMAP_DOUBLE, new FrequencyConfig(1)));
             }
 
             Temperature temperature = Temperature.getTemperatureLevel(temp);

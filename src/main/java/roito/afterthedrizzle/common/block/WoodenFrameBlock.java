@@ -27,7 +27,7 @@ import roito.afterthedrizzle.helper.VoxelShapeHelper;
 
 public class WoodenFrameBlock extends NormalBlock implements IWaterLoggable
 {
-    public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
+    private static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     protected static final VoxelShape SHAPE = makeCuboidShape(5.0D, 0.0D, 5.0D, 11.0D, 16.0D, 11.0D);
 
     public WoodenFrameBlock()
@@ -103,7 +103,7 @@ public class WoodenFrameBlock extends NormalBlock implements IWaterLoggable
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context)
     {
-        return this.getDefaultState().with(WATERLOGGED, Boolean.valueOf(context.getWorld().getFluidState(context.getPos()).getFluid() == Fluids.WATER));
+        return this.getDefaultState().with(WATERLOGGED, context.getWorld().getFluidState(context.getPos()).getFluid() == Fluids.WATER);
     }
 
     @Override

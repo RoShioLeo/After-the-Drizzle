@@ -1,0 +1,23 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "group": "afterthedrizzle",
+    "pattern": [
+        "X*X",
+        "X#X",
+        "XXX"
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:water_bucket"
+        },
+        "X": {
+            "tag": "forge:leather"
+        },
+        "*": {
+            "tag": "forge:nuggets/iron"
+        }
+    },
+    "result": {
+        "item": "afterthedrizzle:water_bag"
+    }
+}

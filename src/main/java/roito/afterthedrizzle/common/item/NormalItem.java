@@ -13,11 +13,11 @@ public class NormalItem extends Item
 
     public NormalItem(String name)
     {
-        super(getCoreItemProperties());
+        super(getNormalItemProperties());
         this.setRegistryName(name);
     }
 
-    public static Item.Properties getCoreItemProperties()
+    public static Item.Properties getNormalItemProperties()
     {
         return new Item.Properties().group(AfterTheDrizzle.GROUP_CORE);
     }

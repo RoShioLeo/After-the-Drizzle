@@ -2,6 +2,7 @@ package roito.afterthedrizzle.common.world.feature;
 
 import com.mojang.datafixers.Dynamic;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.gen.ChunkGenerator;
@@ -13,23 +14,23 @@ import roito.afterthedrizzle.common.block.BlocksRegistry;
 import java.util.Random;
 import java.util.function.Function;
 
-public class TeaPlantsFeature extends Feature<NoFeatureConfig>
+public class BambooDirtFeature extends Feature<NoFeatureConfig>
 {
-    public TeaPlantsFeature(Function<Dynamic<?>, ? extends NoFeatureConfig> configFactoryIn)
+    public BambooDirtFeature(Function<Dynamic<?>, ? extends NoFeatureConfig> configFactoryIn)
     {
         super(configFactoryIn);
-        this.setRegistryName("tea_plant");
+        this.setRegistryName("bamboo_dirt");
     }
 
     @Override
     public boolean place(IWorld worldIn, ChunkGenerator<? extends GenerationSettings> generator, Random rand, BlockPos pos, NoFeatureConfig config)
     {
-        BlockState blockstate = BlocksRegistry.WILD_TEA_PLANT.getDefaultState();
+        BlockState blockstate = BlocksRegistry.GRASS_BLOCK_WITH_HOLE.getDefaultState();
         int i = 0;
-        for (int j = 0; j < 32; ++j)
+        for (int j = 0; j < 8; ++j)
         {
             BlockPos blockpos = pos.add(rand.nextInt(8) - rand.nextInt(8), rand.nextInt(4) - rand.nextInt(4), rand.nextInt(8) - rand.nextInt(8));
-            if (worldIn.isAirBlock(blockpos) && blockpos.getY() < 255 && blockstate.isValidPosition(worldIn, blockpos))
+            if (blockpos.getY() < 255 && worldIn.getBlockState(blockpos).getBlock().equals(Blocks.GRASS_BLOCK))
             {
                 worldIn.setBlockState(blockpos, blockstate, 2);
                 ++i;

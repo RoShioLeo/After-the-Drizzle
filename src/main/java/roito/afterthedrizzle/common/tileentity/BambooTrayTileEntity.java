@@ -70,7 +70,7 @@ public class BambooTrayTileEntity extends NormalContainerTileEntity implements I
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side)
     {
-        if (!this.removed && side != null && CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.equals(cap))
+        if (!this.removed && CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.equals(cap))
         {
             return containerInventory.cast();
         }

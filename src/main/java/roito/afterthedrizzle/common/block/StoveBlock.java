@@ -30,6 +30,7 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
+import roito.afterthedrizzle.common.item.ItemsRegistry;
 import roito.afterthedrizzle.common.tileentity.NormalContainerTileEntity;
 import roito.afterthedrizzle.common.tileentity.StoveTileEntity;
 import roito.afterthedrizzle.common.tileentity.TileEntityTypesRegistry;
@@ -158,6 +159,11 @@ public class StoveBlock extends NormalHorizontalBlock implements IStoveBlock
                     ((StoveTileEntity) te).setToLit();
                     player.getHeldItem(handIn).damageItem(1, player, onBroken -> onBroken.sendBreakAnimation(handIn));
                     worldIn.playSound(player, pos, SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 1.0F, worldIn.getRandom().nextFloat() * 0.4F + 0.8F);
+                    return true;
+                }
+                else if (((StoveTileEntity) te).extractAshForHandWarmer())
+                {
+                    player.setHeldItem(handIn, new ItemStack(ItemsRegistry.LIT_HANDWARMER));
                     return true;
                 }
                 else if (ForgeHooks.getBurnTime(player.getHeldItem(handIn)) > 0)

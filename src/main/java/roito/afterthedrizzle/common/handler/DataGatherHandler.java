@@ -1,4 +1,4 @@
-package roito.afterthedrizzle.common.data;
+package roito.afterthedrizzle.common.handler;
 
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -7,6 +7,7 @@ import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 import roito.afterthedrizzle.AfterTheDrizzle;
 import roito.afterthedrizzle.common.data.provider.CropInfoProvider;
 import roito.afterthedrizzle.common.data.provider.NormalItemTagProvider;
+import roito.afterthedrizzle.common.data.provider.RecipesProvider;
 
 @Mod.EventBusSubscriber(modid = AfterTheDrizzle.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public final class DataGatherHandler
@@ -19,6 +20,7 @@ public final class DataGatherHandler
         {
             gen.addProvider(new CropInfoProvider(gen));
             gen.addProvider(new NormalItemTagProvider(gen));
+            gen.addProvider(new RecipesProvider(gen));
         }
     }
 }

@@ -1,0 +1,21 @@
+{
+    "variants": {
+        "": [
+            {
+                "model": "afterthedrizzle:block/grass_block_with_hole"
+            },
+            {
+                "model": "afterthedrizzle:block/grass_block_with_hole",
+                "y": 90
+            },
+            {
+                "model": "afterthedrizzle:block/grass_block_with_hole",
+                "y": 180
+            },
+            {
+                "model": "afterthedrizzle:block/grass_block_with_hole",
+                "y": 270
+            }
+        ]
+    }
+}

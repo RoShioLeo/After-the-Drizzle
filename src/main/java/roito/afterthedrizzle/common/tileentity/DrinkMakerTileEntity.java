@@ -46,19 +46,16 @@ public class DrinkMakerTileEntity extends NormalContainerTileEntity implements I
     {
         if (!this.removed)
         {
-            if (side != null)
+            if (CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.equals(cap))
             {
-                if (CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.equals(cap))
-                {
-                    if (side == Direction.DOWN)
-                        return residuesInventory.cast();
-                    else
-                        return ingredientsInventory.cast();
-                }
-                else if (CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.equals(cap))
-                {
-                    return fluidTank.cast();
-                }
+                if (side == Direction.DOWN)
+                    return residuesInventory.cast();
+                else
+                    return ingredientsInventory.cast();
+            }
+            else if (CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.equals(cap))
+            {
+                return fluidTank.cast();
             }
         }
         return super.getCapability(cap, side);

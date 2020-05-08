@@ -20,7 +20,7 @@ public class PlayerTemperatureRenderer extends AbstractGui
         this.mc = mc;
     }
 
-    public void renderStatusBar(int screenWidth, int screenHeight, int temp, double env)
+    public void renderStatusBar(int screenWidth, int screenHeight, int temp, double env, int cold, int heat)
     {
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         GlStateManager.enableAlphaTest();
@@ -31,6 +31,8 @@ public class PlayerTemperatureRenderer extends AbstractGui
         mc.getTextureManager().bindTexture(OVERLAY_BAR);
         ApparentTemperature temperature = ApparentTemperature.getTemperature(temp);
         blit((NormalConfig.playerTemperatureX.get()), screenHeight - NormalConfig.playerTemperatureY.get(), (temperature.getIndex() - 1) * 30, 0, 30, 30);
+        blit((NormalConfig.playerTemperatureX.get() + 32), screenHeight - NormalConfig.playerTemperatureY.get(), cold * 9, 30, 9, 9);
+        blit((NormalConfig.playerTemperatureX.get() + 42), screenHeight - NormalConfig.playerTemperatureY.get(), heat * 9, 39, 9, 9);
         this.drawString(mc.fontRenderer, temperature.getTranslation().getFormattedText(), NormalConfig.playerTemperatureX.get() + 34, screenHeight - NormalConfig.playerTemperatureY.get() + 22, temperature.getColor().getColor());
 
         GlStateManager.disableAlphaTest();
