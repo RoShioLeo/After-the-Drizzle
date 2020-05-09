@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import roito.afterthedrizzle.client.gui.BambooTrayGuiContainer;
 import roito.afterthedrizzle.common.block.BlocksRegistry;
+import roito.afterthedrizzle.common.item.ItemsRegistry;
 import roito.afterthedrizzle.common.recipe.RecipesRegistry;
 
 import static roito.afterthedrizzle.AfterTheDrizzle.MODID;
@@ -44,7 +45,7 @@ public class JEICompat implements IModPlugin
     @Override
     public void registerItemSubtypes(ISubtypeRegistration registration)
     {
-        registration.useNbtForSubtypes(BlocksRegistry.CHRYSANTHEMUM_ITEM, BlocksRegistry.HYACINTH_ITEM, BlocksRegistry.ZINNIA_ITEM);
+        registration.useNbtForSubtypes(BlocksRegistry.CHRYSANTHEMUM_ITEM, BlocksRegistry.HYACINTH_ITEM, BlocksRegistry.ZINNIA_ITEM, ItemsRegistry.BOTTLE_DRINK, ItemsRegistry.PORCELAIN_CUP_DRINK, ItemsRegistry.PORCELAIN_TEAPOT);
     }
 
     @Override

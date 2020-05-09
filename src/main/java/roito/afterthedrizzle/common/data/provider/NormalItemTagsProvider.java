@@ -6,15 +6,16 @@ import net.minecraft.item.Items;
 import net.minecraft.tags.ItemTags;
 import net.minecraftforge.common.data.ForgeItemTagsProvider;
 import roito.afterthedrizzle.common.data.tag.NormalTags;
+import roito.afterthedrizzle.common.item.ItemsRegistry;
 
 import static net.minecraft.item.Items.*;
 import static roito.afterthedrizzle.common.block.BlocksRegistry.*;
 import static roito.afterthedrizzle.common.data.tag.NormalTags.Items.*;
 import static roito.afterthedrizzle.common.item.ItemsRegistry.*;
 
-public class NormalItemTagProvider extends ForgeItemTagsProvider
+public class NormalItemTagsProvider extends ForgeItemTagsProvider
 {
-    public NormalItemTagProvider(DataGenerator gen)
+    public NormalItemTagsProvider(DataGenerator gen)
     {
         super(gen);
     }
@@ -26,7 +27,7 @@ public class NormalItemTagProvider extends ForgeItemTagsProvider
         getBuilder(FOOD_JERKY).add(BEEF_JERKY, PORK_JERKY, CHICKEN_JERKY, RABBIT_JERKY, MUTTON_JERKY);
         getBuilder(FOOD_MEAT).add(FOOD_JERKY).add(RABBIT, PORKCHOP, BEEF, MUTTON, CHICKEN);
         getBuilder(ItemTags.SMALL_FLOWERS).add(CHRYSANTHEMUM_ITEM, HYACINTH_ITEM, ZINNIA_ITEM);
-
+        getBuilder(NormalTags.Items.ASH).add(ItemsRegistry.ASH);
         /*getBuilder(AGAVE);
         getBuilder(AMARANTH);
         getBuilder(ARROWROOT);

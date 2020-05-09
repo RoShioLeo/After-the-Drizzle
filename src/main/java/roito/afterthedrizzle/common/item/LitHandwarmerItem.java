@@ -3,23 +3,21 @@ package roito.afterthedrizzle.common.item;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.util.ActionResultType;
 import net.minecraft.world.World;
 import net.minecraftforge.items.ItemHandlerHelper;
 
-public class LitHandWarmerItem extends NormalItem implements IItemWithTemperature
+public class LitHandwarmerItem extends NormalItem implements IItemWithTemperature
 {
 
-    public LitHandWarmerItem()
+    public LitHandwarmerItem()
     {
-        super("lit_handwarmer", getNormalItemProperties().containerItem(ItemsRegistry.HANDWARMER).maxDamage(120));
+        super("lit_handwarmer", getNormalItemProperties().containerItem(ItemsRegistry.HANDWARMER).maxDamage(120).setNoRepair());
     }
 
     @Override
-    public ActionResultType onItemUse(ItemUseContext context)
+    public boolean isEnchantable(ItemStack stack)
     {
-        return ActionResultType.FAIL;
+        return false;
     }
 
     @Override

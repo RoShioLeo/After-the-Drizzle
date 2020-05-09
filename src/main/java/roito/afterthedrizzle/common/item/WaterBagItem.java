@@ -21,6 +21,12 @@ public class WaterBagItem extends NormalItem implements IItemWithTemperature
     }
 
     @Override
+    public boolean isEnchantable(ItemStack stack)
+    {
+        return false;
+    }
+
+    @Override
     public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected)
     {
         if (stack.isDamageable() && entityIn instanceof PlayerEntity && ((PlayerInventory.isHotbar(itemSlot) || ((PlayerEntity) entityIn).getHeldItemOffhand().equals(stack))))

@@ -3,6 +3,7 @@ package roito.afterthedrizzle.common.recipe.type;
 import com.google.common.collect.Lists;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ArmorItem;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.SpecialRecipe;
@@ -25,7 +26,7 @@ public class TemperatureResistanceRecipe extends SpecialRecipe
     public boolean matches(CraftingInventory inv, World worldIn)
     {
         ItemStack armor = ItemStack.EMPTY;
-        List<ItemStack> list = Lists.newArrayList();
+        List<Item> list = Lists.newArrayList();
 
         for (int i = 0; i < inv.getSizeInventory(); ++i)
         {
@@ -43,12 +44,18 @@ public class TemperatureResistanceRecipe extends SpecialRecipe
                 }
                 else
                 {
-                    if (itemstack1.getItem() != ItemsRegistry.INSULATING_LAYER)
+                    if (!list.isEmpty())
                     {
-                        return false;
+                        if (list.get(0).equals(itemstack1.getItem()))
+                        {
+                            list.add(itemstack1.getItem());
+                        }
+                        else return false;
                     }
-
-                    list.add(itemstack1);
+                    else if (itemstack1.getItem().equals(ItemsRegistry.INSULATING_LAYER) || itemstack1.getItem().equals(ItemsRegistry.GAUZE))
+                    {
+                        list.add(itemstack1.getItem());
+                    }
                 }
             }
         }
@@ -60,7 +67,7 @@ public class TemperatureResistanceRecipe extends SpecialRecipe
     public ItemStack getCraftingResult(CraftingInventory inv)
     {
         ItemStack armor = ItemStack.EMPTY;
-        List<ItemStack> list = Lists.newArrayList();
+        List<Item> list = Lists.newArrayList();
 
         for (int i = 0; i < inv.getSizeInventory(); ++i)
         {
@@ -78,19 +85,32 @@ public class TemperatureResistanceRecipe extends SpecialRecipe
                 }
                 else
                 {
-                    if (itemstack1.getItem() != ItemsRegistry.INSULATING_LAYER)
+                    if (!list.isEmpty())
                     {
-                        return ItemStack.EMPTY;
+                        if (list.get(0).equals(itemstack1.getItem()))
+                        {
+                            list.add(itemstack1.getItem());
+                        }
+                        else return ItemStack.EMPTY;
                     }
-
-                    list.add(itemstack1);
+                    else if (itemstack1.getItem().equals(ItemsRegistry.INSULATING_LAYER) || itemstack1.getItem().equals(ItemsRegistry.GAUZE))
+                    {
+                        list.add(itemstack1.getItem());
+                    }
                 }
             }
         }
         if (!armor.isEmpty() && list.size() == 3)
         {
             CompoundNBT nbt = new CompoundNBT();
-            nbt.putString("Resistance", "Cold");
+            if (list.get(0).equals(ItemsRegistry.INSULATING_LAYER))
+            {
+                nbt.putString("Resistance", "Cold");
+            }
+            else
+            {
+                nbt.putString("Resistance", "Heat");
+            }
             ItemStack stack = armor.copy();
             stack.setTag(nbt);
             return stack;

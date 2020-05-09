@@ -16,6 +16,7 @@ bda37e8ff7150423e3b10b34a208439bee96cb0a data\afterthedrizzle\tags\items\crops\d
 ec8170361843e027cd26041187aba78f14908feb data\afterthedrizzle\tags\items\food\jerky.json
 d566176d5a06bc4a25570e5b26efb93a98f0286d data\afterthedrizzle\tags\items\food\meat.json
 0f519043d37d236cf26b42f227de18ee80e8a9b1 data\forge\tags\items\dirt.json
+195eae718fbca866d1bcc46ae9fe431ad1e4b42e data\forge\tags\items\dusts\ash.json
 42065df7e74f6d89a1937c7876e342a03cdb97f2 data\forge\tags\items\seeds\carrot.json
 1c951c2bae0947388025fc943118e4bf04fe0393 data\forge\tags\items\seeds\potato.json
 0acdf05c9d5f69804cf0ae8b6b09b890d31b0def data\forge\tags\items\seeds\tea_leaf.json

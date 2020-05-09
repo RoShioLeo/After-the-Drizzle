@@ -195,22 +195,6 @@ public class StoveTileEntity extends NormalContainerTileEntity implements ITicka
         return doubleClickTicks > 0;
     }
 
-    public boolean extractAshForHandWarmer()
-    {
-        return ashInventory.map(inv ->
-        {
-            if (isBurning() && inv.getStackInSlot(0).getCount() >= 1)
-            {
-                inv.extractItem(0, 1, false);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }).orElse(false);
-    }
-
     private ItemStackHandler createAshHandler()
     {
         return new ItemStackHandler()

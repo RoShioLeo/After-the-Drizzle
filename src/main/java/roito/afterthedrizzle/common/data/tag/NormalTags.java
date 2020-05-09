@@ -115,5 +115,6 @@ public final class NormalTags
         public final static Tag<Item> FOOD_MEAT = new ItemTags.Wrapper(new ResourceLocation("afterthedrizzle:food/meat"));
 
         public final static Tag<Item> DIRT = new ItemTags.Wrapper(new ResourceLocation("forge:dirt"));
+        public final static Tag<Item> ASH = new ItemTags.Wrapper(new ResourceLocation("forge:dusts/ash"));
     }
 }
