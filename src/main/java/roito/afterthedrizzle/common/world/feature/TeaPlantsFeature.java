@@ -26,7 +26,7 @@ public class TeaPlantsFeature extends Feature<NoFeatureConfig>
     {
         BlockState blockstate = BlocksRegistry.WILD_TEA_PLANT.getDefaultState();
         int i = 0;
-        for (int j = 0; j < 32; ++j)
+        for (int j = 0; j < 12; ++j)
         {
             BlockPos blockpos = pos.add(rand.nextInt(8) - rand.nextInt(8), rand.nextInt(4) - rand.nextInt(4), rand.nextInt(8) - rand.nextInt(8));
             if (worldIn.isAirBlock(blockpos) && blockpos.getY() < 255 && blockstate.isValidPosition(worldIn, blockpos))

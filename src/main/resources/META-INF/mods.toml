@@ -1,11 +1,13 @@
 modLoader="javafml" #mandatory
 loaderVersion="[28,)" #mandatory (28 is current forge version)
+issueTrackerURL="https://github.com/lemon-slice-studio/After-the-Drizzle/issues"
 [[mods]] #mandatory
 modId="afterthedrizzle" #mandatory
 version="${file.jarVersion}" #mandatory
 displayName="After the Drizzle" #mandatory
+displayURL="https://www.curseforge.com/minecraft/mc-mods/after-the-drizzle"
 logoFile="atd.png" #optional
-credits="Lemon Slice Studio" #optional
+credits="Lemon Slice Studio, MalayP, jiahuayu" #optional
 authors="RoitoLeonine, Gloridifice" #optional
 description=''' '''
 [[dependencies.afterthedrizzle]] #optional

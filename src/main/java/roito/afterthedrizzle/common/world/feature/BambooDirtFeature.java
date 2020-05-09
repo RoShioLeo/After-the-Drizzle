@@ -27,7 +27,7 @@ public class BambooDirtFeature extends Feature<NoFeatureConfig>
     {
         BlockState blockstate = BlocksRegistry.GRASS_BLOCK_WITH_HOLE.getDefaultState();
         int i = 0;
-        for (int j = 0; j < 8; ++j)
+        for (int j = 0; j < 4; ++j)
         {
             BlockPos blockpos = pos.add(rand.nextInt(8) - rand.nextInt(8), rand.nextInt(4) - rand.nextInt(4), rand.nextInt(8) - rand.nextInt(8));
             if (blockpos.getY() < 255 && worldIn.getBlockState(blockpos).getBlock().equals(Blocks.GRASS_BLOCK))
