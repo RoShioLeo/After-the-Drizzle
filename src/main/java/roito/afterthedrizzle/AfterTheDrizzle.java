@@ -90,6 +90,7 @@ public final class AfterTheDrizzle
         ItemColorsRegistry.init();
         BlockColorsRegistry.init();
         ClientProxy.registerRenderType();
+        ClientProxy.registerEntityRenderer();
         ScreenManager.registerFactory((ContainerType<StoveContainer>) ContainerTypesRegistry.STOVE_CONTAINER, StoveGuiContainer::new);
         ScreenManager.registerFactory((ContainerType<BambooTrayContainer>) ContainerTypesRegistry.BAMBOO_TRAY_CONTAINER, BambooTrayGuiContainer::new);
         ScreenManager.registerFactory((ContainerType<DrinkMakerContainer>) ContainerTypesRegistry.DRINK_MAKER_CONTAINER, DrinkMakerGuiContainer::new);

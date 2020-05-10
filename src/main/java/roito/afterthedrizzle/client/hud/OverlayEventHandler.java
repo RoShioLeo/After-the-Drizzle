@@ -57,7 +57,7 @@ public final class OverlayEventHandler
                     float temp = playerEntity.getEntityWorld().getBiome(playerEntity.getPosition()).getTemperature(playerEntity.getPosition());
                     Humidity h = Humidity.getHumid(playerEntity.getEntityWorld().getBiome(playerEntity.getPosition()).getDownfall(), temp);
                     double env = PlayerTemperatureHandler.getEnvOriginTemp(playerEntity.getEntityWorld().getBiome(playerEntity.getPosition()).getTemperature(playerEntity.getPosition()), h, playerEntity.getEntityWorld().getDayTime(), playerEntity.getEntityWorld().isRaining());
-                    BAR_3.renderStatusBar(event.getWindow().getScaledWidth(), event.getWindow().getScaledHeight(), t.getTemperature(), env, PlayerTemperatureHandler.getResistancePoint(playerEntity, "Cold"), PlayerTemperatureHandler.getResistancePoint(playerEntity, "Heat"));
+                    BAR_3.renderStatusBar(event.getWindow().getScaledWidth(), event.getWindow().getScaledHeight(), t, env, PlayerTemperatureHandler.getResistancePoint(playerEntity, "Cold"), PlayerTemperatureHandler.getResistancePoint(playerEntity, "Heat"));
                 });
             }
         }

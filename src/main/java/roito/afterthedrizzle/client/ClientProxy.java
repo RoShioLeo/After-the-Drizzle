@@ -6,8 +6,11 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import roito.afterthedrizzle.client.render.SeatEntityRenderer;
 import roito.afterthedrizzle.common.CommonProxy;
 import roito.afterthedrizzle.common.block.BlocksRegistry;
+import roito.afterthedrizzle.common.entity.EntityTypesRegistry;
 
 public class ClientProxy extends CommonProxy
 {
@@ -21,6 +24,11 @@ public class ClientProxy extends CommonProxy
     public PlayerEntity getClientPlayer()
     {
         return Minecraft.getInstance().player;
+    }
+
+    public static void registerEntityRenderer()
+    {
+        RenderingRegistry.registerEntityRenderingHandler(EntityTypesRegistry.SEAT_ENTITY, SeatEntityRenderer::new);
     }
 
     public static void registerRenderType()

@@ -12,6 +12,7 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.PlantType;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
@@ -137,7 +138,7 @@ public final class CommonEventHandler
     @SubscribeEvent
     public static void onAttachCapabilitiesEntity(AttachCapabilitiesEvent<Entity> event)
     {
-        if (event.getObject() instanceof PlayerEntity)
+        if (event.getObject() instanceof PlayerEntity && !(event.getObject() instanceof FakePlayer))
         {
             event.addCapability(new ResourceLocation(AfterTheDrizzle.MODID, "player_temperature"), new CapabilityPlayerTemperature.Provider());
         }
@@ -146,9 +147,9 @@ public final class CommonEventHandler
     @SubscribeEvent
     public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event)
     {
-        if (event.getPlayer() instanceof ServerPlayerEntity)
+        if (event.getPlayer() instanceof ServerPlayerEntity && !(event.getPlayer() instanceof FakePlayer))
         {
-            event.getPlayer().getCapability(CapabilityPlayerTemperature.PLAYER_TEMP).ifPresent(t -> SimpleNetworkHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.getPlayer()), new PlayerTemperatureMessage(t.getTemperature())));
+            event.getPlayer().getCapability(CapabilityPlayerTemperature.PLAYER_TEMP).ifPresent(t -> SimpleNetworkHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.getPlayer()), new PlayerTemperatureMessage(t.getTemperature(), t.getHotterOrColder())));
         }
     }
 
@@ -156,7 +157,7 @@ public final class CommonEventHandler
     public static void onPlayTick(TickEvent.PlayerTickEvent event)
     {
         PlayerEntity player = event.player;
-        if (event.phase == TickEvent.Phase.START && player instanceof ServerPlayerEntity && player.getEntityWorld().getDayTime() % 50 == 0)
+        if (event.phase == TickEvent.Phase.START && player instanceof ServerPlayerEntity && !(player instanceof FakePlayer) && player.getEntityWorld().getDayTime() % 50 == 0)
         {
             PlayerTemperatureHandler.adjustPlayerTemperature((ServerPlayerEntity) player, player.getEntityWorld(), player.getPosition());
         }

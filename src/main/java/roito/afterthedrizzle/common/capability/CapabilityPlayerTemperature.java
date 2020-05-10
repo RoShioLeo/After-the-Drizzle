@@ -38,6 +38,7 @@ public class CapabilityPlayerTemperature
     public static class Data
     {
         private int temperature = 0;
+        private int up = 0;
 
         public ApparentTemperature getApparentTemperature()
         {
@@ -54,11 +55,20 @@ public class CapabilityPlayerTemperature
             this.temperature = temp;
         }
 
+        public void setHotterOrColder(int up)
+        {
+            this.up = up;
+        }
+
         public int getTemperature()
         {
             return temperature;
         }
 
+        public int getHotterOrColder()
+        {
+            return up;
+        }
     }
 
     public static class Provider implements ICapabilitySerializable<INBT>
