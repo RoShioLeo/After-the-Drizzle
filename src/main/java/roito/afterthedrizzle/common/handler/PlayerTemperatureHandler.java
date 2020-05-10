@@ -221,12 +221,18 @@ public final class PlayerTemperatureHandler
         if (env > t.getTemperature())
         {
             t.addPlayerTemperature(1);
+            t.setHotterOrColder(1);
+        }
+        else if (env < t.getTemperature())
+        {
+            t.addPlayerTemperature(-1);
+            t.setHotterOrColder(2);
         }
         else
         {
-            t.addPlayerTemperature(-1);
+            t.setHotterOrColder(0);
         }
-        SimpleNetworkHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), new PlayerTemperatureMessage(t.getTemperature()));
+        SimpleNetworkHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), new PlayerTemperatureMessage(t.getTemperature(), t.getHotterOrColder()));
     }
 
     public static void applyEffects(PlayerEntity player, World world, ApparentTemperature temp)

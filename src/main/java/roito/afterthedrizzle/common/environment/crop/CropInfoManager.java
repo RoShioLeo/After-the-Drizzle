@@ -1,12 +1,11 @@
 package roito.afterthedrizzle.common.environment.crop;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.CropsBlock;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.IPlantable;
-import net.minecraftforge.common.PlantType;
 import net.minecraftforge.event.TagsUpdatedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -50,7 +49,7 @@ public final class CropInfoManager
         registerCropInfo(ForgeRegistries.ITEMS.getValue(new ResourceLocation("pamhc2crops:whitemushroomseeditem")), CropType.MOIST_HUMID);
         registerCropInfo(ForgeRegistries.ITEMS.getValue(new ResourceLocation("pamhc2crops:wintersquashseeditem")), CropType.DRY_MOIST);
 
-        ForgeRegistries.BLOCKS.forEach(block -> registerCropInfo(block, CropType.AVERAGE_MOIST));
+        ForgeRegistries.BLOCKS.forEach(block -> registerCropInfo(block, CropType.AVERAGE_MOIST, false));
     }
 
     public static void registerCropInfo(Item item, CropType info)
@@ -61,9 +60,9 @@ public final class CropInfoManager
         }
     }
 
-    public static void registerCropInfo(Block block, CropType info)
+    public static void registerCropInfo(Block block, CropType info, boolean force)
     {
-        if (block instanceof IPlantable && ((IPlantable) block).getPlantType(null, null) == PlantType.Crop)
+        if (force || block instanceof CropsBlock)
         {
             if (!BLOCK_INFO.containsKey(block))
             {
