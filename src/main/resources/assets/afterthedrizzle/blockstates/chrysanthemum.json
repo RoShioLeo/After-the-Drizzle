@@ -1,0 +1,21 @@
+{
+    "variants": {
+        "": [
+            {
+                "model": "afterthedrizzle:block/chrysanthemum"
+            },
+            {
+                "model": "afterthedrizzle:block/chrysanthemum",
+                "y": 90
+            },
+            {
+                "model": "afterthedrizzle:block/chrysanthemum",
+                "y": 180
+            },
+            {
+                "model": "afterthedrizzle:block/chrysanthemum",
+                "y": 270
+            }
+        ]
+    }
+}

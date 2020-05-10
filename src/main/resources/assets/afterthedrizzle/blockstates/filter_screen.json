@@ -1,0 +1,15 @@
+{
+    "variants": {
+        "axis=x": {
+            "model": "afterthedrizzle:block/filter_screen",
+            "y": 90
+        },
+        "axis=y": {
+            "model": "afterthedrizzle:block/filter_screen",
+            "x": 90
+        },
+        "axis=z": {
+            "model": "afterthedrizzle:block/filter_screen"
+        }
+    }
+}

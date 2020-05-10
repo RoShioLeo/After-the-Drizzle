@@ -1,0 +1,16 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "group": "afterthedrizzle",
+    "pattern": [
+        "# #",
+        " # "
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:clay"
+        }
+    },
+    "result": {
+        "item": "afterthedrizzle:clay_teapot"
+    }
+}

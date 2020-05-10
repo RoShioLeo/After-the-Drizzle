@@ -1,0 +1,21 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "group": "afterthedrizzle",
+    "pattern": [
+        " / ",
+        "xxx",
+        "xxx"
+    ],
+    "key": {
+        "x": {
+            "item": "minecraft:paper"
+        },
+        "/": {
+            "item": "minecraft:string"
+        }
+    },
+    "result": {
+        "item": "afterthedrizzle:empty_tea_bag",
+        "count": 3
+    }
+}

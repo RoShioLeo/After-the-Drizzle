@@ -1,0 +1,9 @@
+{
+    "block.cup_broken": {
+        "sounds": [
+            {
+                "name": "afterthedrizzle:block/cup_broken"
+            }
+        ]
+    }
+}

@@ -1,0 +1,6 @@
+{
+    "parent": "afterthedrizzle:block/catapult_board_on",
+    "textures": {
+        "1": "afterthedrizzle:block/bamboo_catapult_board"
+    }
+}

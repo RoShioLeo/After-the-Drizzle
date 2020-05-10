@@ -1,0 +1,9 @@
+{
+    "type": "minecraft:smelting",
+    "ingredient": {
+        "item": "afterthedrizzle:clay_cup"
+    },
+    "result": "afterthedrizzle:porcelain_cup",
+    "experience": 0.35,
+    "cookingtime": 200
+}

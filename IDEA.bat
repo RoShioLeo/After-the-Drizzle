@@ -1,0 +1,1 @@
+gradle genIntellijRuns -i -Dhttp.proxyHost=127.0.0.1 -Dhttp.proxyPort=1080 -Dhttps.proxyHost=127.0.0.1 -Dhttps.proxyPort=1080

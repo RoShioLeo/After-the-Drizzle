@@ -1,0 +1,21 @@
+{
+    "variants": {
+        "": [
+            {
+                "model": "afterthedrizzle:block/zinnia"
+            },
+            {
+                "model": "afterthedrizzle:block/zinnia",
+                "y": 90
+            },
+            {
+                "model": "afterthedrizzle:block/zinnia",
+                "y": 180
+            },
+            {
+                "model": "afterthedrizzle:block/zinnia",
+                "y": 270
+            }
+        ]
+    }
+}
