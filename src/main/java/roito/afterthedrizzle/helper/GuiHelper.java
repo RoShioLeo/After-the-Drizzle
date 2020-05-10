@@ -1,6 +1,6 @@
 package roito.afterthedrizzle.helper;
 
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.renderer.texture.AtlasTexture;
@@ -25,10 +25,10 @@ public final class GuiHelper
 
         if (fluidHeight != 0)
         {
-            TextureAtlasSprite sprite = gui.getMinecraft().getAtlasSpriteGetter(fluid.getFluid().getAttributes().getStillTexture()).apply(fluid.getFluid().getAttributes().getStillTexture());
+            TextureAtlasSprite sprite = gui.getMinecraft().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(fluid.getFluid().getAttributes().getStillTexture());
             gui.getMinecraft().getTextureManager().bindTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE);
             int color = fluid.getFluid().getAttributes().getColor(fluid);
-            GlStateManager.color4f((color >> 16 & 255) / 255.0F, (color >> 8 & 255) / 255.0F, (color & 255) / 255.0F, (color >> 24 & 255) / 255.0F);
+            RenderSystem.color4f((color >> 16 & 255) / 255.0F, (color >> 8 & 255) / 255.0F, (color & 255) / 255.0F, (color >> 24 & 255) / 255.0F);
             for (int j = 0; j < pos.getU() / 16; j++)
             {
                 int count = 0;

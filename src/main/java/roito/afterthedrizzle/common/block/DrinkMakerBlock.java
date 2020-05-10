@@ -46,7 +46,7 @@ public class DrinkMakerBlock extends NormalHorizontalBlock
 
     protected DrinkMakerBlock()
     {
-        super(Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(0.5F), "drink_maker");
+        super(Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(0.5F).notSolid(), "drink_maker");
         this.setDefaultState(this.getStateContainer().getBaseState().with(HORIZONTAL_FACING, Direction.NORTH).with(LEFT, true));
     }
 

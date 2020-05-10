@@ -1,11 +1,8 @@
 package roito.afterthedrizzle.client.render;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.ItemRenderer;
-import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
@@ -32,9 +29,8 @@ public class DrinkMakerTESR extends TileEntityRenderer<DrinkMakerTileEntity>
 
         ItemRenderer renderItem = mc.getItemRenderer();
 
-        GlStateManager.pushMatrix();
+        matrixStackIn.push();
         RenderHelper.disableStandardItemLighting();
-        GlStateManager.disableLighting();
         for (int i = 0; i < 4; i++)
         {
             ItemStack itemStack = list.get(i);
@@ -43,34 +39,30 @@ public class DrinkMakerTESR extends TileEntityRenderer<DrinkMakerTileEntity>
                 continue;
             }
 
-            int x = tileEntityIn.getPos().getX();
-            int y = tileEntityIn.getPos().getY();
-            int z = tileEntityIn.getPos().getZ();
-
-            GlStateManager.pushMatrix();
+            matrixStackIn.push();
 
             switch (tileEntityIn.getFacing())
             {
                 case NORTH:
-                    GlStateManager.translated(x + 0.4 * (i + 1), y + 0.35, z + 0.5);
+                    matrixStackIn.translate(0.4 * (i + 1), 0.35, 0.5);
                     break;
                 case SOUTH:
-                    GlStateManager.translated(x + 1.0 - 0.4 * (i + 1), y + 0.35, z + 0.5);
+                    matrixStackIn.translate(1.0 - 0.4 * (i + 1), 0.35, 0.5);
                     break;
                 case WEST:
-                    GlStateManager.translated(x + 0.5, y + 0.35, z + 1.0 - 0.4 * (i + 1));
+                    matrixStackIn.translate(0.5, 0.35, 1.0 - 0.4 * (i + 1));
                     break;
                 default:
-                    GlStateManager.translated(x + 0.5, y + 0.35, z + 0.4 * (i + 1));
+                    matrixStackIn.translate(0.5, 0.35, 0.4 * (i + 1));
             }
-            GlStateManager.rotatef(45, 0, 1, 0);
-            GlStateManager.scaled(0.5, 0.5, 0.5);
+            matrixStackIn.rotate(new Quaternion(Vector3f.YP, 45, true));
+            matrixStackIn.scale(0.5F, 0.5F, 0.5F);
 
             RenderHelper.enableStandardItemLighting();
             renderItem.renderItem(itemStack, ItemCameraTransforms.TransformType.FIXED, combinedLightIn, combinedOverlayIn, matrixStackIn, bufferIn);
             RenderHelper.disableStandardItemLighting();
-            GlStateManager.popMatrix();
+            matrixStackIn.pop();
         }
-        GlStateManager.popMatrix();
+        matrixStackIn.pop();
     }
 }

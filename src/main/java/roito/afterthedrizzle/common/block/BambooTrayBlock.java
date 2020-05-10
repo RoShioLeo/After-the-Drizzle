@@ -37,7 +37,7 @@ public class BambooTrayBlock extends NormalBlock
 
     public BambooTrayBlock()
     {
-        super("bamboo_tray", Properties.create(Material.BAMBOO).sound(SoundType.BAMBOO).hardnessAndResistance(0.5F));
+        super("bamboo_tray", Properties.create(Material.BAMBOO).sound(SoundType.BAMBOO).hardnessAndResistance(0.5F).notSolid());
     }
 
     @Override

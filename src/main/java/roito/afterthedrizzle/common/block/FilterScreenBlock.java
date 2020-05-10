@@ -40,7 +40,7 @@ public class FilterScreenBlock extends NormalBlock
 
     public FilterScreenBlock()
     {
-        super("filter_screen", Properties.create(Material.WEB).sound(SoundType.WOOD).hardnessAndResistance(0.2F).doesNotBlockMovement());
+        super("filter_screen", Properties.create(Material.WEB).sound(SoundType.WOOD).hardnessAndResistance(0.2F).doesNotBlockMovement().notSolid());
         this.setDefaultState(this.stateContainer.getBaseState().with(AXIS, Direction.Axis.X));
     }
 

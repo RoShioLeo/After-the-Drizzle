@@ -1,11 +1,8 @@
 package roito.afterthedrizzle.client.render;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.ItemRenderer;
-import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
@@ -36,30 +33,27 @@ public class BambooTrayTESR extends TileEntityRenderer<BambooTrayTileEntity>
 
         ItemRenderer renderItem = mc.getItemRenderer();
 
-        GlStateManager.pushMatrix();
+        matrixStackIn.push();
         RenderHelper.disableStandardItemLighting();
-        GlStateManager.disableLighting();
 
         double h = 0.125;
         if (tileEntityIn.getBlockState().getBlock() instanceof CatapultBoardBlockWithTray)
         {
             h += 0.125;
         }
-        GlStateManager.translated(tileEntityIn.getPos().getX() + 0.5, tileEntityIn.getPos().getY() + h, tileEntityIn.getPos().getZ() + 0.5);
+        matrixStackIn.translate(0.5, h, 0.5);
 
-        GlStateManager.pushMatrix();
         int seed = tileEntityIn.getRandomSeed();
 
-        GlStateManager.scaled(0.5, 0.5, 0.5);
-        GlStateManager.translated(((seed % 100) - 50) / 200D, 0, ((seed % 56) - 28) / 112D);
-        GlStateManager.rotatef(360 * (seed % 943) / 943F, 0, 1, 0);
-        GlStateManager.rotatef(90, 1, 0, 0);
+        matrixStackIn.scale(0.5F, 0.5F, 0.5F);
+        matrixStackIn.translate(((seed % 100) - 50) / 200D, 0, ((seed % 56) - 28) / 112D);
+        matrixStackIn.rotate(new Quaternion(Vector3f.YP, 360 * (seed % 943) / 943F, true));
+        matrixStackIn.rotate(new Quaternion(Vector3f.XP, 90, true));
 
         RenderHelper.enableStandardItemLighting();
         renderItem.renderItem(itemStack, ItemCameraTransforms.TransformType.FIXED, combinedLightIn, combinedOverlayIn, matrixStackIn, bufferIn);
         RenderHelper.disableStandardItemLighting();
-        GlStateManager.popMatrix();
 
-        GlStateManager.popMatrix();
+        matrixStackIn.pop();
     }
 }

@@ -20,10 +20,10 @@ public final class BlocksRegistry extends RegistryModule
     public static final Block STONE_STOVE = new StoveBlock(Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(3.5F), "stone_stove", 2);
     public static final Block WOODEN_FRAME = new WoodenFrameBlock();
     public static final Block TEAPOT = new TeapotBlock();
-    public static final Block STONE_CATAPULT_BOARD = new CatapultBoardBlock(0.2F, "stone_catapult_board", Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(3.5F));
-    public static final Block STONE_CATAPULT_BOARD_WITH_TRAY = new CatapultBoardBlockWithTray("stone_catapult_board_with_tray", Block.Properties.create(Material.ROCK).sound(SoundType.BAMBOO));
-    public static final Block BAMBOO_CATAPULT_BOARD = new CatapultBoardBlock(0.4F, "bamboo_catapult_board", Block.Properties.create(Material.BAMBOO).sound(SoundType.BAMBOO));
-    public static final Block IRON_CATAPULT_BOARD = new CatapultBoardBlock(0.6F, "iron_catapult_board", Block.Properties.create(Material.IRON).sound(SoundType.STONE).hardnessAndResistance(3.5F));
+    public static final Block STONE_CATAPULT_BOARD = new CatapultBoardBlock(0.2F, "stone_catapult_board", Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(3.5F).notSolid());
+    public static final Block STONE_CATAPULT_BOARD_WITH_TRAY = new CatapultBoardBlockWithTray("stone_catapult_board_with_tray", Block.Properties.create(Material.ROCK).sound(SoundType.BAMBOO).notSolid());
+    public static final Block BAMBOO_CATAPULT_BOARD = new CatapultBoardBlock(0.4F, "bamboo_catapult_board", Block.Properties.create(Material.BAMBOO).sound(SoundType.BAMBOO).notSolid());
+    public static final Block IRON_CATAPULT_BOARD = new CatapultBoardBlock(0.6F, "iron_catapult_board", Block.Properties.create(Material.IRON).sound(SoundType.STONE).hardnessAndResistance(3.5F).notSolid());
     public static final Block FILTER_SCREEN = new FilterScreenBlock();
 
     public static final BlockItem BAMBOO_TRAY_ITEM = new NormalBlockItem(BAMBOO_TRAY);

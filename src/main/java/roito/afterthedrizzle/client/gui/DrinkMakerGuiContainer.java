@@ -1,6 +1,6 @@
 package roito.afterthedrizzle.client.gui;
 
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
@@ -36,9 +36,9 @@ public class DrinkMakerGuiContainer extends ContainerScreen<DrinkMakerContainer>
     {
         int offsetX = (width - xSize) / 2, offsetY = (height - ySize) / 2;
 
-        GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        GlStateManager.enableBlend();
-        GlStateManager.enableAlphaTest();
+        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.enableBlend();
+        RenderSystem.enableAlphaTest();
         minecraft.getTextureManager().bindTexture(TEXTURE);
         blit(offsetX, offsetY, 0, 0, xSize, ySize);
 
@@ -54,8 +54,8 @@ public class DrinkMakerGuiContainer extends ContainerScreen<DrinkMakerContainer>
         int height = (int) Math.ceil(64 * this.container.getTileEntity().getFluidAmount() / NormalConfig.drinkMakerCapacity.get());
         GuiHelper.drawTank(this, offsetX + 134, offsetY + 14, new TexturePos(134, 14, 16, 64), container.getTileEntity().getFluidTank().getFluid(), height);
 
-        GlStateManager.disableAlphaTest();
-        GlStateManager.disableBlend();
+        RenderSystem.disableAlphaTest();
+        RenderSystem.disableBlend();
         this.container.detectAndSendChanges();
     }
 
