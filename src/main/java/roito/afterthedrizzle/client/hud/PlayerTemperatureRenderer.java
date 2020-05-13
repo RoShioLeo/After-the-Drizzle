@@ -50,7 +50,7 @@ public class PlayerTemperatureRenderer extends AbstractGui
         {
             blit((NormalConfig.playerTemperatureX.get()) + 26, screenHeight - NormalConfig.playerTemperatureY.get() + 7, index / 200 * 7, 48 + (up - 1) * 16, 7, 16);
             index++;
-            index %= 2000;
+            index %= 2200;
             if (index == 0)
             {
                 up = t.getHotterOrColder();
