@@ -4,16 +4,26 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import roito.afterthedrizzle.AfterTheDrizzle;
 import roito.afterthedrizzle.common.capability.CapabilityPlayerTemperature;
 import roito.afterthedrizzle.common.config.NormalConfig;
 import roito.afterthedrizzle.common.environment.ApparentTemperature;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
+import static roito.afterthedrizzle.AfterTheDrizzle.MODID;
+
+@Mod.EventBusSubscriber(modid = MODID)
 public class PlayerTemperatureRenderer extends AbstractGui
 {
 
-    private final static ResourceLocation OVERLAY_BAR = new ResourceLocation(AfterTheDrizzle.MODID, "textures/gui/hud/temperature.png");
+    private final static ResourceLocation OVERLAY_BAR = new ResourceLocation(MODID, "textures/gui/hud/temperature.png");
 
+    private static final Timer timer = new Timer();
     private static int index = -1;
     private static int up = 0;
 
@@ -33,7 +43,6 @@ public class PlayerTemperatureRenderer extends AbstractGui
 //        this.drawString(mc.fontRenderer, String.valueOf(env), screenWidth / 2 - mc.fontRenderer.getStringWidth(String.valueOf(env)) / 2, 12, 4210752);
 
         mc.getTextureManager().bindTexture(OVERLAY_BAR);
-
         if (up == 0)
         {
             up = t.getHotterOrColder();
@@ -41,13 +50,15 @@ public class PlayerTemperatureRenderer extends AbstractGui
             {
                 index = 0;
             }
-            else index = -1;
+            else
+            {
+                index = -1;
+            }
         }
         if (up != 0 && index >= 0)
         {
-            blit((NormalConfig.playerTemperatureX.get()) + 26, screenHeight - NormalConfig.playerTemperatureY.get() + 7, index / 200 * 7, 48 + (up - 1) * 16, 7, 16);
-            index++;
-            index %= 2000;
+            blit((NormalConfig.playerTemperatureX.get()) + 26, screenHeight - NormalConfig.playerTemperatureY.get() + 7, index / 8  * 7, 48 + (up - 1) * 16, 7, 16);
+            index %= 120;
             if (index == 0)
             {
                 up = t.getHotterOrColder();
@@ -62,5 +73,14 @@ public class PlayerTemperatureRenderer extends AbstractGui
 
         GlStateManager.disableAlphaTest();
         mc.getTextureManager().bindTexture(OverlayEventHandler.DEFAULT);
+    }
+
+    @SubscribeEvent
+    public static void onClientTick(TickEvent.ClientTickEvent event)
+    {
+        if (index >=0)
+        {
+            index++;
+        }
     }
 }

@@ -71,7 +71,7 @@ public class BambooTrayBlock extends NormalBlock
     @SuppressWarnings("deprecation")
     public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos)
     {
-        return hasSolidSideOnTop(worldIn, pos.down());
+        return hasSolidSideOnTop(worldIn, pos.down()) || worldIn.getBlockState(pos.down()).getBlock() instanceof WoodenFrameBlock;
     }
 
     @Override
