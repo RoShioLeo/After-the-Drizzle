@@ -1,9 +1,6 @@
 package roito.afterthedrizzle.common.block;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.GrassBlock;
-import net.minecraft.block.LanternBlock;
-import net.minecraft.block.SoundType;
+import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.BlockItem;
 import roito.afterthedrizzle.common.item.DrinkMakerItem;
@@ -42,6 +39,7 @@ public final class BlocksRegistry extends RegistryModule
     public static final Block BAMBOO_LANTERN = new LanternBlock(Block.Properties.create(Material.BAMBOO).sound(SoundType.BAMBOO).hardnessAndResistance(0.5F).lightValue(15)).setRegistryName("bamboo_lantern");
     public static final Block BAMBOO_DOOR = new BambooDoorBlock("bamboo_door");
     public static final Block BAMBOO_GLASS_DOOR = new BambooDoorBlock("bamboo_glass_door");
+    public static final Block BAMBOO_TRAPDOOR = new BambooTrapDoorBlock("bamboo_trapdoor");
 //    public static final Block BAMBOO_GLASS_WINDOW = new BambooGlassWindow();
 
     public static final BlockItem BAMBOO_TABLE_ITEM = new NormalBlockItem(BAMBOO_TABLE);
@@ -49,6 +47,7 @@ public final class BlocksRegistry extends RegistryModule
     public static final BlockItem BAMBOO_LANTERN_ITEM = new NormalBlockItem(BAMBOO_LANTERN);
     public static final BlockItem BAMBOO_DOOR_ITEM = new NormalBlockItem(BAMBOO_DOOR);
     public static final BlockItem BAMBOO_GLASS_DOOR_ITEM = new NormalBlockItem(BAMBOO_GLASS_DOOR);
+    public static final BlockItem BAMBOO_TRAPDOOR_ITEM = new NormalBlockItem(BAMBOO_TRAPDOOR);
 //    public static final BlockItem BAMBOO_GLASS_WINDOW_ITEM = new NormalBlockItem(BAMBOO_GLASS_WINDOW);
 
     // CROPS 作物
