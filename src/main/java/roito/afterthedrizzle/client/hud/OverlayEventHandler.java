@@ -9,8 +9,9 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import roito.afterthedrizzle.AfterTheDrizzle;
 import roito.afterthedrizzle.common.capability.CapabilityPlayerTemperature;
+import roito.afterthedrizzle.common.config.CommonConfig;
 import roito.afterthedrizzle.common.environment.Humidity;
-import roito.afterthedrizzle.common.handler.PlayerTemperatureHandler;
+import roito.afterthedrizzle.common.environment.temperature.PlayerTemperatureHandler;
 import roito.afterthedrizzle.common.item.ItemsRegistry;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT, modid = AfterTheDrizzle.MODID)
@@ -50,7 +51,7 @@ public final class OverlayEventHandler
                     BAR_2.renderStatusBar(event.getWindow().getScaledWidth(), event.getWindow().getScaledHeight(), playerEntity.getEntityWorld().getBiome(playerEntity.getPosition()).getTemperature(playerEntity.getPosition()), playerEntity.getEntityWorld().getBiome(playerEntity.getPosition()).getDownfall());
                 }
             }
-            if (!playerEntity.isSpectator())
+            if (!playerEntity.isSpectator() && CommonConfig.Temperature.enable.get())
             {
                 playerEntity.getCapability(CapabilityPlayerTemperature.PLAYER_TEMP).ifPresent(t ->
                 {

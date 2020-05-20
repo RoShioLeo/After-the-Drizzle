@@ -1,4 +1,4 @@
-package roito.afterthedrizzle.common.handler;
+package roito.afterthedrizzle.common.data;
 
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

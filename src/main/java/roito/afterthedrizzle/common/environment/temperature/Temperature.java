@@ -1,4 +1,4 @@
-package roito.afterthedrizzle.common.environment;
+package roito.afterthedrizzle.common.environment.temperature;
 
 import net.minecraft.client.resources.I18n;
 

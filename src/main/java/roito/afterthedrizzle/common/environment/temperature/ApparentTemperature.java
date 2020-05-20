@@ -1,4 +1,4 @@
-package roito.afterthedrizzle.common.environment;
+package roito.afterthedrizzle.common.environment.temperature;
 
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;

@@ -10,23 +10,22 @@ import java.util.Map;
 
 public enum FlowerColor implements IStringSerializable
 {
-    //一级花:自然生成
-    WHITE(16383998, Items.WHITE_DYE),
-    RED(0xFF5151, Items.RED_DYE),
-    YELLOW(16701501, Items.YELLOW_DYE),
-    BLUE(3949738, Items.BLUE_DYE),
-    ORANGE(16351261, Items.ORANGE_DYE),
-    PINK(15961002, Items.PINK_DYE),
-    MAGENTA(13061821, Items.MAGENTA_DYE),
-    LIGHT_BLUE(3847130, Items.LIGHT_BLUE_DYE),
-    LIME(8439583, Items.LIME_DYE),
-    GRAY(4673362, Items.GRAY_DYE),
-    LIGHT_GRAY(10329495, Items.LIGHT_GRAY_DYE),
-    CYAN(1481884, Items.CYAN_DYE),
-    PURPLE(8991416, Items.PURPLE_DYE),
-    BROWN(8606770, Items.BROWN_DYE),
-    GREEN(43520, Items.GREEN_DYE),
-    BLACK(1908001, Items.BLACK_DYE);
+    WHITE(0xFFFFFB, Items.WHITE_DYE),
+    RED(0xEF4136, Items.RED_DYE),
+    YELLOW(0xFFD400, Items.YELLOW_DYE),
+    BLUE(0x2468A2, Items.BLUE_DYE),
+    ORANGE(0xF36C21, Items.ORANGE_DYE),
+    PINK(0xF391A9, Items.PINK_DYE),
+    MAGENTA(0xEF5B9C, Items.MAGENTA_DYE),
+    LIGHT_BLUE(0x33A3DC, Items.LIGHT_BLUE_DYE),
+    LIME(0x8DDF0F, Items.LIME_DYE),
+    GRAY(0x8A8C8E, Items.GRAY_DYE),
+    LIGHT_GRAY(0xC3C7C4, Items.LIGHT_GRAY_DYE),
+    CYAN(0x008792, Items.CYAN_DYE),
+    PURPLE(0x8552A1, Items.PURPLE_DYE),
+    BROWN(0x5F3C23, Items.BROWN_DYE),
+    GREEN(0x32CD32, Items.GREEN_DYE),
+    BLACK(0x131C1E, Items.BLACK_DYE);
 
     private static final Map<FlowerColorPair, FlowerColor> COLOR_MAP;
 

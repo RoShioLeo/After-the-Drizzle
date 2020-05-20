@@ -6,6 +6,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.SoundType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.particles.RedstoneParticleData;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -22,6 +23,8 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import roito.afterthedrizzle.helper.VoxelShapeHelper;
 
 import java.util.Random;
@@ -91,6 +94,18 @@ public class CatapultBoardBlock extends NormalHorizontalBlock
     public void tick(BlockState state, World worldIn, BlockPos pos, Random random)
     {
         worldIn.setBlockState(pos, state.with(ENABLED, false), 2);
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand)
+    {
+        if (worldIn.isBlockPowered(pos))
+        {
+            double d0 = (double) pos.getX() + 0.5D + (rand.nextDouble() - 0.5D);
+            double d1 = (double) pos.getY() + 0.125D + (rand.nextDouble() - 0.5D) * 0.2D;
+            double d2 = (double) pos.getZ() + 0.5D + (rand.nextDouble() - 0.5D);
+            worldIn.addParticle(RedstoneParticleData.REDSTONE_DUST, d0, d1, d2, 0.0D, 0.0D, 0.0D);
+        }
     }
 
     @Override

@@ -3,10 +3,17 @@ package roito.afterthedrizzle.common.block;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.BlockItem;
+import net.minecraft.particles.ParticleTypes;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import roito.afterthedrizzle.common.item.DrinkMakerItem;
 import roito.afterthedrizzle.common.item.HybridizableFlowerBlockItem;
 import roito.afterthedrizzle.common.item.NormalBlockItem;
 import roito.afterthedrizzle.registry.RegistryModule;
+
+import java.util.Random;
 
 public final class BlocksRegistry extends RegistryModule
 {
@@ -36,10 +43,20 @@ public final class BlocksRegistry extends RegistryModule
     // DECORATIONS 装饰
     public static final Block BAMBOO_TABLE = new BambooTableBlock();
     public static final Block BAMBOO_CHAIR = new BambooChairBlock();
-    public static final Block BAMBOO_LANTERN = new LanternBlock(Block.Properties.create(Material.BAMBOO).sound(SoundType.BAMBOO).hardnessAndResistance(0.5F).lightValue(15)).setRegistryName("bamboo_lantern");
+    public static final Block BAMBOO_LANTERN = new LanternBlock(Block.Properties.create(Material.BAMBOO).sound(SoundType.BAMBOO).hardnessAndResistance(0.5F).lightValue(15))
+    {
+        @OnlyIn(Dist.CLIENT)
+        public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand)
+        {
+            double d0 = (double) pos.getX() + 0.5D + (rand.nextDouble() - 0.5D) * 0.2D;
+            double d1 = (double) pos.getY() + 0.35D;
+            double d2 = (double) pos.getZ() + 0.5D + (rand.nextDouble() - 0.5D) * 0.2D;
+            worldIn.addParticle(ParticleTypes.FLAME, d0, d1, d2, 0.0D, 0.0D, 0.0D);
+        }
+    }.setRegistryName("bamboo_lantern");
     public static final Block BAMBOO_DOOR = new BambooDoorBlock("bamboo_door");
     public static final Block BAMBOO_GLASS_DOOR = new BambooDoorBlock("bamboo_glass_door");
-    public static final Block BAMBOO_TRAPDOOR = new BambooTrapDoorBlock("bamboo_trapdoor");
+//    public static final Block BAMBOO_TRAPDOOR = new BambooTrapDoorBlock("bamboo_trapdoor");
 //    public static final Block BAMBOO_GLASS_WINDOW = new BambooGlassWindow();
 
     public static final BlockItem BAMBOO_TABLE_ITEM = new NormalBlockItem(BAMBOO_TABLE);
@@ -47,7 +64,7 @@ public final class BlocksRegistry extends RegistryModule
     public static final BlockItem BAMBOO_LANTERN_ITEM = new NormalBlockItem(BAMBOO_LANTERN);
     public static final BlockItem BAMBOO_DOOR_ITEM = new NormalBlockItem(BAMBOO_DOOR);
     public static final BlockItem BAMBOO_GLASS_DOOR_ITEM = new NormalBlockItem(BAMBOO_GLASS_DOOR);
-    public static final BlockItem BAMBOO_TRAPDOOR_ITEM = new NormalBlockItem(BAMBOO_TRAPDOOR);
+//    public static final BlockItem BAMBOO_TRAPDOOR_ITEM = new NormalBlockItem(BAMBOO_TRAPDOOR);
 //    public static final BlockItem BAMBOO_GLASS_WINDOW_ITEM = new NormalBlockItem(BAMBOO_GLASS_WINDOW);
 
     // CROPS 作物

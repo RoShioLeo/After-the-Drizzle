@@ -3,7 +3,8 @@ package roito.afterthedrizzle.common.environment;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
-import roito.afterthedrizzle.common.config.NormalConfig;
+import roito.afterthedrizzle.common.config.CommonConfig;
+import roito.afterthedrizzle.common.environment.temperature.Temperature;
 
 public enum Humidity
 {
@@ -44,7 +45,7 @@ public enum Humidity
 
     public int getOutdoorDryingTicks()
     {
-        int basicTicks = NormalConfig.dryingOutdoorsBasicTime.get();
+        int basicTicks = CommonConfig.Time.dryingOutdoorsBasicTime.get();
         switch (this)
         {
             case ARID:
@@ -62,7 +63,7 @@ public enum Humidity
 
     public int getFermentationTicks()
     {
-        int basicTicks = NormalConfig.fermentationBasicTime.get();
+        int basicTicks = CommonConfig.Time.fermentationBasicTime.get();
         switch (this)
         {
             case ARID:

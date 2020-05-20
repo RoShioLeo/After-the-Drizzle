@@ -8,7 +8,7 @@ import net.minecraft.world.gen.placement.Placement;
 import net.minecraftforge.registries.ForgeRegistries;
 import roito.afterthedrizzle.common.environment.Humidity;
 import roito.afterthedrizzle.common.environment.Rainfall;
-import roito.afterthedrizzle.common.environment.Temperature;
+import roito.afterthedrizzle.common.environment.temperature.Temperature;
 import roito.afterthedrizzle.common.world.feature.FeaturesRegistry;
 
 public final class WorldGenManager

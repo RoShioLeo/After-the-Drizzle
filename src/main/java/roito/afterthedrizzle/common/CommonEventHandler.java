@@ -28,8 +28,8 @@ import net.minecraftforge.fml.network.PacketDistributor;
 import roito.afterthedrizzle.AfterTheDrizzle;
 import roito.afterthedrizzle.common.block.TeaPlantBlock;
 import roito.afterthedrizzle.common.capability.CapabilityPlayerTemperature;
-import roito.afterthedrizzle.common.config.NormalConfig;
-import roito.afterthedrizzle.common.handler.PlayerTemperatureHandler;
+import roito.afterthedrizzle.common.config.CommonConfig;
+import roito.afterthedrizzle.common.environment.temperature.PlayerTemperatureHandler;
 import roito.afterthedrizzle.common.item.ItemsRegistry;
 import roito.afterthedrizzle.common.network.PlayerTemperatureMessage;
 import roito.afterthedrizzle.common.network.SimpleNetworkHandler;
@@ -101,7 +101,7 @@ public final class CommonEventHandler
     @SubscribeEvent
     public static void onUseBoneMeal(BonemealEvent event)
     {
-        if (!NormalConfig.canUseBoneMeal.get())
+        if (!CommonConfig.Agriculture.canUseBoneMeal.get())
         {
             if (event.getBlock().getBlock() instanceof TeaPlantBlock)
             {
@@ -126,19 +126,20 @@ public final class CommonEventHandler
     @SubscribeEvent
     public static void onNeighborChanged(BlockEvent.NeighborNotifyEvent event)
     {
-        event.getNotifiedSides().forEach(direction ->
-        {
-            if (event.getWorld().getBlockState(event.getPos()).isFlammable(event.getWorld(), event.getPos(), direction) && event.getWorld().getBlockState(event.getPos().offset(direction)).getBlock() instanceof FireBlock)
+        if (CommonConfig.Others.woodDropsAshWhenBurning.get())
+            event.getNotifiedSides().forEach(direction ->
             {
-                Block.spawnAsEntity(event.getWorld().getWorld(), event.getPos(), new ItemStack(ItemsRegistry.ASH));
-            }
-        });
+                if (event.getWorld().getBlockState(event.getPos()).isFlammable(event.getWorld(), event.getPos(), direction) && event.getWorld().getBlockState(event.getPos().offset(direction)).getBlock() instanceof FireBlock)
+                {
+                    Block.spawnAsEntity(event.getWorld().getWorld(), event.getPos(), new ItemStack(ItemsRegistry.ASH));
+                }
+            });
     }
 
     @SubscribeEvent
     public static void onAttachCapabilitiesEntity(AttachCapabilitiesEvent<Entity> event)
     {
-        if (event.getObject() instanceof PlayerEntity && !(event.getObject() instanceof FakePlayer))
+        if (CommonConfig.Temperature.enable.get() && event.getObject() instanceof PlayerEntity && !(event.getObject() instanceof FakePlayer))
         {
             event.addCapability(new ResourceLocation(AfterTheDrizzle.MODID, "player_temperature"), new CapabilityPlayerTemperature.Provider());
         }
@@ -147,7 +148,7 @@ public final class CommonEventHandler
     @SubscribeEvent
     public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event)
     {
-        if (event.getPlayer() instanceof ServerPlayerEntity && !(event.getPlayer() instanceof FakePlayer))
+        if (CommonConfig.Temperature.enable.get() && event.getPlayer() instanceof ServerPlayerEntity && !(event.getPlayer() instanceof FakePlayer))
         {
             event.getPlayer().getCapability(CapabilityPlayerTemperature.PLAYER_TEMP).ifPresent(t -> SimpleNetworkHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.getPlayer()), new PlayerTemperatureMessage(t.getTemperature(), t.getHotterOrColder())));
         }
@@ -157,7 +158,7 @@ public final class CommonEventHandler
     public static void onPlayTick(TickEvent.PlayerTickEvent event)
     {
         PlayerEntity player = event.player;
-        if (event.phase == TickEvent.Phase.START && player instanceof ServerPlayerEntity && !(player instanceof FakePlayer) && player.getEntityWorld().getDayTime() % 50 == 0)
+        if (CommonConfig.Temperature.enable.get() && event.phase == TickEvent.Phase.START && player instanceof ServerPlayerEntity && !(player instanceof FakePlayer) && player.getEntityWorld().getDayTime() % 50 == 0)
         {
             PlayerTemperatureHandler.adjustPlayerTemperature((ServerPlayerEntity) player, player.getEntityWorld(), player.getPosition());
         }

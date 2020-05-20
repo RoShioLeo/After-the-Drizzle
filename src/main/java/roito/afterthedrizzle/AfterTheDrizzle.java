@@ -3,7 +3,6 @@ package roito.afterthedrizzle;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FireBlock;
 import net.minecraft.client.gui.ScreenManager;
-import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.Items;
 import net.minecraftforge.fml.DistExecutor;
@@ -25,15 +24,12 @@ import roito.afterthedrizzle.client.sound.SoundEventsRegistry;
 import roito.afterthedrizzle.common.CommonProxy;
 import roito.afterthedrizzle.common.block.BlocksRegistry;
 import roito.afterthedrizzle.common.capability.CapabilitiesRegistry;
-import roito.afterthedrizzle.common.config.NormalConfig;
+import roito.afterthedrizzle.common.config.NormalConfigs;
 import roito.afterthedrizzle.common.entity.EntityTypesRegistry;
 import roito.afterthedrizzle.common.fluid.FluidsRegistry;
 import roito.afterthedrizzle.common.group.GroupCore;
 import roito.afterthedrizzle.common.group.GroupDrink;
-import roito.afterthedrizzle.common.inventory.BambooTrayContainer;
 import roito.afterthedrizzle.common.inventory.ContainerTypesRegistry;
-import roito.afterthedrizzle.common.inventory.DrinkMakerContainer;
-import roito.afterthedrizzle.common.inventory.StoveContainer;
 import roito.afterthedrizzle.common.item.ItemsRegistry;
 import roito.afterthedrizzle.common.network.SimpleNetworkHandler;
 import roito.afterthedrizzle.common.potion.EffectsRegistry;
@@ -51,7 +47,7 @@ public final class AfterTheDrizzle
 {
     public static final String MODID = "afterthedrizzle";
     public static final Logger LOGGER = LogManager.getLogger();
-    public static final String NETWORK_VERSION = "1";
+    public static final String NETWORK_VERSION = "1.0";
 
     public static final CommonProxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 
@@ -59,7 +55,8 @@ public final class AfterTheDrizzle
     {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::ClientSetup);
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, NormalConfig.COMMON_CONFIG);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, NormalConfigs.COMMON_CONFIG);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, NormalConfigs.CLIENT_CONFIG);
         FluidsRegistry.FLUIDS.register(FMLJavaModLoadingContext.get().getModEventBus());
         FluidsRegistry.BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
         FluidsRegistry.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
@@ -89,9 +86,9 @@ public final class AfterTheDrizzle
     {
         ItemColorsRegistry.init();
         BlockColorsRegistry.init();
-        ScreenManager.registerFactory((ContainerType<StoveContainer>) ContainerTypesRegistry.STOVE_CONTAINER, StoveGuiContainer::new);
-        ScreenManager.registerFactory((ContainerType<BambooTrayContainer>) ContainerTypesRegistry.BAMBOO_TRAY_CONTAINER, BambooTrayGuiContainer::new);
-        ScreenManager.registerFactory((ContainerType<DrinkMakerContainer>) ContainerTypesRegistry.DRINK_MAKER_CONTAINER, DrinkMakerGuiContainer::new);
+        ScreenManager.registerFactory(ContainerTypesRegistry.STOVE_CONTAINER, StoveGuiContainer::new);
+        ScreenManager.registerFactory(ContainerTypesRegistry.BAMBOO_TRAY_CONTAINER, BambooTrayGuiContainer::new);
+        ScreenManager.registerFactory(ContainerTypesRegistry.DRINK_MAKER_CONTAINER, DrinkMakerGuiContainer::new);
     }
 
     private static void registerCompostable()
