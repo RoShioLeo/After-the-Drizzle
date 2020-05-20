@@ -7,7 +7,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
-import roito.afterthedrizzle.common.environment.ApparentTemperature;
+import roito.afterthedrizzle.common.environment.temperature.ApparentTemperature;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

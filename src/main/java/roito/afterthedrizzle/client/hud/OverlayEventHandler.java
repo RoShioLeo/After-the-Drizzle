@@ -10,7 +10,7 @@ import net.minecraftforge.fml.common.Mod;
 import roito.afterthedrizzle.AfterTheDrizzle;
 import roito.afterthedrizzle.common.capability.CapabilityPlayerTemperature;
 import roito.afterthedrizzle.common.environment.Humidity;
-import roito.afterthedrizzle.common.handler.PlayerTemperatureHandler;
+import roito.afterthedrizzle.common.environment.temperature.PlayerTemperatureHandler;
 import roito.afterthedrizzle.common.item.ItemsRegistry;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT, modid = AfterTheDrizzle.MODID)

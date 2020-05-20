@@ -16,7 +16,7 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
-import roito.afterthedrizzle.common.config.NormalConfig;
+import roito.afterthedrizzle.common.config.CommonConfig;
 import roito.afterthedrizzle.common.inventory.DrinkMakerContainer;
 import roito.afterthedrizzle.common.recipe.RecipesRegistry;
 import roito.afterthedrizzle.common.recipe.drink.DrinkRecipeInput;
@@ -158,7 +158,7 @@ public class DrinkMakerTileEntity extends NormalContainerTileEntity implements I
 
     private FluidTank createFluidHandler()
     {
-        return new FluidTank(NormalConfig.drinkMakerCapacity.get())
+        return new FluidTank(CommonConfig.Block.drinkMakerCapacity.get())
         {
             @Override
             protected void onContentsChanged()

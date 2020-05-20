@@ -7,7 +7,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import roito.afterthedrizzle.AfterTheDrizzle;
 import roito.afterthedrizzle.client.texture.TexturePos;
-import roito.afterthedrizzle.common.config.NormalConfig;
+import roito.afterthedrizzle.common.config.CommonConfig;
 import roito.afterthedrizzle.common.inventory.DrinkMakerContainer;
 import roito.afterthedrizzle.helper.GuiHelper;
 
@@ -47,11 +47,11 @@ public class DrinkMakerGuiContainer extends ContainerScreen<DrinkMakerContainer>
         int textureWidth = 0;
         if (totalTicks != 0)
         {
-            textureWidth = (int) Math.ceil(22 * processTicks / totalTicks);
+            textureWidth = (int) Math.ceil(22.0 * processTicks / totalTicks);
         }
         blit(offsetX + 104, offsetY + 37, 176, 0, textureWidth, 16);
 
-        int height = (int) Math.ceil(64 * this.container.getTileEntity().getFluidAmount() / NormalConfig.drinkMakerCapacity.get());
+        int height = (int) Math.ceil(64.0 * this.container.getTileEntity().getFluidAmount() / CommonConfig.Block.drinkMakerCapacity.get());
         GuiHelper.drawTank(this, offsetX + 134, offsetY + 14, new TexturePos(134, 14, 16, 64), container.getTileEntity().getFluidTank().getFluid(), height);
 
         RenderSystem.disableAlphaTest();

@@ -7,8 +7,8 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import roito.afterthedrizzle.AfterTheDrizzle;
 import roito.afterthedrizzle.common.capability.CapabilityPlayerTemperature;
-import roito.afterthedrizzle.common.config.NormalConfig;
-import roito.afterthedrizzle.common.environment.ApparentTemperature;
+import roito.afterthedrizzle.common.config.ClientConfig;
+import roito.afterthedrizzle.common.environment.temperature.ApparentTemperature;
 
 public class PlayerTemperatureRenderer extends AbstractGui
 {
@@ -48,7 +48,7 @@ public class PlayerTemperatureRenderer extends AbstractGui
         }
         if (up != 0 && index >= 0)
         {
-            blit((NormalConfig.playerTemperatureX.get()) + 26, screenHeight - NormalConfig.playerTemperatureY.get() + 7, index / 200 * 7, 48 + (up - 1) * 16, 7, 16);
+            blit((ClientConfig.GUI.playerTemperatureX.get()) + 26, screenHeight - ClientConfig.GUI.playerTemperatureY.get() + 7, index / 200 * 7, 48 + (up - 1) * 16, 7, 16);
             index++;
             index %= 2200;
             if (index == 0)
@@ -58,10 +58,10 @@ public class PlayerTemperatureRenderer extends AbstractGui
         }
 
         ApparentTemperature temperature = ApparentTemperature.getTemperature(t.getTemperature());
-        blit((NormalConfig.playerTemperatureX.get()), screenHeight - NormalConfig.playerTemperatureY.get(), (temperature.getIndex() - 1) * 30, 0, 30, 30);
-        blit((NormalConfig.playerTemperatureX.get() + 32), screenHeight - NormalConfig.playerTemperatureY.get(), cold * 9, 30, 9, 9);
-        blit((NormalConfig.playerTemperatureX.get() + 42), screenHeight - NormalConfig.playerTemperatureY.get(), heat * 9, 39, 9, 9);
-        this.drawString(mc.fontRenderer, temperature.getTranslation().getFormattedText(), NormalConfig.playerTemperatureX.get() + 34, screenHeight - NormalConfig.playerTemperatureY.get() + 22, temperature.getColor().getColor());
+        blit((ClientConfig.GUI.playerTemperatureX.get()), screenHeight - ClientConfig.GUI.playerTemperatureY.get(), (temperature.getIndex() - 1) * 30, 0, 30, 30);
+        blit((ClientConfig.GUI.playerTemperatureX.get() + 32), screenHeight - ClientConfig.GUI.playerTemperatureY.get(), cold * 9, 30, 9, 9);
+        blit((ClientConfig.GUI.playerTemperatureX.get() + 42), screenHeight - ClientConfig.GUI.playerTemperatureY.get(), heat * 9, 39, 9, 9);
+        this.drawString(mc.fontRenderer, temperature.getTranslation().getFormattedText(), ClientConfig.GUI.playerTemperatureX.get() + 34, screenHeight - ClientConfig.GUI.playerTemperatureY.get() + 22, temperature.getColor().getColor());
 
         RenderSystem.enableBlend();
         RenderSystem.disableAlphaTest();

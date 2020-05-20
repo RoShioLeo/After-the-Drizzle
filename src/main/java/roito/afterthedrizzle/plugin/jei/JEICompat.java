@@ -6,6 +6,7 @@ import mezz.jei.api.registration.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import roito.afterthedrizzle.client.gui.BambooTrayGuiContainer;
+import roito.afterthedrizzle.client.gui.DrinkMakerGuiContainer;
 import roito.afterthedrizzle.common.block.BlocksRegistry;
 import roito.afterthedrizzle.common.item.ItemsRegistry;
 import roito.afterthedrizzle.common.recipe.RecipesRegistry;
@@ -59,6 +60,7 @@ public class JEICompat implements IModPlugin
     public void registerGuiHandlers(IGuiHandlerRegistration registration)
     {
         registration.addRecipeClickArea(BambooTrayGuiContainer.class, 77, 32, 22, 17, new ResourceLocation(MODID, IN_RAIN), new ResourceLocation(MODID, OUTDOORS), new ResourceLocation(MODID, INDOORS), new ResourceLocation(MODID, BAKE));
+        registration.addRecipeClickArea(DrinkMakerGuiContainer.class, 103, 37, 24, 17, new ResourceLocation(MODID, DRINK_MAKER));
     }
 
     @Override

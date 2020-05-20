@@ -39,7 +39,14 @@ public final class ItemsRegistry extends RegistryModule
     public static final Item TEA_RESIDUES = new NormalItem("tea_residues");
     public static final Item INSULATING_LAYER = new TempResistanceItem("insulating_layer");
     public static final Item GAUZE = new TempResistanceItem("gauze");
-    public static final Item WATER_BAG = new NormalItem("water_bag", getNormalItemProperties().maxStackSize(1));
+    public static final Item WATER_BAG = new WaterBagItem("water_bag", getNormalItemProperties().maxStackSize(1), 2, "Heat")
+    {
+        @Override
+        public boolean onlyOnce()
+        {
+            return true;
+        }
+    };
     public static final Item ICE_WATER_BAG = new WaterBagItem("ice_water_bag", getNormalItemProperties().containerItem(WATER_BAG).maxDamage(60).setNoRepair(), 4, "Heat");
     public static final Item HOT_WATER_BAG = new WaterBagItem("hot_water_bag", getNormalItemProperties().containerItem(WATER_BAG).maxDamage(60).setNoRepair(), 4, "Cold");
     public static final Item HANDWARMER = new HandwarmerItem();

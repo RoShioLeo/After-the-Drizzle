@@ -4,7 +4,7 @@ import net.minecraft.item.ItemUseContext;
 import net.minecraft.item.Items;
 import net.minecraft.util.ActionResultType;
 import roito.afterthedrizzle.AfterTheDrizzle;
-import roito.afterthedrizzle.common.config.NormalConfig;
+import roito.afterthedrizzle.common.config.CommonConfig;
 
 public class FertilizerItem extends NormalItem
 {
@@ -16,7 +16,7 @@ public class FertilizerItem extends NormalItem
     @Override
     public ActionResultType onItemUse(ItemUseContext context)
     {
-        if (NormalConfig.useAshAsBoneMeal.get())
+        if (CommonConfig.Agriculture.useAshAsBoneMeal.get())
         {
             return Items.BONE_MEAL.onItemUse(context);
         }

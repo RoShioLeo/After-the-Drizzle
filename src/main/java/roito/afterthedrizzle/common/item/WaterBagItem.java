@@ -4,7 +4,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.UseAction;
 import net.minecraft.world.World;
 import net.minecraftforge.items.ItemHandlerHelper;
 
@@ -42,12 +41,6 @@ public class WaterBagItem extends NormalItem implements IItemWithTemperature
                 }
             }
         }
-    }
-
-    @Override
-    public UseAction getUseAction(ItemStack stack)
-    {
-        return super.getUseAction(stack);
     }
 
     @Override

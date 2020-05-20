@@ -1,5 +1,6 @@
-package roito.afterthedrizzle.common.handler;
+package roito.afterthedrizzle.common.environment.temperature;
 
+import com.google.common.collect.Lists;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.fluid.Fluid;
@@ -16,13 +17,14 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraftforge.fml.network.PacketDistributor;
 import roito.afterthedrizzle.common.capability.CapabilityPlayerTemperature;
-import roito.afterthedrizzle.common.environment.ApparentTemperature;
+import roito.afterthedrizzle.common.config.CommonConfig;
 import roito.afterthedrizzle.common.environment.Humidity;
-import roito.afterthedrizzle.common.environment.Temperature;
 import roito.afterthedrizzle.common.item.IItemWithTemperature;
 import roito.afterthedrizzle.common.network.PlayerTemperatureMessage;
 import roito.afterthedrizzle.common.network.SimpleNetworkHandler;
 import roito.afterthedrizzle.common.potion.EffectsRegistry;
+
+import java.util.List;
 
 public final class PlayerTemperatureHandler
 {
@@ -45,7 +47,7 @@ public final class PlayerTemperatureHandler
             }
             else
             {
-                ApparentTemperature ATemp = getTemperatureWithPoint(getTemperatureByLight(getTemperatureByHeight(temp, humidity, world, pos), world, pos), player);
+                ApparentTemperature ATemp = getTemperatureWithPoint(getTemperatureByLight(getTemperatureIndoors(getTemperatureByHeight(temp, humidity, world, pos), world, pos), world, pos), player);
                 adjust((int) (ATemp.getMiddle() * humidity.getCoefficient()), t, player);
             }
             applyEffects(player, world, t.getApparentTemperature());
@@ -70,27 +72,39 @@ public final class PlayerTemperatureHandler
 
     public static ApparentTemperature getTemperatureByLight(ApparentTemperature temp, World world, BlockPos pos)
     {
-        int light = world.getLightFor(LightType.BLOCK, pos);
-        if (light >= 15)
+        if (CommonConfig.Temperature.heatInfluencedByLight.get())
         {
-            if (temp.ordinal() <= 4)
+            int light = world.getLightFor(LightType.BLOCK, pos);
+            if (light >= 15)
             {
-                return ApparentTemperature.HOT;
+                if (temp.ordinal() <= 4)
+                {
+                    return ApparentTemperature.HOT;
+                }
+            }
+            else if (light >= 11)
+            {
+                if (temp.ordinal() <= 3)
+                {
+                    return ApparentTemperature.WARM;
+                }
+            }
+            else if (light >= 8)
+            {
+                if (temp.ordinal() <= 2)
+                {
+                    return ApparentTemperature.COOL;
+                }
             }
         }
-        else if (light >= 11)
+        return temp;
+    }
+
+    public static ApparentTemperature getTemperatureIndoors(ApparentTemperature temp, World world, BlockPos pos)
+    {
+        if (CommonConfig.Temperature.coolerIndoors.get() && !world.canBlockSeeSky(pos) && temp.getIndex() > 4)
         {
-            if (temp.ordinal() <= 3)
-            {
-                return ApparentTemperature.WARM;
-            }
-        }
-        else if (light >= 8)
-        {
-            if (temp.ordinal() <= 2)
-            {
-                return ApparentTemperature.COOL;
-            }
+            return ApparentTemperature.values()[temp.getIndex() - 1];
         }
         return temp;
     }
@@ -100,19 +114,19 @@ public final class PlayerTemperatureHandler
      */
     public static ApparentTemperature getTemperatureByHeight(float temp, Humidity humidity, World world, BlockPos pos)
     {
-        if (world.getDimension().getType() == DimensionType.OVERWORLD && !world.canBlockSeeSky(pos))
+        if (CommonConfig.Temperature.coolUnderground.get() && world.getDimension().getType() == DimensionType.OVERWORLD && !world.canBlockSeeSky(pos))
         {
-            if (pos.getY() <= 25)
+            if (pos.getY() <= CommonConfig.Temperature.undergroundHeight.get() / 2)
             {
                 return ApparentTemperature.WARM;
             }
-            else if (pos.getY() <= 45)
+            else if (pos.getY() <= CommonConfig.Temperature.undergroundHeight.get())
             {
                 return ApparentTemperature.COOL;
             }
         }
         float apparent = temp;
-        if (world.getDimension().getType().hasSkyLight())
+        if (CommonConfig.Temperature.fluctuation.get() && world.getDimension().getType().hasSkyLight())
         {
             apparent = getEnvOriginTemp(temp, humidity, world.getDayTime(), world.isRaining());
         }
@@ -140,7 +154,7 @@ public final class PlayerTemperatureHandler
         int t = Math.toIntExact(ticks / 100 % 240);
         int id = humidity.getId();
         // 雨天波动减半
-        double sd = (6 - id) * (6 - id) * 0.02D * Math.abs((double) biomeTemp) * (isRaining ? 0.5D : 1);
+        double sd = (6 - id) * (6 - id) * 0.02D * Math.abs((double) biomeTemp) * (CommonConfig.Temperature.fluctuationDecreaseWhenRaining.get() && isRaining ? 0.5D : 1);
         double standard = (double) biomeTemp - sd * sd;
         double actual = -4.0706867802E-14 * t * t * t * t * t * t - 6.6491872724E-11 * t * t * t * t * t + 5.5361084324E-08 * t * t * t * t - 1.2584165083E-05 * t * t * t + 8.4482896013E-04 * t * t + 9.6706499996E-03 * t - 7.3983503027E-01;
         return (float) (sd * actual + standard);
@@ -177,34 +191,62 @@ public final class PlayerTemperatureHandler
     public static int getResistancePoint(PlayerEntity player, String type)
     {
         int point = 0;
+        boolean emptyArmor = CommonConfig.Temperature.coolerWithoutArmor.get();
+        List<Item> onceUsedList = Lists.newArrayList();
         for (ItemStack armor : player.getArmorInventoryList())
         {
             if (armor.getOrCreateTag().getString("Resistance").equals(type))
             {
                 point++;
+                emptyArmor = false;
             }
+            else if (!armor.isEmpty())
+            {
+                emptyArmor = false;
+            }
+        }
+        if (emptyArmor && type.equals("Heat"))
+        {
+            point += 2;
         }
         for (int i = 0; i < 9; i++)
         {
             Item hotbar = player.inventory.getStackInSlot(i).getItem();
             if (hotbar instanceof IItemWithTemperature && ((IItemWithTemperature) hotbar).getResistanceType().equals(type))
             {
-                if (!((IItemWithTemperature) hotbar).shouldHeld())
+                if (!((IItemWithTemperature) hotbar).shouldHeld() || player.getHeldItemMainhand().getItem().equals(hotbar))
                 {
-                    point += ((IItemWithTemperature) hotbar).getResistancePoint();
-                }
-                else if (player.getHeldItemMainhand().getItem().equals(hotbar))
-                {
-                    point += ((IItemWithTemperature) hotbar).getResistancePoint();
+                    if (((IItemWithTemperature) hotbar).onlyOnce())
+                    {
+                        if (!onceUsedList.contains(hotbar))
+                        {
+                            point += ((IItemWithTemperature) hotbar).getResistancePoint();
+                            onceUsedList.add(hotbar);
+                        }
+                    }
+                    else
+                    {
+                        point += ((IItemWithTemperature) hotbar).getResistancePoint();
+                    }
                 }
             }
         }
         Item hotbar = player.getHeldItemOffhand().getItem();
         if (hotbar instanceof IItemWithTemperature && ((IItemWithTemperature) hotbar).getResistanceType().equals(type))
         {
-            point += ((IItemWithTemperature) hotbar).getResistancePoint();
+            if (((IItemWithTemperature) hotbar).onlyOnce())
+            {
+                if (!onceUsedList.contains(hotbar))
+                {
+                    point += ((IItemWithTemperature) hotbar).getResistancePoint();
+                    onceUsedList.add(hotbar);
+                }
+            }
+            else
+            {
+                point += ((IItemWithTemperature) hotbar).getResistancePoint();
+            }
         }
-
         if (type.equals("Cold") && player.getActivePotionEffect(EffectsRegistry.EXCITEMENT) != null)
         {
             point += 2;

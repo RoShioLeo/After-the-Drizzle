@@ -15,7 +15,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import roito.afterthedrizzle.common.block.BambooTrayMode;
 import roito.afterthedrizzle.common.block.CatapultBoardBlockWithTray;
 import roito.afterthedrizzle.common.block.IStoveBlock;
-import roito.afterthedrizzle.common.config.NormalConfig;
+import roito.afterthedrizzle.common.config.CommonConfig;
 import roito.afterthedrizzle.common.environment.Humidity;
 import roito.afterthedrizzle.common.inventory.BambooTrayContainer;
 import roito.afterthedrizzle.common.recipe.RecipesRegistry;
@@ -105,7 +105,7 @@ public class BambooTrayTileEntity extends NormalContainerTileEntity implements I
                 this.mode = BambooTrayMode.INDOORS;
                 return;
             case BAKE:
-                this.refreshTotalTicks(NormalConfig.bakeBasicTime.get());
+                this.refreshTotalTicks(CommonConfig.Time.bakeBasicTime.get());
                 this.process(RecipesRegistry.MANAGER_BAMBOO_TRAY_BAKE);
                 this.mode = BambooTrayMode.BAKE;
                 return;

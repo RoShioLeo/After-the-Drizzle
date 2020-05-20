@@ -6,7 +6,7 @@ import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import roito.afterthedrizzle.AfterTheDrizzle;
-import roito.afterthedrizzle.common.environment.Temperature;
+import roito.afterthedrizzle.common.environment.temperature.Temperature;
 
 public class ThermometerBarRenderer extends AbstractGui
 {

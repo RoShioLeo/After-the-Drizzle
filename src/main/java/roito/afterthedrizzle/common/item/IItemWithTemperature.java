@@ -7,4 +7,9 @@ public interface IItemWithTemperature
     int getResistancePoint();
 
     boolean shouldHeld();
+
+    default boolean onlyOnce()
+    {
+        return false;
+    }
 }

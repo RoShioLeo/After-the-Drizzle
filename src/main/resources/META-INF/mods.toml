@@ -13,12 +13,18 @@ description=''' '''
 [[dependencies.afterthedrizzle]] #optional
     modId="forge" #mandatory
     mandatory=true #mandatory
-    versionRange="[31,)" #mandatory
+    versionRange="[31.1.0,)" #mandatory
     ordering="NONE"
     side="BOTH"
 [[dependencies.afterthedrizzle]]
     modId="minecraft"
     mandatory=true
     versionRange="[1.15.2]"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.afterthedrizzle]]
+    modId="jei"
+    mandatory=false
+    versionRange="[6.0.0.4,)"
     ordering="NONE"
     side="BOTH"

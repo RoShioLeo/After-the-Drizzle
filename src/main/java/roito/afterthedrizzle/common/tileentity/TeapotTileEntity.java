@@ -16,7 +16,6 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
-import roito.afterthedrizzle.common.config.NormalConfig;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -85,7 +84,7 @@ public class TeapotTileEntity extends TileEntity
 
     private FluidTank createFluidHandler()
     {
-        return new FluidTank(NormalConfig.drinkMakerCapacity.get())
+        return new FluidTank(1000)
         {
             @Override
             protected void onContentsChanged()
