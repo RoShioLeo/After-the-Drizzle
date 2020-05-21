@@ -3,7 +3,7 @@
 ![After the Drizzle](src/main/resources/atd.png)
 
 [![Supported Versions](https://img.shields.io/badge/Available%20for-%201.14%20|%201.15-c70039)](https://www.curseforge.com/minecraft/mc-mods/after-the-drizzle)
-[![Downloads](https://cf.way2muchnoise.eu/full_380920_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/after-the-drizzle/files)
+[![Downloads](http://cf.way2muchnoise.eu/full_380920_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/after-the-drizzle/files)
 [![License](https://img.shields.io/github/license/lemon-slice-studio/After-the-Drizzle?style=flat&color=009ad6)](https://github.com/lemon-slice-studio/After-the-Drizzle/blob/1.15.2/LICENSE)
 
 A Chinese agricultural mod! You can consider it as Tea the Story mod in 1.14.4 or higher.
