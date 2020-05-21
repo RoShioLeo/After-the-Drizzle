@@ -2,10 +2,9 @@
 
 ![After the Drizzle](src/main/resources/atd.png)
 
-
-<a href="https://www.curseforge.com/minecraft/mc-mods/after-the-drizzle"><img src="https://img.shields.io/badge/Available%20for-%201.14%20|%201.15-c70039" alt="Supported Versions"></a>
-<a href="https://www.curseforge.com/minecraft/mc-mods/after-the-drizzle/files"><img src="https://cf.way2muchnoise.eu/full_380920_downloads.svg" alt="Downloads"></a>
-<a href="https://github.com/Creators-of-Create/Create/blob/master/LICENSE"><img src="https://img.shields.io/github/license/lemon-slice-studio/After-the-Drizzle?style=flat&color=009ad6" alt="License"></a>
+[![Supported Versions](https://img.shields.io/badge/Available%20for-%201.14%20|%201.15-c70039)](https://www.curseforge.com/minecraft/mc-mods/after-the-drizzle)
+[![Downloads](https://cf.way2muchnoise.eu/full_380920_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/after-the-drizzle/files)
+[![License](https://img.shields.io/github/license/lemon-slice-studio/After-the-Drizzle?style=flat&color=009ad6)](https://github.com/lemon-slice-studio/After-the-Drizzle/blob/1.15.2/LICENSE)
 
 A Chinese agricultural mod! You can consider it as Tea the Story mod in 1.14.4 or higher.
 
