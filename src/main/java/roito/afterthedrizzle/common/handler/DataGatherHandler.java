@@ -6,6 +6,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 import roito.afterthedrizzle.AfterTheDrizzle;
 import roito.afterthedrizzle.common.data.provider.CropInfoProvider;
+import roito.afterthedrizzle.common.data.provider.NormalFluidTagsProvider;
 import roito.afterthedrizzle.common.data.provider.NormalItemTagsProvider;
 import roito.afterthedrizzle.common.data.provider.RecipesProvider;
 
@@ -20,6 +21,7 @@ public final class DataGatherHandler
         {
             gen.addProvider(new CropInfoProvider(gen));
             gen.addProvider(new NormalItemTagsProvider(gen));
+            gen.addProvider(new NormalFluidTagsProvider(gen));
             gen.addProvider(new RecipesProvider(gen));
         }
     }

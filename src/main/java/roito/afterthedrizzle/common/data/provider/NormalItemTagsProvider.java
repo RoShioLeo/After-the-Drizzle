@@ -2,9 +2,9 @@ package roito.afterthedrizzle.common.data.provider;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.ItemTagsProvider;
 import net.minecraft.item.Items;
 import net.minecraft.tags.ItemTags;
-import net.minecraftforge.common.data.ForgeItemTagsProvider;
 import roito.afterthedrizzle.common.data.tag.NormalTags;
 import roito.afterthedrizzle.common.item.ItemsRegistry;
 
@@ -13,7 +13,7 @@ import static roito.afterthedrizzle.common.block.BlocksRegistry.*;
 import static roito.afterthedrizzle.common.data.tag.NormalTags.Items.*;
 import static roito.afterthedrizzle.common.item.ItemsRegistry.*;
 
-public class NormalItemTagsProvider extends ForgeItemTagsProvider
+public class NormalItemTagsProvider extends ItemTagsProvider
 {
     public NormalItemTagsProvider(DataGenerator gen)
     {
@@ -27,7 +27,7 @@ public class NormalItemTagsProvider extends ForgeItemTagsProvider
         getBuilder(FOOD_JERKY).add(BEEF_JERKY, PORK_JERKY, CHICKEN_JERKY, RABBIT_JERKY, MUTTON_JERKY);
         getBuilder(FOOD_MEAT).add(FOOD_JERKY).add(RABBIT, PORKCHOP, BEEF, MUTTON, CHICKEN);
         getBuilder(ItemTags.SMALL_FLOWERS).add(CHRYSANTHEMUM_ITEM, HYACINTH_ITEM, ZINNIA_ITEM);
-        getBuilder(NormalTags.Items.ASH).add(ItemsRegistry.ASH);
+        getBuilder(DUSTS_ASH).add(ItemsRegistry.ASH);
         /*getBuilder(AGAVE);
         getBuilder(AMARANTH);
         getBuilder(ARROWROOT);
@@ -44,7 +44,7 @@ public class NormalItemTagsProvider extends ForgeItemTagsProvider
         getBuilder(CACTUS_FRUIT);
         getBuilder(CANDLE_BERRY);
         getBuilder(CANTALOUPE);*/
-        getBuilder(NormalTags.Items.CARROT).add(Items.CARROT);
+        getBuilder(SEEDS_CARROT).add(Items.CARROT);
         /*getBuilder(CASSAVA);
         getBuilder(CAULIFLOWER);
         getBuilder(CELERY);
@@ -86,7 +86,7 @@ public class NormalItemTagsProvider extends ForgeItemTagsProvider
         getBuilder(PEANUT);
         getBuilder(PEPPER);
         getBuilder(PINEAPPLE);*/
-        getBuilder(NormalTags.Items.POTATO).add(Items.POTATO);
+        getBuilder(SEEDS_POTATO).add(Items.POTATO);
         /*getBuilder(QUINOA);
         getBuilder(RADISH);
         getBuilder(RASPBERRY);
@@ -104,7 +104,7 @@ public class NormalItemTagsProvider extends ForgeItemTagsProvider
         getBuilder(SWEET_POTATO);
         getBuilder(TARO);
         getBuilder(STRAWBERRY);*/
-        getBuilder(TEA_LEAF).add(TEA_SEEDS);
+        getBuilder(SEEDS_TEA_LEAF).add(TEA_SEEDS);
         /*getBuilder(TOMATILLO);
         getBuilder(TOMATO);
         getBuilder(TURNIP);
@@ -113,5 +113,15 @@ public class NormalItemTagsProvider extends ForgeItemTagsProvider
         getBuilder(WINTER_SQUASH);
         getBuilder(YAM);
         getBuilder(ZUCCHINI);*/
+        getBuilder(CROPS_BLACK_TEA_LEAF).add(ItemsRegistry.BLACK_TEA_LEAVES);
+        getBuilder(CROPS_GREEN_TEA_LEAF).add(ItemsRegistry.GREEN_TEA_LEAVES);
+        getBuilder(CROPS_TEA_LEAF).add(ItemsRegistry.TEA_LEAVES);
+        getBuilder(CROPS_WHITE_TEA_LEAF).add(ItemsRegistry.WHITE_TEA_LEAVES);
+    }
+
+    @Override
+    public String getName()
+    {
+        return "After the Drizzle Item Tags";
     }
 }

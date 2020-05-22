@@ -1,0 +1,33 @@
+{
+    "replace": false,
+    "values": [
+        "afterthedrizzle:boiling_water",
+        "afterthedrizzle:boiling_water_flowing",
+        "afterthedrizzle:hot_water_80",
+        "afterthedrizzle:hot_water_80_flowing",
+        "afterthedrizzle:hot_water_60",
+        "afterthedrizzle:hot_water_60_flowing",
+        "afterthedrizzle:warm_water",
+        "afterthedrizzle:warm_water_flowing",
+        "afterthedrizzle:sugary_water",
+        "afterthedrizzle:sugary_water_flowing",
+        "afterthedrizzle:weak_green_tea",
+        "afterthedrizzle:weak_green_tea_flowing",
+        "afterthedrizzle:weak_black_tea",
+        "afterthedrizzle:weak_black_tea_flowing",
+        "afterthedrizzle:weak_white_tea",
+        "afterthedrizzle:weak_white_tea_flowing",
+        "afterthedrizzle:green_tea",
+        "afterthedrizzle:green_tea_flowing",
+        "afterthedrizzle:black_tea",
+        "afterthedrizzle:black_tea_flowing",
+        "afterthedrizzle:white_tea",
+        "afterthedrizzle:white_tea_flowing",
+        "afterthedrizzle:strong_green_tea",
+        "afterthedrizzle:strong_green_tea_flowing",
+        "afterthedrizzle:strong_black_tea",
+        "afterthedrizzle:strong_black_tea_flowing",
+        "afterthedrizzle:strong_white_tea",
+        "afterthedrizzle:strong_white_tea_flowing"
+    ]
+}

@@ -4,12 +4,17 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import org.lwjgl.opengl.GL11;
 import roito.afterthedrizzle.AfterTheDrizzle;
 import roito.afterthedrizzle.common.capability.CapabilityPlayerTemperature;
 import roito.afterthedrizzle.common.config.ClientConfig;
 import roito.afterthedrizzle.common.environment.temperature.ApparentTemperature;
 
+@Mod.EventBusSubscriber(value = Dist.CLIENT, modid = AfterTheDrizzle.MODID)
 public class PlayerTemperatureRenderer extends AbstractGui
 {
 
@@ -48,9 +53,8 @@ public class PlayerTemperatureRenderer extends AbstractGui
         }
         if (up != 0 && index >= 0)
         {
-            blit((ClientConfig.GUI.playerTemperatureX.get()) + 26, screenHeight - ClientConfig.GUI.playerTemperatureY.get() + 7, index / 200 * 7, 48 + (up - 1) * 16, 7, 16);
-            index++;
-            index %= 2200;
+            blit((ClientConfig.GUI.playerTemperatureX.get()) + 26, screenHeight - ClientConfig.GUI.playerTemperatureY.get() + 7, index / 8 * 7, 48 + (up - 1) * 16, 7, 16);
+            index %= 120;
             if (index == 0)
             {
                 up = t.getHotterOrColder();
@@ -66,5 +70,14 @@ public class PlayerTemperatureRenderer extends AbstractGui
         RenderSystem.enableBlend();
         RenderSystem.disableAlphaTest();
         mc.getTextureManager().bindTexture(OverlayEventHandler.DEFAULT);
+    }
+
+    @SubscribeEvent
+    public static void onClientTick(TickEvent.ClientTickEvent event)
+    {
+        if (index >= 0)
+        {
+            index++;
+        }
     }
 }
