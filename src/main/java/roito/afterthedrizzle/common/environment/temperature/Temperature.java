@@ -1,6 +1,7 @@
 package roito.afterthedrizzle.common.environment.temperature;
 
-import net.minecraft.client.resources.I18n;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 
 public enum Temperature
 {
@@ -50,9 +51,9 @@ public enum Temperature
         return max - min;
     }
 
-    public String getTranslation()
+    public ITextComponent getTranslation()
     {
-        return I18n.format("info.afterthedrizzle.environment.temperature." + getName());
+        return new TranslationTextComponent("info.afterthedrizzle.environment.temperature." + getName());
     }
 
     public static Temperature getTemperatureLevel(float temp)

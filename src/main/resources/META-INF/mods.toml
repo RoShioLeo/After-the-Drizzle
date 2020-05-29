@@ -1,5 +1,5 @@
 modLoader="javafml" #mandatory
-loaderVersion="[31,)" #mandatory (28 is current forge version)
+loaderVersion="[31,)" #mandatory
 issueTrackerURL="https://github.com/lemon-slice-studio/After-the-Drizzle/issues"
 [[mods]] #mandatory
 modId="afterthedrizzle" #mandatory

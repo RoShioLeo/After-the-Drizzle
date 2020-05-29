@@ -73,8 +73,8 @@ public class CapabilityPlayerTemperature
 
     public static class Provider implements ICapabilitySerializable<INBT>
     {
-        private Data playerTemp = new Data();
-        private Capability.IStorage<Data> storage = PLAYER_TEMP.getStorage();
+        private final Data playerTemp = new Data();
+        private final Capability.IStorage<Data> storage = PLAYER_TEMP.getStorage();
 
         @Nonnull
         @Override

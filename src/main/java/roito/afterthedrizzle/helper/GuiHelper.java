@@ -28,7 +28,7 @@ public final class GuiHelper
             TextureAtlasSprite sprite = gui.getMinecraft().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(fluid.getFluid().getAttributes().getStillTexture());
             gui.getMinecraft().getTextureManager().bindTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE);
             int color = fluid.getFluid().getAttributes().getColor(fluid);
-            RenderSystem.color4f((color >> 16 & 255) / 255.0F, (color >> 8 & 255) / 255.0F, (color & 255) / 255.0F, (color >> 24 & 255) / 255.0F);
+            RenderSystem.color4f(ColorHelper.getRedF(color), ColorHelper.getGreenF(color), ColorHelper.getBlueF(color), ColorHelper.getAlphaF(color));
             for (int j = 0; j < pos.getU() / 16; j++)
             {
                 int count = 0;

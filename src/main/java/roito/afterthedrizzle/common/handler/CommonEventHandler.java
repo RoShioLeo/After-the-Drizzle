@@ -1,4 +1,4 @@
-package roito.afterthedrizzle.common;
+package roito.afterthedrizzle.common.handler;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.FireBlock;
@@ -10,6 +10,9 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.World;
+import net.minecraft.world.dimension.DimensionType;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.PlantType;
 import net.minecraftforge.common.util.FakePlayer;
@@ -28,11 +31,13 @@ import net.minecraftforge.fml.network.PacketDistributor;
 import roito.afterthedrizzle.AfterTheDrizzle;
 import roito.afterthedrizzle.common.block.TeaPlantBlock;
 import roito.afterthedrizzle.common.capability.CapabilityPlayerTemperature;
+import roito.afterthedrizzle.common.capability.CapabilitySolarTermTime;
 import roito.afterthedrizzle.common.config.CommonConfig;
 import roito.afterthedrizzle.common.environment.temperature.PlayerTemperatureHandler;
 import roito.afterthedrizzle.common.item.ItemsRegistry;
 import roito.afterthedrizzle.common.network.PlayerTemperatureMessage;
 import roito.afterthedrizzle.common.network.SimpleNetworkHandler;
+import roito.afterthedrizzle.common.network.SolarTermsMessage;
 import roito.afterthedrizzle.common.potion.EffectsRegistry;
 
 import static roito.afterthedrizzle.common.block.TeaPlantBlock.AGE;
@@ -146,11 +151,27 @@ public final class CommonEventHandler
     }
 
     @SubscribeEvent
+    public static void onAttachCapabilitiesWorld(AttachCapabilitiesEvent<World> event)
+    {
+        if (CommonConfig.Season.enable.get() && event.getObject().getDimension().getType().equals(DimensionType.OVERWORLD))
+        {
+            event.addCapability(new ResourceLocation(AfterTheDrizzle.MODID, "world_solar_terms"), new CapabilitySolarTermTime.Provider());
+        }
+    }
+
+    @SubscribeEvent
     public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event)
     {
-        if (CommonConfig.Temperature.enable.get() && event.getPlayer() instanceof ServerPlayerEntity && !(event.getPlayer() instanceof FakePlayer))
+        if (event.getPlayer() instanceof ServerPlayerEntity && !(event.getPlayer() instanceof FakePlayer))
         {
-            event.getPlayer().getCapability(CapabilityPlayerTemperature.PLAYER_TEMP).ifPresent(t -> SimpleNetworkHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.getPlayer()), new PlayerTemperatureMessage(t.getTemperature(), t.getHotterOrColder())));
+            if (CommonConfig.Temperature.enable.get())
+            {
+                event.getPlayer().getCapability(CapabilityPlayerTemperature.PLAYER_TEMP).ifPresent(t -> SimpleNetworkHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.getPlayer()), new PlayerTemperatureMessage(t.getTemperature(), t.getHotterOrColder())));
+            }
+            if (CommonConfig.Season.enable.get())
+            {
+                event.getPlayer().getEntityWorld().getCapability(CapabilitySolarTermTime.WORLD_SOLAR_TIME).ifPresent(t -> SimpleNetworkHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.getPlayer()), new SolarTermsMessage(t.getSolarTermsDay())));
+            }
         }
     }
 
@@ -161,6 +182,17 @@ public final class CommonEventHandler
         if (CommonConfig.Temperature.enable.get() && event.phase == TickEvent.Phase.START && player instanceof ServerPlayerEntity && !(player instanceof FakePlayer) && player.getEntityWorld().getDayTime() % 50 == 0)
         {
             PlayerTemperatureHandler.adjustPlayerTemperature((ServerPlayerEntity) player, player.getEntityWorld(), player.getPosition());
+        }
+    }
+
+    @SubscribeEvent
+    public static void onWorldTick(TickEvent.WorldTickEvent event)
+    {
+        if (event.phase.equals(TickEvent.Phase.END) && CommonConfig.Temperature.fluctuation.get() && event.world.getServer() != null)
+        {
+            ServerWorld world = event.world.getServer().getWorld(DimensionType.OVERWORLD);
+            world.getCapability(CapabilitySolarTermTime.WORLD_SOLAR_TIME).ifPresent(data ->
+                    data.updateTicks(world));
         }
     }
 }

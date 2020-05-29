@@ -47,7 +47,7 @@ public final class PlayerTemperatureHandler
             }
             else
             {
-                ApparentTemperature ATemp = getTemperatureWithPoint(getTemperatureByLight(getTemperatureIndoors(getTemperatureByHeight(temp, humidity, world, pos), world, pos), world, pos), player);
+                ApparentTemperature ATemp = getTemperatureWithPoint(getTemperatureByLight(getTemperatureIndoors(getTemperatureByHeight(getEnvOriginTemp(temp, humidity, world.getDayTime(), world.isRaining()), humidity, world, pos), world, pos), world, pos), player);
                 adjust((int) (ATemp.getMiddle() * humidity.getCoefficient()), t, player);
             }
             applyEffects(player, world, t.getApparentTemperature());
@@ -128,7 +128,7 @@ public final class PlayerTemperatureHandler
         float apparent = temp;
         if (CommonConfig.Temperature.fluctuation.get() && world.getDimension().getType().hasSkyLight())
         {
-            apparent = getEnvOriginTemp(temp, humidity, world.getDayTime(), world.isRaining());
+            apparent = world.getBiome(pos).getTemperature(pos);
         }
         return ApparentTemperature.getApparentTemp(Temperature.getTemperatureLevel(apparent));
     }

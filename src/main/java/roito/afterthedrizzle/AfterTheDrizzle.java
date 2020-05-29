@@ -26,6 +26,8 @@ import roito.afterthedrizzle.common.block.BlocksRegistry;
 import roito.afterthedrizzle.common.capability.CapabilitiesRegistry;
 import roito.afterthedrizzle.common.config.NormalConfigs;
 import roito.afterthedrizzle.common.entity.EntityTypesRegistry;
+import roito.afterthedrizzle.common.environment.solar.BiomeTemperatureManager;
+import roito.afterthedrizzle.common.environment.weather.BiomeWeatherManager;
 import roito.afterthedrizzle.common.fluid.FluidsRegistry;
 import roito.afterthedrizzle.common.group.GroupCore;
 import roito.afterthedrizzle.common.group.GroupDrink;
@@ -47,7 +49,7 @@ public final class AfterTheDrizzle
 {
     public static final String MODID = "afterthedrizzle";
     public static final Logger LOGGER = LogManager.getLogger();
-    public static final String NETWORK_VERSION = "1";
+    public static final String NETWORK_VERSION = "1.1";
 
     public static final CommonProxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 
@@ -80,12 +82,15 @@ public final class AfterTheDrizzle
         registerFireInfo();
         CapabilitiesRegistry.init();
         SimpleNetworkHandler.init();
+        BiomeWeatherManager.init();
+        BiomeTemperatureManager.init();
     }
 
     public void ClientSetup(FMLClientSetupEvent event)
     {
         ItemColorsRegistry.init();
         BlockColorsRegistry.init();
+        ClientProxy.initBiomeColors();
         ClientProxy.registerRenderType();
         ClientProxy.registerEntityRenderer();
         ScreenManager.registerFactory(ContainerTypesRegistry.STOVE_CONTAINER, StoveGuiContainer::new);

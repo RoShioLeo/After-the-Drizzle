@@ -3,6 +3,7 @@ package roito.afterthedrizzle.client.hud;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.TickEvent;
@@ -38,7 +39,7 @@ public class PlayerTemperatureRenderer extends AbstractGui
         RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
 //        this.drawString(mc.fontRenderer, String.valueOf(temp), screenWidth / 2 - mc.fontRenderer.getStringWidth(String.valueOf(temp)) / 2, 6, 4210752);
-//        this.drawString(mc.fontRenderer, String.valueOf(env), screenWidth / 2 - mc.fontRenderer.getStringWidth(String.valueOf(env)) / 2, 12, 4210752);
+        this.drawString(mc.fontRenderer, String.valueOf(env), screenWidth / 2 - mc.fontRenderer.getStringWidth(String.valueOf(env)) / 2, 12, 4210752);
 
         mc.getTextureManager().bindTexture(OVERLAY_BAR);
 
@@ -53,8 +54,8 @@ public class PlayerTemperatureRenderer extends AbstractGui
         }
         if (up != 0 && index >= 0)
         {
-            blit((ClientConfig.GUI.playerTemperatureX.get()) + 26, screenHeight - ClientConfig.GUI.playerTemperatureY.get() + 7, index / 8 * 7, 48 + (up - 1) * 16, 7, 16);
-            index %= 120;
+            blit((ClientConfig.GUI.playerTemperatureX.get()) + 26, screenHeight - ClientConfig.GUI.playerTemperatureY.get() + 7, index / 4 * 7, 48 + (up - 1) * 16, 7, 16);
+            index %= 60;
             if (index == 0)
             {
                 up = t.getHotterOrColder();
@@ -75,9 +76,26 @@ public class PlayerTemperatureRenderer extends AbstractGui
     @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event)
     {
-        if (index >= 0)
+        if (event.phase.equals(TickEvent.Phase.START))
         {
-            index++;
+            if (index >= 0)
+            {
+                index++;
+            }
+        }
+        else if (Minecraft.getInstance().world != null && Minecraft.getInstance().world.getDayTime() % 60 == 0)
+        {
+            PlayerEntity player = Minecraft.getInstance().player;
+            for (int x = player.chunkCoordX - 2; x <= player.chunkCoordX + 2; x++)
+            {
+                for (int z = player.chunkCoordZ - 2; z <= player.chunkCoordZ + 2; z++)
+                {
+                    for (int k = 0; k < 16; ++k)
+                    {
+                        Minecraft.getInstance().world.markSurroundingsForRerender(x, k, z);
+                    }
+                }
+            }
         }
     }
 }
