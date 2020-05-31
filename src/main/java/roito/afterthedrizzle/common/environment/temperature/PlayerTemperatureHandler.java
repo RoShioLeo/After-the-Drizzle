@@ -47,7 +47,7 @@ public final class PlayerTemperatureHandler
             }
             else
             {
-                ApparentTemperature ATemp = getTemperatureWithPoint(getTemperatureByLight(getTemperatureIndoors(getTemperatureByHeight(getEnvOriginTemp(temp, humidity, world.getDayTime(), world.isRaining()), humidity, world, pos), world, pos), world, pos), player);
+                ApparentTemperature ATemp = getTemperatureWithPoint(getTemperatureByLight(getTemperatureIndoors(getTemperatureByHeight(getEnvOriginTemp(temp, humidity, world), humidity, world, pos), world, pos), world, pos), player);
                 adjust((int) (ATemp.getMiddle() * humidity.getCoefficient()), t, player);
             }
             applyEffects(player, world, t.getApparentTemperature());
@@ -149,9 +149,10 @@ public final class PlayerTemperatureHandler
     /*
      * 计算玩家所处的环境随时间变化的原始气温。
      */
-    public static float getEnvOriginTemp(float biomeTemp, Humidity humidity, long ticks, boolean isRaining)
+    public static float getEnvOriginTemp(float biomeTemp, Humidity humidity, World world)
     {
-        int t = Math.toIntExact(ticks / 100 % 240);
+        int t = ((int) (world.getCelestialAngle(0) * 24000 + 6000)) % 24000 / 100;
+        boolean isRaining = world.isRaining();
         int id = humidity.getId();
         // 雨天波动减半
         double sd = (6 - id) * (6 - id) * 0.02D * Math.abs((double) biomeTemp) * (CommonConfig.Temperature.fluctuationDecreaseWhenRaining.get() && isRaining ? 0.5D : 1);

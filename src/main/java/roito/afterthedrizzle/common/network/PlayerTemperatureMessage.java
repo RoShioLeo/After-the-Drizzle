@@ -34,10 +34,14 @@ public class PlayerTemperatureMessage implements INormalMessage
     @Override
     public void process(Supplier<NetworkEvent.Context> context)
     {
-        context.get().enqueueWork(() -> Minecraft.getInstance().player.getCapability(CapabilityPlayerTemperature.PLAYER_TEMP).ifPresent(t ->
+        context.get().enqueueWork(() ->
         {
-            t.setPlayerTemperature(playerTemperature);
-            t.setHotterOrColder(up);
-        }));
+            if (Minecraft.getInstance().player != null)
+                Minecraft.getInstance().player.getCapability(CapabilityPlayerTemperature.PLAYER_TEMP).ifPresent(t ->
+                {
+                    t.setPlayerTemperature(playerTemperature);
+                    t.setHotterOrColder(up);
+                });
+        });
     }
 }

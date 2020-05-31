@@ -2,7 +2,6 @@ package roito.afterthedrizzle;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FireBlock;
-import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.Items;
 import net.minecraftforge.fml.DistExecutor;
@@ -17,9 +16,6 @@ import org.apache.logging.log4j.Logger;
 import roito.afterthedrizzle.client.ClientProxy;
 import roito.afterthedrizzle.client.color.block.BlockColorsRegistry;
 import roito.afterthedrizzle.client.color.item.ItemColorsRegistry;
-import roito.afterthedrizzle.client.gui.BambooTrayGuiContainer;
-import roito.afterthedrizzle.client.gui.DrinkMakerGuiContainer;
-import roito.afterthedrizzle.client.gui.StoveGuiContainer;
 import roito.afterthedrizzle.client.sound.SoundEventsRegistry;
 import roito.afterthedrizzle.common.CommonProxy;
 import roito.afterthedrizzle.common.block.BlocksRegistry;
@@ -68,9 +64,9 @@ public final class AfterTheDrizzle
         new EffectsRegistry();
         new TileEntityTypesRegistry();
         new EntityTypesRegistry();
-        new ContainerTypesRegistry();
         new FeaturesRegistry();
         new SoundEventsRegistry();
+        new ContainerTypesRegistry();
     }
 
     public void setup(FMLCommonSetupEvent event)
@@ -93,9 +89,7 @@ public final class AfterTheDrizzle
         ClientProxy.initBiomeColors();
         ClientProxy.registerRenderType();
         ClientProxy.registerEntityRenderer();
-        ScreenManager.registerFactory(ContainerTypesRegistry.STOVE_CONTAINER, StoveGuiContainer::new);
-        ScreenManager.registerFactory(ContainerTypesRegistry.BAMBOO_TRAY_CONTAINER, BambooTrayGuiContainer::new);
-        ScreenManager.registerFactory(ContainerTypesRegistry.DRINK_MAKER_CONTAINER, DrinkMakerGuiContainer::new);
+        ContainerTypesRegistry.clientInit();
     }
 
     private static void registerCompostable()

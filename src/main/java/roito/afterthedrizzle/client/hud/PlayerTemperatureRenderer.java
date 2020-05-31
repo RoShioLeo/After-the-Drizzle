@@ -24,23 +24,19 @@ public class PlayerTemperatureRenderer extends AbstractGui
     private static int index = -1;
     private static int up = 0;
 
-    private Minecraft mc;
+    private final Minecraft mc;
 
     public PlayerTemperatureRenderer(Minecraft mc)
     {
         this.mc = mc;
     }
 
-    public void renderStatusBar(int screenWidth, int screenHeight, CapabilityPlayerTemperature.Data t, double env, int cold, int heat)
+    public void renderStatusBar(int screenWidth, int screenHeight, CapabilityPlayerTemperature.Data t, int cold, int heat)
     {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.enableAlphaTest();
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-
-//        this.drawString(mc.fontRenderer, String.valueOf(temp), screenWidth / 2 - mc.fontRenderer.getStringWidth(String.valueOf(temp)) / 2, 6, 4210752);
-        this.drawString(mc.fontRenderer, String.valueOf(env), screenWidth / 2 - mc.fontRenderer.getStringWidth(String.valueOf(env)) / 2, 12, 4210752);
-
         mc.getTextureManager().bindTexture(OVERLAY_BAR);
 
         if (up == 0)

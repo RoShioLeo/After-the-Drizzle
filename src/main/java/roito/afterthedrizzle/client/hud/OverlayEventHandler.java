@@ -10,9 +10,11 @@ import net.minecraftforge.fml.common.Mod;
 import roito.afterthedrizzle.AfterTheDrizzle;
 import roito.afterthedrizzle.common.capability.CapabilityPlayerTemperature;
 import roito.afterthedrizzle.common.capability.CapabilitySolarTermTime;
+import roito.afterthedrizzle.common.config.ClientConfig;
 import roito.afterthedrizzle.common.config.CommonConfig;
 import roito.afterthedrizzle.common.environment.Humidity;
 import roito.afterthedrizzle.common.environment.temperature.PlayerTemperatureHandler;
+import roito.afterthedrizzle.common.handler.AsmHandler;
 import roito.afterthedrizzle.common.item.ItemsRegistry;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT, modid = AfterTheDrizzle.MODID)
@@ -24,42 +26,50 @@ public final class OverlayEventHandler
     private final static RainGaugeBarRenderer BAR_1 = new RainGaugeBarRenderer(Minecraft.getInstance());
     private final static HygrometerBarRenderer BAR_2 = new HygrometerBarRenderer(Minecraft.getInstance());
     private final static PlayerTemperatureRenderer BAR_3 = new PlayerTemperatureRenderer(Minecraft.getInstance());
+    private final static DebugInfoRenderer BAR_4 = new DebugInfoRenderer(Minecraft.getInstance());
 
     @SubscribeEvent(receiveCanceled = true)
     public static void onEvent(RenderGameOverlayEvent.Pre event)
     {
-        ClientPlayerEntity playerEntity = Minecraft.getInstance().player;
-        if (!playerEntity.getHeldItemMainhand().isEmpty())
+        ClientPlayerEntity clientPlayer = Minecraft.getInstance().player;
+        if (clientPlayer != null)
         {
-            if (playerEntity.getHeldItemMainhand().getItem().equals(ItemsRegistry.THERMOMETER))
+            if (!clientPlayer.getHeldItemMainhand().isEmpty())
             {
-                float temp = playerEntity.getEntityWorld().getBiome(playerEntity.getPosition()).getTemperature(playerEntity.getPosition());
-                Humidity h = Humidity.getHumid(playerEntity.getEntityWorld().getBiome(playerEntity.getPosition()).getDownfall(), temp);
-                if (playerEntity.getEntityWorld().getDimension().getType().hasSkyLight())
+                if (clientPlayer.getHeldItemMainhand().getItem().equals(ItemsRegistry.THERMOMETER))
                 {
-                    temp = PlayerTemperatureHandler.getEnvOriginTemp(playerEntity.getEntityWorld().getBiome(playerEntity.getPosition()).getTemperature(playerEntity.getPosition()), h, playerEntity.getEntityWorld().getDayTime(), playerEntity.getEntityWorld().isRaining());
+                    float temp = clientPlayer.getEntityWorld().getBiome(clientPlayer.getPosition()).getTemperature(clientPlayer.getPosition());
+                    Humidity h = Humidity.getHumid(clientPlayer.getEntityWorld().getBiome(clientPlayer.getPosition()).getDownfall(), temp);
+                    if (clientPlayer.getEntityWorld().getDimension().getType().hasSkyLight())
+                    {
+                        temp = PlayerTemperatureHandler.getEnvOriginTemp(clientPlayer.getEntityWorld().getBiome(clientPlayer.getPosition()).getTemperature(clientPlayer.getPosition()), h, clientPlayer.getEntityWorld());
+                    }
+                    BAR_0.renderStatusBar(event.getWindow().getScaledWidth(), event.getWindow().getScaledHeight(), temp);
                 }
-                BAR_0.renderStatusBar(event.getWindow().getScaledWidth(), event.getWindow().getScaledHeight(), temp);
+                else if (clientPlayer.getHeldItemMainhand().getItem().equals(ItemsRegistry.RAIN_GAUGE))
+                {
+                    BAR_1.renderStatusBar(event.getWindow().getScaledWidth(), event.getWindow().getScaledHeight(), clientPlayer.getEntityWorld().getBiome(clientPlayer.getPosition()).getDownfall());
+                }
+                else if (clientPlayer.getHeldItemMainhand().getItem().equals(ItemsRegistry.HYGROMETER))
+                {
+                    BAR_2.renderStatusBar(event.getWindow().getScaledWidth(), event.getWindow().getScaledHeight(), clientPlayer.getEntityWorld().getBiome(clientPlayer.getPosition()).getTemperature(clientPlayer.getPosition()), clientPlayer.getEntityWorld().getBiome(clientPlayer.getPosition()).getDownfall());
+                }
             }
-            else if (playerEntity.getHeldItemMainhand().getItem().equals(ItemsRegistry.RAIN_GAUGE))
+            if (CommonConfig.Temperature.enable.get() && !clientPlayer.isSpectator())
             {
-                BAR_1.renderStatusBar(event.getWindow().getScaledWidth(), event.getWindow().getScaledHeight(), playerEntity.getEntityWorld().getBiome(playerEntity.getPosition()).getDownfall());
+                clientPlayer.getCapability(CapabilityPlayerTemperature.PLAYER_TEMP).ifPresent(t ->
+                        BAR_3.renderStatusBar(event.getWindow().getScaledWidth(), event.getWindow().getScaledHeight(), t, PlayerTemperatureHandler.getResistancePoint(clientPlayer, "Cold"), PlayerTemperatureHandler.getResistancePoint(clientPlayer, "Heat")));
             }
-            else if (playerEntity.getHeldItemMainhand().getItem().equals(ItemsRegistry.HYGROMETER))
+            if (ClientConfig.GUI.debugInfo.get())
             {
-                BAR_2.renderStatusBar(event.getWindow().getScaledWidth(), event.getWindow().getScaledHeight(), playerEntity.getEntityWorld().getBiome(playerEntity.getPosition()).getTemperature(playerEntity.getPosition()), playerEntity.getEntityWorld().getBiome(playerEntity.getPosition()).getDownfall());
+                int solar = clientPlayer.world.getCapability(CapabilitySolarTermTime.WORLD_SOLAR_TIME).orElse(new CapabilitySolarTermTime.Data()).getSolarTermsDay();
+                long dayTime = clientPlayer.world.getWorldInfo().getDayTime();
+                float temp = clientPlayer.getEntityWorld().getBiome(clientPlayer.getPosition()).getTemperature(clientPlayer.getPosition());
+                Humidity h = Humidity.getHumid(clientPlayer.getEntityWorld().getBiome(clientPlayer.getPosition()).getDownfall(), temp);
+                double env = PlayerTemperatureHandler.getEnvOriginTemp(clientPlayer.getEntityWorld().getBiome(clientPlayer.getPosition()).getTemperature(clientPlayer.getPosition()), h, clientPlayer.getEntityWorld());
+                int solarTime = AsmHandler.getSolarAngelTime(clientPlayer.getEntityWorld().getDayTime(), 0, clientPlayer.getEntityWorld());
+                BAR_4.renderStatusBar(event.getWindow().getScaledWidth(), event.getWindow().getScaledHeight(), solar, dayTime, env, solarTime);
             }
-        }
-        if (CommonConfig.Temperature.enable.get() && !playerEntity.isSpectator())
-        {
-            playerEntity.getCapability(CapabilityPlayerTemperature.PLAYER_TEMP).ifPresent(t ->
-            {
-                float temp = playerEntity.getEntityWorld().getBiome(playerEntity.getPosition()).getTemperature(playerEntity.getPosition());
-                Humidity h = Humidity.getHumid(playerEntity.getEntityWorld().getBiome(playerEntity.getPosition()).getDownfall(), temp);
-//                double env = PlayerTemperatureHandler.getEnvOriginTemp(playerEntity.getEntityWorld().getBiome(playerEntity.getPosition()).getTemperature(playerEntity.getPosition()), h, playerEntity.getEntityWorld().getDayTime(), playerEntity.getEntityWorld().isRaining());
-                double env = Minecraft.getInstance().world.getCapability(CapabilitySolarTermTime.WORLD_SOLAR_TIME).orElse(new CapabilitySolarTermTime.Data()).getSolarTermsDay();
-                BAR_3.renderStatusBar(event.getWindow().getScaledWidth(), event.getWindow().getScaledHeight(), t, env, PlayerTemperatureHandler.getResistancePoint(playerEntity, "Cold"), PlayerTemperatureHandler.getResistancePoint(playerEntity, "Heat"));
-            });
         }
     }
 }

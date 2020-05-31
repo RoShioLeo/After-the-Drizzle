@@ -37,7 +37,7 @@ public final class CustomRandomTickHandler
     @SubscribeEvent
     public static void onWorldTick(TickEvent.WorldTickEvent event)
     {
-        if (event.phase.equals(TickEvent.Phase.END) && CommonConfig.Temperature.iceMelt.get() && !event.world.isRemote)
+        if (event.phase.equals(TickEvent.Phase.END) && CommonConfig.Temperature.enable.get() && CommonConfig.Temperature.iceMelt.get() && !event.world.isRemote)
         {
             ServerWorld world = (ServerWorld) event.world;
             int randomTickSpeed = world.getGameRules().getInt(GameRules.RANDOM_TICK_SPEED);

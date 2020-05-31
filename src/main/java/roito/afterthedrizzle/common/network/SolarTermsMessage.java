@@ -36,15 +36,20 @@ public class SolarTermsMessage implements INormalMessage
     public void process(Supplier<NetworkEvent.Context> context)
     {
         context.get().enqueueWork(() ->
+        {
+            if (Minecraft.getInstance().world != null)
+            {
                 Minecraft.getInstance().world.getCapability(CapabilitySolarTermTime.WORLD_SOLAR_TIME).ifPresent(data ->
                 {
                     data.setSolarTermsDay(solarDay);
                     ForgeRegistries.BIOMES.forEach(biome ->
                             biome.temperature = BiomeTemperatureManager.getDefaultTemperature(biome) + SolarTerms.get(data.getSolarTermIndex()).getTemperatureChange());
-                    if (solarDay % CommonConfig.Season.lastingDaysOfEachTerm.get() == 0)
+                    if (solarDay % CommonConfig.Season.lastingDaysOfEachTerm.get() == 0 && Minecraft.getInstance().player != null)
                     {
                         Minecraft.getInstance().player.sendMessage(new TranslationTextComponent("info.afterthedrizzle.environment.solar_term.message", SolarTerms.get(data.getSolarTermIndex()).getTranslation()));
                     }
-                }));
+                });
+            }
+        });
     }
 }
