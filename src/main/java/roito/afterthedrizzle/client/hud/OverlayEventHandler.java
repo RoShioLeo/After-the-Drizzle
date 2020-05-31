@@ -32,7 +32,7 @@ public final class OverlayEventHandler
     public static void onEvent(RenderGameOverlayEvent.Pre event)
     {
         ClientPlayerEntity clientPlayer = Minecraft.getInstance().player;
-        if (clientPlayer != null)
+        if (clientPlayer != null && event.getType() == RenderGameOverlayEvent.ElementType.HEALTH)
         {
             if (!clientPlayer.getHeldItemMainhand().isEmpty())
             {
