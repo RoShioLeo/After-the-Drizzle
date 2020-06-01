@@ -11,13 +11,13 @@ import net.minecraft.world.IBlockReader;
 import roito.afterthedrizzle.helper.VoxelShapeHelper;
 
 
-public class BambooTableBlock extends NormalBlock
+public class TableBlock extends NormalBlock
 {
     public static final VoxelShape SHAPE;
 
-    public BambooTableBlock()
+    public TableBlock(String name, Properties properties)
     {
-        super("bamboo_table", Properties.create(Material.BAMBOO).sound(SoundType.BAMBOO).hardnessAndResistance(0.5F));
+        super(name, properties);
     }
 
     @Override

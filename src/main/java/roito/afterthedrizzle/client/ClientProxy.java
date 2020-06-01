@@ -48,6 +48,7 @@ public class ClientProxy extends CommonProxy
         registerCutoutType(BlocksRegistry.WILD_TEA_PLANT);
         registerCutoutType(BlocksRegistry.GRASS_BLOCK_WITH_HOLE);
         registerCutoutType(BlocksRegistry.BAMBOO_GLASS_DOOR);
+        registerCutoutType(BlocksRegistry.DRINK_MAKER);
     }
 
     private static void registerCutoutType(Block block)
