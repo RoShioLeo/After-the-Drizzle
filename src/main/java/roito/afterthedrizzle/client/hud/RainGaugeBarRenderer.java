@@ -4,9 +4,14 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import org.lwjgl.opengl.GL11;
 import roito.afterthedrizzle.AfterTheDrizzle;
 
+@Mod.EventBusSubscriber(value = Dist.CLIENT, modid = AfterTheDrizzle.MODID)
 public class RainGaugeBarRenderer extends AbstractGui
 {
     private final static ResourceLocation OVERLAY_BAR = new ResourceLocation(AfterTheDrizzle.MODID, "textures/gui/hud/env.png");
@@ -14,9 +19,10 @@ public class RainGaugeBarRenderer extends AbstractGui
     private final static int WIDTH = 31;
     private final static int HEIGHT = 5;
 
-    private float rainfall = 0;
+    private static float rainfall = 0;
+    private static float level = 0;
 
-    private Minecraft mc;
+    private final Minecraft mc;
 
     public RainGaugeBarRenderer(Minecraft mc)
     {
@@ -30,27 +36,12 @@ public class RainGaugeBarRenderer extends AbstractGui
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
-        if (this.rainfall == -1.0F)
-        {
-            this.rainfall = rainfall;
-        }
-        else
-        {
-            if (rainfall > this.rainfall)
-            {
-                this.rainfall += 0.0005F;
-            }
-            else if (rainfall < this.rainfall)
-            {
-                this.rainfall -= 0.0005F;
-            }
-        }
+        level = rainfall;
 
         mc.getTextureManager().bindTexture(OVERLAY_BAR);
         int offsetX = (screenWidth - WIDTH + 1) / 2, offsetY = (screenHeight + 36 - HEIGHT) / 2;
 
-        int width = Math.min((int) (29 * this.rainfall), 29);
-        width = Math.max(width, 0);
+        int width = getWidth(RainGaugeBarRenderer.rainfall);
 
         blit(offsetX + 1, offsetY + 1, 1, 0, width, HEIGHT - 2);
         blit(offsetX, offsetY, 0, 4, WIDTH, HEIGHT);
@@ -75,6 +66,22 @@ public class RainGaugeBarRenderer extends AbstractGui
         else
         {
             return WIDTH - 2;
+        }
+    }
+
+    @SubscribeEvent
+    public static void onClientTick(TickEvent.ClientTickEvent event)
+    {
+        if (event.phase.equals(TickEvent.Phase.START))
+        {
+            if (level > rainfall)
+            {
+                rainfall += 0.02F;
+            }
+            else if (level < rainfall)
+            {
+                rainfall -= 0.02F;
+            }
         }
     }
 }

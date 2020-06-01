@@ -35,7 +35,12 @@ public class BiomeColorsHandler
             return Minecraft.getInstance().world.getCapability(CapabilitySolarTermTime.WORLD_SOLAR_TIME).map(data ->
             {
                 SolarTerms solar = SolarTerms.get(data.getSolarTermIndex());
-                return ColorHelper.simplyMixColor(solar.getColor(), solar.getAlpha(), originColor, 1.0F - solar.getAlpha());
+                if (solar.getAlpha() == 0.0F)
+                {
+                    return originColor;
+                }
+                else
+                    return ColorHelper.simplyMixColor(solar.getColor(), solar.getAlpha(), originColor, 1.0F - solar.getAlpha());
             }).orElse(originColor);
         }
         else return -1;

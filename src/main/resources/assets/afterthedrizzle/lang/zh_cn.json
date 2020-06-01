@@ -152,6 +152,7 @@
     "info.afterthedrizzle.tooltip.handwarmer": "右击来快速填充",
     "info.afterthedrizzle.tooltip.temp_resistance": "使用三个与护甲合成以获得气温抗性",
     "info.afterthedrizzle.message.handwarmer": "似乎你的物品栏里没有足够的灰烬或炭",
+    "commands.afterthedrizzle.solar.set": "已将节气天数设置为第%s天",
     "death.attack.boiling": "%1$s被开水烫伤了",
     "death.attack.frostbite": "%1$s死于严寒",
     "death.attack.heatstroke": "%1$s因中暑而死"

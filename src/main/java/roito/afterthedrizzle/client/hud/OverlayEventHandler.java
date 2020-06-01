@@ -32,30 +32,33 @@ public final class OverlayEventHandler
     public static void onEvent(RenderGameOverlayEvent.Pre event)
     {
         ClientPlayerEntity clientPlayer = Minecraft.getInstance().player;
-        if (clientPlayer != null && event.getType() == RenderGameOverlayEvent.ElementType.HEALTH)
+        if (clientPlayer != null)
         {
-            if (!clientPlayer.getHeldItemMainhand().isEmpty())
+            if (event.getType() == RenderGameOverlayEvent.ElementType.HOTBAR)
             {
-                if (clientPlayer.getHeldItemMainhand().getItem().equals(ItemsRegistry.THERMOMETER))
+                if (!clientPlayer.getHeldItemMainhand().isEmpty())
                 {
-                    float temp = clientPlayer.getEntityWorld().getBiome(clientPlayer.getPosition()).getTemperature(clientPlayer.getPosition());
-                    Humidity h = Humidity.getHumid(clientPlayer.getEntityWorld().getBiome(clientPlayer.getPosition()).getDownfall(), temp);
-                    if (clientPlayer.getEntityWorld().getDimension().getType().hasSkyLight())
+                    if (clientPlayer.getHeldItemMainhand().getItem().equals(ItemsRegistry.THERMOMETER))
                     {
-                        temp = PlayerTemperatureHandler.getEnvOriginTemp(clientPlayer.getEntityWorld().getBiome(clientPlayer.getPosition()).getTemperature(clientPlayer.getPosition()), h, clientPlayer.getEntityWorld());
+                        float temp = clientPlayer.getEntityWorld().getBiome(clientPlayer.getPosition()).getTemperature(clientPlayer.getPosition());
+                        Humidity h = Humidity.getHumid(clientPlayer.getEntityWorld().getBiome(clientPlayer.getPosition()).getDownfall(), temp);
+                        if (clientPlayer.getEntityWorld().getDimension().getType().hasSkyLight())
+                        {
+                            temp = PlayerTemperatureHandler.getEnvOriginTemp(clientPlayer.getEntityWorld().getBiome(clientPlayer.getPosition()).getTemperature(clientPlayer.getPosition()), h, clientPlayer.getEntityWorld());
+                        }
+                        BAR_0.renderStatusBar(event.getWindow().getScaledWidth(), event.getWindow().getScaledHeight(), temp);
                     }
-                    BAR_0.renderStatusBar(event.getWindow().getScaledWidth(), event.getWindow().getScaledHeight(), temp);
-                }
-                else if (clientPlayer.getHeldItemMainhand().getItem().equals(ItemsRegistry.RAIN_GAUGE))
-                {
-                    BAR_1.renderStatusBar(event.getWindow().getScaledWidth(), event.getWindow().getScaledHeight(), clientPlayer.getEntityWorld().getBiome(clientPlayer.getPosition()).getDownfall());
-                }
-                else if (clientPlayer.getHeldItemMainhand().getItem().equals(ItemsRegistry.HYGROMETER))
-                {
-                    BAR_2.renderStatusBar(event.getWindow().getScaledWidth(), event.getWindow().getScaledHeight(), clientPlayer.getEntityWorld().getBiome(clientPlayer.getPosition()).getTemperature(clientPlayer.getPosition()), clientPlayer.getEntityWorld().getBiome(clientPlayer.getPosition()).getDownfall());
+                    else if (clientPlayer.getHeldItemMainhand().getItem().equals(ItemsRegistry.RAIN_GAUGE))
+                    {
+                        BAR_1.renderStatusBar(event.getWindow().getScaledWidth(), event.getWindow().getScaledHeight(), clientPlayer.getEntityWorld().getBiome(clientPlayer.getPosition()).getDownfall());
+                    }
+                    else if (clientPlayer.getHeldItemMainhand().getItem().equals(ItemsRegistry.HYGROMETER))
+                    {
+                        BAR_2.renderStatusBar(event.getWindow().getScaledWidth(), event.getWindow().getScaledHeight(), clientPlayer.getEntityWorld().getBiome(clientPlayer.getPosition()).getTemperature(clientPlayer.getPosition()), clientPlayer.getEntityWorld().getBiome(clientPlayer.getPosition()).getDownfall());
+                    }
                 }
             }
-            if (CommonConfig.Temperature.enable.get() && !clientPlayer.isSpectator())
+            if (CommonConfig.Temperature.enable.get() && event.getType() == RenderGameOverlayEvent.ElementType.HEALTH)
             {
                 clientPlayer.getCapability(CapabilityPlayerTemperature.PLAYER_TEMP).ifPresent(t ->
                         BAR_3.renderStatusBar(event.getWindow().getScaledWidth(), event.getWindow().getScaledHeight(), t, PlayerTemperatureHandler.getResistancePoint(clientPlayer, "Cold"), PlayerTemperatureHandler.getResistancePoint(clientPlayer, "Heat")));

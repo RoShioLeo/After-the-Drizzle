@@ -60,10 +60,7 @@ public class CapabilitySolarTermTime
                 solarTermsDay %= 24 * CommonConfig.Season.lastingDaysOfEachTerm.get();
                 ForgeRegistries.BIOMES.forEach(biome ->
                         biome.temperature = BiomeTemperatureManager.getDefaultTemperature(biome) + SolarTerms.get(getSolarTermIndex()).getTemperatureChange());
-                for (ServerPlayerEntity player : world.getServer().getPlayerList().getPlayers())
-                {
-                    SimpleNetworkHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), new SolarTermsMessage(solarTermsDay));
-                }
+                sendUpdateMessage(world);
             }
             solarTermsTicks = dayTime;
         }
@@ -85,12 +82,20 @@ public class CapabilitySolarTermTime
 
         public void setSolarTermsDay(int solarTermsDay)
         {
-            this.solarTermsDay = solarTermsDay;
+            this.solarTermsDay = Math.max(solarTermsDay, 0) % (24 * CommonConfig.Season.lastingDaysOfEachTerm.get());
         }
 
         public void setSolarTermsTicks(int solarTermsTicks)
         {
             this.solarTermsTicks = solarTermsTicks;
+        }
+
+        public void sendUpdateMessage(ServerWorld world)
+        {
+            for (ServerPlayerEntity player : world.getServer().getPlayerList().getPlayers())
+            {
+                SimpleNetworkHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), new SolarTermsMessage(solarTermsDay));
+            }
         }
     }
 

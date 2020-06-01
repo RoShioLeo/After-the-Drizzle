@@ -8,6 +8,7 @@ public class ClientConfig
     protected ClientConfig(ForgeConfigSpec.Builder builder)
     {
         GUI.load(builder);
+        Renderer.load(builder);
     }
 
     public static class GUI
@@ -25,6 +26,19 @@ public class ClientConfig
                     .defineInRange("PlayerTemperatureY", 40, Integer.MIN_VALUE, Integer.MAX_VALUE);
             debugInfo = builder.comment("Info used for development.")
                     .define("DebugInfo", false);
+            builder.pop();
+        }
+    }
+
+    public static class Renderer
+    {
+        public static ForgeConfigSpec.BooleanValue forceChunkRenderUpdate;
+
+        private static void load(ForgeConfigSpec.Builder builder)
+        {
+            builder.push("Renderer");
+            forceChunkRenderUpdate = builder.comment("Force to update chunk rendering.")
+                    .define("ForceChunkRenderUpdate", false);
             builder.pop();
         }
     }

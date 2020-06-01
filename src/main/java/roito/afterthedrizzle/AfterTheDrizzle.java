@@ -4,12 +4,14 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.FireBlock;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.Items;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,6 +22,7 @@ import roito.afterthedrizzle.client.sound.SoundEventsRegistry;
 import roito.afterthedrizzle.common.CommonProxy;
 import roito.afterthedrizzle.common.block.BlocksRegistry;
 import roito.afterthedrizzle.common.capability.CapabilitiesRegistry;
+import roito.afterthedrizzle.common.command.SolarCommand;
 import roito.afterthedrizzle.common.config.NormalConfigs;
 import roito.afterthedrizzle.common.entity.EntityTypesRegistry;
 import roito.afterthedrizzle.common.environment.solar.BiomeTemperatureManager;
@@ -52,7 +55,8 @@ public final class AfterTheDrizzle
     public AfterTheDrizzle()
     {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::ClientSetup);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
+        MinecraftForge.EVENT_BUS.addListener(this::serverStarting);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, NormalConfigs.COMMON_CONFIG);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, NormalConfigs.CLIENT_CONFIG);
         FluidsRegistry.FLUIDS.register(FMLJavaModLoadingContext.get().getModEventBus());
@@ -82,7 +86,7 @@ public final class AfterTheDrizzle
         BiomeTemperatureManager.init();
     }
 
-    public void ClientSetup(FMLClientSetupEvent event)
+    public void clientSetup(FMLClientSetupEvent event)
     {
         ItemColorsRegistry.init();
         BlockColorsRegistry.init();
@@ -90,6 +94,11 @@ public final class AfterTheDrizzle
         ClientProxy.registerRenderType();
         ClientProxy.registerEntityRenderer();
         ContainerTypesRegistry.clientInit();
+    }
+
+    public void serverStarting(FMLServerStartingEvent event)
+    {
+        SolarCommand.register(event.getCommandDispatcher());
     }
 
     private static void registerCompostable()

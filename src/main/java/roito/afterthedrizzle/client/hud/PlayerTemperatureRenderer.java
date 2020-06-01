@@ -79,7 +79,7 @@ public class PlayerTemperatureRenderer extends AbstractGui
                 index++;
             }
         }
-        else if (Minecraft.getInstance().world != null && Minecraft.getInstance().world.getDayTime() % 60 == 0)
+        else if (ClientConfig.Renderer.forceChunkRenderUpdate.get() && Minecraft.getInstance().world != null && Minecraft.getInstance().world.getGameTime() % 100 == 0)
         {
             PlayerEntity player = Minecraft.getInstance().player;
             for (int x = player.chunkCoordX - 2; x <= player.chunkCoordX + 2; x++)

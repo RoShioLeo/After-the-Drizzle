@@ -152,6 +152,7 @@
     "info.afterthedrizzle.tooltip.handwarmer": "Right click to quick fill",
     "info.afterthedrizzle.tooltip.temp_resistance": "Use three to craft with armor to get temperature resistance",
     "info.afterthedrizzle.message.handwarmer": "It seems you don't have enough ashes or coals in the inventory",
+    "commands.afterthedrizzle.solar.set": "Set the solar day to %s",
     "death.attack.boiling": "%1$s was scalded by boiling water",
     "death.attack.frostbite": "%1$s died from severe cold",
     "death.attack.heatstroke": "%1$s died from heatstroke"
