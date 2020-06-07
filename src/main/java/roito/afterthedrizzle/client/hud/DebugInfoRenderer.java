@@ -35,6 +35,7 @@ public final class DebugInfoRenderer extends AbstractGui
 
         RenderSystem.enableBlend();
         RenderSystem.disableAlphaTest();
+        mc.getTextureManager().bindTexture(OverlayEventHandler.DEFAULT);
     }
 
     private void drawInfo(int screenWidth, int screenHeight, String s, int index)

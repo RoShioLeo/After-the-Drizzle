@@ -19,7 +19,7 @@ public class BirchLeavesColor implements IBlockColor
         if (Minecraft.getInstance().world != null)
         {
             return Minecraft.getInstance().world.getCapability(CapabilitySolarTermTime.WORLD_SOLAR_TIME).map(data ->
-                    SolarTerms.get(data.getSolarTermIndex()).getBirchColor()).orElse(FoliageColors.getBirch());
+                    SolarTerms.get(data.getSolarTermIndex()).getColorInfo().getBirchColor()).orElse(FoliageColors.getBirch());
         }
         return FoliageColors.getBirch();
     }

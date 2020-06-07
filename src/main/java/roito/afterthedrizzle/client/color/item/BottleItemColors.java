@@ -2,8 +2,11 @@ package roito.afterthedrizzle.client.color.item;
 
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fluids.FluidUtil;
 
+@OnlyIn(Dist.CLIENT)
 public class BottleItemColors implements IItemColor
 {
 
