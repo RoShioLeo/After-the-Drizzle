@@ -13,7 +13,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = "${mod_version}-${mod_phase}-${minecraft_version}"
+version = "${mod_version}.${build_version}-${mod_phase}-${minecraft_version}"
 group = "${mod_group}"
 archivesBaseName = 'After the Drizzle'
 
