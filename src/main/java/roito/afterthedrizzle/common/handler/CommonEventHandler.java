@@ -179,7 +179,7 @@ public final class CommonEventHandler
     public static void onPlayTick(TickEvent.PlayerTickEvent event)
     {
         PlayerEntity player = event.player;
-        if (CommonConfig.Temperature.enable.get() && event.phase == TickEvent.Phase.START && player instanceof ServerPlayerEntity && !(player instanceof FakePlayer) && player.getEntityWorld().getDayTime() % 50 == 0)
+        if (CommonConfig.Temperature.enable.get() && event.phase == TickEvent.Phase.START && player instanceof ServerPlayerEntity && !(player instanceof FakePlayer) && player.getEntityWorld().getGameTime() % 50 == 0)
         {
             PlayerTemperatureHandler.adjustPlayerTemperature((ServerPlayerEntity) player, player.getEntityWorld(), player.getPosition());
         }

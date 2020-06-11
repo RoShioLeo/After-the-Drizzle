@@ -21,7 +21,7 @@ public class NormalItemTagsProvider extends ItemTagsProvider
     }
 
     @Override
-    public void registerTags()
+    protected void registerTags()
     {
         getBuilder(NormalTags.Items.DIRT).add(Blocks.DIRT.asItem(), COARSE_DIRT.asItem(), GRASS_BLOCK.asItem(), MYCELIUM.asItem(), PODZOL.asItem());
         getBuilder(FOOD_JERKY).add(BEEF_JERKY, PORK_JERKY, CHICKEN_JERKY, RABBIT_JERKY, MUTTON_JERKY);

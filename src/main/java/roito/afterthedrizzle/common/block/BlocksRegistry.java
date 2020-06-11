@@ -30,6 +30,13 @@ public final class BlocksRegistry extends RegistryModule
     public static final Block IRON_CATAPULT_BOARD = new CatapultBoardBlock(0.6F, "iron_catapult_board", Block.Properties.create(Material.IRON).sound(SoundType.STONE).hardnessAndResistance(3.5F).notSolid());
     public static final Block FILTER_SCREEN = new FilterScreenBlock();
 
+    public static final Block OAK_TRELLIS = new TrellisBlock("oak_trellis", Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(0.6F).notSolid());
+    public static final Block BIRCH_TRELLIS = new TrellisBlock("birch_trellis", Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(0.6F).notSolid());
+    public static final Block JUNGLE_TRELLIS = new TrellisBlock("jungle_trellis", Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(0.6F).notSolid());
+    public static final Block SPRUCE_TRELLIS = new TrellisBlock("spruce_trellis", Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(0.6F).notSolid());
+    public static final Block DARK_OAK_TRELLIS = new TrellisBlock("dark_oak_trellis", Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(0.6F).notSolid());
+    public static final Block ACACIA_TRELLIS = new TrellisBlock("acacia_trellis", Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(0.6F).notSolid());
+
     public static final BlockItem BAMBOO_TRAY_ITEM = new NormalBlockItem(BAMBOO_TRAY);
     public static final BlockItem DRINK_MAKER_ITEM = new DrinkMakerItem();
     public static final BlockItem DIRT_STOVE_ITEM = new NormalBlockItem(DIRT_STOVE);
@@ -39,10 +46,16 @@ public final class BlocksRegistry extends RegistryModule
     public static final BlockItem BAMBOO_CATAPULT_BOARD_ITEM = new NormalBlockItem(BAMBOO_CATAPULT_BOARD);
     public static final BlockItem IRON_CATAPULT_BOARD_ITEM = new NormalBlockItem(IRON_CATAPULT_BOARD);
     public static final BlockItem FILTER_SCREEN_ITEM = new NormalBlockItem(FILTER_SCREEN);
+    public static final BlockItem OAK_TRELLIS_ITEM = new NormalBlockItem(OAK_TRELLIS);
+    public static final BlockItem BIRCH_TRELLIS_ITEM = new NormalBlockItem(BIRCH_TRELLIS);
+    public static final BlockItem JUNGLE_TRELLIS_ITEM = new NormalBlockItem(JUNGLE_TRELLIS);
+    public static final BlockItem SPRUCE_TRELLIS_ITEM = new NormalBlockItem(SPRUCE_TRELLIS);
+    public static final BlockItem DARK_OAK_TRELLIS_ITEM = new NormalBlockItem(DARK_OAK_TRELLIS);
+    public static final BlockItem ACACIA_TRELLIS_ITEM = new NormalBlockItem(ACACIA_TRELLIS);
 
     // DECORATIONS 装饰
-    public static final Block BAMBOO_TABLE = new TableBlock("bamboo_table", Block.Properties.create(Material.BAMBOO).sound(SoundType.BAMBOO).hardnessAndResistance(0.5F));
-    public static final Block WOODEN_TABLE = new TableBlock("wooden_table", Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(0.6F));
+    public static final Block BAMBOO_TABLE = new TableBlock("bamboo_table", Block.Properties.create(Material.BAMBOO).sound(SoundType.BAMBOO).hardnessAndResistance(0.5F).notSolid());
+    public static final Block WOODEN_TABLE = new TableBlock("wooden_table", Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(0.6F).notSolid());
     public static final Block BAMBOO_CHAIR = new BambooChairBlock();
     public static final Block BAMBOO_LANTERN = new LanternBlock(Block.Properties.create(Material.BAMBOO).sound(SoundType.BAMBOO).hardnessAndResistance(0.5F).lightValue(15).notSolid())
     {
@@ -57,6 +70,7 @@ public final class BlocksRegistry extends RegistryModule
     }.setRegistryName("bamboo_lantern");
     public static final Block BAMBOO_DOOR = new BambooDoorBlock("bamboo_door");
     public static final Block BAMBOO_GLASS_DOOR = new BambooDoorBlock("bamboo_glass_door");
+    public static final Block BAMBOO_LATTICE = new BambooLatticeBlock();
 //    public static final Block BAMBOO_GLASS_WINDOW = new BambooGlassWindow();
 
     public static final BlockItem BAMBOO_TABLE_ITEM = new NormalBlockItem(BAMBOO_TABLE);
@@ -65,6 +79,7 @@ public final class BlocksRegistry extends RegistryModule
     public static final BlockItem BAMBOO_LANTERN_ITEM = new NormalBlockItem(BAMBOO_LANTERN);
     public static final BlockItem BAMBOO_DOOR_ITEM = new NormalBlockItem(BAMBOO_DOOR);
     public static final BlockItem BAMBOO_GLASS_DOOR_ITEM = new NormalBlockItem(BAMBOO_GLASS_DOOR);
+    public static final BlockItem BAMBOO_LATTICE_ITEM = new NormalBlockItem(BAMBOO_LATTICE);
 //    public static final BlockItem BAMBOO_GLASS_WINDOW_ITEM = new NormalBlockItem(BAMBOO_GLASS_WINDOW);
 
     // CROPS 作物

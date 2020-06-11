@@ -70,7 +70,7 @@ public class WoodenFrameBlock extends NormalBlock implements IWaterLoggable
     @Override
     public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos)
     {
-        return true;
+        return !state.get(WATERLOGGED);
     }
 
     @Override

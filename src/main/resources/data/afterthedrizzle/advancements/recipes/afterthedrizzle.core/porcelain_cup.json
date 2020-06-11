@@ -1,0 +1,32 @@
+{
+    "parent": "minecraft:recipes/root",
+    "rewards": {
+        "recipes": [
+            "afterthedrizzle:porcelain_cup"
+        ]
+    },
+    "criteria": {
+        "has_clay_cup": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "afterthedrizzle:clay_cup"
+                    }
+                ]
+            }
+        },
+        "has_the_recipe": {
+            "trigger": "minecraft:recipe_unlocked",
+            "conditions": {
+                "recipe": "afterthedrizzle:porcelain_cup"
+            }
+        }
+    },
+    "requirements": [
+        [
+            "has_clay_cup",
+            "has_the_recipe"
+        ]
+    ]
+}

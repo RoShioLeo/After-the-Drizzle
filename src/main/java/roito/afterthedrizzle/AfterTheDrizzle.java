@@ -1,9 +1,6 @@
 package roito.afterthedrizzle;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.block.FireBlock;
 import net.minecraft.item.ItemGroup;
-import net.minecraft.item.Items;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -41,8 +38,6 @@ import roito.afterthedrizzle.common.world.WorldGenManager;
 import roito.afterthedrizzle.common.world.feature.FeaturesRegistry;
 import roito.afterthedrizzle.registry.RegisterManager;
 
-import static net.minecraft.block.ComposterBlock.CHANCES;
-
 @Mod("afterthedrizzle")
 public final class AfterTheDrizzle
 {
@@ -78,12 +73,12 @@ public final class AfterTheDrizzle
         RecipesRegistry.init();
         WorldGenManager.init();
         RegisterManager.clearAll();
-        registerCompostable();
-        registerFireInfo();
         CapabilitiesRegistry.init();
         SimpleNetworkHandler.init();
         BiomeWeatherManager.init();
         BiomeTemperatureManager.init();
+        CommonProxy.registerCompostable();
+        CommonProxy.registerFireInfo();
     }
 
     public void clientSetup(FMLClientSetupEvent event)
@@ -99,35 +94,6 @@ public final class AfterTheDrizzle
     public void serverStarting(FMLServerStartingEvent event)
     {
         SolarCommand.register(event.getCommandDispatcher());
-    }
-
-    private static void registerCompostable()
-    {
-        CHANCES.put(ItemsRegistry.TEA_SEEDS, 0.3F);
-        CHANCES.put(ItemsRegistry.TEA_LEAVES, 0.15F);
-        CHANCES.put(ItemsRegistry.GREEN_TEA_LEAVES, 0.3F);
-        CHANCES.put(ItemsRegistry.BLACK_TEA_LEAVES, 0.4F);
-        CHANCES.put(ItemsRegistry.TEA_RESIDUES, 0.5F);
-        CHANCES.put(BlocksRegistry.CHRYSANTHEMUM_ITEM, 0.3F);
-        CHANCES.put(BlocksRegistry.ZINNIA_ITEM, 0.3F);
-        CHANCES.put(BlocksRegistry.HYACINTH_ITEM, 0.3F);
-        CHANCES.put(Items.POISONOUS_POTATO, 0.3F);
-    }
-
-    private static void registerFireInfo()
-    {
-        FireBlock fireblock = (FireBlock) Blocks.FIRE;
-        fireblock.setFireInfo(BlocksRegistry.WOODEN_FRAME, 5, 20);
-        fireblock.setFireInfo(BlocksRegistry.BAMBOO_CHAIR, 60, 60);
-        fireblock.setFireInfo(BlocksRegistry.BAMBOO_DOOR, 60, 60);
-        fireblock.setFireInfo(BlocksRegistry.BAMBOO_GLASS_DOOR, 60, 60);
-        fireblock.setFireInfo(BlocksRegistry.BAMBOO_LANTERN, 60, 60);
-        fireblock.setFireInfo(BlocksRegistry.BAMBOO_TABLE, 60, 60);
-        fireblock.setFireInfo(BlocksRegistry.BAMBOO_TRAY, 60, 60);
-        fireblock.setFireInfo(BlocksRegistry.BAMBOO_CATAPULT_BOARD, 60, 60);
-        fireblock.setFireInfo(BlocksRegistry.HYACINTH, 60, 100);
-        fireblock.setFireInfo(BlocksRegistry.CHRYSANTHEMUM, 60, 100);
-        fireblock.setFireInfo(BlocksRegistry.ZINNIA, 60, 100);
     }
 
     public static final ItemGroup GROUP_CORE = new GroupCore();

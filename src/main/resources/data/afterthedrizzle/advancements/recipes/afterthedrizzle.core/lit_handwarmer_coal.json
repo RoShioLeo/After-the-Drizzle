@@ -1,0 +1,32 @@
+{
+    "parent": "minecraft:recipes/root",
+    "rewards": {
+        "recipes": [
+            "afterthedrizzle:lit_handwarmer_coal"
+        ]
+    },
+    "criteria": {
+        "has_handwarmer": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "afterthedrizzle:handwarmer"
+                    }
+                ]
+            }
+        },
+        "has_the_recipe": {
+            "trigger": "minecraft:recipe_unlocked",
+            "conditions": {
+                "recipe": "afterthedrizzle:lit_handwarmer_coal"
+            }
+        }
+    },
+    "requirements": [
+        [
+            "has_handwarmer",
+            "has_the_recipe"
+        ]
+    ]
+}

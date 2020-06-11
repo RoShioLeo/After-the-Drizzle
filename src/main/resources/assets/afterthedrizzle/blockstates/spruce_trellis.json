@@ -1,0 +1,99 @@
+{
+    "multipart": [
+        {
+            "apply": {
+                "model": "afterthedrizzle:block/spruce_trellis_center"
+            }
+        },
+        {
+            "when": {
+                "post": "true"
+            },
+            "apply": {
+                "model": "afterthedrizzle:block/spruce_trellis_post"
+            }
+        },
+        {
+            "when": {
+                "north": "true"
+            },
+            "apply": {
+                "model": "afterthedrizzle:block/spruce_trellis_bar",
+                "uvlock": true
+            }
+        },
+        {
+            "when": {
+                "east": "true"
+            },
+            "apply": {
+                "model": "afterthedrizzle:block/spruce_trellis_bar",
+                "y": 90,
+                "uvlock": true
+            }
+        },
+        {
+            "when": {
+                "south": "true"
+            },
+            "apply": {
+                "model": "afterthedrizzle:block/spruce_trellis_bar",
+                "y": 180,
+                "uvlock": true
+            }
+        },
+        {
+            "when": {
+                "west": "true"
+            },
+            "apply": {
+                "model": "afterthedrizzle:block/spruce_trellis_bar",
+                "y": 270,
+                "uvlock": true
+            }
+        },
+        {
+            "when": {
+                "north": "true",
+                "post": "true"
+            },
+            "apply": {
+                "model": "afterthedrizzle:block/spruce_trellis_support",
+                "uvlock": true
+            }
+        },
+        {
+            "when": {
+                "east": "true",
+                "post": "true"
+            },
+            "apply": {
+                "model": "afterthedrizzle:block/spruce_trellis_support",
+                "y": 90,
+                "uvlock": true
+            }
+        },
+        {
+            "when": {
+                "south": "true",
+                "post": "true"
+            },
+            "apply": {
+                "model": "afterthedrizzle:block/spruce_trellis_support",
+                "y": 180,
+                "uvlock": true
+            }
+        },
+        {
+            "when": {
+                "west": "true",
+                "post": "true"
+            },
+            "apply": {
+                "model": "afterthedrizzle:block/spruce_trellis_support",
+                "y": 270,
+                "uvlock": true
+            }
+        }
+    ]
+}
