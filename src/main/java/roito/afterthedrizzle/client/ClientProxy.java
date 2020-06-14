@@ -45,10 +45,12 @@ public class ClientProxy extends CommonProxy
         registerCutoutType(BlocksRegistry.ZINNIA);
         registerCutoutType(BlocksRegistry.HYACINTH);
         registerCutoutType(BlocksRegistry.TEA_PLANT);
+        registerCutoutType(BlocksRegistry.RICE_SEEDLING);
         registerCutoutType(BlocksRegistry.WILD_TEA_PLANT);
         registerCutoutType(BlocksRegistry.GRASS_BLOCK_WITH_HOLE);
         registerCutoutType(BlocksRegistry.BAMBOO_GLASS_DOOR);
         registerCutoutType(BlocksRegistry.DRINK_MAKER);
+        registerCutoutType(BlocksRegistry.RICE_PLANT);
     }
 
     private static void registerCutoutType(Block block)

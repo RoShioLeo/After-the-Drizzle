@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "waterlogged=false": {
+            "model": "afterthedrizzle:block/dry_paddy_field"
+        },
+        "waterlogged=true": {
+            "model": "afterthedrizzle:block/moist_paddy_field"
+        }
+    }
+}

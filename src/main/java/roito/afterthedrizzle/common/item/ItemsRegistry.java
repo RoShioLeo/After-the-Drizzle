@@ -52,9 +52,7 @@ public final class ItemsRegistry extends RegistryModule
     public static final Item HANDWARMER = new HandwarmerItem();
     public static final Item LIT_HANDWARMER = new LitHandwarmerItem();
 
-
     // INGREDIENTS 原料
-    public static final Item TEA_SEEDS = new BlockNamedItem(BlocksRegistry.TEA_PLANT, getNormalItemProperties()).setRegistryName("tea_seeds");
     public static final Item TEA_LEAVES = new NormalItem("tea_leaves");
     public static final Item GREEN_TEA_LEAVES = new NormalItem("green_tea_leaves", getTeaLeavesItemProperties());
     public static final Item BLACK_TEA_LEAVES = new NormalItem("black_tea_leaves", getTeaLeavesItemProperties());
@@ -62,6 +60,11 @@ public final class ItemsRegistry extends RegistryModule
     public static final Item EMPTY_TEA_BAG = new NormalItem("empty_tea_bag", getTeaLeavesItemProperties());
     public static final Item GREEN_TEA_BAG = new NormalItem("green_tea_bag", getTeaLeavesItemProperties());
     public static final Item BLACK_TEA_BAG = new NormalItem("black_tea_bag", getTeaLeavesItemProperties());
+
+    // CROPS 作物
+    public static final Item TEA_SEEDS = new BlockNamedItem(BlocksRegistry.TEA_PLANT, getNormalItemProperties()).setRegistryName("tea_seeds");
+    public static final Item RICE_SEEDS = new BlockNamedItem(BlocksRegistry.RICE_SEEDLING, getNormalItemProperties()).setRegistryName("rice_seeds");
+    public static final Item RICE_SEEDLINGS = new BlockNamedItem(BlocksRegistry.RICE_PLANT, getNormalItemProperties()).setRegistryName("rice_seedlings");
 
     // DRINK 饮品
     public static final Item CLAY_CUP = new NormalItem("clay_cup");

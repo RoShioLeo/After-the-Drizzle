@@ -1,5 +1,5 @@
 {
-    "credit": "Made with Blockbench by MalayP",
+    "credit": "Made with Blockbench",
     "ambientocclusion": false,
     "textures": {
         "particle": "#texture"
@@ -14,7 +14,6 @@
                 "axis": "x",
                 "origin": [8.5, 2, 8]
             },
-            "color": 5,
             "faces": {
                 "north": {
                     "uv": [0, 0, 0, 0],
@@ -38,7 +37,7 @@
                     "texture": "#texture"
                 },
                 "down": {
-                    "uv": [7.5, 9, 8.5, 16],
+                    "uv": [7, 9, 8, 16],
                     "texture": "#texture"
                 }
             }

@@ -90,9 +90,9 @@ public class NormalItemTagsProvider extends ItemTagsProvider
         /*getBuilder(QUINOA);
         getBuilder(RADISH);
         getBuilder(RASPBERRY);
-        getBuilder(RHUBARB);
-        getBuilder(RICE);
-        getBuilder(RUTABAGA);
+        getBuilder(RHUBARB);*/
+        getBuilder(SEEDS_RICE).add(RICE_SEEDS);
+        /*getBuilder(RUTABAGA);
         getBuilder(RYE);
         getBuilder(SCALLION);
         getBuilder(SESAME_SEEDS);

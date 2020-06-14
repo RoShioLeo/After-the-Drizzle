@@ -35,10 +35,10 @@ public class BambooLatticeBlock extends NormalBlock implements IWaterLoggable
     public static final BooleanProperty WEST = SixWayBlock.WEST;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
-    protected static final VoxelShape NORTH_SHAPE = VoxelShapeHelper.createVoxelShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 2.0D);
-    protected static final VoxelShape SOUTH_SHAPE = VoxelShapeHelper.createVoxelShape(0.0D, 0.0D, 14.0D, 16.0D, 16.0D, 2.0D);
-    protected static final VoxelShape WEST_SHAPE = VoxelShapeHelper.createVoxelShape(0.0D, 0.0D, 0.0D, 2.0D, 16.0D, 16.0D);
-    protected static final VoxelShape EAST_SHAPE = VoxelShapeHelper.createVoxelShape(14.0D, 0.0D, 0.0D, 2.0D, 16.0D, 16.0D);
+    protected static final VoxelShape NORTH_SHAPE = VoxelShapeHelper.createVoxelShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 4.0D);
+    protected static final VoxelShape SOUTH_SHAPE = VoxelShapeHelper.createVoxelShape(0.0D, 0.0D, 12.0D, 16.0D, 16.0D, 4.0D);
+    protected static final VoxelShape WEST_SHAPE = VoxelShapeHelper.createVoxelShape(0.0D, 0.0D, 0.0D, 4.0D, 16.0D, 16.0D);
+    protected static final VoxelShape EAST_SHAPE = VoxelShapeHelper.createVoxelShape(12.0D, 0.0D, 0.0D, 4.0D, 16.0D, 16.0D);
 
     @Override
     @SuppressWarnings("deprecation")
@@ -78,7 +78,23 @@ public class BambooLatticeBlock extends NormalBlock implements IWaterLoggable
     @SuppressWarnings("deprecation")
     public boolean isReplaceable(BlockState state, BlockItemUseContext useContext)
     {
-        return useContext.getItem().getItem() == this.asItem();
+//        return useContext.getItem().getItem() == this.asItem();
+        if (useContext.getItem().getItem() == this.asItem())
+        {
+            if (useContext.getFace() != Direction.UP)
+            {
+                return true;
+            }
+            else if (useContext.replacingClickedOnBlock())
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        else return false;
     }
 
     @Override

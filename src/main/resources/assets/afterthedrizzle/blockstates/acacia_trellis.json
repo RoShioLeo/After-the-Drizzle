@@ -1,8 +1,24 @@
 {
     "multipart": [
         {
+            "when": {
+                "post": "false",
+                "up": "false",
+                "north": "false",
+                "south": "false",
+                "east": "false",
+                "west": "false"
+            },
             "apply": {
                 "model": "afterthedrizzle:block/acacia_trellis_center"
+            }
+        },
+        {
+            "when": {
+                "up": "true"
+            },
+            "apply": {
+                "model": "afterthedrizzle:block/acacia_trellis_post_up"
             }
         },
         {
@@ -58,8 +74,7 @@
                 "post": "true"
             },
             "apply": {
-                "model": "afterthedrizzle:block/acacia_trellis_support",
-                "uvlock": true
+                "model": "afterthedrizzle:block/acacia_trellis_support"
             }
         },
         {
@@ -69,8 +84,7 @@
             },
             "apply": {
                 "model": "afterthedrizzle:block/acacia_trellis_support",
-                "y": 90,
-                "uvlock": true
+                "y": 90
             }
         },
         {
@@ -80,8 +94,7 @@
             },
             "apply": {
                 "model": "afterthedrizzle:block/acacia_trellis_support",
-                "y": 180,
-                "uvlock": true
+                "y": 180
             }
         },
         {
@@ -91,8 +104,7 @@
             },
             "apply": {
                 "model": "afterthedrizzle:block/acacia_trellis_support",
-                "y": 270,
-                "uvlock": true
+                "y": 270
             }
         }
     ]

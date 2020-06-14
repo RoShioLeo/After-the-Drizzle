@@ -1,6 +1,7 @@
 package roito.afterthedrizzle.common.handler;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.FarmlandBlock;
 import net.minecraft.block.FireBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -8,7 +9,9 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
@@ -23,12 +26,14 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.BonemealEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
+import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.network.PacketDistributor;
 import roito.afterthedrizzle.AfterTheDrizzle;
+import roito.afterthedrizzle.common.block.BlocksRegistry;
 import roito.afterthedrizzle.common.block.TeaPlantBlock;
 import roito.afterthedrizzle.common.capability.CapabilityPlayerTemperature;
 import roito.afterthedrizzle.common.capability.CapabilitySolarTermTime;
@@ -139,6 +144,19 @@ public final class CommonEventHandler
                     Block.spawnAsEntity(event.getWorld().getWorld(), event.getPos(), new ItemStack(ItemsRegistry.ASH));
                 }
             });
+    }
+
+    @SubscribeEvent
+    public static void onHoeUse(UseHoeEvent event)
+    {
+        World world = event.getContext().getWorld();
+        BlockPos pos = event.getContext().getPos();
+        if (world.getBlockState(pos).getBlock() instanceof FarmlandBlock)
+        {
+            world.setBlockState(pos, BlocksRegistry.PADDY_FIELD.getDefaultState());
+            world.playSound(event.getPlayer(), pos, SoundEvents.ITEM_HOE_TILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
+            event.setResult(Event.Result.ALLOW);
+        }
     }
 
     @SubscribeEvent

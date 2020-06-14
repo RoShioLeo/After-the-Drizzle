@@ -35,17 +35,16 @@ public class TrellisBlock extends NormalBlock implements IWaterLoggable
     public static final BooleanProperty SOUTH = SixWayBlock.SOUTH;
     public static final BooleanProperty WEST = SixWayBlock.WEST;
     public static final BooleanProperty POST = BooleanProperty.create("post");
+    public static final BooleanProperty UP = BlockStateProperties.UP;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-    protected static final Map<Direction, BooleanProperty> FACING_TO_PROPERTY_MAP = SixWayBlock.FACING_TO_PROPERTY_MAP.entrySet().stream().filter((direction) -> direction.getKey().getAxis().isHorizontal()).collect(Util.toMapCollector());
+    private static final Map<Direction, BooleanProperty> FACING_TO_PROPERTY_MAP = SixWayBlock.FACING_TO_PROPERTY_MAP.entrySet().stream().filter((direction) -> direction.getKey().getAxis().isHorizontal()).collect(Util.toMapCollector());
 
-    protected static final VoxelShape TOP_SHAPE = VoxelShapeHelper.createVoxelShape(0.0D, 7.0D, 0.0D, 16.0D, 3.0D, 16.0D);
-    protected static final VoxelShape POST_SHAPE = VoxelShapeHelper.createVoxelShape(6.0D, 0.0D, 6.0D, 4.0D, 12.0D, 4.0D);
-    protected static final VoxelShape MIXED_SHAPE = VoxelShapes.or(TOP_SHAPE, POST_SHAPE);
+    private static final VoxelShape[] SHAPES;
 
     public TrellisBlock(String name, Properties properties)
     {
         super(name, properties);
-        this.setDefaultState(this.stateContainer.getBaseState().with(POST, false).with(NORTH, false).with(EAST, false).with(SOUTH, false).with(WEST, false).with(WATERLOGGED, false));
+        this.setDefaultState(this.stateContainer.getBaseState().with(POST, false).with(UP, false).with(NORTH, false).with(EAST, false).with(SOUTH, false).with(WEST, false).with(WATERLOGGED, false));
     }
 
     @Override
@@ -61,8 +60,10 @@ public class TrellisBlock extends NormalBlock implements IWaterLoggable
     @SuppressWarnings("deprecation")
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
     {
-        boolean bar = state.get(NORTH) || state.get(SOUTH) || state.get(WEST) || state.get(EAST);
-        return state.get(POST) ? bar ? MIXED_SHAPE : POST_SHAPE : TOP_SHAPE;
+        int bar = (state.get(NORTH) || state.get(SOUTH) || state.get(WEST) || state.get(EAST)) ? 4 : 0;
+        int post = state.get(POST) ? 2 : 0;
+        int up = state.get(UP) ? 1 : 0;
+        return SHAPES[bar + post + up];
     }
 
     @SuppressWarnings("deprecation")
@@ -70,10 +71,16 @@ public class TrellisBlock extends NormalBlock implements IWaterLoggable
     {
         BlockState state = this.getDefaultState();
         BlockState down = world.getBlockState(pos.down());
-        if (down.isSolidSide(world, pos.down(), Direction.UP) || down.isIn(BlockTags.WOODEN_FENCES))
+        if (down.isIn(BlockTags.WOODEN_FENCES) || down.isSolidSide(world, pos.down(), Direction.UP))
         {
             state = state.with(POST, true);
         }
+        BlockState up = world.getBlockState(pos.up());
+        if (up.isIn(BlockTags.WOODEN_FENCES) || up.isSolidSide(world, pos.up(), Direction.DOWN))
+        {
+            state = state.with(UP, true);
+        }
+
         for (Direction facing : Direction.Plane.HORIZONTAL)
         {
             BlockPos facingPos = pos.offset(facing);
@@ -116,7 +123,13 @@ public class TrellisBlock extends NormalBlock implements IWaterLoggable
         {
             BlockPos posDown = currentPos.offset(facing);
             BlockState state = worldIn.getBlockState(posDown);
-            return stateIn.with(POST, state.isSolidSide(worldIn, posDown, Direction.UP) || state.isIn(BlockTags.WOODEN_FENCES));
+            return stateIn.with(POST, state.isIn(BlockTags.WOODEN_FENCES) || state.isSolidSide(worldIn, posDown, Direction.UP));
+        }
+        else if (facing == Direction.UP)
+        {
+            BlockPos posUp = currentPos.offset(facing);
+            BlockState state = worldIn.getBlockState(posUp);
+            return stateIn.with(UP, state.isIn(BlockTags.WOODEN_FENCES) || state.isSolidSide(worldIn, posUp, Direction.DOWN));
         }
         return stateIn;
     }
@@ -137,7 +150,7 @@ public class TrellisBlock extends NormalBlock implements IWaterLoggable
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder)
     {
-        builder.add(POST, NORTH, EAST, WEST, SOUTH, WATERLOGGED);
+        builder.add(POST, UP, NORTH, EAST, WEST, SOUTH, WATERLOGGED);
     }
 
     @Override
@@ -179,4 +192,12 @@ public class TrellisBlock extends NormalBlock implements IWaterLoggable
         }
     }
 
+    static
+    {
+        VoxelShape TOP_SHAPE = VoxelShapeHelper.createVoxelShape(0.0D, 7.0D, 0.0D, 16.0D, 3.0D, 16.0D);
+        VoxelShape POST_SHAPE = VoxelShapeHelper.createVoxelShape(6.0D, 0.0D, 6.0D, 4.0D, 12.0D, 4.0D);
+        VoxelShape POST_UP_SHAPE = VoxelShapeHelper.createVoxelShape(6.0D, 7.0D, 6.0D, 4.0D, 9.0D, 4.0D);
+        SHAPES = new VoxelShape[]{TOP_SHAPE, POST_UP_SHAPE, POST_SHAPE, VoxelShapes.or(POST_UP_SHAPE, POST_SHAPE),
+                TOP_SHAPE, VoxelShapes.or(TOP_SHAPE, POST_UP_SHAPE), VoxelShapes.or(TOP_SHAPE, POST_SHAPE), VoxelShapes.or(TOP_SHAPE, POST_UP_SHAPE, POST_SHAPE)};
+    }
 }

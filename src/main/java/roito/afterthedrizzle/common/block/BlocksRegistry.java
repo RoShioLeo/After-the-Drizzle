@@ -83,8 +83,11 @@ public final class BlocksRegistry extends RegistryModule
 //    public static final BlockItem BAMBOO_GLASS_WINDOW_ITEM = new NormalBlockItem(BAMBOO_GLASS_WINDOW);
 
     // CROPS 作物
+    public static final Block PADDY_FIELD = new PaddyFieldBlock();
     public static final Block TEA_PLANT = new TeaPlantBlock();
     public static final Block WILD_TEA_PLANT = new WildTeaPlantBlock();
+    public static final Block RICE_SEEDLING = new RiceSeedlingBlock("rice_seedling");
+    public static final Block RICE_PLANT = new RicePlantBlock("rice_plant");
 
     public static final BlockItem WILD_TEA_PLANT_ITEM = new NormalBlockItem(WILD_TEA_PLANT);
 

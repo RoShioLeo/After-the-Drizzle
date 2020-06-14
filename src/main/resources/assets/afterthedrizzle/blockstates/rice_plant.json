@@ -1,0 +1,28 @@
+{
+    "variants": {
+        "age=0": {
+            "model": "afterthedrizzle:block/rice_plant_0"
+        },
+        "age=1": {
+            "model": "afterthedrizzle:block/rice_plant_1"
+        },
+        "age=2": {
+            "model": "afterthedrizzle:block/rice_plant_2"
+        },
+        "age=3": {
+            "model": "afterthedrizzle:block/rice_plant_3"
+        },
+        "age=4": {
+            "model": "afterthedrizzle:block/rice_plant_4"
+        },
+        "age=5": {
+            "model": "afterthedrizzle:block/rice_plant_5"
+        },
+        "age=6": {
+            "model": "afterthedrizzle:block/rice_plant_6"
+        },
+        "age=7": {
+            "model": "afterthedrizzle:block/rice_plant_7"
+        }
+    }
+}
