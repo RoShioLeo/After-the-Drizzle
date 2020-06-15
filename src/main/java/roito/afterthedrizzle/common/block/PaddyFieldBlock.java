@@ -9,8 +9,10 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.BooleanProperty;
+import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -21,12 +23,13 @@ import net.minecraft.world.IWorld;
 public class PaddyFieldBlock extends NormalBlock implements IWaterLoggable
 {
     private static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
+    public static final IntegerProperty LEVEL = BlockStateProperties.LEVEL_1_8;
     protected static final VoxelShape SHAPE = makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 6.0D, 16.0D);
 
     public PaddyFieldBlock()
     {
         super("paddy_field", Block.Properties.create(Material.ORGANIC).hardnessAndResistance(0.6F).sound(SoundType.GROUND).notSolid());
-        this.setDefaultState(this.stateContainer.getBaseState().with(WATERLOGGED, false));
+        this.setDefaultState(this.stateContainer.getBaseState().with(WATERLOGGED, false).with(LEVEL, 8));
     }
 
     @Override
@@ -34,12 +37,6 @@ public class PaddyFieldBlock extends NormalBlock implements IWaterLoggable
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
     {
         return SHAPE;
-    }
-
-    @Override
-    public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos)
-    {
-        return !state.get(WATERLOGGED);
     }
 
     @Override
@@ -60,7 +57,16 @@ public class PaddyFieldBlock extends NormalBlock implements IWaterLoggable
     @SuppressWarnings("deprecation")
     public IFluidState getFluidState(BlockState state)
     {
-        return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
+        if (state.get(WATERLOGGED))
+        {
+            int level = state.get(LEVEL);
+            if (level != 8)
+            {
+                return Fluids.WATER.getFlowingFluidState(state.get(LEVEL), false);
+            }
+            else return Fluids.WATER.getStillFluidState(false);
+        }
+        return super.getFluidState(state);
     }
 
     @Override
@@ -71,13 +77,25 @@ public class PaddyFieldBlock extends NormalBlock implements IWaterLoggable
         {
             worldIn.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(worldIn));
         }
-        return super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
+        else if (worldIn.getBlockState(currentPos.up()).isAir())
+        {
+            stateIn = stateIn.with(LEVEL, 8);
+            if (facingState.getBlock() == this && facingState.get(WATERLOGGED) && facingState.get(LEVEL) == 8)
+            {
+                stateIn = stateIn.with(WATERLOGGED, true);
+            }
+        }
+        else if (worldIn.getFluidState(currentPos.up()).isTagged(FluidTags.WATER))
+        {
+            stateIn = stateIn.with(WATERLOGGED, true).with(LEVEL, 8);
+        }
+        return stateIn;
     }
 
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder)
     {
-        builder.add(WATERLOGGED);
+        builder.add(WATERLOGGED, LEVEL);
     }
 
     @Override

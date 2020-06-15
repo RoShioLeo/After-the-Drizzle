@@ -20,6 +20,7 @@ import java.util.Random;
 
 import static net.minecraft.state.properties.BlockStateProperties.AGE_0_7;
 import static net.minecraft.state.properties.BlockStateProperties.WATERLOGGED;
+import static roito.afterthedrizzle.common.block.PaddyFieldBlock.LEVEL;
 
 public class RicePlantBlock extends CropsBlock
 {
@@ -81,9 +82,16 @@ public class RicePlantBlock extends CropsBlock
                 }
             }
             BlockState down = worldIn.getBlockState(pos.down());
-            if ((i >= 4) && down.getBlock() instanceof PaddyFieldBlock && down.get(WATERLOGGED))
+            if (down.getBlock() instanceof PaddyFieldBlock && down.get(WATERLOGGED))
             {
-                worldIn.setBlockState(pos.down(), down.with(WATERLOGGED, false));
+                if (i != 7)
+                {
+                    worldIn.setBlockState(pos.down(), down.with(LEVEL, 8 - i));
+                }
+                else
+                {
+                    worldIn.setBlockState(pos.down(), down.with(LEVEL, 8).with(WATERLOGGED, false));
+                }
             }
         }
     }
