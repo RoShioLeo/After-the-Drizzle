@@ -111,13 +111,13 @@ public class TrellisBlock extends NormalBlock implements IWaterLoggable
                     }
                     else
                     {
-                        if (worldIn.getBlockState(pos.down()).isAir())
+                        if (worldIn.getBlockState(pos.down()).isAir() && state.get(DISTANCE) % 2 == 1 && random.nextBoolean())
                         {
                             worldIn.setBlockState(pos, state.with(AGE, 0));
                             worldIn.setBlockState(pos.down(), state.get(VINE).getFruit().getDefaultState());
+                            ForgeHooks.onCropsGrowPost(worldIn, pos, state);
+                            return;
                         }
-                        ForgeHooks.onCropsGrowPost(worldIn, pos, state);
-                        return;
                     }
                     BlockPos blockPos = pos;
                     switch (random.nextInt(4))

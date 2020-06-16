@@ -99,7 +99,7 @@ public class StemFruitBlock extends NormalBlock implements IGrowable, IPlantable
                 BlockState blockstate = worldIn.getBlockState(blockpos.add(i, 0, j));
                 if (blockstate.getBlock() instanceof TrellisBlock && blockstate.get(VINE) == type)
                 {
-                    f1 = 2.0F;
+                    f1 = 1.0F;
                 }
 
                 if (i != 0 || j != 0)
@@ -130,7 +130,7 @@ public class StemFruitBlock extends NormalBlock implements IGrowable, IPlantable
             }
         }
 
-        return f;
+        return f / 2.0F;
     }
 
     @Override
