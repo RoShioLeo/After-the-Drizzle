@@ -1,0 +1,6 @@
+{
+    "parent": "afterthedrizzle:block/leaves_on_beam",
+    "textures": {
+        "leaves": "afterthedrizzle:block/grape_leaves"
+    }
+}

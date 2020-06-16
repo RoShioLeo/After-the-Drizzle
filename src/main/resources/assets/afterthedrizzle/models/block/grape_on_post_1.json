@@ -1,0 +1,6 @@
+{
+    "parent": "afterthedrizzle:block/stem_on_post",
+    "textures": {
+        "stem": "afterthedrizzle:block/grape_stage_1"
+    }
+}
