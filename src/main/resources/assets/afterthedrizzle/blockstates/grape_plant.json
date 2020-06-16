@@ -1,0 +1,29 @@
+{
+    "variants": {
+        "age=0": [
+            {
+                "model": "afterthedrizzle:block/grape_flowers"
+            }
+        ],
+        "age=1": [
+            {
+                "model": "afterthedrizzle:block/grape_flowers"
+            }
+        ],
+        "age=2": [
+            {
+                "model": "afterthedrizzle:block/immature_grapes"
+            }
+        ],
+        "age=3": [
+            {
+                "model": "afterthedrizzle:block/immature_grapes"
+            }
+        ],
+        "age=4": [
+            {
+                "model": "afterthedrizzle:block/mature_grapes"
+            }
+        ]
+    }
+}

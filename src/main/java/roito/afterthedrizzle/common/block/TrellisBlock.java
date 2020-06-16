@@ -1,9 +1,6 @@
 package roito.afterthedrizzle.common.block;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.IWaterLoggable;
-import net.minecraft.block.SixWayBlock;
+import net.minecraft.block.*;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.BlockItemUseContext;
@@ -24,6 +21,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.Tags;
 import roito.afterthedrizzle.helper.VoxelShapeHelper;
 
@@ -74,9 +72,77 @@ public class TrellisBlock extends NormalBlock implements IWaterLoggable
 
     @Override
     @SuppressWarnings("deprecation")
-    public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random)
+    public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random)
     {
-
+        if (state.get(VINE) != VineType.NONE)
+        {
+            if (hasPost(state))
+            {
+                int i = state.get(AGE);
+                float f = 8.0F; //TODO Connected with humidity.
+                if (ForgeHooks.onCropsGrowPre(worldIn, pos, state, random.nextInt((int) (25.0F / f) + 1) == 0))
+                {
+                    if (i < 3)
+                    {
+                        worldIn.setBlockState(pos, state.with(AGE, i + 1), 2);
+                    }
+                    else
+                    {
+                        BlockState up = worldIn.getBlockState(pos.up());
+                        if (up.getBlock() instanceof TrellisBlock && up.get(VINE) == VineType.NONE)
+                        {
+                            worldIn.setBlockState(pos.up(), up.with(VINE, state.get(VINE)).with(AGE, 0).with(DISTANCE, state.get(DISTANCE)), 2);
+                        }
+                    }
+                    ForgeHooks.onCropsGrowPost(worldIn, pos, state);
+                    return;
+                }
+            }
+            if (hasHorizontalBar(state))
+            {
+                int i = state.get(AGE);
+                float f = 5.0F; //TODO Connected with humidity.
+                if (ForgeHooks.onCropsGrowPre(worldIn, pos, state, random.nextInt((int) (25.0F / f) + 1) == 0))
+                {
+                    if (i < 3)
+                    {
+                        if (worldIn.getBlockState(pos.down()).getBlock() != state.get(VINE).getFruit())
+                            worldIn.setBlockState(pos, state.with(AGE, i + 1), 2);
+                    }
+                    else
+                    {
+                        if (worldIn.getBlockState(pos.down()).isAir())
+                        {
+                            worldIn.setBlockState(pos, state.with(AGE, 0));
+                            worldIn.setBlockState(pos.down(), state.get(VINE).getFruit().getDefaultState());
+                        }
+                        ForgeHooks.onCropsGrowPost(worldIn, pos, state);
+                        return;
+                    }
+                    BlockPos blockPos = pos;
+                    switch (random.nextInt(4))
+                    {
+                        case 0:
+                            blockPos = blockPos.north();
+                            break;
+                        case 1:
+                            blockPos = blockPos.south();
+                            break;
+                        case 2:
+                            blockPos = blockPos.east();
+                            break;
+                        default:
+                            blockPos = blockPos.west();
+                    }
+                    BlockState next = worldIn.getBlockState(blockPos);
+                    if (next.getBlock() instanceof TrellisBlock && next.get(VINE) == VineType.NONE && state.get(DISTANCE) < 7)
+                    {
+                        worldIn.setBlockState(blockPos, next.with(VINE, state.get(VINE)).with(AGE, 0).with(DISTANCE, state.get(DISTANCE) + 1), 2);
+                    }
+                    ForgeHooks.onCropsGrowPost(worldIn, pos, state);
+                }
+            }
+        }
     }
 
     @Override
@@ -148,7 +214,7 @@ public class TrellisBlock extends NormalBlock implements IWaterLoggable
 
     public int getDistance(BlockState state, VineType vine)
     {
-        if (state.getBlock() == this && state.get(VINE) == vine)
+        if (state.getBlock() instanceof TrellisBlock && state.get(VINE) == vine)
         {
             return state.get(DISTANCE);
         }
@@ -203,7 +269,7 @@ public class TrellisBlock extends NormalBlock implements IWaterLoggable
                     stateIn = stateIn.with(DISTANCE, 0);
                     valid = true;
                 }
-                else if (down.getBlock() == this)
+                else if (down.getBlock() instanceof TrellisBlock)
                 {
                     if (down.get(AGE) == 3 && down.get(VINE) == stateIn.get(VINE))
                     {
@@ -217,7 +283,7 @@ public class TrellisBlock extends NormalBlock implements IWaterLoggable
                 stateIn = getNoneVineState(stateIn);
             }
         }
-
+        else stateIn = getNoneVineState(stateIn);
         return stateIn;
     }
 
@@ -283,6 +349,15 @@ public class TrellisBlock extends NormalBlock implements IWaterLoggable
     {
         NONE,
         GRAPE;
+
+        public Block getFruit()
+        {
+            if (getName().equals("grape"))
+            {
+                return BlocksRegistry.GRAPE;
+            }
+            else return Blocks.AIR;
+        }
 
         @Override
         public String getName()

@@ -183,39 +183,6 @@
             "apply": {
                 "model": "afterthedrizzle:block/grape_leaves_on_beam"
             }
-        },
-        {
-            "when": {
-                "age": "1",
-                "vine": "grape",
-                "horizontal": "true",
-                "post": "false"
-            },
-            "apply": {
-                "model": "afterthedrizzle:block/grape_flowers_on_beam"
-            }
-        },
-        {
-            "when": {
-                "age": "2",
-                "vine": "grape",
-                "horizontal": "true",
-                "post": "false"
-            },
-            "apply": {
-                "model": "afterthedrizzle:block/immature_grape_on_beam"
-            }
-        },
-        {
-            "when": {
-                "age": "3",
-                "vine": "grape",
-                "horizontal": "true",
-                "post": "false"
-            },
-            "apply": {
-                "model": "afterthedrizzle:block/mature_grape_on_beam"
-            }
         }
     ]
 }

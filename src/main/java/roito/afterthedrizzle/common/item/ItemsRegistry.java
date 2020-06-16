@@ -65,6 +65,7 @@ public final class ItemsRegistry extends RegistryModule
     public static final Item TEA_SEEDS = new BlockNamedItem(BlocksRegistry.TEA_PLANT, getNormalItemProperties()).setRegistryName("tea_seeds");
     public static final Item RICE_SEEDS = new BlockNamedItem(BlocksRegistry.RICE_SEEDLING, getNormalItemProperties()).setRegistryName("rice_seeds");
     public static final Item RICE_SEEDLINGS = new BlockNamedItem(BlocksRegistry.RICE_PLANT, getNormalItemProperties()).setRegistryName("rice_seedlings");
+    public static final Item GRAPES = new GrapeSeedsItem();
 
     // DRINK 饮品
     public static final Item CLAY_CUP = new NormalItem("clay_cup");

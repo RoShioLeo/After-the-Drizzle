@@ -1,5 +1,5 @@
 {
-    "parent": "afterthedrizzle:block/grape_on_beam",
+    "parent": "afterthedrizzle:block/grape",
     "textures": {
         "fruit": "afterthedrizzle:block/immature_grape"
     }

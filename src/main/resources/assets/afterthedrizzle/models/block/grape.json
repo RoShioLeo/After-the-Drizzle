@@ -2,16 +2,16 @@
     "credit": "Made with Blockbench",
     "textures": {
         "leaf": "afterthedrizzle:block/grape_fruit_leaf",
-        "particle": "afterthedrizzle:block/grape_leaves"
+        "particle": "#fruit"
     },
     "elements": [
         {
-            "from": [8, -12, 0],
-            "to": [8, 4, 16],
+            "from": [8, 5, 0],
+            "to": [8, 21, 16],
             "rotation": {
                 "angle": 0,
                 "axis": "y",
-                "origin": [16, 11, 15]
+                "origin": [16, 28, 15]
             },
             "faces": {
                 "east": {
@@ -25,12 +25,12 @@
             }
         },
         {
-            "from": [8, -12, 0],
-            "to": [8, 4, 16],
+            "from": [8, 5, 0],
+            "to": [8, 21, 16],
             "rotation": {
                 "angle": -45,
                 "axis": "y",
-                "origin": [8, -4, 8]
+                "origin": [8, 13, 8]
             },
             "faces": {
                 "east": {
@@ -44,12 +44,12 @@
             }
         },
         {
-            "from": [8, -12, 0],
-            "to": [8, 4, 16],
+            "from": [8, 5, 0],
+            "to": [8, 21, 16],
             "rotation": {
                 "angle": 45,
                 "axis": "y",
-                "origin": [8, -4, 8]
+                "origin": [8, 13, 8]
             },
             "faces": {
                 "east": {
@@ -63,12 +63,12 @@
             }
         },
         {
-            "from": [0, -12, 8],
-            "to": [16, 4, 8],
+            "from": [0, 5, 8],
+            "to": [16, 21, 8],
             "rotation": {
                 "angle": 0,
                 "axis": "y",
-                "origin": [8, -4, 8]
+                "origin": [8, 13, 8]
             },
             "faces": {
                 "north": {
@@ -82,12 +82,12 @@
             }
         },
         {
-            "from": [0, 3, 5],
-            "to": [8, 3, 12],
+            "from": [0, 20, 5],
+            "to": [8, 20, 12],
             "rotation": {
                 "angle": 22.5,
                 "axis": "z",
-                "origin": [7.5, 3.5, 5.5]
+                "origin": [7.5, 20.5, 5.5]
             },
             "faces": {
                 "north": {
@@ -123,12 +123,12 @@
             }
         },
         {
-            "from": [3, 2, -3],
-            "to": [10, 2, 5],
+            "from": [3, 19, -3],
+            "to": [10, 19, 5],
             "rotation": {
                 "angle": 45,
                 "axis": "y",
-                "origin": [9.5, 2.5, 4.5]
+                "origin": [9.5, 19.5, 4.5]
             },
             "faces": {
                 "north": {
@@ -163,12 +163,12 @@
             }
         },
         {
-            "from": [5, 2.5, 10],
-            "to": [12, 2.5, 18],
+            "from": [5, 19.5, 10],
+            "to": [12, 19.5, 18],
             "rotation": {
                 "angle": 45,
                 "axis": "y",
-                "origin": [5.5, 3, 10.5]
+                "origin": [5.5, 20, 10.5]
             },
             "faces": {
                 "north": {
@@ -203,12 +203,12 @@
             }
         },
         {
-            "from": [8, 3.5, 4.5],
-            "to": [16, 3.5, 11.5],
+            "from": [8, 20.5, 4.5],
+            "to": [16, 20.5, 11.5],
             "rotation": {
                 "angle": -22.5,
                 "axis": "z",
-                "origin": [8.5, 4, 5]
+                "origin": [8.5, 21, 5]
             },
             "faces": {
                 "north": {

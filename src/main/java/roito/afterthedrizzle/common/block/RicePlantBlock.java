@@ -34,7 +34,7 @@ public class RicePlantBlock extends CropsBlock
     public RicePlantBlock(String name)
     {
         super(Block.Properties.create(Material.PLANTS).doesNotBlockMovement().tickRandomly().hardnessAndResistance(0.0F).sound(SoundType.CROP));
-        this.setDefaultState(this.stateContainer.getBaseState().with(AGE_0_7, 0));
+        this.setDefaultState(this.stateContainer.getBaseState().with(AGE, 0));
         this.setRegistryName(name);
     }
 

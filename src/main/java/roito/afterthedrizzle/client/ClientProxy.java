@@ -57,6 +57,7 @@ public class ClientProxy extends CommonProxy
         registerCutoutType(BlocksRegistry.ACACIA_TRELLIS);
         registerCutoutType(BlocksRegistry.SPRUCE_TRELLIS);
         registerCutoutType(BlocksRegistry.JUNGLE_TRELLIS);
+        registerCutoutType(BlocksRegistry.GRAPE);
     }
 
     private static void registerCutoutType(Block block)

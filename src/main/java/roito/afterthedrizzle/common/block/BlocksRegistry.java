@@ -88,6 +88,7 @@ public final class BlocksRegistry extends RegistryModule
     public static final Block WILD_TEA_PLANT = new WildTeaPlantBlock();
     public static final Block RICE_SEEDLING = new RiceSeedlingBlock("rice_seedling");
     public static final Block RICE_PLANT = new RicePlantBlock("rice_plant");
+    public static final Block GRAPE = new StemFruitBlock("grape_plant", Block.Properties.create(Material.PLANTS).doesNotBlockMovement().tickRandomly().hardnessAndResistance(0.0F).sound(SoundType.CROP), TrellisBlock.VineType.GRAPE);
 
     public static final BlockItem WILD_TEA_PLANT_ITEM = new NormalBlockItem(WILD_TEA_PLANT);
 
