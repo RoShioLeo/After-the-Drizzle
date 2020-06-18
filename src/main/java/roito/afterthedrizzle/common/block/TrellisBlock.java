@@ -1,6 +1,9 @@
 package roito.afterthedrizzle.common.block;
 
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.IWaterLoggable;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.BlockItemUseContext;
@@ -10,7 +13,8 @@ import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.*;
+import net.minecraft.util.Direction;
+import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
@@ -25,15 +29,10 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.Tags;
 import roito.afterthedrizzle.helper.VoxelShapeHelper;
 
-import java.util.Map;
 import java.util.Random;
 
-public class TrellisBlock extends NormalBlock implements IWaterLoggable
+public class TrellisBlock extends HorizontalConnectedBlock implements IWaterLoggable
 {
-    public static final BooleanProperty NORTH = SixWayBlock.NORTH;
-    public static final BooleanProperty EAST = SixWayBlock.EAST;
-    public static final BooleanProperty SOUTH = SixWayBlock.SOUTH;
-    public static final BooleanProperty WEST = SixWayBlock.WEST;
     public static final BooleanProperty POST = BooleanProperty.create("post");
     public static final BooleanProperty UP = BlockStateProperties.UP;
     public static final BooleanProperty HORIZONTAL = BooleanProperty.create("horizontal");
@@ -41,8 +40,6 @@ public class TrellisBlock extends NormalBlock implements IWaterLoggable
     public static final IntegerProperty AGE = BlockStateProperties.AGE_0_3;
     public static final IntegerProperty DISTANCE = BlockStateProperties.DISTANCE_0_7;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-    private static final Map<Direction, BooleanProperty> FACING_TO_PROPERTY_MAP = SixWayBlock.FACING_TO_PROPERTY_MAP.entrySet().stream().filter((direction) -> direction.getKey().getAxis().isHorizontal()).collect(Util.toMapCollector());
-
     private static final VoxelShape[] SHAPES;
 
     public TrellisBlock(String name, Properties properties)
@@ -174,7 +171,7 @@ public class TrellisBlock extends NormalBlock implements IWaterLoggable
         {
             BlockPos facingPos = pos.offset(facing);
             BlockState facingState = world.getBlockState(facingPos);
-            if (this.canConnect(facingState, facingState.isSolidSide(world, facingPos, facing.getOpposite()), facing.getOpposite()))
+            if (this.canConnect(facingState, facingState.isSolidSide(world, facingPos, facing.getOpposite())))
             {
                 state = state.with(FACING_TO_PROPERTY_MAP.get(facing), true);
             }
@@ -191,7 +188,7 @@ public class TrellisBlock extends NormalBlock implements IWaterLoggable
         return 1.0F;
     }
 
-    public boolean canConnect(BlockState state, boolean isSolidSide, Direction direction)
+    public boolean canConnect(BlockState state, boolean isSolidSide)
     {
         Block block = state.getBlock();
         return !cannotAttach(block) && isSolidSide || block instanceof TrellisBlock;
@@ -232,7 +229,7 @@ public class TrellisBlock extends NormalBlock implements IWaterLoggable
         }
         if (facing.getAxis().getPlane() == Direction.Plane.HORIZONTAL)
         {
-            stateIn = stateIn.with(FACING_TO_PROPERTY_MAP.get(facing), this.canConnect(facingState, facingState.isSolidSide(worldIn, facingPos, facing.getOpposite()), facing.getOpposite()));
+            stateIn = stateIn.with(FACING_TO_PROPERTY_MAP.get(facing), this.canConnect(facingState, facingState.isSolidSide(worldIn, facingPos, facing.getOpposite())));
             stateIn = stateIn.with(HORIZONTAL, hasHorizontalBar(stateIn));
         }
         else if (facing == Direction.DOWN)
@@ -303,7 +300,8 @@ public class TrellisBlock extends NormalBlock implements IWaterLoggable
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder)
     {
-        builder.add(HORIZONTAL, POST, UP, NORTH, EAST, WEST, SOUTH, AGE, DISTANCE, VINE, WATERLOGGED);
+        super.fillStateContainer(builder);
+        builder.add(HORIZONTAL, POST, UP, AGE, DISTANCE, VINE, WATERLOGGED);
     }
 
     @Override
@@ -311,38 +309,6 @@ public class TrellisBlock extends NormalBlock implements IWaterLoggable
     public IFluidState getFluidState(BlockState state)
     {
         return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
-    }
-
-    @Override
-    @SuppressWarnings("deprecation")
-    public BlockState rotate(BlockState state, Rotation rot)
-    {
-        switch (rot)
-        {
-            case CLOCKWISE_180:
-                return state.with(NORTH, state.get(SOUTH)).with(EAST, state.get(WEST)).with(SOUTH, state.get(NORTH)).with(WEST, state.get(EAST));
-            case COUNTERCLOCKWISE_90:
-                return state.with(NORTH, state.get(EAST)).with(EAST, state.get(SOUTH)).with(SOUTH, state.get(WEST)).with(WEST, state.get(NORTH));
-            case CLOCKWISE_90:
-                return state.with(NORTH, state.get(WEST)).with(EAST, state.get(NORTH)).with(SOUTH, state.get(EAST)).with(WEST, state.get(SOUTH));
-            default:
-                return state;
-        }
-    }
-
-    @Override
-    @SuppressWarnings("deprecation")
-    public BlockState mirror(BlockState state, Mirror mirrorIn)
-    {
-        switch (mirrorIn)
-        {
-            case LEFT_RIGHT:
-                return state.with(NORTH, state.get(SOUTH)).with(SOUTH, state.get(NORTH));
-            case FRONT_BACK:
-                return state.with(EAST, state.get(WEST)).with(WEST, state.get(EAST));
-            default:
-                return super.mirror(state, mirrorIn);
-        }
     }
 
     public enum VineType implements IStringSerializable

@@ -5,6 +5,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.IWaterLoggable;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.BlockItemUseContext;
@@ -12,7 +13,6 @@ import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -46,6 +46,17 @@ public class PaddyFieldBlock extends NormalBlock implements IWaterLoggable
         return false;
     }
 
+    @Override
+    public boolean receiveFluid(IWorld worldIn, BlockPos pos, BlockState state, IFluidState fluidStateIn)
+    {
+        return false;
+    }
+
+    @Override
+    public boolean canContainFluid(IBlockReader worldIn, BlockPos pos, BlockState state, Fluid fluidIn)
+    {
+        return false;
+    }
 
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context)
@@ -76,18 +87,6 @@ public class PaddyFieldBlock extends NormalBlock implements IWaterLoggable
         if (stateIn.get(WATERLOGGED))
         {
             worldIn.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(worldIn));
-        }
-        else if (worldIn.getBlockState(currentPos.up()).isAir())
-        {
-            stateIn = stateIn.with(LEVEL, 8);
-            if (facingState.getBlock() == this && facingState.get(WATERLOGGED) && facingState.get(LEVEL) == 8)
-            {
-                stateIn = stateIn.with(WATERLOGGED, true);
-            }
-        }
-        else if (worldIn.getFluidState(currentPos.up()).isTagged(FluidTags.WATER))
-        {
-            stateIn = stateIn.with(WATERLOGGED, true).with(LEVEL, 8);
         }
         return stateIn;
     }
