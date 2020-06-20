@@ -61,7 +61,8 @@ public final class BlocksRegistry extends RegistryModule
     // DECORATIONS 装饰
     public static final Block BAMBOO_TABLE = new TableBlock("bamboo_table", Block.Properties.create(Material.BAMBOO).sound(SoundType.BAMBOO).hardnessAndResistance(0.5F).notSolid());
     public static final Block WOODEN_TABLE = new TableBlock("wooden_table", Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(0.6F).notSolid());
-    public static final Block BAMBOO_CHAIR = new BambooChairBlock();
+    public static final Block BAMBOO_CHAIR = new ChairBlock("bamboo_chair", Block.Properties.create(Material.BAMBOO).sound(SoundType.BAMBOO).hardnessAndResistance(0.5F).notSolid());
+    public static final Block WOODEN_CHAIR = new ChairBlock("wooden_chair", Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(0.6F).notSolid());
     public static final Block BAMBOO_LANTERN = new LanternBlock(Block.Properties.create(Material.BAMBOO).sound(SoundType.BAMBOO).hardnessAndResistance(0.5F).lightValue(15).notSolid())
     {
         @OnlyIn(Dist.CLIENT)
@@ -81,6 +82,7 @@ public final class BlocksRegistry extends RegistryModule
     public static final BlockItem BAMBOO_TABLE_ITEM = new NormalBlockItem(BAMBOO_TABLE);
     public static final BlockItem WOODEN_TABLE_ITEM = new NormalBlockItem(WOODEN_TABLE);
     public static final BlockItem BAMBOO_CHAIR_ITEM = new NormalBlockItem(BAMBOO_CHAIR);
+    public static final BlockItem WOODEN_CHAIR_ITEM = new NormalBlockItem(WOODEN_CHAIR);
     public static final BlockItem BAMBOO_LANTERN_ITEM = new NormalBlockItem(BAMBOO_LANTERN);
     public static final BlockItem BAMBOO_DOOR_ITEM = new NormalBlockItem(BAMBOO_DOOR);
     public static final BlockItem BAMBOO_GLASS_DOOR_ITEM = new NormalBlockItem(BAMBOO_GLASS_DOOR);
