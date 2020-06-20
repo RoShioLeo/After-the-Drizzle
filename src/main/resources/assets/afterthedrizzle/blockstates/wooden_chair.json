@@ -1,0 +1,19 @@
+{
+    "variants": {
+        "facing=north": {
+            "model": "afterthedrizzle:block/wooden_chair"
+        },
+        "facing=south": {
+            "model": "afterthedrizzle:block/wooden_chair",
+            "y": 180
+        },
+        "facing=west": {
+            "model": "afterthedrizzle:block/wooden_chair",
+            "y": 270
+        },
+        "facing=east": {
+            "model": "afterthedrizzle:block/wooden_chair",
+            "y": 90
+        }
+    }
+}

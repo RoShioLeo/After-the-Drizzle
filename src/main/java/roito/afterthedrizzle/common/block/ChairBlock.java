@@ -19,16 +19,16 @@ import net.minecraft.world.World;
 import roito.afterthedrizzle.common.entity.SeatEntity;
 import roito.afterthedrizzle.helper.VoxelShapeHelper;
 
-public class BambooChairBlock extends NormalHorizontalBlock
+public class ChairBlock extends NormalHorizontalBlock
 {
     public static final VoxelShape NORTH_SHAPE;
     public static final VoxelShape EAST_SHAPE;
     public static final VoxelShape WEST_SHAPE;
     public static final VoxelShape SOUTH_SHAPE;
 
-    public BambooChairBlock()
+    public ChairBlock(String name,Properties properties)
     {
-        super(Properties.create(Material.BAMBOO).sound(SoundType.BAMBOO).hardnessAndResistance(0.5F), "bamboo_chair");
+        super(properties,name);
         this.setDefaultState(this.getStateContainer().getBaseState().with(HORIZONTAL_FACING, Direction.NORTH));
     }
 
