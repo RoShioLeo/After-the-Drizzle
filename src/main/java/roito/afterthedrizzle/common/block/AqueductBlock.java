@@ -65,10 +65,10 @@ public class AqueductBlock extends HorizontalConnectedBlock implements IWaterLog
             worldIn.setBlockState(pos, state.with(BLOCKED, true).with(WATERLOGGED, false).with(DISTANCE, 64));
             if (worldIn instanceof ServerWorld)
             {
-                updateWater((ServerWorld) worldIn, pos.north(), false);
-                updateWater((ServerWorld) worldIn, pos.south(), false);
-                updateWater((ServerWorld) worldIn, pos.east(), false);
-                updateWater((ServerWorld) worldIn, pos.west(), false);
+                updateWater((ServerWorld) worldIn, pos.north());
+                updateWater((ServerWorld) worldIn, pos.south());
+                updateWater((ServerWorld) worldIn, pos.east());
+                updateWater((ServerWorld) worldIn, pos.west());
             }
             player.getHeldItem(handIn).shrink(1);
             return ActionResultType.SUCCESS;
@@ -192,29 +192,29 @@ public class AqueductBlock extends HorizontalConnectedBlock implements IWaterLog
         {
             state = state.with(WATERLOGGED, true).with(DISTANCE, nearDistance + 1);
             worldIn.getPendingFluidTicks().scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(worldIn));
-            updateWater(worldIn, pos.north(), true);
-            updateWater(worldIn, pos.south(), true);
-            updateWater(worldIn, pos.east(), true);
-            updateWater(worldIn, pos.west(), true);
+            updateWater(worldIn, pos.north());
+            updateWater(worldIn, pos.south());
+            updateWater(worldIn, pos.east());
+            updateWater(worldIn, pos.west());
             flag = true;
         }
         else if (nearDistance + 1 != currentDistance)
         {
             state = state.with(WATERLOGGED, false).with(DISTANCE, 64);
-            updateWater(worldIn, pos.north(), false);
-            updateWater(worldIn, pos.south(), false);
-            updateWater(worldIn, pos.east(), false);
-            updateWater(worldIn, pos.west(), false);
+            updateWater(worldIn, pos.north());
+            updateWater(worldIn, pos.south());
+            updateWater(worldIn, pos.east());
+            updateWater(worldIn, pos.west());
             flag = true;
         }
         if (flag)
         {
             worldIn.setBlockState(pos, state);
-            updateWater(worldIn, pos, false);
+            updateWater(worldIn, pos);
         }
     }
 
-    public void updateWater(ServerWorld worldIn, BlockPos pos, boolean water)
+    public void updateWater(ServerWorld worldIn, BlockPos pos)
     {
         BlockState state = worldIn.getBlockState(pos);
         if (state.getBlock() instanceof AqueductBlock && canConnect(state))

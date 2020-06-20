@@ -42,13 +42,13 @@ public final class PlayerTemperatureHandler
 
             if (f != Fluids.EMPTY)
             {
-                // 浸没于水中时，初步体感倾向温度等于水温。
-                adjust(getFluidApparentTemp(f.getAttributes().getTemperature()), t, player);
+                // When in the fluid, use the temperature of the fluid. 浸没于水中时，环境体感温度等于水温。
+                adjustTemperature(getFluidApparentTemp(f.getAttributes().getTemperature()), t, player);
             }
             else
             {
                 ApparentTemperature ATemp = getTemperatureWithPoint(getTemperatureByLight(getTemperatureIndoors(getTemperatureByHeight(getEnvOriginTemp(temp, humidity, world), humidity, world, pos), world, pos), world, pos), player);
-                adjust((int) (ATemp.getMiddle() * humidity.getCoefficient()), t, player);
+                adjustTemperature((int) (ATemp.getMiddle() * humidity.getCoefficient()), t, player);
             }
             applyEffects(player, world, t.getApparentTemperature());
         });
@@ -111,6 +111,7 @@ public final class PlayerTemperatureHandler
 
     /*
      * 根据玩家所处的高度决定温度（主世界地底挖矿）。
+     *  Temperature depending on height.
      */
     public static ApparentTemperature getTemperatureByHeight(float temp, Humidity humidity, World world, BlockPos pos)
     {
@@ -135,6 +136,7 @@ public final class PlayerTemperatureHandler
 
     /*
      * 计算玩家所处的环境的实际湿度，若在雨中，+1。
+     *  Calculate the actual environment humidity. If in rain, increasing 1 level.
      */
     public static Humidity getActualHumidity(Humidity in, World world, BlockPos pos)
     {
@@ -148,17 +150,18 @@ public final class PlayerTemperatureHandler
 
     /*
      * 计算玩家所处的环境随时间变化的原始气温。
+     *  Calculate the original time-related temperature.
      */
     public static float getEnvOriginTemp(float biomeTemp, Humidity humidity, World world)
     {
         int t = ((int) (world.getCelestialAngle(0) * 24000 + 6000)) % 24000 / 100;
         boolean isRaining = world.isRaining();
         int id = humidity.getId();
-        // 雨天波动减半
-        double sd = (6 - id) * (6 - id) * 0.02D * Math.abs((double) biomeTemp) * (CommonConfig.Temperature.fluctuationDecreaseWhenRaining.get() && isRaining ? 0.5D : 1);
-        double standard = (double) biomeTemp - sd * sd;
+        //Volatility halved when raining. 雨天波动减半
+        double volatility = (6 - id) * (6 - id) * 0.02D * Math.abs((double) biomeTemp) * (CommonConfig.Temperature.fluctuationDecreaseWhenRaining.get() && isRaining ? 0.5D : 1);
+        double standard = (double) biomeTemp - volatility * volatility;
         double actual = -4.0706867802E-14 * t * t * t * t * t * t - 6.6491872724E-11 * t * t * t * t * t + 5.5361084324E-08 * t * t * t * t - 1.2584165083E-05 * t * t * t + 8.4482896013E-04 * t * t + 9.6706499996E-03 * t - 7.3983503027E-01;
-        return (float) (sd * actual + standard);
+        return (float) (volatility * actual + standard);
     }
 
     public static int getFluidApparentTemp(int k)
@@ -259,7 +262,7 @@ public final class PlayerTemperatureHandler
         return Math.min(2, point / 2);
     }
 
-    public static void adjust(int env, CapabilityPlayerTemperature.Data t, ServerPlayerEntity player)
+    public static void adjustTemperature(int env, CapabilityPlayerTemperature.Data t, ServerPlayerEntity player)
     {
         if (env > t.getTemperature())
         {
@@ -282,7 +285,7 @@ public final class PlayerTemperatureHandler
     {
         if (!player.isCreative() && !player.isSpectator())
         {
-            int ticks = Math.toIntExact(world.getDayTime() % 24000);
+            int ticks = Math.toIntExact(world.getGameTime() % 24000);
             int id = temp.getIndex();
             if (id <= 2)
             {

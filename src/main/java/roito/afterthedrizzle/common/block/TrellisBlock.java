@@ -73,6 +73,7 @@ public class TrellisBlock extends HorizontalConnectedBlock implements IWaterLogg
     {
         if (state.get(VINE) != VineType.NONE)
         {
+            // Grow vertically. 垂直方向生长。
             if (hasPost(state))
             {
                 int i = state.get(AGE);
@@ -95,6 +96,7 @@ public class TrellisBlock extends HorizontalConnectedBlock implements IWaterLogg
                     return;
                 }
             }
+            // Grow horizontally and bear fruit. 水平方向蔓延和结果。
             if (hasHorizontalBar(state))
             {
                 int i = state.get(AGE);
@@ -222,7 +224,7 @@ public class TrellisBlock extends HorizontalConnectedBlock implements IWaterLogg
     @SuppressWarnings("deprecation")
     public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos)
     {
-        // Trellis
+        // Update the connecting state of trellis. 更新棚架方块的连接状态。
         if (stateIn.get(WATERLOGGED))
         {
             worldIn.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(worldIn));
@@ -245,7 +247,8 @@ public class TrellisBlock extends HorizontalConnectedBlock implements IWaterLogg
             stateIn = stateIn.with(UP, state.isIn(BlockTags.WOODEN_FENCES) || state.isSolidSide(worldIn, posUp, Direction.DOWN));
         }
 
-        // Vines
+        // To judge whether vines can be stay here. 判断缠绕藤（棚架）作物在此是否合理。
+        // Distance should be within 7. 攀爬距离应该小于等于7。
         if (stateIn.get(VINE) != VineType.NONE)
         {
             boolean valid = false;
