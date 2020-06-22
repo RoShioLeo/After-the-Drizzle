@@ -1,5 +1,6 @@
 package roito.afterthedrizzle.common.block;
 
+import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -7,6 +8,7 @@ import net.minecraft.block.IWaterLoggable;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.IntegerProperty;
@@ -23,12 +25,14 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.storage.loot.LootContext;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.Tags;
 import roito.afterthedrizzle.helper.VoxelShapeHelper;
 
+import java.util.List;
 import java.util.Random;
 
 public class TrellisBlock extends HorizontalConnectedBlock implements IWaterLoggable
@@ -103,16 +107,16 @@ public class TrellisBlock extends HorizontalConnectedBlock implements IWaterLogg
                 float f = 5.0F; //TODO Connected with humidity.
                 if (ForgeHooks.onCropsGrowPre(worldIn, pos, state, random.nextInt((int) (25.0F / f) + 1) == 0))
                 {
-                    if (i < 3)
+                    if (random.nextBoolean()) // Leaves grow up.
                     {
                         if (worldIn.getBlockState(pos.down()).getBlock() != state.get(VINE).getFruit())
-                            worldIn.setBlockState(pos, state.with(AGE, i + 1), 2);
+                            worldIn.setBlockState(pos, state.with(AGE, (i + 1) % 4), 2);
                     }
-                    else
+                    else // Bear fruit.
                     {
-                        if (worldIn.getBlockState(pos.down()).isAir() && state.get(DISTANCE) % 2 == 1 && random.nextBoolean())
+                        if (worldIn.getBlockState(pos.down()).isAir() && (state.get(DISTANCE) + state.get(AGE)) % 3 == 0)
                         {
-                            worldIn.setBlockState(pos, state.with(AGE, 0));
+                            worldIn.setBlockState(pos, state.with(AGE, (i + 1) % 4));
                             worldIn.setBlockState(pos.down(), state.get(VINE).getFruit().getDefaultState());
                             ForgeHooks.onCropsGrowPost(worldIn, pos, state);
                             return;
@@ -312,6 +316,15 @@ public class TrellisBlock extends HorizontalConnectedBlock implements IWaterLogg
     public IFluidState getFluidState(BlockState state)
     {
         return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder)
+    {
+        List<ItemStack> list = Lists.newArrayList();
+        list.add(new ItemStack(this));
+        return list;
     }
 
     public enum VineType implements IStringSerializable

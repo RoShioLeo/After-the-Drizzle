@@ -1,6 +1,7 @@
 package roito.afterthedrizzle.common.handler;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.FarmlandBlock;
 import net.minecraft.block.FireBlock;
 import net.minecraft.entity.Entity;
@@ -18,15 +19,14 @@ import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.PlantType;
+import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.entity.player.BonemealEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
-import net.minecraftforge.event.entity.player.UseHoeEvent;
+import net.minecraftforge.event.entity.player.*;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -37,12 +37,14 @@ import roito.afterthedrizzle.common.block.BlocksRegistry;
 import roito.afterthedrizzle.common.block.TeaPlantBlock;
 import roito.afterthedrizzle.common.capability.CapabilityPlayerTemperature;
 import roito.afterthedrizzle.common.capability.CapabilitySolarTermTime;
+import roito.afterthedrizzle.common.capability.CapabilityWorldWeather;
 import roito.afterthedrizzle.common.config.CommonConfig;
 import roito.afterthedrizzle.common.environment.temperature.PlayerTemperatureHandler;
 import roito.afterthedrizzle.common.item.ItemsRegistry;
 import roito.afterthedrizzle.common.network.PlayerTemperatureMessage;
 import roito.afterthedrizzle.common.network.SimpleNetworkHandler;
 import roito.afterthedrizzle.common.network.SolarTermsMessage;
+import roito.afterthedrizzle.common.network.WeatherChangeMessage;
 import roito.afterthedrizzle.common.potion.EffectsRegistry;
 
 import static roito.afterthedrizzle.common.block.TeaPlantBlock.AGE;
@@ -147,6 +149,24 @@ public final class CommonEventHandler
     }
 
     @SubscribeEvent
+    public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event)
+    {
+        PlayerEntity player = event.getPlayer();
+        ItemStack held = player.getHeldItem(event.getHand());
+        if (!held.isEmpty())
+        {
+            BlockState state = event.getWorld().getBlockState(event.getPos());
+            if (state.isIn(Tags.Blocks.DIRT) && held.getItem().getToolTypes(held).contains(ToolType.SHOVEL))
+            {
+                event.getWorld().setBlockState(event.getPos(), BlocksRegistry.DIRT_AQUEDUCT.getDefaultState());
+                event.getWorld().playSound(event.getPlayer(), event.getPos(), SoundEvents.ITEM_HOE_TILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                held.damageItem(1, player, p -> p.sendBreakAnimation(event.getHand()));
+                event.setUseItem(Event.Result.ALLOW);
+            }
+        }
+    }
+
+    @SubscribeEvent
     public static void onHoeUse(UseHoeEvent event)
     {
         World world = event.getContext().getWorld();
@@ -175,6 +195,7 @@ public final class CommonEventHandler
         {
             event.addCapability(new ResourceLocation(AfterTheDrizzle.MODID, "world_solar_terms"), new CapabilitySolarTermTime.Provider());
         }
+        event.addCapability(new ResourceLocation(AfterTheDrizzle.MODID, "world_weather"), new CapabilityWorldWeather.Provider());
     }
 
     @SubscribeEvent
@@ -190,6 +211,7 @@ public final class CommonEventHandler
             {
                 event.getPlayer().getEntityWorld().getCapability(CapabilitySolarTermTime.WORLD_SOLAR_TIME).ifPresent(t -> SimpleNetworkHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.getPlayer()), new SolarTermsMessage(t.getSolarTermsDay())));
             }
+            event.getPlayer().getEntityWorld().getCapability(CapabilityWorldWeather.WORLD_WEATHER).ifPresent(data -> SimpleNetworkHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.getPlayer()), new WeatherChangeMessage(data.getCurrentWeather().getType())));
         }
     }
 

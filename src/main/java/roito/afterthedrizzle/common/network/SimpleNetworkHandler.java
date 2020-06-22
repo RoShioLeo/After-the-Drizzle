@@ -19,6 +19,7 @@ public final class SimpleNetworkHandler
         int id = 0;
         registerMessage(id++, PlayerTemperatureMessage.class, PlayerTemperatureMessage::new);
         registerMessage(id++, SolarTermsMessage.class, SolarTermsMessage::new);
+        registerMessage(id++, WeatherChangeMessage.class, WeatherChangeMessage::new);
     }
 
     private static <T extends INormalMessage> void registerMessage(int index, Class<T> messageType, Function<PacketBuffer, T> decoder)

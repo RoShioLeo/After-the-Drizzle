@@ -11,6 +11,7 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.pathfinding.PathType;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
@@ -27,6 +28,8 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.Tags;
+import roito.afterthedrizzle.common.data.tag.NormalTags;
 import roito.afterthedrizzle.helper.VoxelShapeHelper;
 
 import javax.annotation.Nullable;
@@ -65,12 +68,22 @@ public class AqueductBlock extends HorizontalConnectedBlock implements IWaterLog
             worldIn.setBlockState(pos, state.with(BLOCKED, true).with(WATERLOGGED, false).with(DISTANCE, 64));
             if (worldIn instanceof ServerWorld)
             {
-                updateWater((ServerWorld) worldIn, pos.north());
-                updateWater((ServerWorld) worldIn, pos.south());
-                updateWater((ServerWorld) worldIn, pos.east());
-                updateWater((ServerWorld) worldIn, pos.west());
+                updateWater((ServerWorld) worldIn, pos.north(), state);
+                updateWater((ServerWorld) worldIn, pos.south(), state);
+                updateWater((ServerWorld) worldIn, pos.east(), state);
+                updateWater((ServerWorld) worldIn, pos.west(), state);
             }
             player.getHeldItem(handIn).shrink(1);
+            return ActionResultType.SUCCESS;
+        }
+        else if (player.getHeldItem(handIn).getItem().isIn(NormalTags.Items.DIRT))
+        {
+            worldIn.setBlockState(pos, Blocks.DIRT.getDefaultState());
+            return ActionResultType.SUCCESS;
+        }
+        else if (player.getHeldItem(handIn).getItem().isIn(Tags.Items.COBBLESTONE))
+        {
+            worldIn.setBlockState(pos, BlocksRegistry.DIRT_AQUEDUCT_POOL.getDefaultState());
             return ActionResultType.SUCCESS;
         }
         return ActionResultType.PASS;
@@ -192,34 +205,34 @@ public class AqueductBlock extends HorizontalConnectedBlock implements IWaterLog
         {
             state = state.with(WATERLOGGED, true).with(DISTANCE, nearDistance + 1);
             worldIn.getPendingFluidTicks().scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(worldIn));
-            updateWater(worldIn, pos.north());
-            updateWater(worldIn, pos.south());
-            updateWater(worldIn, pos.east());
-            updateWater(worldIn, pos.west());
+            updateWater(worldIn, pos.north(), state);
+            updateWater(worldIn, pos.south(), state);
+            updateWater(worldIn, pos.east(), state);
+            updateWater(worldIn, pos.west(), state);
             flag = true;
         }
         else if (nearDistance + 1 != currentDistance)
         {
             state = state.with(WATERLOGGED, false).with(DISTANCE, 64);
-            updateWater(worldIn, pos.north());
-            updateWater(worldIn, pos.south());
-            updateWater(worldIn, pos.east());
-            updateWater(worldIn, pos.west());
+            updateWater(worldIn, pos.north(), state);
+            updateWater(worldIn, pos.south(), state);
+            updateWater(worldIn, pos.east(), state);
+            updateWater(worldIn, pos.west(), state);
             flag = true;
         }
         if (flag)
         {
             worldIn.setBlockState(pos, state);
-            updateWater(worldIn, pos);
+            updateWater(worldIn, pos, state);
         }
     }
 
-    public void updateWater(ServerWorld worldIn, BlockPos pos)
+    public void updateWater(ServerWorld worldIn, BlockPos pos, BlockState origin)
     {
         BlockState state = worldIn.getBlockState(pos);
         if (state.getBlock() instanceof AqueductBlock && canConnect(state))
         {
-            worldIn.getPendingBlockTicks().scheduleTick(pos, this, Fluids.WATER.getTickRate(worldIn));
+            worldIn.getPendingBlockTicks().scheduleTick(pos, state.getBlock(), Fluids.WATER.getTickRate(worldIn));
         }
     }
 
@@ -233,9 +246,9 @@ public class AqueductBlock extends HorizontalConnectedBlock implements IWaterLog
     @SuppressWarnings("deprecation")
     public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos)
     {
-        if (facingState.getBlock() != this)
+        if (!(facingState.getBlock() instanceof AqueductBlock) && !(facingState.getBlock() instanceof PaddyFieldBlock))
         {
-            worldIn.getPendingBlockTicks().scheduleTick(currentPos, this, Fluids.WATER.getTickRate(worldIn));
+            worldIn.getPendingBlockTicks().scheduleTick(currentPos, this, Fluids.WATER.getTickRate(worldIn) / 2);
         }
         if (stateIn.get(WATERLOGGED))
         {
@@ -268,6 +281,17 @@ public class AqueductBlock extends HorizontalConnectedBlock implements IWaterLog
     {
         super.fillStateContainer(builder);
         builder.add(DISTANCE, BLOCKED, WATERLOGGED);
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public boolean allowsMovement(BlockState state, IBlockReader worldIn, BlockPos pos, PathType type)
+    {
+        if (type == PathType.WATER)
+        {
+            return state.get(WATERLOGGED);
+        }
+        return false;
     }
 
     static

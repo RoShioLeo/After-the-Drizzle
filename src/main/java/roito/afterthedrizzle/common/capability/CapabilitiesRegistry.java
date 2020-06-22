@@ -8,5 +8,6 @@ public final class CapabilitiesRegistry
     {
         CapabilityManager.INSTANCE.register(CapabilityPlayerTemperature.Data.class, new CapabilityPlayerTemperature.Storage(), CapabilityPlayerTemperature.Data::new);
         CapabilityManager.INSTANCE.register(CapabilitySolarTermTime.Data.class, new CapabilitySolarTermTime.Storage(), CapabilitySolarTermTime.Data::new);
+        CapabilityManager.INSTANCE.register(CapabilityWorldWeather.Data.class, new CapabilityWorldWeather.Storage(), CapabilityWorldWeather.Data::new);
     }
 }

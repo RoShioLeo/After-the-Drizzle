@@ -1,10 +1,13 @@
 package roito.afterthedrizzle.common.block;
 
+import com.google.common.collect.Lists;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.pathfinding.PathType;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
@@ -17,9 +20,14 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.storage.loot.LootContext;
+import roito.afterthedrizzle.common.data.tag.NormalTags;
 import roito.afterthedrizzle.helper.VoxelShapeHelper;
 
+import java.util.List;
 import java.util.Random;
+
+import static roito.afterthedrizzle.common.block.PaddyFieldBlock.WATER;
 
 public class AqueductOutputBlock extends AqueductBlock
 {
@@ -34,6 +42,15 @@ public class AqueductOutputBlock extends AqueductBlock
     @SuppressWarnings("deprecation")
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit)
     {
+        if (player.getHeldItem(handIn).getItem().isIn(NormalTags.Items.DIRT))
+        {
+            worldIn.setBlockState(pos, Blocks.DIRT.getDefaultState());
+            if (!worldIn.isRemote)
+            {
+                Block.spawnAsEntity(worldIn, pos, new ItemStack(Blocks.COBBLESTONE));
+            }
+            return ActionResultType.SUCCESS;
+        }
         return ActionResultType.PASS;
     }
 
@@ -70,6 +87,22 @@ public class AqueductOutputBlock extends AqueductBlock
     }
 
     @Override
+    public void updateWater(ServerWorld worldIn, BlockPos pos, BlockState origin)
+    {
+        BlockState state = worldIn.getBlockState(pos);
+        if (canConnect(state))
+        {
+            if (state.getBlock() instanceof AqueductBlock)
+                worldIn.getPendingBlockTicks().scheduleTick(pos, state.getBlock(), Fluids.WATER.getTickRate(worldIn));
+            else if (state.getBlock() instanceof PaddyFieldBlock)
+            {
+                worldIn.setBlockState(pos, state.with(WATER, origin.get(WATERLOGGED) ? PaddyFieldBlock.Water.POUR : PaddyFieldBlock.Water.DRAIN));
+                ((PaddyFieldBlock) state.getBlock()).updateWater(worldIn, pos);
+            }
+        }
+    }
+
+    @Override
     @SuppressWarnings("deprecation")
     public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random rand)
     {
@@ -79,25 +112,25 @@ public class AqueductOutputBlock extends AqueductBlock
         if (nearDistance + 1 < currentDistance)
         {
             state = state.with(WATERLOGGED, true).with(DISTANCE, nearDistance + 1);
-            updateWater(worldIn, pos.north());
-            updateWater(worldIn, pos.south());
-            updateWater(worldIn, pos.east());
-            updateWater(worldIn, pos.west());
+            updateWater(worldIn, pos.north(), state);
+            updateWater(worldIn, pos.south(), state);
+            updateWater(worldIn, pos.east(), state);
+            updateWater(worldIn, pos.west(), state);
             flag = true;
         }
         else if (nearDistance + 1 != currentDistance)
         {
             state = state.with(WATERLOGGED, false).with(DISTANCE, 64);
-            updateWater(worldIn, pos.north());
-            updateWater(worldIn, pos.south());
-            updateWater(worldIn, pos.east());
-            updateWater(worldIn, pos.west());
+            updateWater(worldIn, pos.north(), state);
+            updateWater(worldIn, pos.south(), state);
+            updateWater(worldIn, pos.east(), state);
+            updateWater(worldIn, pos.west(), state);
             flag = true;
         }
         if (flag)
         {
             worldIn.setBlockState(pos, state);
-            updateWater(worldIn, pos);
+            updateWater(worldIn, pos, state);
         }
     }
 
@@ -105,7 +138,7 @@ public class AqueductOutputBlock extends AqueductBlock
     @SuppressWarnings("deprecation")
     public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos)
     {
-        if (facingState.getBlock() != this)
+        if (!(facingState.getBlock() instanceof AqueductBlock) && !(facingState.getBlock() instanceof PaddyFieldBlock))
         {
             worldIn.getPendingBlockTicks().scheduleTick(currentPos, this, Fluids.WATER.getTickRate(worldIn));
         }
@@ -129,13 +162,11 @@ public class AqueductOutputBlock extends AqueductBlock
 
     @Override
     @SuppressWarnings("deprecation")
-    public boolean allowsMovement(BlockState state, IBlockReader worldIn, BlockPos pos, PathType type)
+    public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder)
     {
-        if (type == PathType.WATER)
-        {
-            return state.get(WATERLOGGED);
-        }
-        return false;
+        List<ItemStack> list = Lists.newArrayList();
+        list.add(new ItemStack(Blocks.COBBLESTONE));
+        return list;
     }
 
     static

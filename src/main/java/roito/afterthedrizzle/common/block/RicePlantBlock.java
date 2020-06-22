@@ -1,12 +1,12 @@
 package roito.afterthedrizzle.common.block;
 
+import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CropsBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemStack;
-import net.minecraft.state.IntegerProperty;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -14,17 +14,16 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.storage.loot.LootContext;
 import roito.afterthedrizzle.common.item.ItemsRegistry;
 
+import java.util.List;
 import java.util.Random;
 
-import static net.minecraft.state.properties.BlockStateProperties.AGE_0_7;
 import static net.minecraft.state.properties.BlockStateProperties.WATERLOGGED;
-import static roito.afterthedrizzle.common.block.PaddyFieldBlock.LEVEL;
 
 public class RicePlantBlock extends CropsBlock
 {
-    public static final IntegerProperty AGE = AGE_0_7;
     private static final VoxelShape[] SHAPE_BY_AGE = new VoxelShape[]{
             Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D), Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D),
             Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D), Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 5.0D, 16.0D),
@@ -67,33 +66,51 @@ public class RicePlantBlock extends CropsBlock
     @Override
     public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random rand)
     {
-        super.tick(state, worldIn, pos, rand);
         if (!worldIn.isAreaLoaded(pos, 1)) return;
         if (worldIn.getLightSubtracted(pos, 0) >= 9)
         {
             int i = this.getAge(state);
             if (i < this.getMaxAge())
             {
-                float f = getGrowthChance(this, worldIn, pos) * 2;
+                if (i <= 3 && !worldIn.getBlockState(pos.down()).get(WATERLOGGED))
+                {
+                    return;
+                }
+                else if (i >= 6 && worldIn.getBlockState(pos.down()).get(WATERLOGGED))
+                {
+                    return;
+                }
+                float f = getGrowthChance(this, worldIn, pos) + getOneSideExtraGrowthChance(i, worldIn, pos.north()) + getOneSideExtraGrowthChance(i, worldIn, pos.south()) + getOneSideExtraGrowthChance(i, worldIn, pos.west()) + getOneSideExtraGrowthChance(i, worldIn, pos.east());
                 if (net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, pos, state, rand.nextInt((int) (25.0F / f) + 1) == 0))
                 {
                     worldIn.setBlockState(pos, this.withAge(i + 1), 2);
                     net.minecraftforge.common.ForgeHooks.onCropsGrowPost(worldIn, pos, state);
-                }
-            }
-            BlockState down = worldIn.getBlockState(pos.down());
-            if (down.getBlock() instanceof PaddyFieldBlock && down.get(WATERLOGGED))
-            {
-                if (i != 7)
-                {
-                    worldIn.setBlockState(pos.down(), down.with(LEVEL, 8 - i));
-                }
-                else
-                {
-                    worldIn.setBlockState(pos.down(), down.with(LEVEL, 8).with(WATERLOGGED, false));
+                    doExtraRandomTick(worldIn.getBlockState(pos.north()), worldIn, pos.north(), rand);
+                    doExtraRandomTick(worldIn.getBlockState(pos.south()), worldIn, pos.south(), rand);
+                    doExtraRandomTick(worldIn.getBlockState(pos.west()), worldIn, pos.west(), rand);
+                    doExtraRandomTick(worldIn.getBlockState(pos.east()), worldIn, pos.east(), rand);
                 }
             }
         }
+    }
+
+    @SuppressWarnings("deprecation")
+    public void doExtraRandomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random rand)
+    {
+        if (state.getBlock() == this)
+        {
+            state.getBlock().randomTick(state, worldIn, pos, rand);
+        }
+    }
+
+    protected float getOneSideExtraGrowthChance(int age, IBlockReader worldIn, BlockPos pos)
+    {
+        BlockState state = worldIn.getBlockState(pos);
+        if (state.getBlock() == this && state.get(AGE) > age)
+        {
+            return state.get(AGE) - age;
+        }
+        return 0.0F;
     }
 
     @Override
@@ -110,6 +127,22 @@ public class RicePlantBlock extends CropsBlock
         {
             return new ItemStack(ItemsRegistry.RICE_SEEDS);
         }
-        else return new ItemStack(ItemsRegistry.RICE_SEEDS);
+        else return new ItemStack(ItemsRegistry.RICE_SEEDLINGS);
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder)
+    {
+        List<ItemStack> list = Lists.newArrayList();
+        if (getAge(state) < 7)
+        {
+            list.add(new ItemStack(ItemsRegistry.RICE_SEEDLINGS));
+        }
+        else
+        {
+            list.add(new ItemStack(ItemsRegistry.RICE_SEEDS, builder.getWorld().rand.nextInt(4) + 1));
+        }
+        return list;
     }
 }
