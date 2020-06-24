@@ -11,6 +11,7 @@ public class CommonConfig
         Temperature.load(builder);
         Agriculture.load(builder);
         Season.load(builder);
+        Weather.load(builder);
         Others.load(builder);
     }
 
@@ -101,6 +102,19 @@ public class CommonConfig
                     .define("EnableSeason", true);
             lastingDaysOfEachTerm = builder.comment("The lasting days of each term (24 in total).")
                     .defineInRange("LastingDaysOfEachTerm", 7, 1, 30);
+            builder.pop();
+        }
+    }
+
+    public static class Weather
+    {
+        public static ForgeConfigSpec.BooleanValue enable;
+
+        private static void load(ForgeConfigSpec.Builder builder)
+        {
+            builder.push("Weather");
+            enable = builder.comment("Enable independent weather system.")
+                    .define("EnableWeather", true);
             builder.pop();
         }
     }

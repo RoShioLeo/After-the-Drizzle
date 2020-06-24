@@ -4,11 +4,13 @@ import com.google.common.collect.Lists;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.util.Direction;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
-import roito.afterthedrizzle.common.environment.weather.WeatherEvent;
+import roito.afterthedrizzle.common.environment.weather.DailyWeatherData;
+import roito.afterthedrizzle.common.environment.weather.WeatherType;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -21,19 +23,19 @@ public class CapabilityWorldWeather
 
     public static class Storage implements Capability.IStorage<CapabilityWorldWeather.Data>
     {
-
         @Nullable
         @Override
         public INBT writeNBT(Capability<CapabilityWorldWeather.Data> capability, CapabilityWorldWeather.Data instance, Direction side)
         {
             CompoundNBT compound = new CompoundNBT();
             int i = 0;
-            for (WeatherEvent weather : instance.list)
+            for (DailyWeatherData weather : instance.list)
             {
-                compound.put("Weather_" + i, weather.writeToNBT());
+                compound.put("Day_" + i, weather.writeToNBT());
                 i++;
             }
             compound.putInt("Amount", i);
+            compound.putInt("WeatherTicks", instance.getWeatherTicks());
             return compound;
         }
 
@@ -41,55 +43,96 @@ public class CapabilityWorldWeather
         public void readNBT(Capability<CapabilityWorldWeather.Data> capability, CapabilityWorldWeather.Data instance, Direction side, INBT nbt)
         {
             CompoundNBT compound = (CompoundNBT) nbt;
-            List<WeatherEvent> list = Lists.newArrayList();
+            List<DailyWeatherData> list = Lists.newArrayList();
             int index = compound.getInt("Amount");
             for (int i = 0; i < index; i++)
             {
-                list.add(WeatherEvent.readFromNBT((CompoundNBT) compound.get("Weather_" + i)));
+                list.add(DailyWeatherData.fromNBTToData((CompoundNBT) compound.get("Day_" + i)));
             }
             instance.list = list;
+            instance.setWeatherTicks(((CompoundNBT) nbt).getInt("WeatherTicks"));
         }
     }
 
     public static class Data
     {
-        private List<WeatherEvent> list = Lists.newArrayList();
+        private List<DailyWeatherData> list = Lists.newArrayList();
+        private int weatherTicks = 0;
+        public WeatherType currentType = WeatherType.NONE;
 
-        public WeatherEvent getCurrentWeather()
+        public void tick(ServerWorld world)
         {
-            return getWeather(0);
+            weatherTicks++;
+            int dayTime = Math.toIntExact(world.getDayTime() % 24000);
+            if (weatherTicks > dayTime + 100)
+            {
+                deleteCurrentDay();
+            }
+            weatherTicks = dayTime;
         }
 
-        public WeatherEvent getNextWeather()
+        public DailyWeatherData getCurrentDay()
         {
-            return getWeather(1);
+            return getWeatherData(0);
         }
 
-        public WeatherEvent getWeather(int index)
+        public WeatherType getCurrentWeather()
         {
-            if (list.isEmpty() && index >= list.size()) return WeatherEvent.EMPTY;
+            DailyWeatherData data = getCurrentDay();
+            if (!data.getWeatherList().isEmpty())
+            {
+                return data.getWeatherList().get(weatherTicks / 1000);
+            }
+            else return WeatherType.NONE;
+        }
+
+        public void setCurrentWeather(WeatherType type)
+        {
+            DailyWeatherData data = getCurrentDay();
+            if (!data.getWeatherList().isEmpty())
+                data.getWeatherList().set(weatherTicks / 1000, type);
+        }
+
+        public DailyWeatherData getCertainDay(int i)
+        {
+            return getWeatherData(i);
+        }
+
+        public DailyWeatherData getWeatherData(int index)
+        {
+            if (list.isEmpty() && index >= list.size()) return DailyWeatherData.NONE;
             return list.get(index);
         }
 
-        public void addWeather(WeatherEvent weather)
+        public void addWeatherData(DailyWeatherData weather)
         {
             list.add(weather);
         }
 
-        public void deleteCurrentWeather()
+        public void deleteCurrentDay()
         {
             if (!list.isEmpty()) list.remove(0);
         }
 
-        public void setCurrentWeather(WeatherEvent weather)
+        public void setWeatherData(DailyWeatherData weather)
         {
             list.clear();
             list.add(weather);
         }
 
-        public int getListSize()
+        public int getDayAmount()
         {
             return list.size();
+        }
+
+        public int getWeatherTicks()
+        {
+            return weatherTicks;
+        }
+
+        public void setWeatherTicks(int weatherTicks)
+        {
+            this.weatherTicks = weatherTicks;
         }
     }
 

@@ -5,6 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeColors;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -16,6 +17,13 @@ import roito.afterthedrizzle.common.entity.EntityTypesRegistry;
 
 public class ClientProxy extends CommonProxy
 {
+    public static final ResourceLocation LIGHT_RAIN_TEXTURES = new ResourceLocation("afterthedrizzle:textures/environment/rain_light.png");
+    public static final ResourceLocation NORMAL_RAIN_TEXTURES = new ResourceLocation("afterthedrizzle:textures/environment/rain_normal.png");
+    public static final ResourceLocation HEAVY_RAIN_TEXTURES = new ResourceLocation("afterthedrizzle:textures/environment/rain_heavy.png");
+    public static final ResourceLocation LIGHT_SNOW_TEXTURES = new ResourceLocation("afterthedrizzle:textures/environment/snow_light.png");
+    public static final ResourceLocation NORMAL_SNOW_TEXTURES = new ResourceLocation("afterthedrizzle:textures/environment/snow_normal.png");
+    public static final ResourceLocation HEAVY_SNOW_TEXTURES = new ResourceLocation("afterthedrizzle:textures/environment/snow_heavy.png");
+
     @Override
     public World getClientWorld()
     {

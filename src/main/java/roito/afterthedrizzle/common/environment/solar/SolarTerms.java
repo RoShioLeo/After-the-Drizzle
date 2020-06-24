@@ -79,4 +79,9 @@ public enum SolarTerms
     {
         return dayTime;
     }
+
+    public Season getSeason()
+    {
+        return Season.values()[this.ordinal() / 6];
+    }
 }

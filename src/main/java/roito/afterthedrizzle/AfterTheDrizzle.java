@@ -20,6 +20,7 @@ import roito.afterthedrizzle.common.CommonProxy;
 import roito.afterthedrizzle.common.block.BlocksRegistry;
 import roito.afterthedrizzle.common.capability.CapabilitiesRegistry;
 import roito.afterthedrizzle.common.command.SolarCommand;
+import roito.afterthedrizzle.common.command.WeatherCommand;
 import roito.afterthedrizzle.common.config.NormalConfigs;
 import roito.afterthedrizzle.common.entity.EntityTypesRegistry;
 import roito.afterthedrizzle.common.environment.solar.BiomeTemperatureManager;
@@ -94,6 +95,7 @@ public final class AfterTheDrizzle
     public void serverStarting(FMLServerStartingEvent event)
     {
         SolarCommand.register(event.getCommandDispatcher());
+        WeatherCommand.register(event.getCommandDispatcher());
     }
 
     public static final ItemGroup GROUP_CORE = new GroupCore();

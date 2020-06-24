@@ -31,7 +31,7 @@ import java.util.List;
 
 public class FilterScreenBlock extends NormalBlock
 {
-    private static final EnumProperty<Direction.Axis> AXIS = BlockStateProperties.AXIS;
+    private static final EnumProperty<Direction.Axis> AXIS = BlockStateProperties.HORIZONTAL_AXIS;
 
     private static final VoxelShape[] SHAPE = new VoxelShape[]{
             VoxelShapeHelper.createVoxelShape(6.5, 0, 0, 3, 16, 16),

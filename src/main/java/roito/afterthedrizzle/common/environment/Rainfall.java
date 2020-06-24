@@ -1,6 +1,5 @@
 package roito.afterthedrizzle.common.environment;
 
-import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
 public enum Rainfall
@@ -45,7 +44,7 @@ public enum Rainfall
         return max;
     }
 
-    public ITextComponent getTranslation()
+    public TranslationTextComponent getTranslation()
     {
         return new TranslationTextComponent("info.afterthedrizzle.environment.rainfall." + getName());
     }

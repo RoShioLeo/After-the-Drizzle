@@ -73,11 +73,8 @@ public class PaddyFieldBlock extends NormalBlock implements IWaterLoggable
     @SuppressWarnings("deprecation")
     public IFluidState getFluidState(BlockState state)
     {
-        if (state.get(WATERLOGGED))
-        {
-            return Fluids.WATER.getStillFluidState(false);
-        }
-        return super.getFluidState(state);
+
+        return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
     }
 
     @Override

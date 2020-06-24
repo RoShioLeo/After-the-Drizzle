@@ -16,7 +16,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
-import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.PlantType;
 import net.minecraftforge.common.Tags;
@@ -211,7 +210,7 @@ public final class CommonEventHandler
             {
                 event.getPlayer().getEntityWorld().getCapability(CapabilitySolarTermTime.WORLD_SOLAR_TIME).ifPresent(t -> SimpleNetworkHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.getPlayer()), new SolarTermsMessage(t.getSolarTermsDay())));
             }
-            event.getPlayer().getEntityWorld().getCapability(CapabilityWorldWeather.WORLD_WEATHER).ifPresent(data -> SimpleNetworkHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.getPlayer()), new WeatherChangeMessage(data.getCurrentWeather().getType())));
+            event.getPlayer().getEntityWorld().getCapability(CapabilityWorldWeather.WORLD_WEATHER).ifPresent(data -> SimpleNetworkHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.getPlayer()), new WeatherChangeMessage(data.getCurrentDay().getCurrentWeather(Math.toIntExact(((ServerPlayerEntity) event.getPlayer()).getServerWorld().getGameTime() % 24000)))));
         }
     }
 
@@ -222,17 +221,6 @@ public final class CommonEventHandler
         if (CommonConfig.Temperature.enable.get() && event.phase == TickEvent.Phase.START && player instanceof ServerPlayerEntity && !(player instanceof FakePlayer) && player.getEntityWorld().getGameTime() % 50 == 0)
         {
             PlayerTemperatureHandler.adjustPlayerTemperature((ServerPlayerEntity) player, player.getEntityWorld(), player.getPosition());
-        }
-    }
-
-    @SubscribeEvent
-    public static void onWorldTick(TickEvent.WorldTickEvent event)
-    {
-        if (event.phase.equals(TickEvent.Phase.END) && CommonConfig.Temperature.fluctuation.get() && event.world.getServer() != null)
-        {
-            ServerWorld world = event.world.getServer().getWorld(DimensionType.OVERWORLD);
-            world.getCapability(CapabilitySolarTermTime.WORLD_SOLAR_TIME).ifPresent(data ->
-                    data.updateTicks(world));
         }
     }
 }

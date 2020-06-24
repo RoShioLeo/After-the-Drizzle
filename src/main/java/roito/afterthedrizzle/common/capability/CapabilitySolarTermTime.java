@@ -70,6 +70,11 @@ public class CapabilitySolarTermTime
             return solarTermsDay / CommonConfig.Season.lastingDaysOfEachTerm.get();
         }
 
+        public SolarTerms getSolarTerm()
+        {
+            return SolarTerms.get(this.getSolarTermIndex());
+        }
+
         public int getSolarTermsDay()
         {
             return solarTermsDay;

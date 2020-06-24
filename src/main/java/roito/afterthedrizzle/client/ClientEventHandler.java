@@ -2,8 +2,10 @@ package roito.afterthedrizzle.client;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.BlockItem;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -21,10 +23,10 @@ import roito.afterthedrizzle.common.environment.weather.WeatherType;
 import roito.afterthedrizzle.common.fluid.NormalFlowingFluidBlock;
 
 @Mod.EventBusSubscriber(modid = AfterTheDrizzle.MODID, value = Dist.CLIENT)
-public final class ClientEventHander
+public final class ClientEventHandler
 {
-    private static float currentDensity = 0.0F;
-    private static float trendDensity = 0.0F;
+    public static WeatherType current = WeatherType.NONE;
+    public static float currentDensity = 0.006F;
 
     @SubscribeEvent
     public static void addTooltips(ItemTooltipEvent event)
@@ -38,15 +40,45 @@ public final class ClientEventHander
     {
         AfterTheDrizzle.proxy.getClientWorld().getCapability(CapabilityWorldWeather.WORLD_WEATHER).ifPresent(data ->
         {
-            if (data.getCurrentWeather().getType() == WeatherType.FOGGY)
+            if (current == WeatherType.FOGGY)
             {
                 Entity entity = event.getInfo().getRenderViewEntity();
+                if (entity instanceof PlayerEntity && ((PlayerEntity) entity).isPotionActive(Effects.BLINDNESS))
+                {
+                    currentDensity = 0.006F;
+                    return;
+                }
                 BlockPos blockpos = new BlockPos(entity);
                 if (entity.getEntityWorld().getLightFor(LightType.SKY, blockpos) > 0)
                 {
-                    event.setDensity(0.1F);
+                    if (currentDensity < 0.1F) currentDensity += 0.0001F;
+                    event.setDensity(currentDensity);
                     event.setCanceled(true);
+                    return;
                 }
+            }
+            else if (current == WeatherType.STORM)
+            {
+                Entity entity = event.getInfo().getRenderViewEntity();
+                if (entity instanceof PlayerEntity && ((PlayerEntity) entity).isPotionActive(Effects.BLINDNESS))
+                {
+                    currentDensity = 0.006F;
+                    return;
+                }
+                BlockPos blockpos = new BlockPos(entity);
+                if (entity.getEntityWorld().getLightFor(LightType.SKY, blockpos) > 0)
+                {
+                    if (currentDensity < 0.025F) currentDensity += 0.0001F;
+                    event.setDensity(currentDensity);
+                    event.setCanceled(true);
+                    return;
+                }
+            }
+            if (currentDensity > 0.006F)
+            {
+                currentDensity -= 0.0001F;
+                event.setDensity(currentDensity);
+                event.setCanceled(true);
             }
         });
     }
