@@ -68,7 +68,7 @@ public final class ClientEventHandler
                 BlockPos blockpos = new BlockPos(entity);
                 if (entity.getEntityWorld().getLightFor(LightType.SKY, blockpos) > 0)
                 {
-                    if (currentDensity < 0.025F) currentDensity += 0.0001F;
+                    if (currentDensity < 0.02F) currentDensity += 0.0001F;
                     event.setDensity(currentDensity);
                     event.setCanceled(true);
                     return;

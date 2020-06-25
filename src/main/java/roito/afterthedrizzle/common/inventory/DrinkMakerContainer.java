@@ -25,19 +25,22 @@ public class DrinkMakerContainer extends NormalContainer
         this.tileEntity = (DrinkMakerTileEntity) world.getTileEntity(pos);
         tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.UP).ifPresent(h ->
         {
-            addSlot(new SlotItemHandler(h, 0, 26, 24));
-            addSlot(new SlotItemHandler(h, 1, 44, 24));
-            addSlot(new SlotItemHandler(h, 2, 62, 24));
-            addSlot(new SlotItemHandler(h, 3, 80, 24));
+            addSlot(new SlotItemHandler(h, 0, 21, 24));
+            addSlot(new SlotItemHandler(h, 1, 39, 24));
+            addSlot(new SlotItemHandler(h, 2, 57, 24));
+            addSlot(new SlotItemHandler(h, 3, 75, 24));
         });
         tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.DOWN).ifPresent(h ->
         {
-            addSlot(new SlotItemHandler(h, 0, 26, 51));
-            addSlot(new SlotItemHandler(h, 1, 44, 51));
-            addSlot(new SlotItemHandler(h, 2, 62, 51));
-            addSlot(new SlotItemHandler(h, 3, 80, 51));
+            addSlot(new SlotItemHandler(h, 0, 21, 51));
+            addSlot(new SlotItemHandler(h, 1, 39, 51));
+            addSlot(new SlotItemHandler(h, 2, 57, 51));
+            addSlot(new SlotItemHandler(h, 3, 75, 51));
         });
         addPlayerInventory(inv);
+        tileEntity.getContainerInventory().ifPresent(h -> addSlot(new SlotItemHandler(h, 0, 102, 13)));
+        tileEntity.getInputInventory().ifPresent(h -> addSlot(new SlotItemHandler(h, 0, 152, 15)));
+        tileEntity.getOutputInventory().ifPresent(h -> addSlot(new SlotItemHandler(h, 0, 152, 59)));
     }
 
     @Override
@@ -58,25 +61,29 @@ public class DrinkMakerContainer extends NormalContainer
 
         ItemStack newStack = slot.getStack(), oldStack = newStack.copy();
 
-        boolean isMerged = false;
+        boolean isMerged;
 
-        if (index >= 0 && index < 4)
+        if (index < 4)
         {
             isMerged = mergeItemStack(newStack, 8, 44, true);
         }
-        else if (index >= 4 && index < 8)
+        else if (index < 8)
         {
             isMerged = mergeItemStack(newStack, 8, 44, true);
         }
-        else if (index >= 8 && index < 35)
+        else if (index < 35)
         {
             isMerged = mergeItemStack(newStack, 0, 4, false)
                     || mergeItemStack(newStack, 35, 44, false);
         }
-        else if (index >= 35 && index < 44)
+        else if (index < 44)
         {
             isMerged = mergeItemStack(newStack, 0, 4, false)
                     || mergeItemStack(newStack, 8, 35, false);
+        }
+        else
+        {
+            isMerged = mergeItemStack(newStack, 8, 44, true);
         }
 
         if (!isMerged)

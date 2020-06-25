@@ -11,12 +11,14 @@ import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.FluidActionResult;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
+import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
-import roito.afterthedrizzle.common.config.CommonConfig;
 import roito.afterthedrizzle.common.inventory.DrinkMakerContainer;
 import roito.afterthedrizzle.common.recipe.RecipesRegistry;
 import roito.afterthedrizzle.common.recipe.drink.DrinkRecipeInput;
@@ -26,11 +28,15 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
+import static net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack.FLUID_NBT_KEY;
+
 public class DrinkMakerTileEntity extends NormalContainerTileEntity implements ITickableTileEntity
 {
-    private final LazyOptional<ItemStackHandler> ingredientsInventory = LazyOptional.of(this::createItemHandler);
-    private final LazyOptional<ItemStackHandler> residuesInventory = LazyOptional.of(this::createItemHandler);
-    private final LazyOptional<FluidTank> fluidTank = LazyOptional.of(this::createFluidHandler);
+    private final LazyOptional<ItemStackHandler> ingredientsInventory = LazyOptional.of(() -> this.createItemHandler(4));
+    private final LazyOptional<ItemStackHandler> residuesInventory = LazyOptional.of(() -> this.createItemHandler(4));
+    private final LazyOptional<ItemStackHandler> containerInventory = LazyOptional.of(() -> this.createItemHandler(1));
+    private final LazyOptional<ItemStackHandler> inputInventory = LazyOptional.of(() -> this.createItemHandler(1));
+    private final LazyOptional<ItemStackHandler> outputInventory = LazyOptional.of(() -> this.createItemHandler(1));
 
     private int processTicks = 0;
     private static final int totalTicks = 200;
@@ -55,7 +61,7 @@ public class DrinkMakerTileEntity extends NormalContainerTileEntity implements I
             }
             else if (CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.equals(cap))
             {
-                return fluidTank.cast();
+                return getFluidHandler().cast();
             }
         }
         return super.getCapability(cap, side);
@@ -65,18 +71,22 @@ public class DrinkMakerTileEntity extends NormalContainerTileEntity implements I
     public void read(CompoundNBT tag)
     {
         super.read(tag);
-        this.fluidTank.ifPresent(f -> f.readFromNBT(tag.getCompound("FluidTank")));
         this.ingredientsInventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("Ingredients")));
         this.residuesInventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("Residues")));
+        this.containerInventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("Container")));
+        this.inputInventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("Input")));
+        this.outputInventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("Output")));
         this.processTicks = tag.getInt("ProcessTicks");
     }
 
     @Override
     public CompoundNBT write(CompoundNBT tag)
     {
-        fluidTank.ifPresent(f -> tag.put("FluidTank", f.writeToNBT(new CompoundNBT())));
         ingredientsInventory.ifPresent(h -> tag.put("Ingredients", ((INBTSerializable<CompoundNBT>) h).serializeNBT()));
         residuesInventory.ifPresent(h -> tag.put("Residues", ((INBTSerializable<CompoundNBT>) h).serializeNBT()));
+        containerInventory.ifPresent(h -> tag.put("Container", ((INBTSerializable<CompoundNBT>) h).serializeNBT()));
+        inputInventory.ifPresent(h -> tag.put("Input", ((INBTSerializable<CompoundNBT>) h).serializeNBT()));
+        outputInventory.ifPresent(h -> tag.put("Output", ((INBTSerializable<CompoundNBT>) h).serializeNBT()));
         tag.putInt("ProcessTicks", processTicks);
         return super.write(tag);
     }
@@ -87,13 +97,13 @@ public class DrinkMakerTileEntity extends NormalContainerTileEntity implements I
         if (this.getFluidAmount() != 0)
         {
             this.ingredientsInventory.ifPresent(inv ->
-                    this.fluidTank.ifPresent(fluid ->
+                    getFluidHandler().ifPresent(fluid ->
                     {
-                        DrinkRecipeInput inventoryRecipe = DrinkRecipeInput.toRecipe(inv, this.getFluidTank().getFluid().getFluid());
+                        DrinkRecipeInput inventoryRecipe = DrinkRecipeInput.toRecipe(inv, fluid.getFluidInTank(0).getFluid());
                         FluidStack output = RecipesRegistry.MANAGER_DRINK_MAKER.getOutput(inventoryRecipe);
                         if (!output.isEmpty())
                         {
-                            int n = (int) Math.ceil(this.getFluidAmount() / output.getAmount());
+                            int n = (int) Math.ceil(this.getFluidAmount() * 1.0F / output.getAmount());
                             for (int i = 0; i < 4; i++)
                             {
                                 if (!inv.getStackInSlot(i).isEmpty() && inv.getStackInSlot(i).getCount() < n)
@@ -119,7 +129,8 @@ public class DrinkMakerTileEntity extends NormalContainerTileEntity implements I
                                         }
                                     }
                                 });
-                                fluid.setFluid(new FluidStack(output.getFluid(), this.getFluidAmount()));
+                                CompoundNBT nbt = new FluidStack(output.getFluid(), this.getFluidAmount()).writeToNBT(new CompoundNBT());
+                                fluid.getContainer().getOrCreateTag().put(FLUID_NBT_KEY, nbt);
                                 this.setToZero();
                             }
                         }
@@ -127,6 +138,23 @@ public class DrinkMakerTileEntity extends NormalContainerTileEntity implements I
                         {
                             this.setToZero();
                         }
+                        inputInventory.ifPresent(in ->
+                                outputInventory.ifPresent(out ->
+                                {
+                                    {
+                                        ItemStack inputCup = in.getStackInSlot(0);
+                                        ItemStack outputCup = out.getStackInSlot(0);
+                                        if (outputCup.isEmpty())
+                                        {
+                                            FluidActionResult filledSimulated = FluidUtil.tryFillContainer(inputCup, fluid, Integer.MAX_VALUE, null, true);
+                                            if (filledSimulated.isSuccess())
+                                            {
+                                                ItemHandlerHelper.insertItemStacked(out, filledSimulated.getResult(), false);
+                                                inputCup.shrink(1);
+                                            }
+                                        }
+                                    }
+                                }));
                     }));
         }
         else
@@ -142,9 +170,9 @@ public class DrinkMakerTileEntity extends NormalContainerTileEntity implements I
         return new DrinkMakerContainer(i, playerInventory, pos, world);
     }
 
-    private ItemStackHandler createItemHandler()
+    private ItemStackHandler createItemHandler(int size)
     {
-        return new ItemStackHandler(4)
+        return new ItemStackHandler(size)
         {
             @Override
             protected void onContentsChanged(int slot)
@@ -152,26 +180,6 @@ public class DrinkMakerTileEntity extends NormalContainerTileEntity implements I
                 DrinkMakerTileEntity.this.refresh();
                 DrinkMakerTileEntity.this.markDirty();
                 super.onContentsChanged(slot);
-            }
-        };
-    }
-
-    private FluidTank createFluidHandler()
-    {
-        return new FluidTank(CommonConfig.Block.drinkMakerCapacity.get())
-        {
-            @Override
-            protected void onContentsChanged()
-            {
-                DrinkMakerTileEntity.this.refresh();
-                DrinkMakerTileEntity.this.markDirty();
-                super.onContentsChanged();
-            }
-
-            @Override
-            public boolean isFluidValid(FluidStack stack)
-            {
-                return !stack.getFluid().getAttributes().isLighterThanAir() && stack.getFluid().getAttributes().getTemperature() < 500;
             }
         };
     }
@@ -194,18 +202,33 @@ public class DrinkMakerTileEntity extends NormalContainerTileEntity implements I
 
     public int getFluidAmount()
     {
-        return getFluidTank().getFluidAmount();
+        return getFluidHandler().map(h -> h.getFluidInTank(0).getAmount()).orElse(0);
     }
 
     @Nullable
     public String getFluidTranslation()
     {
-        return getFluidTank().getFluid().getDisplayName().getFormattedText();
+        return getFluidHandler().map(h -> h.getFluidInTank(0).getDisplayName().getFormattedText()).orElse(null);
     }
 
-    public FluidTank getFluidTank()
+    public LazyOptional<IFluidHandlerItem> getFluidHandler()
     {
-        return this.fluidTank.orElse(new FluidTank(0));
+        return this.containerInventory.map(h -> FluidUtil.getFluidHandler(h.getStackInSlot(0))).orElse(LazyOptional.empty());
+    }
+
+    public LazyOptional<ItemStackHandler> getContainerInventory()
+    {
+        return containerInventory;
+    }
+
+    public LazyOptional<ItemStackHandler> getInputInventory()
+    {
+        return inputInventory;
+    }
+
+    public LazyOptional<ItemStackHandler> getOutputInventory()
+    {
+        return outputInventory;
     }
 
     public List<ItemStack> getContent()

@@ -102,9 +102,9 @@ public class DrinkMakerCategory implements IRecipeCategory<DrinkRecipeInput>
         guiItemStacks.init(3, true, 93, 29);
         guiItemStacks.set(3, ingredients.getInputs(VanillaTypes.ITEM).get(3));
         IGuiFluidStackGroup fluidStackGroup = recipeLayout.getFluidStacks();
-        fluidStackGroup.init(4, true, new FluidStackRenderer(2000, true, 16, 64, (IDrawable) null), 6, 6, 16, 64, 0, 0);
+        fluidStackGroup.init(4, true, new FluidStackRenderer(1000, false, 16, 64, (IDrawable) null), 6, 6, 16, 64, 0, 0);
         fluidStackGroup.set(4, ingredients.getInputs(VanillaTypes.FLUID).get(0));
-        fluidStackGroup.init(5, true, new FluidStackRenderer(2000, true, 16, 64, (IDrawable) null), 127, 6, 16, 64, 0, 0);
+        fluidStackGroup.init(5, true, new FluidStackRenderer(1000, false, 16, 64, (IDrawable) null), 127, 6, 16, 64, 0, 0);
         fluidStackGroup.set(5, ingredients.getOutputs(VanillaTypes.FLUID).get(0));
     }
 }

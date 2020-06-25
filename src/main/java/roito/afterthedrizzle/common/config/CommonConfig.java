@@ -39,14 +39,11 @@ public class CommonConfig
 
     public static class Block
     {
-        public static ForgeConfigSpec.IntValue drinkMakerCapacity;
         public static ForgeConfigSpec.IntValue woodenBarrelCapacity;
 
         private static void load(ForgeConfigSpec.Builder builder)
         {
             builder.push("Block");
-            drinkMakerCapacity = builder.comment("The capacity of drink maker. (mB)")
-                    .defineInRange("DrinkMakerCapacity", 2000, 100, Integer.MAX_VALUE);
             woodenBarrelCapacity = builder.comment("The capacity of wooden barrel. (mB)")
                     .defineInRange("WoodenBarrelCapacity", 4000, 100, Integer.MAX_VALUE);
             builder.pop();

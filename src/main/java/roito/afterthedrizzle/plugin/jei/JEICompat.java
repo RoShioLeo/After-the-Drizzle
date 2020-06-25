@@ -60,7 +60,7 @@ public class JEICompat implements IModPlugin
     public void registerGuiHandlers(IGuiHandlerRegistration registration)
     {
         registration.addRecipeClickArea(BambooTrayGuiContainer.class, 77, 32, 22, 17, new ResourceLocation(MODID, IN_RAIN), new ResourceLocation(MODID, OUTDOORS), new ResourceLocation(MODID, INDOORS), new ResourceLocation(MODID, BAKE));
-        registration.addRecipeClickArea(DrinkMakerGuiContainer.class, 103, 37, 24, 17, new ResourceLocation(MODID, DRINK_MAKER));
+        registration.addRecipeClickArea(DrinkMakerGuiContainer.class, 98, 37, 24, 17, new ResourceLocation(MODID, DRINK_MAKER));
     }
 
     @Override
