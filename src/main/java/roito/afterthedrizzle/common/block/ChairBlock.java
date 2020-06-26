@@ -21,10 +21,10 @@ import roito.afterthedrizzle.helper.VoxelShapeHelper;
 
 public class ChairBlock extends NormalHorizontalBlock
 {
-    public static final VoxelShape NORTH_SHAPE;
-    public static final VoxelShape EAST_SHAPE;
-    public static final VoxelShape WEST_SHAPE;
-    public static final VoxelShape SOUTH_SHAPE;
+    public static VoxelShape NORTH_SHAPE;
+    public static VoxelShape EAST_SHAPE;
+    public static VoxelShape WEST_SHAPE;
+    public static VoxelShape SOUTH_SHAPE;
 
     public ChairBlock(String name,Properties properties)
     {
