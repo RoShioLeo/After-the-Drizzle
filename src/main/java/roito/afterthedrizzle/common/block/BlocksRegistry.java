@@ -65,8 +65,8 @@ public final class BlocksRegistry extends RegistryModule
     // DECORATIONS 装饰
     public static final Block WOODEN_TABLE = new TableBlock("wooden_table", Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(0.6F).notSolid());
     public static final Block WOODEN_CHAIR = new ChairBlock("wooden_chair", Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(0.6F).notSolid());
-    public static final Block STONE_TABLE = new TableBlock("stone_table", Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(1F).notSolid());
-    public static final Block STONE_CHAIR = new StoneChairBlock("stone_chair", Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(1F).notSolid());
+    public static final Block STONE_TABLE = new TableBlock("stone_table", Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(1.5F).notSolid());
+    public static final Block STONE_CHAIR = new StoneChairBlock("stone_chair", Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(1.5F).notSolid());
     public static final Block BAMBOO_TABLE = new TableBlock("bamboo_table", Block.Properties.create(Material.BAMBOO).sound(SoundType.BAMBOO).hardnessAndResistance(0.5F).notSolid());
     public static final Block BAMBOO_CHAIR = new ChairBlock("bamboo_chair", Block.Properties.create(Material.BAMBOO).sound(SoundType.BAMBOO).hardnessAndResistance(0.5F).notSolid());
     public static final Block BAMBOO_LANTERN = new LanternBlock(Block.Properties.create(Material.BAMBOO).sound(SoundType.BAMBOO).hardnessAndResistance(0.5F).lightValue(15).notSolid())
