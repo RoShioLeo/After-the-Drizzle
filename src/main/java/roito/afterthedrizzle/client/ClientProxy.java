@@ -14,6 +14,7 @@ import roito.afterthedrizzle.client.render.SeatEntityRenderer;
 import roito.afterthedrizzle.common.CommonProxy;
 import roito.afterthedrizzle.common.block.BlocksRegistry;
 import roito.afterthedrizzle.common.entity.EntityTypesRegistry;
+import roito.afterthedrizzle.common.fluid.FluidsRegistry;
 
 public class ClientProxy extends CommonProxy
 {
@@ -66,6 +67,8 @@ public class ClientProxy extends CommonProxy
         registerCutoutType(BlocksRegistry.SPRUCE_TRELLIS);
         registerCutoutType(BlocksRegistry.JUNGLE_TRELLIS);
         registerCutoutType(BlocksRegistry.GRAPE);
+        FluidsRegistry.FLUIDS.getEntries().forEach(e -> RenderTypeLookup.setRenderLayer(e.get(), RenderType.getTranslucent()));
+        RenderTypeLookup.setRenderLayer(BlocksRegistry.WOODEN_TRAY, RenderType.getTranslucent());
     }
 
     private static void registerCutoutType(Block block)

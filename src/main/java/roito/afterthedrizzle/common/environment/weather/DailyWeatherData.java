@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.server.ServerWorld;
 import roito.afterthedrizzle.common.capability.CapabilitySolarTermTime;
+import roito.afterthedrizzle.common.config.CommonConfig;
 import roito.afterthedrizzle.common.environment.solar.Season;
 
 import java.util.Collections;
@@ -116,9 +117,13 @@ public class DailyWeatherData
                 {
                     if (index < 3 && random.nextInt(100) < 60)
                     {
-                        return create(WeatherType.FOGGY, 6 - index);
+                        if (CommonConfig.Weather.enableFoggy.get())
+                            return create(WeatherType.FOGGY, 6 - index);
                     }
-                    else return create(WeatherType.OVERCAST, lasting);
+                    if (CommonConfig.Weather.enableOvercast.get())
+                        return create(WeatherType.OVERCAST, lasting);
+                    else
+                        return create(WeatherType.SUNNY, lasting);
                 }
                 else
                 {
@@ -149,7 +154,10 @@ public class DailyWeatherData
                 }
                 else if (f < 0.75F)
                 {
-                    return create(WeatherType.OVERCAST, lasting);
+                    if (CommonConfig.Weather.enableOvercast.get())
+                        return create(WeatherType.OVERCAST, lasting);
+                    else
+                        return create(WeatherType.SUNNY, lasting);
                 }
                 else
                 {
@@ -180,7 +188,10 @@ public class DailyWeatherData
                 }
                 else if (f < 0.75F)
                 {
-                    return create(WeatherType.OVERCAST, lasting);
+                    if (CommonConfig.Weather.enableOvercast.get())
+                        return create(WeatherType.OVERCAST, lasting);
+                    else
+                        return create(WeatherType.SUNNY, lasting);
                 }
                 else
                 {
@@ -206,9 +217,13 @@ public class DailyWeatherData
 
                     if (index < 3 && random.nextInt(100) < 45)
                     {
-                        return create(WeatherType.FOGGY, 6 - index);
+                        if (CommonConfig.Weather.enableFoggy.get())
+                            return create(WeatherType.FOGGY, 6 - index);
                     }
-                    else return create(WeatherType.OVERCAST, lasting);
+                    if (CommonConfig.Weather.enableOvercast.get())
+                        return create(WeatherType.OVERCAST, lasting);
+                    else
+                        return create(WeatherType.SUNNY, lasting);
                 }
                 else
                 {

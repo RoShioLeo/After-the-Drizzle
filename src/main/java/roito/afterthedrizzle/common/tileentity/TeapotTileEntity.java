@@ -1,7 +1,5 @@
 package roito.afterthedrizzle.common.tileentity;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.nbt.CompoundNBT;
@@ -9,8 +7,6 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
@@ -19,8 +15,6 @@ import net.minecraftforge.fluids.capability.templates.FluidTank;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static roito.afterthedrizzle.common.tileentity.TileEntityTypesRegistry.TEAPOT;
 
@@ -89,7 +83,6 @@ public class TeapotTileEntity extends TileEntity
             @Override
             protected void onContentsChanged()
             {
-                TeapotTileEntity.this.refresh();
                 TeapotTileEntity.this.markDirty();
                 super.onContentsChanged();
             }
@@ -125,22 +118,5 @@ public class TeapotTileEntity extends TileEntity
     public void setFluid(Fluid fluid)
     {
         this.fluidTank.ifPresent(f -> f.setFluid(new FluidStack(fluid, getFluidAmount())));
-        this.refresh();
-    }
-
-    public void refresh()
-    {
-        if (this.hasWorld() && !this.world.isRemote)
-        {
-            BlockState state = this.world.getBlockState(pos);
-            this.world.markAndNotifyBlock(pos, null, state, state, 11);
-
-            SUpdateTileEntityPacket packet = this.getUpdatePacket();
-            Stream<ServerPlayerEntity> playerEntity = ((ServerWorld) this.world).getChunkProvider().chunkManager.getTrackingPlayers(new ChunkPos(this.pos.getX() >> 4, this.pos.getZ() >> 4), false);
-            for (ServerPlayerEntity player : playerEntity.collect(Collectors.toList()))
-            {
-                player.connection.sendPacket(packet);
-            }
-        }
     }
 }

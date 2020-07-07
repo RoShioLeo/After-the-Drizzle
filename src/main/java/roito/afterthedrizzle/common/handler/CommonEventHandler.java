@@ -31,7 +31,6 @@ import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.network.PacketDistributor;
-import roito.afterthedrizzle.AfterTheDrizzle;
 import roito.afterthedrizzle.common.block.BlocksRegistry;
 import roito.afterthedrizzle.common.block.TeaPlantBlock;
 import roito.afterthedrizzle.common.capability.CapabilityPlayerTemperature;
@@ -46,9 +45,10 @@ import roito.afterthedrizzle.common.network.SolarTermsMessage;
 import roito.afterthedrizzle.common.network.WeatherChangeMessage;
 import roito.afterthedrizzle.common.potion.EffectsRegistry;
 
+import static roito.afterthedrizzle.AfterTheDrizzle.MODID;
 import static roito.afterthedrizzle.common.block.TeaPlantBlock.AGE;
 
-@Mod.EventBusSubscriber(modid = AfterTheDrizzle.MODID)
+@Mod.EventBusSubscriber(modid = MODID)
 public final class CommonEventHandler
 {
     @SubscribeEvent
@@ -183,7 +183,7 @@ public final class CommonEventHandler
     {
         if (CommonConfig.Temperature.enable.get() && event.getObject() instanceof PlayerEntity && !(event.getObject() instanceof FakePlayer))
         {
-            event.addCapability(new ResourceLocation(AfterTheDrizzle.MODID, "player_temperature"), new CapabilityPlayerTemperature.Provider());
+            event.addCapability(new ResourceLocation(MODID, "player_temperature"), new CapabilityPlayerTemperature.Provider());
         }
     }
 
@@ -192,9 +192,9 @@ public final class CommonEventHandler
     {
         if (CommonConfig.Season.enable.get() && event.getObject().getDimension().getType().equals(DimensionType.OVERWORLD))
         {
-            event.addCapability(new ResourceLocation(AfterTheDrizzle.MODID, "world_solar_terms"), new CapabilitySolarTermTime.Provider());
+            event.addCapability(new ResourceLocation(MODID, "world_solar_terms"), new CapabilitySolarTermTime.Provider());
         }
-        event.addCapability(new ResourceLocation(AfterTheDrizzle.MODID, "world_weather"), new CapabilityWorldWeather.Provider());
+        event.addCapability(new ResourceLocation(MODID, "world_weather"), new CapabilityWorldWeather.Provider());
     }
 
     @SubscribeEvent

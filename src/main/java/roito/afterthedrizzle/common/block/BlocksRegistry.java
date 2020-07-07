@@ -31,6 +31,7 @@ public final class BlocksRegistry extends RegistryModule
     public static final Block IRON_CATAPULT_BOARD = new CatapultBoardBlock(0.6F, "iron_catapult_board", Block.Properties.create(Material.IRON).sound(SoundType.STONE).hardnessAndResistance(3.5F).notSolid());
     public static final Block FILTER_SCREEN = new FilterScreenBlock();
     public static final Block INSTRUMENT_SHELTER = new InstrumentShelterBlock();
+    public static final Block WOODEN_TRAY = new WoodenTrayBlock();
 
     public static final Block OAK_TRELLIS = new TrellisBlock("oak_trellis", Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(0.6F).notSolid());
     public static final Block BIRCH_TRELLIS = new TrellisBlock("birch_trellis", Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(0.6F).notSolid());
@@ -59,6 +60,7 @@ public final class BlocksRegistry extends RegistryModule
     public static final BlockItem ACACIA_TRELLIS_ITEM = new NormalBlockItem(ACACIA_TRELLIS);
     public static final BlockItem DIRT_AQUEDUCT_ITEM = new NormalBlockItem(DIRT_AQUEDUCT);
     public static final BlockItem DIRT_AQUEDUCT_POOL_ITEM = new NormalBlockItem(DIRT_AQUEDUCT_POOL);
+    public static final BlockItem WOODEN_TRAY_ITEM = new NormalBlockItem(WOODEN_TRAY);
 
     // DECORATIONS 装饰
     public static final Block WOODEN_TABLE = new TableBlock("wooden_table", Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(0.6F).notSolid());

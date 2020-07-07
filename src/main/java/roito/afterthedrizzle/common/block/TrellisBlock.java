@@ -54,6 +54,13 @@ public class TrellisBlock extends HorizontalConnectedBlock implements IWaterLogg
 
     @Override
     @SuppressWarnings("deprecation")
+    public boolean isNormalCube(BlockState state, IBlockReader worldIn, BlockPos pos)
+    {
+        return false;
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
     public BlockState getStateForPlacement(BlockItemUseContext context)
     {
         World world = context.getWorld();

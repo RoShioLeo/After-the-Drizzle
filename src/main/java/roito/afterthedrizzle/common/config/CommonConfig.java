@@ -106,12 +106,18 @@ public class CommonConfig
     public static class Weather
     {
         public static ForgeConfigSpec.BooleanValue enable;
+        public static ForgeConfigSpec.BooleanValue enableOvercast;
+        public static ForgeConfigSpec.BooleanValue enableFoggy;
 
         private static void load(ForgeConfigSpec.Builder builder)
         {
             builder.push("Weather");
             enable = builder.comment("Enable independent weather system.")
                     .define("EnableWeather", true);
+            enableOvercast = builder.comment("Enable Overcast Weather.")
+                    .define("EnableOvercast", true);
+            enableFoggy = builder.comment("Enable Foggy Weather.")
+                    .define("EnableFoggy", true);
             builder.pop();
         }
     }

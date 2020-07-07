@@ -152,6 +152,10 @@ public class DrinkMakerTileEntity extends NormalContainerTileEntity implements I
                                                 ItemHandlerHelper.insertItemStacked(out, filledSimulated.getResult(), false);
                                                 inputCup.shrink(1);
                                             }
+                                            if (fluid.getFluidInTank(0).isEmpty())
+                                            {
+                                                containerInventory.ifPresent(container -> container.setStackInSlot(0, container.getStackInSlot(0).getContainerItem()));
+                                            }
                                         }
                                     }
                                 }));

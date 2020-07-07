@@ -44,7 +44,7 @@ import static net.minecraftforge.fluids.capability.templates.FluidHandlerItemSta
 
 public class TeapotBlock extends NormalHorizontalBlock
 {
-    private static final VoxelShape SHAPE = makeCuboidShape(3F, 0F, 3F, 13F, 8.2F, 13F);
+    private static final VoxelShape SHAPE = makeCuboidShape(5F, 0F, 5F, 11F, 8F, 11F);
 
     public TeapotBlock()
     {

@@ -127,8 +127,8 @@ public class CupDrinkItem extends ItemFluidContainer
         if (canDrink(stack))
         {
             worldIn.playSound(null, entityLiving.getPosX(), entityLiving.getPosY(), entityLiving.getPosZ(), entityLiving.getEatSound(stack), SoundCategory.NEUTRAL, 1.0F, 1.0F + (worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) * 0.4F);
-            for (EffectInstance effct : getEffects(stack))
-                entityLiving.addPotionEffect(effct);
+            for (EffectInstance effect : getEffects(stack))
+                entityLiving.addPotionEffect(effect);
             if (entityLiving instanceof PlayerEntity)
             {
                 ItemHandlerHelper.giveItemToPlayer((PlayerEntity) entityLiving, new ItemStack(this.getContainerItem()));

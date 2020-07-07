@@ -4,17 +4,17 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.fluids.FluidStack;
-import roito.afterthedrizzle.AfterTheDrizzle;
 import roito.afterthedrizzle.common.fluid.FluidsRegistry;
 import roito.afterthedrizzle.common.item.ItemsRegistry;
 
 import static net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack.FLUID_NBT_KEY;
+import static roito.afterthedrizzle.AfterTheDrizzle.MODID;
 
 public class GroupDrink extends ItemGroup
 {
     public GroupDrink()
     {
-        super(AfterTheDrizzle.MODID + ".drink");
+        super(MODID + ".drink");
     }
 
     @Override
