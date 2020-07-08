@@ -1,18 +1,17 @@
 {
     "credit": "Made with Blockbench",
-    "texture_size": [16, 16],
     "textures": {
         "water": "block/water_still"
     },
     "elements": [
         {
             "name": "WF",
-            "from": [6.25, 2, 3.25],
-            "to": [9.75, 5, 6.75],
+            "from": [7.25, 1.5, 3],
+            "to": [10.75, 4.5, 6.5],
             "rotation": {
                 "angle": 0,
                 "axis": "y",
-                "origin": [14.25, 11, 11.25]
+                "origin": [15.25, 11, 11.25]
             },
             "faces": {
                 "up": {
@@ -24,20 +23,27 @@
         },
         {
             "name": "WF",
-            "from": [3.25, 2, 9.25],
-            "to": [6.75, 5, 12.75],
+            "from": [2.25, 1.5, 8],
+            "to": [5.75, 4.5, 11.5],
             "rotation": {
                 "angle": 0,
                 "axis": "y",
-                "origin": [11.25, 11, 17.25]
+                "origin": [10.25, 10, 16.25]
             },
             "faces": {
                 "up": {
-                    "uv": [0, 0, 5, 5],
+                    "uv": [5, 0, 10, 5],
                     "texture": "#water",
                     "tintindex": 2
                 }
             }
+        }
+    ],
+    "groups": [
+        {
+            "name": "teacup_3_3",
+            "origin": [8, 8, 8],
+            "children": [0, 1]
         }
     ]
 }

@@ -1,18 +1,17 @@
 {
     "credit": "Made with Blockbench",
-    "texture_size": [32, 32],
     "textures": {
         "water": "block/water_still"
     },
     "elements": [
         {
             "name": "WF",
-            "from": [6.25, 1.5, 6],
-            "to": [9.75, 4.5, 9.5],
+            "from": [7.25, 1.5, 3],
+            "to": [10.75, 4.5, 6.5],
             "rotation": {
                 "angle": 0,
                 "axis": "y",
-                "origin": [14.25, 11, 14.25]
+                "origin": [15.25, 11, 11.25]
             },
             "faces": {
                 "up": {
@@ -25,7 +24,7 @@
     ],
     "groups": [
         {
-            "name": "teacup_1_1",
+            "name": "teacup_3_3",
             "origin": [8, 8, 8],
             "children": [0]
         }

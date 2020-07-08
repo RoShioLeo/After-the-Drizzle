@@ -13,6 +13,8 @@ import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -133,6 +135,7 @@ public class WoodenTrayBlock extends NormalBlock
                                     if (FluidUtil.interactWithFluidHandler(player, handIn, tank))
                                     {
                                         worldIn.setBlockState(pos, state.with(DRINK, state.get(DRINK) + 1));
+                                        worldIn.playSound(null, pos, SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.BLOCKS, 0.5F, 0.9F);
                                     }
                                     break;
                                 }

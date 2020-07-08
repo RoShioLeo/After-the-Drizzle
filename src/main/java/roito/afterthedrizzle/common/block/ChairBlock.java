@@ -2,8 +2,6 @@ package roito.afterthedrizzle.common.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.state.StateContainer;
 import net.minecraft.util.ActionResultType;
@@ -21,14 +19,14 @@ import roito.afterthedrizzle.helper.VoxelShapeHelper;
 
 public class ChairBlock extends NormalHorizontalBlock
 {
-    public static VoxelShape NORTH_SHAPE;
-    public static VoxelShape EAST_SHAPE;
-    public static VoxelShape WEST_SHAPE;
-    public static VoxelShape SOUTH_SHAPE;
+    private final static VoxelShape NORTH_SHAPE;
+    private final static VoxelShape EAST_SHAPE;
+    private final static VoxelShape WEST_SHAPE;
+    private final static VoxelShape SOUTH_SHAPE;
 
-    public ChairBlock(String name,Properties properties)
+    public ChairBlock(String name, Properties properties)
     {
-        super(properties,name);
+        super(properties, name);
         this.setDefaultState(this.getStateContainer().getBaseState().with(HORIZONTAL_FACING, Direction.NORTH));
     }
 

@@ -34,9 +34,9 @@ public class DrinkMakerTileEntity extends NormalContainerTileEntity implements I
 {
     private final LazyOptional<ItemStackHandler> ingredientsInventory = LazyOptional.of(() -> this.createItemHandler(4));
     private final LazyOptional<ItemStackHandler> residuesInventory = LazyOptional.of(() -> this.createItemHandler(4));
-    private final LazyOptional<ItemStackHandler> containerInventory = LazyOptional.of(() -> this.createItemHandler(1));
+    private final LazyOptional<ItemStackHandler> containerInventory = LazyOptional.of(() -> this.createContainerItemHandler(1));
     private final LazyOptional<ItemStackHandler> inputInventory = LazyOptional.of(() -> this.createItemHandler(1));
-    private final LazyOptional<ItemStackHandler> outputInventory = LazyOptional.of(() -> this.createItemHandler(1));
+    private final LazyOptional<ItemStackHandler> outputInventory = LazyOptional.of(() -> this.createContainerItemHandler(1));
 
     private int processTicks = 0;
     private static final int totalTicks = 200;
@@ -154,7 +154,11 @@ public class DrinkMakerTileEntity extends NormalContainerTileEntity implements I
                                             }
                                             if (fluid.getFluidInTank(0).isEmpty())
                                             {
-                                                containerInventory.ifPresent(container -> container.setStackInSlot(0, container.getStackInSlot(0).getContainerItem()));
+                                                containerInventory.ifPresent(container ->
+                                                {
+                                                    if (container.getStackInSlot(0).hasContainerItem())
+                                                        container.setStackInSlot(0, container.getStackInSlot(0).getContainerItem());
+                                                });
                                             }
                                         }
                                     }
@@ -184,6 +188,26 @@ public class DrinkMakerTileEntity extends NormalContainerTileEntity implements I
                 DrinkMakerTileEntity.this.refresh();
                 DrinkMakerTileEntity.this.markDirty();
                 super.onContentsChanged(slot);
+            }
+        };
+    }
+
+    private ItemStackHandler createContainerItemHandler(int size)
+    {
+        return new ItemStackHandler(size)
+        {
+            @Override
+            protected void onContentsChanged(int slot)
+            {
+                DrinkMakerTileEntity.this.refresh();
+                DrinkMakerTileEntity.this.markDirty();
+                super.onContentsChanged(slot);
+            }
+
+            @Override
+            public int getSlotLimit(int slot)
+            {
+                return 1;
             }
         };
     }
@@ -243,6 +267,7 @@ public class DrinkMakerTileEntity extends NormalContainerTileEntity implements I
             int index = i;
             ingredientsInventory.ifPresent(h -> list.add(h.getStackInSlot(index)));
         }
+        containerInventory.ifPresent(h -> list.add(h.getStackInSlot(0)));
         return list;
     }
 

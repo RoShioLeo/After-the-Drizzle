@@ -31,7 +31,7 @@ public class DrinkMakerTESR extends TileEntityRenderer<DrinkMakerTileEntity>
 
         matrixStackIn.push();
         RenderHelper.disableStandardItemLighting();
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 5; i++)
         {
             ItemStack itemStack = list.get(i);
             if (itemStack.isEmpty())
@@ -44,16 +44,16 @@ public class DrinkMakerTESR extends TileEntityRenderer<DrinkMakerTileEntity>
             switch (tileEntityIn.getFacing())
             {
                 case NORTH:
-                    matrixStackIn.translate(0.4 * (i + 1), 0.35, 0.5);
+                    matrixStackIn.translate(0.35 * (i - 2) + 1, 0.35, 0.5);
                     break;
                 case SOUTH:
-                    matrixStackIn.translate(1.0 - 0.4 * (i + 1), 0.35, 0.5);
+                    matrixStackIn.translate(0.35 * (2 - i), 0.35, 0.5);
                     break;
                 case WEST:
-                    matrixStackIn.translate(0.5, 0.35, 1.0 - 0.4 * (i + 1));
+                    matrixStackIn.translate(0.5, 0.35, 0.35 * (2 - i));
                     break;
                 default:
-                    matrixStackIn.translate(0.5, 0.35, 0.4 * (i + 1));
+                    matrixStackIn.translate(0.5, 0.35, 0.35 * (i - 2) + 1);
             }
             matrixStackIn.rotate(new Quaternion(Vector3f.YP, 45, true));
             matrixStackIn.scale(0.5F, 0.5F, 0.5F);
