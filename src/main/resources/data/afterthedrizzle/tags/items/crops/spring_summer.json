@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "#forge:seeds/kohlrabi",
+    "#forge:seeds/mulberry",
+    "#forge:seeds/mustard_seeds",
+    "#forge:seeds/turnip",
+    "#forge:seeds/winter_squash"
+  ]
+}

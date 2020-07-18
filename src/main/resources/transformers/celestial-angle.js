@@ -19,13 +19,13 @@ function initializeCoreMod() {
                             var node = iterator.next();
                             if (node.getOpcode() === Opcodes.INVOKEVIRTUAL && node.name === ASM.mapMethod("func_76563_a")) {
                                 mn.instructions.insertBefore(node, new VarInsnNode(Opcodes.ALOAD, 0));
-                                iterator.set(new MethodInsnNode(Opcodes.INVOKESTATIC, "roito/afterthedrizzle/common/handler/AsmHandler", "getSeasonCelestialAngle", "(JFLnet/minecraft/world/IWorld;)F", false));
+                                iterator.set(new MethodInsnNode(Opcodes.INVOKESTATIC, "cloud/lemonslice/afterthedrizzle/common/handler/AsmHandler", "getSeasonCelestialAngle", "(JFLnet/minecraft/world/IWorld;)F", false));
                             }
                         }
                     }
                  });
-            return cn;
+                return cn;
+            }
         }
     }
-}
 }

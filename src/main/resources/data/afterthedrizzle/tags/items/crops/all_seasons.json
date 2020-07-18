@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "#forge:seeds/radish",
+    "#forge:seeds/rye",
+    "#forge:seeds/scallion",
+    "#forge:seeds/spinach",
+    "#forge:seeds/wheat",
+    "#forge:seeds/yam"
+  ]
+}

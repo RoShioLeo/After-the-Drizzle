@@ -16,7 +16,7 @@
             },
             "faces": {
                 "up": {
-                    "uv": [0, 0, 2.5, 2.5],
+                    "uv": [0, 0, 5, 5],
                     "texture": "#water",
                     "tintindex": 1
                 }
@@ -33,7 +33,7 @@
             },
             "faces": {
                 "up": {
-                    "uv": [2.5, 0, 5, 2.5],
+                    "uv": [5, 0, 10, 5],
                     "texture": "#water",
                     "tintindex": 2
                 }
