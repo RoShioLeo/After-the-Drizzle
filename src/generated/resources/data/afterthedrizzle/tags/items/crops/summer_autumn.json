@@ -1,0 +1,16 @@
+{
+    "replace": false,
+    "values": [
+        "#forge:seeds/leek",
+        "#forge:seeds/onion",
+        "#forge:seeds/parsnip",
+        "#forge:seeds/peanut",
+        "#forge:seeds/pepper",
+        "#forge:seeds/pumpkin",
+        "#forge:seeds/raspberry",
+        "#forge:seeds/rhubarb",
+        "#forge:seeds/sesame_seeds",
+        "#forge:seeds/strawberry",
+        "#forge:seeds/water_chestnut"
+    ]
+}

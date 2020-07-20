@@ -17,6 +17,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -31,6 +32,26 @@ public class InstrumentShelterBlock extends NormalBlock
     {
         super("instrument_shelter", Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(0.6F).notSolid());
         this.setDefaultState(this.stateContainer.getBaseState().with(THERMOMETER, false).with(RAIN_GAUGE, false).with(HYGROMETER, false));
+    }
+
+    @Override
+    public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos)
+    {
+        return true;
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public boolean causesSuffocation(BlockState state, IBlockReader worldIn, BlockPos pos)
+    {
+        return false;
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public boolean isNormalCube(BlockState state, IBlockReader worldIn, BlockPos pos)
+    {
+        return false;
     }
 
     @Override

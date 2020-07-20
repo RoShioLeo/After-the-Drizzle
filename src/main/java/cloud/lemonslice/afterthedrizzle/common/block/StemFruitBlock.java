@@ -21,15 +21,13 @@ import net.minecraftforge.common.IPlantable;
 
 import java.util.Random;
 
-import static cloud.lemonslice.afterthedrizzle.common.block.TrellisBlock.VINE;
-
 public class StemFruitBlock extends NormalBlock implements IGrowable, IPlantable
 {
-    public final TrellisBlock.VineType type;
+    public final VineType type;
     public static final IntegerProperty AGE = IntegerProperty.create("age", 0, 4);
     private static final VoxelShape SHAPE = VoxelShapeHelper.createVoxelShape(3.5, 6.0, 3.5, 9.0, 10.0, 9.0);
 
-    public StemFruitBlock(String name, Properties properties, TrellisBlock.VineType type)
+    public StemFruitBlock(String name, Properties properties, VineType type)
     {
         super(name, properties);
         this.type = type;
@@ -49,7 +47,7 @@ public class StemFruitBlock extends NormalBlock implements IGrowable, IPlantable
     {
         BlockPos blockpos = pos.up();
         BlockState up = worldIn.getBlockState(blockpos);
-        if (state.getBlock() == this && up.getBlock() instanceof TrellisBlock && up.get(VINE) == type)
+        if (state.getBlock() == this && up.getBlock() instanceof TrellisWithVineBlock && ((TrellisWithVineBlock) up.getBlock()).getType() == type)
             return true;
         else return false;
     }
@@ -86,7 +84,7 @@ public class StemFruitBlock extends NormalBlock implements IGrowable, IPlantable
         }
     }
 
-    protected static float getGrowthChance(Block blockIn, IBlockReader worldIn, BlockPos pos, TrellisBlock.VineType type)
+    protected static float getGrowthChance(Block blockIn, IBlockReader worldIn, BlockPos pos, VineType type)
     {
         float f = 1.0F;
         BlockPos blockpos = pos.up();
@@ -97,7 +95,7 @@ public class StemFruitBlock extends NormalBlock implements IGrowable, IPlantable
             {
                 float f1 = 0.0F;
                 BlockState blockstate = worldIn.getBlockState(blockpos.add(i, 0, j));
-                if (blockstate.getBlock() instanceof TrellisBlock && blockstate.get(VINE) == type)
+                if (blockstate.getBlock() instanceof TrellisWithVineBlock && ((TrellisWithVineBlock) blockstate.getBlock()).getType() == type)
                 {
                     f1 = 1.0F;
                 }

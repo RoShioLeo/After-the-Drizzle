@@ -1,0 +1,23 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "group": "insulating_layer",
+    "pattern": [
+        "xxx",
+        "###",
+        "***"
+    ],
+    "key": {
+        "x": {
+            "tag": "forge:leather"
+        },
+        "#": {
+            "tag": "minecraft:wool"
+        },
+        "*": {
+            "tag": "forge:feathers"
+        }
+    },
+    "result": {
+        "item": "afterthedrizzle:insulating_layer"
+    }
+}

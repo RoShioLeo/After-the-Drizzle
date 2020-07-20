@@ -16,6 +16,8 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeColors;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 
+import java.util.Arrays;
+
 public class ClientProxy extends CommonProxy
 {
     public static final ResourceLocation LIGHT_RAIN_TEXTURES = new ResourceLocation("afterthedrizzle:textures/environment/rain_light.png");
@@ -60,19 +62,14 @@ public class ClientProxy extends CommonProxy
         registerCutoutType(BlocksRegistry.BAMBOO_GLASS_DOOR);
         registerCutoutType(BlocksRegistry.DRINK_MAKER);
         registerCutoutType(BlocksRegistry.RICE_PLANT);
-        registerCutoutType(BlocksRegistry.OAK_TRELLIS);
-        registerCutoutType(BlocksRegistry.BIRCH_TRELLIS);
-        registerCutoutType(BlocksRegistry.DARK_OAK_TRELLIS);
-        registerCutoutType(BlocksRegistry.ACACIA_TRELLIS);
-        registerCutoutType(BlocksRegistry.SPRUCE_TRELLIS);
-        registerCutoutType(BlocksRegistry.JUNGLE_TRELLIS);
+        registerCutoutType(BlocksRegistry.TRELLIS_BLOCKS.toArray(new Block[0]));
         registerCutoutType(BlocksRegistry.GRAPE);
         FluidsRegistry.FLUIDS.getEntries().forEach(e -> RenderTypeLookup.setRenderLayer(e.get(), RenderType.getTranslucent()));
         RenderTypeLookup.setRenderLayer(BlocksRegistry.WOODEN_TRAY, RenderType.getTranslucent());
     }
 
-    private static void registerCutoutType(Block block)
+    private static void registerCutoutType(Block... blocks)
     {
-        RenderTypeLookup.setRenderLayer(block, RenderType.getCutout());
+        Arrays.asList(blocks).forEach(block -> RenderTypeLookup.setRenderLayer(block, RenderType.getCutout()));
     }
 }

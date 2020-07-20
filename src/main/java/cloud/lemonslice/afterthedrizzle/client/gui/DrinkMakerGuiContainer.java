@@ -63,7 +63,7 @@ public class DrinkMakerGuiContainer extends ContainerScreen<DrinkMakerContainer>
             {
                 height = 0;
             }
-            GuiHelper.drawTank(this, offsetX + 128, offsetY + 12, new TexturePos(128, 12, 16, 64), f.getFluidInTank(0), height);
+            GuiHelper.drawTank(this, new TexturePos(offsetX + 128, offsetY + 12, 16, 64), f.getFluidInTank(0), height);
         });
         RenderSystem.disableAlphaTest();
         RenderSystem.disableBlend();

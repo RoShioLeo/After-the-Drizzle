@@ -1,0 +1,9 @@
+{
+    "type": "minecraft:smelting",
+    "ingredient": {
+        "item": "afterthedrizzle:water_bag"
+    },
+    "result": "afterthedrizzle:hot_water_bag",
+    "experience": 0.2,
+    "cookingtime": 200
+}

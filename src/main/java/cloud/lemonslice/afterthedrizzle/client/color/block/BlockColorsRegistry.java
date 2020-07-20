@@ -1,6 +1,7 @@
 package cloud.lemonslice.afterthedrizzle.client.color.block;
 
 import cloud.lemonslice.afterthedrizzle.common.block.BlocksRegistry;
+import cloud.lemonslice.afterthedrizzle.common.block.TrellisWithVineBlock;
 import cloud.lemonslice.afterthedrizzle.common.fluid.FluidsRegistry;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
@@ -18,8 +19,8 @@ public final class BlockColorsRegistry
     {
         Minecraft.getInstance().getBlockColors().register(HYBRIDIZABLE_FLOWER_COLOR, BlocksRegistry.CHRYSANTHEMUM, BlocksRegistry.HYACINTH, BlocksRegistry.ZINNIA);
         FluidsRegistry.BLOCKS.getEntries().forEach(e -> Minecraft.getInstance().getBlockColors().register(FLUID_COLOR, e.get()));
-        Minecraft.getInstance().getBlockColors().register(GRASS_BLOCK_COLOR, BlocksRegistry.GRASS_BLOCK_WITH_HOLE,
-                BlocksRegistry.OAK_TRELLIS, BlocksRegistry.BIRCH_TRELLIS, BlocksRegistry.DARK_OAK_TRELLIS, BlocksRegistry.ACACIA_TRELLIS, BlocksRegistry.SPRUCE_TRELLIS, BlocksRegistry.JUNGLE_TRELLIS);
+        Minecraft.getInstance().getBlockColors().register(GRASS_BLOCK_COLOR, BlocksRegistry.GRASS_BLOCK_WITH_HOLE);
+        BlocksRegistry.TRELLIS_BLOCKS.stream().filter(block -> block instanceof TrellisWithVineBlock).forEach(block -> Minecraft.getInstance().getBlockColors().register(GRASS_BLOCK_COLOR, block));
         Minecraft.getInstance().getBlockColors().register(BIRCH_LEAVES_COLOR, Blocks.BIRCH_LEAVES);
         Minecraft.getInstance().getBlockColors().register(TEA_CUP_COLOR, BlocksRegistry.WOODEN_TRAY);
     }

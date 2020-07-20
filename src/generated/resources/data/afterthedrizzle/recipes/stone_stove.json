@@ -1,0 +1,20 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "group": "stove",
+    "pattern": [
+        "xxx",
+        "x#x",
+        "xxx"
+    ],
+    "key": {
+        "x": {
+            "tag": "forge:stone"
+        },
+        "#": {
+            "item": "afterthedrizzle:dirt_stove"
+        }
+    },
+    "result": {
+        "item": "afterthedrizzle:stone_stove"
+    }
+}

@@ -1,0 +1,20 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "group": "handwarmer",
+    "pattern": [
+        " x ",
+        "# #",
+        "###"
+    ],
+    "key": {
+        "x": {
+            "tag": "forge:nuggets/iron"
+        },
+        "#": {
+            "tag": "forge:ingots/iron"
+        }
+    },
+    "result": {
+        "item": "afterthedrizzle:handwarmer"
+    }
+}

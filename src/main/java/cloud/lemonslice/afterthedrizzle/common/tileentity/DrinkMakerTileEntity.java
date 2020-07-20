@@ -149,8 +149,11 @@ public class DrinkMakerTileEntity extends NormalContainerTileEntity implements I
                                             FluidActionResult filledSimulated = FluidUtil.tryFillContainer(inputCup, fluid, Integer.MAX_VALUE, null, true);
                                             if (filledSimulated.isSuccess())
                                             {
-                                                ItemHandlerHelper.insertItemStacked(out, filledSimulated.getResult(), false);
-                                                inputCup.shrink(1);
+                                                if (filledSimulated.getResult().hasTag())
+                                                {
+                                                    ItemHandlerHelper.insertItemStacked(out, filledSimulated.getResult(), false);
+                                                    inputCup.shrink(1);
+                                                }
                                             }
                                             if (fluid.getFluidInTank(0).isEmpty())
                                             {

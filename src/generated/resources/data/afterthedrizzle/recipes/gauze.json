@@ -1,0 +1,17 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "group": "gauze",
+    "pattern": [
+        "# #",
+        "###",
+        "# #"
+    ],
+    "key": {
+        "#": {
+            "tag": "forge:string"
+        }
+    },
+    "result": {
+        "item": "afterthedrizzle:gauze"
+    }
+}

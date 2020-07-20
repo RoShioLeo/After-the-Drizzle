@@ -1,6 +1,10 @@
 package cloud.lemonslice.afterthedrizzle.common.environment.crop;
 
 import cloud.lemonslice.afterthedrizzle.AfterTheDrizzle;
+import cloud.lemonslice.afterthedrizzle.common.block.BlocksRegistry;
+import cloud.lemonslice.afterthedrizzle.common.block.TrellisBlock;
+import cloud.lemonslice.afterthedrizzle.common.block.TrellisWithVineBlock;
+import cloud.lemonslice.afterthedrizzle.common.block.VineType;
 import net.minecraft.block.Block;
 import net.minecraft.block.CropsBlock;
 import net.minecraft.item.BlockItem;
@@ -23,6 +27,24 @@ public final class CropInfoManager
 {
     private final static Map<Block, CropHumidityInfo> CROP_HUMIDITY_INFO = new HashMap<>();
     private final static Map<Block, CropSeasonInfo> CROP_SEASON_INFO = new HashMap<>();
+    private final static Map<VinePair, TrellisWithVineBlock> TRELLIS_VINES_INFO = new HashMap<>();
+    private final static Map<TrellisWithVineBlock, TrellisBlock> TRELLIS_INFO = new HashMap<>();
+
+    public static void registerVineTypeConnections(VineType typeIn, TrellisBlock blockIn, TrellisWithVineBlock vineOut)
+    {
+        TRELLIS_VINES_INFO.put(new VinePair(typeIn, blockIn), vineOut);
+        TRELLIS_INFO.put(vineOut, blockIn);
+    }
+
+    public static void initTrellisBlocks()
+    {
+        registerVineTypeConnections(VineType.GRAPE, BlocksRegistry.OAK_TRELLIS, BlocksRegistry.OAK_TRELLIS_GRAPE);
+        registerVineTypeConnections(VineType.GRAPE, BlocksRegistry.BIRCH_TRELLIS, BlocksRegistry.BIRCH_TRELLIS_GRAPE);
+        registerVineTypeConnections(VineType.GRAPE, BlocksRegistry.JUNGLE_TRELLIS, BlocksRegistry.JUNGLE_TRELLIS_GRAPE);
+        registerVineTypeConnections(VineType.GRAPE, BlocksRegistry.SPRUCE_TRELLIS, BlocksRegistry.SPRUCE_TRELLIS_GRAPE);
+        registerVineTypeConnections(VineType.GRAPE, BlocksRegistry.DARK_OAK_TRELLIS, BlocksRegistry.DARK_OAK_TRELLIS_GRAPE);
+        registerVineTypeConnections(VineType.GRAPE, BlocksRegistry.ACACIA_TRELLIS, BlocksRegistry.ACACIA_TRELLIS_GRAPE);
+    }
 
     @SubscribeEvent
     public static void init(TagsUpdatedEvent event)
@@ -118,5 +140,15 @@ public final class CropInfoManager
     public static CropSeasonInfo getSeasonInfo(Block crop)
     {
         return CROP_SEASON_INFO.get(crop);
+    }
+
+    public static TrellisWithVineBlock getVineTrellis(VineType typeIn, TrellisBlock blockIn)
+    {
+        return TRELLIS_VINES_INFO.get(new VinePair(typeIn, blockIn));
+    }
+
+    public static TrellisBlock getEmptyTrellis(TrellisWithVineBlock blockIn)
+    {
+        return TRELLIS_INFO.get(blockIn);
     }
 }

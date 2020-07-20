@@ -1,0 +1,21 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "group": "tea_bag",
+    "ingredients": [
+        {
+            "item": "afterthedrizzle:empty_tea_bag"
+        },
+        {
+            "tag": "forge:crops/green_tea_leaf"
+        },
+        {
+            "tag": "forge:crops/green_tea_leaf"
+        },
+        {
+            "tag": "forge:crops/green_tea_leaf"
+        }
+    ],
+    "result": {
+        "item": "afterthedrizzle:green_tea_bag"
+    }
+}

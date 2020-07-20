@@ -11,6 +11,7 @@ import cloud.lemonslice.afterthedrizzle.common.command.SolarCommand;
 import cloud.lemonslice.afterthedrizzle.common.command.WeatherCommand;
 import cloud.lemonslice.afterthedrizzle.common.config.NormalConfigs;
 import cloud.lemonslice.afterthedrizzle.common.entity.EntityTypesRegistry;
+import cloud.lemonslice.afterthedrizzle.common.environment.crop.CropInfoManager;
 import cloud.lemonslice.afterthedrizzle.common.environment.solar.BiomeTemperatureManager;
 import cloud.lemonslice.afterthedrizzle.common.environment.weather.BiomeWeatherManager;
 import cloud.lemonslice.afterthedrizzle.common.fluid.FluidsRegistry;
@@ -34,6 +35,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
@@ -52,6 +54,7 @@ public final class AfterTheDrizzle
     {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::interModEnqueue);
         MinecraftForge.EVENT_BUS.addListener(this::serverStarting);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, NormalConfigs.COMMON_CONFIG);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, NormalConfigs.CLIENT_CONFIG);
@@ -73,13 +76,14 @@ public final class AfterTheDrizzle
     {
         RecipesRegistry.init();
         WorldGenManager.init();
-        RegisterManager.clearAll();
         CapabilitiesRegistry.init();
         SimpleNetworkHandler.init();
         BiomeWeatherManager.init();
         BiomeTemperatureManager.init();
         CommonProxy.registerCompostable();
         CommonProxy.registerFireInfo();
+        CropInfoManager.initTrellisBlocks();
+        RegisterManager.clearAll();
     }
 
     public void clientSetup(FMLClientSetupEvent event)
@@ -96,6 +100,11 @@ public final class AfterTheDrizzle
     {
         SolarCommand.register(event.getCommandDispatcher());
         WeatherCommand.register(event.getCommandDispatcher());
+    }
+
+    public void interModEnqueue(InterModEnqueueEvent event)
+    {
+        BlocksRegistry.TRELLIS_BLOCKS = null;
     }
 
     public static final ItemGroup GROUP_CORE = new GroupCore();

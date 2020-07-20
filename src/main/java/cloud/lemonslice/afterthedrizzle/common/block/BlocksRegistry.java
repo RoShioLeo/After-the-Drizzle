@@ -4,6 +4,7 @@ import cloud.lemonslice.afterthedrizzle.common.item.DrinkMakerItem;
 import cloud.lemonslice.afterthedrizzle.common.item.HybridizableFlowerBlockItem;
 import cloud.lemonslice.afterthedrizzle.common.item.NormalBlockItem;
 import cloud.lemonslice.afterthedrizzle.registry.RegistryModule;
+import com.google.common.collect.Lists;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
@@ -14,10 +15,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import java.util.List;
 import java.util.Random;
 
 public final class BlocksRegistry extends RegistryModule
 {
+    public static List<Block> TRELLIS_BLOCKS = Lists.newArrayList();
     // CRAFT 工艺
     public static final Block BAMBOO_TRAY = new BambooTrayBlock();
     public static final Block DRINK_MAKER = new DrinkMakerBlock();
@@ -33,12 +36,20 @@ public final class BlocksRegistry extends RegistryModule
     public static final Block INSTRUMENT_SHELTER = new InstrumentShelterBlock();
     public static final Block WOODEN_TRAY = new WoodenTrayBlock();
 
-    public static final Block OAK_TRELLIS = new TrellisBlock("oak_trellis", Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(0.6F).notSolid());
-    public static final Block BIRCH_TRELLIS = new TrellisBlock("birch_trellis", Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(0.6F).notSolid());
-    public static final Block JUNGLE_TRELLIS = new TrellisBlock("jungle_trellis", Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(0.6F).notSolid());
-    public static final Block SPRUCE_TRELLIS = new TrellisBlock("spruce_trellis", Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(0.6F).notSolid());
-    public static final Block DARK_OAK_TRELLIS = new TrellisBlock("dark_oak_trellis", Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(0.6F).notSolid());
-    public static final Block ACACIA_TRELLIS = new TrellisBlock("acacia_trellis", Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(0.6F).notSolid());
+    public static final TrellisBlock OAK_TRELLIS = new TrellisBlock("oak_trellis", Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(0.6F).notSolid());
+    public static final TrellisBlock BIRCH_TRELLIS = new TrellisBlock("birch_trellis", Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(0.6F).notSolid());
+    public static final TrellisBlock JUNGLE_TRELLIS = new TrellisBlock("jungle_trellis", Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(0.6F).notSolid());
+    public static final TrellisBlock SPRUCE_TRELLIS = new TrellisBlock("spruce_trellis", Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(0.6F).notSolid());
+    public static final TrellisBlock DARK_OAK_TRELLIS = new TrellisBlock("dark_oak_trellis", Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(0.6F).notSolid());
+    public static final TrellisBlock ACACIA_TRELLIS = new TrellisBlock("acacia_trellis", Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(0.6F).notSolid());
+
+    public static final TrellisWithVineBlock OAK_TRELLIS_GRAPE = new TrellisWithVineBlock("oak_trellis_grape", VineType.GRAPE, Block.Properties.create(Material.WOOD).sound(SoundType.PLANT).hardnessAndResistance(0.6F).notSolid());
+    public static final TrellisWithVineBlock BIRCH_TRELLIS_GRAPE = new TrellisWithVineBlock("birch_trellis_grape", VineType.GRAPE, Block.Properties.create(Material.WOOD).sound(SoundType.PLANT).hardnessAndResistance(0.6F).notSolid());
+    public static final TrellisWithVineBlock JUNGLE_TRELLIS_GRAPE = new TrellisWithVineBlock("jungle_trellis_grape", VineType.GRAPE, Block.Properties.create(Material.WOOD).sound(SoundType.PLANT).hardnessAndResistance(0.6F).notSolid());
+    public static final TrellisWithVineBlock SPRUCE_TRELLIS_GRAPE = new TrellisWithVineBlock("spruce_trellis_grape", VineType.GRAPE, Block.Properties.create(Material.WOOD).sound(SoundType.PLANT).hardnessAndResistance(0.6F).notSolid());
+    public static final TrellisWithVineBlock DARK_OAK_TRELLIS_GRAPE = new TrellisWithVineBlock("dark_oak_trellis_grape", VineType.GRAPE, Block.Properties.create(Material.WOOD).sound(SoundType.PLANT).hardnessAndResistance(0.6F).notSolid());
+    public static final TrellisWithVineBlock ACACIA_TRELLIS_GRAPE = new TrellisWithVineBlock("acacia_trellis_grape", VineType.GRAPE, Block.Properties.create(Material.WOOD).sound(SoundType.PLANT).hardnessAndResistance(0.6F).notSolid());
+
     public static final Block DIRT_AQUEDUCT = new AqueductBlock("dirt_aqueduct", Block.Properties.create(Material.EARTH, MaterialColor.DIRT).hardnessAndResistance(0.5F).sound(SoundType.GROUND).notSolid());
     public static final Block DIRT_AQUEDUCT_POOL = new AqueductOutputBlock("dirt_aqueduct_pool", Block.Properties.create(Material.EARTH, MaterialColor.DIRT).hardnessAndResistance(0.5F).sound(SoundType.GROUND).notSolid());
 
@@ -103,7 +114,7 @@ public final class BlocksRegistry extends RegistryModule
     public static final Block WILD_TEA_PLANT = new WildTeaPlantBlock();
     public static final Block RICE_SEEDLING = new RiceSeedlingBlock("rice_seedling");
     public static final Block RICE_PLANT = new RicePlantBlock("rice_plant");
-    public static final Block GRAPE = new StemFruitBlock("grape_plant", Block.Properties.create(Material.PLANTS).doesNotBlockMovement().tickRandomly().hardnessAndResistance(0.0F).sound(SoundType.CROP), TrellisBlock.VineType.GRAPE);
+    public static final Block GRAPE = new StemFruitBlock("grape_plant", Block.Properties.create(Material.PLANTS).doesNotBlockMovement().tickRandomly().hardnessAndResistance(0.0F).sound(SoundType.CROP), VineType.GRAPE);
 
     public static final BlockItem WILD_TEA_PLANT_ITEM = new NormalBlockItem(WILD_TEA_PLANT);
 

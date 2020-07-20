@@ -2,10 +2,10 @@ package cloud.lemonslice.afterthedrizzle.client.texture;
 
 public class TexturePos
 {
-    private int textureX;
-    private int textureY;
-    private int width;
-    private int height;
+    private final int textureX;
+    private final int textureY;
+    private final int width;
+    private final int height;
 
     public TexturePos(int textureX, int textureY, int width, int height)
     {
@@ -25,12 +25,12 @@ public class TexturePos
         return textureY;
     }
 
-    public int getU()
+    public int getWidth()
     {
         return width;
     }
 
-    public int getV()
+    public int getHeight()
     {
         return height;
     }

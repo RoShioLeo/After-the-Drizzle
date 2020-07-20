@@ -33,56 +33,56 @@ public final class RegisterManager
     public static void registerItems(RegistryEvent.Register<Item> event)
     {
         event.getRegistry().registerAll(ITEMS.toArray(new Item[0]));
-        LogHelper.info("Successfully registered %d Item(s).", ITEMS.size());
+        LogHelper.info("[AfterTheDrizzle] Successfully registered %d Item(s).", ITEMS.size());
     }
 
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event)
     {
         event.getRegistry().registerAll(BLOCKS.toArray(new Block[0]));
-        LogHelper.info("Successfully registered %d Block(s).", BLOCKS.size());
+        LogHelper.info("[AfterTheDrizzle] Successfully registered %d Block(s).", BLOCKS.size());
     }
 
     @SubscribeEvent
     public static void registerTileEntityTypes(RegistryEvent.Register<TileEntityType<?>> event)
     {
         event.getRegistry().registerAll(TILE_ENTITY_TYPES.toArray(new TileEntityType<?>[0]));
-        LogHelper.info("Successfully registered %d Tile Entity Type(s).", TILE_ENTITY_TYPES.size());
+        LogHelper.info("[AfterTheDrizzle] Successfully registered %d Tile Entity Type(s).", TILE_ENTITY_TYPES.size());
     }
 
     @SubscribeEvent
     public static void registerEntityTypes(RegistryEvent.Register<EntityType<?>> event)
     {
         event.getRegistry().registerAll(ENTITY_TYPES.toArray(new EntityType<?>[0]));
-        LogHelper.info("Successfully registered %d Entity Type(s).", ENTITY_TYPES.size());
+        LogHelper.info("[AfterTheDrizzle] Successfully registered %d Entity Type(s).", ENTITY_TYPES.size());
     }
 
     @SubscribeEvent
     public static void registerEffects(RegistryEvent.Register<Effect> event)
     {
         event.getRegistry().registerAll(EFFECTS.toArray(new Effect[0]));
-        LogHelper.info("Successfully registered %d Effect(s).", EFFECTS.size());
+        LogHelper.info("[AfterTheDrizzle] Successfully registered %d Effect(s).", EFFECTS.size());
     }
 
     @SubscribeEvent
     public static void registerContainerTypes(RegistryEvent.Register<ContainerType<?>> event)
     {
         event.getRegistry().registerAll(CONTAINER_TYPES.toArray(new ContainerType<?>[0]));
-        LogHelper.info("Successfully registered %d Container Type(s).", CONTAINER_TYPES.size());
+        LogHelper.info("[AfterTheDrizzle] Successfully registered %d Container Type(s).", CONTAINER_TYPES.size());
     }
 
     @SubscribeEvent
     public static void registerFeatures(RegistryEvent.Register<Feature<?>> event)
     {
         event.getRegistry().registerAll(FEATURES.toArray(new Feature<?>[0]));
-        LogHelper.info("Successfully registered %d Feature(s).", FEATURES.size());
+        LogHelper.info("[AfterTheDrizzle] Successfully registered %d Feature(s).", FEATURES.size());
     }
 
     @SubscribeEvent
     public static void registerSounds(RegistryEvent.Register<SoundEvent> event)
     {
         event.getRegistry().registerAll(SOUNDS.toArray(new SoundEvent[0]));
-        LogHelper.info("Successfully registered %d Sound(s).", SOUNDS.size());
+        LogHelper.info("[AfterTheDrizzle] Successfully registered %d Sound(s).", SOUNDS.size());
     }
 
     public static void clearAll()

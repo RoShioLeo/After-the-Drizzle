@@ -1,0 +1,21 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "group": "ice_water_bag",
+    "ingredients": [
+        {
+            "item": "afterthedrizzle:water_bag"
+        },
+        {
+            "item": "minecraft:snowball"
+        },
+        {
+            "item": "minecraft:snowball"
+        },
+        {
+            "item": "minecraft:snowball"
+        }
+    ],
+    "result": {
+        "item": "afterthedrizzle:ice_water_bag"
+    }
+}
