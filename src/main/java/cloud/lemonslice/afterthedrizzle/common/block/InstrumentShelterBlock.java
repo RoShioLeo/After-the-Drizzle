@@ -1,7 +1,7 @@
 package cloud.lemonslice.afterthedrizzle.common.block;
 
 import cloud.lemonslice.afterthedrizzle.common.capability.CapabilityWorldWeather;
-import cloud.lemonslice.afterthedrizzle.common.config.CommonConfig;
+import cloud.lemonslice.afterthedrizzle.common.config.ServerConfig;
 import cloud.lemonslice.afterthedrizzle.common.environment.weather.DailyWeatherData;
 import cloud.lemonslice.afterthedrizzle.common.environment.weather.WeatherType;
 import cloud.lemonslice.afterthedrizzle.common.item.ItemsRegistry;
@@ -78,7 +78,7 @@ public class InstrumentShelterBlock extends NormalBlock
         }
         else if (!worldIn.isRemote)
         {
-            if (!CommonConfig.Weather.enable.get())
+            if (!ServerConfig.Weather.enable.get())
             {
                 player.sendMessage(new TranslationTextComponent("info.afterthedrizzle.environment.weather.forecast.disable"));
                 return ActionResultType.SUCCESS;

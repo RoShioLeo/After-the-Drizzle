@@ -1,6 +1,7 @@
-package cloud.lemonslice.afterthedrizzle.common.recipe.type;
+package cloud.lemonslice.afterthedrizzle.common.recipe.special;
 
 import cloud.lemonslice.afterthedrizzle.common.item.ItemsRegistry;
+import cloud.lemonslice.afterthedrizzle.common.recipe.serializer.RecipeSerializersRegistry;
 import com.google.common.collect.Lists;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ArmorItem;

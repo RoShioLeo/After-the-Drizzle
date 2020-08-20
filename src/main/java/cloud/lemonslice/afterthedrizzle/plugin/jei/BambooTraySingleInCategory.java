@@ -1,7 +1,7 @@
 package cloud.lemonslice.afterthedrizzle.plugin.jei;
 
 import cloud.lemonslice.afterthedrizzle.AfterTheDrizzle;
-import cloud.lemonslice.afterthedrizzle.common.recipe.bamboo_tray.BambooTaryRecipe;
+import cloud.lemonslice.afterthedrizzle.common.recipe.bamboo_tray.BambooTraySingleInRecipe;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -15,16 +15,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.Collections;
-import java.util.List;
 
-public class BambooTrayCategory implements IRecipeCategory<BambooTaryRecipe>
+public class BambooTraySingleInCategory implements IRecipeCategory<BambooTraySingleInRecipe>
 {
     private final String uid;
     private final IDrawable icon;
     private final IGuiHelper guiHelper;
     protected final IDrawable arrow;
 
-    public BambooTrayCategory(IGuiHelper guiHelper, String uid, ResourceLocation resourceLocation, int i)
+    public BambooTraySingleInCategory(IGuiHelper guiHelper, String uid, ResourceLocation resourceLocation, int i)
     {
         this.guiHelper = guiHelper;
         this.uid = uid;
@@ -39,9 +38,9 @@ public class BambooTrayCategory implements IRecipeCategory<BambooTaryRecipe>
     }
 
     @Override
-    public Class<? extends BambooTaryRecipe> getRecipeClass()
+    public Class<? extends BambooTraySingleInRecipe> getRecipeClass()
     {
-        return BambooTaryRecipe.class;
+        return BambooTraySingleInRecipe.class;
     }
 
     @Override
@@ -63,22 +62,21 @@ public class BambooTrayCategory implements IRecipeCategory<BambooTaryRecipe>
     }
 
     @Override
-    public void setIngredients(BambooTaryRecipe bambooTaryRecipe, IIngredients iIngredients)
+    public void setIngredients(BambooTraySingleInRecipe bambooTraySingleInRecipe, IIngredients iIngredients)
     {
-        List<List<ItemStack>> itemIn = Collections.singletonList(bambooTaryRecipe.getInputs());
-        ItemStack itemOut = bambooTaryRecipe.getOutput();
-        iIngredients.setInputLists(VanillaTypes.ITEM, itemIn);
+        ItemStack itemOut = bambooTraySingleInRecipe.getRecipeOutput();
+        iIngredients.setInputIngredients(Collections.singletonList(bambooTraySingleInRecipe.getIngredient()));
         iIngredients.setOutput(VanillaTypes.ITEM, itemOut);
     }
 
     @Override
-    public void draw(BambooTaryRecipe recipe, double mouseX, double mouseY)
+    public void draw(BambooTraySingleInRecipe recipe, double mouseX, double mouseY)
     {
         this.arrow.draw(28, 2);
     }
 
     @Override
-    public void setRecipe(IRecipeLayout iRecipeLayout, BambooTaryRecipe bambooTaryRecipe, IIngredients iIngredients)
+    public void setRecipe(IRecipeLayout iRecipeLayout, BambooTraySingleInRecipe bambooTraySingleInRecipe, IIngredients iIngredients)
     {
         IGuiItemStackGroup guiItemStacks = iRecipeLayout.getItemStacks();
         guiItemStacks.init(0, true, 5, 1);

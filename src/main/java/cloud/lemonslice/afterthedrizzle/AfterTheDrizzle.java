@@ -22,7 +22,7 @@ import cloud.lemonslice.afterthedrizzle.common.item.ItemsRegistry;
 import cloud.lemonslice.afterthedrizzle.common.network.SimpleNetworkHandler;
 import cloud.lemonslice.afterthedrizzle.common.potion.EffectsRegistry;
 import cloud.lemonslice.afterthedrizzle.common.recipe.RecipesRegistry;
-import cloud.lemonslice.afterthedrizzle.common.recipe.type.RecipeSerializersRegistry;
+import cloud.lemonslice.afterthedrizzle.common.recipe.serializer.RecipeSerializersRegistry;
 import cloud.lemonslice.afterthedrizzle.common.tileentity.TileEntityTypesRegistry;
 import cloud.lemonslice.afterthedrizzle.common.world.WorldGenManager;
 import cloud.lemonslice.afterthedrizzle.common.world.feature.FeaturesRegistry;
@@ -56,7 +56,7 @@ public final class AfterTheDrizzle
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::interModEnqueue);
         MinecraftForge.EVENT_BUS.addListener(this::serverStarting);
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, NormalConfigs.COMMON_CONFIG);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, NormalConfigs.SERVER_CONFIG);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, NormalConfigs.CLIENT_CONFIG);
         FluidsRegistry.FLUIDS.register(FMLJavaModLoadingContext.get().getModEventBus());
         FluidsRegistry.BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());

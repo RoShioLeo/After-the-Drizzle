@@ -1,7 +1,7 @@
 package cloud.lemonslice.afterthedrizzle.common.environment.crop;
 
 import cloud.lemonslice.afterthedrizzle.AfterTheDrizzle;
-import cloud.lemonslice.afterthedrizzle.common.config.CommonConfig;
+import cloud.lemonslice.afterthedrizzle.common.config.ServerConfig;
 import cloud.lemonslice.afterthedrizzle.common.environment.Humidity;
 import cloud.lemonslice.afterthedrizzle.helper.SeasonHelper;
 import net.minecraft.block.Block;
@@ -23,7 +23,7 @@ public final class CropGrowthHandler
         World world = (World) event.getWorld();
         BlockPos pos = event.getPos();
         CropSeasonInfo seasonInfo = CropInfoManager.getSeasonInfo(block);
-        if (seasonInfo != null && CommonConfig.Season.enable.get())
+        if (seasonInfo != null && ServerConfig.Season.enable.get())
         {
             if (seasonInfo.isSuitable(SeasonHelper.getSeason(world)))
             {

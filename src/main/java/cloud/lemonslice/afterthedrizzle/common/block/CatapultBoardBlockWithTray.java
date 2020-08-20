@@ -1,6 +1,6 @@
 package cloud.lemonslice.afterthedrizzle.common.block;
 
-import cloud.lemonslice.afterthedrizzle.common.recipe.bamboo_tray.BambooTaryRecipe;
+import cloud.lemonslice.afterthedrizzle.common.recipe.bamboo_tray.BambooTraySingleInRecipe;
 import cloud.lemonslice.afterthedrizzle.common.tileentity.BambooTrayTileEntity;
 import cloud.lemonslice.afterthedrizzle.common.tileentity.NormalContainerTileEntity;
 import cloud.lemonslice.afterthedrizzle.common.tileentity.TileEntityTypesRegistry;
@@ -12,6 +12,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -158,8 +159,16 @@ public class CatapultBoardBlockWithTray extends NormalHorizontalBlock
                 {
                     te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.UP).ifPresent(inv ->
                     {
-                        BambooTaryRecipe recipe = BambooTrayTileEntity.getRecipeManager(BambooTrayMode.getMode(worldIn, pos)).getRecipe(player.getHeldItem(handIn));
-                        if (!recipe.getOutput().isEmpty())
+                        BambooTraySingleInRecipe recipe = null;
+                        for (IRecipe<?> r : worldIn.getRecipeManager().getRecipes())
+                        {
+                            if (r.getType().equals(((BambooTrayTileEntity) te).getRecipeType()) && ((BambooTraySingleInRecipe) r).getIngredient().test(player.getHeldItem(handIn)))
+                            {
+                                recipe = (BambooTraySingleInRecipe) r;
+                                break;
+                            }
+                        }
+                        if (recipe != null && !recipe.getRecipeOutput().isEmpty())
                         {
                             player.setHeldItem(handIn, inv.insertItem(0, player.getHeldItem(handIn), false));
                             te.markDirty();

@@ -1,6 +1,5 @@
 package cloud.lemonslice.afterthedrizzle.common.environment;
 
-import cloud.lemonslice.afterthedrizzle.common.config.CommonConfig;
 import cloud.lemonslice.afterthedrizzle.common.environment.temperature.Temperature;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -43,39 +42,37 @@ public enum Humidity
         return tempCoefficient;
     }
 
-    public int getOutdoorDryingTicks()
+    public float getOutdoorDryingCoefficient()
     {
-        int basicTicks = CommonConfig.Time.dryingOutdoorsBasicTime.get();
         switch (this)
         {
             case ARID:
-                return (int) (basicTicks * 0.5F);
+                return 0.5F;
             case DRY:
-                return (int) (basicTicks * 0.75F);
+                return 0.75F;
             case AVERAGE:
-                return basicTicks;
+                return 1.0F;
             case MOIST:
-                return (int) (basicTicks * 1.25F);
+                return 1.25F;
             default:
-                return (int) (basicTicks * 1.5F);
+                return 1.5F;
         }
     }
 
-    public int getFermentationTicks()
+    public float getFermentationCoefficient()
     {
-        int basicTicks = CommonConfig.Time.fermentationBasicTime.get();
         switch (this)
         {
             case ARID:
-                return (int) (basicTicks * 1.5F);
+                return 1.5F;
             case DRY:
-                return (int) (basicTicks * 1.25F);
+                return 1.25F;
             case AVERAGE:
-                return basicTicks;
+                return 1.0F;
             case MOIST:
-                return (int) (basicTicks * 0.75F);
+                return 0.75F;
             default:
-                return (int) (basicTicks * 0.5F);
+                return 0.5F;
         }
     }
 

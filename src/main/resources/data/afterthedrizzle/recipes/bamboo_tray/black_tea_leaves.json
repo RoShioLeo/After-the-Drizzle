@@ -1,0 +1,8 @@
+{
+    "type": "afterthedrizzle:bamboo_tray_indoors",
+    "ingredient": {
+        "tag": "forge:crops/tea_leaf"
+    },
+    "result": "afterthedrizzle:black_tea_leaves",
+    "workingtime": 200
+}

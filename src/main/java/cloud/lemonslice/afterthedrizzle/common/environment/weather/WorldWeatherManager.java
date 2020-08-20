@@ -2,7 +2,7 @@ package cloud.lemonslice.afterthedrizzle.common.environment.weather;
 
 import cloud.lemonslice.afterthedrizzle.AfterTheDrizzle;
 import cloud.lemonslice.afterthedrizzle.common.capability.CapabilityWorldWeather;
-import cloud.lemonslice.afterthedrizzle.common.config.CommonConfig;
+import cloud.lemonslice.afterthedrizzle.common.config.ServerConfig;
 import cloud.lemonslice.afterthedrizzle.common.network.SimpleNetworkHandler;
 import cloud.lemonslice.afterthedrizzle.common.network.WeatherChangeMessage;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -18,7 +18,7 @@ public final class WorldWeatherManager
     @SubscribeEvent
     public static void onWorldTick(TickEvent.WorldTickEvent event)
     {
-        if (CommonConfig.Weather.enable.get() && event.phase == TickEvent.Phase.START)
+        if (ServerConfig.Weather.enable.get() && event.phase == TickEvent.Phase.START)
         {
             if (!event.world.isRemote)
             {

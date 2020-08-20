@@ -1,0 +1,8 @@
+{
+    "type": "afterthedrizzle:bamboo_tray_in_rain",
+    "ingredient": {
+        "item": "afterthedrizzle:beef_jerky"
+    },
+    "result": "minecraft:beef",
+    "workingtime": 0
+}

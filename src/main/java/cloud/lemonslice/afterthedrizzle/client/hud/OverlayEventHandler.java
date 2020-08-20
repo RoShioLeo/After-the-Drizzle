@@ -4,7 +4,7 @@ import cloud.lemonslice.afterthedrizzle.AfterTheDrizzle;
 import cloud.lemonslice.afterthedrizzle.common.capability.CapabilityPlayerTemperature;
 import cloud.lemonslice.afterthedrizzle.common.capability.CapabilitySolarTermTime;
 import cloud.lemonslice.afterthedrizzle.common.config.ClientConfig;
-import cloud.lemonslice.afterthedrizzle.common.config.CommonConfig;
+import cloud.lemonslice.afterthedrizzle.common.config.ServerConfig;
 import cloud.lemonslice.afterthedrizzle.common.environment.Humidity;
 import cloud.lemonslice.afterthedrizzle.common.handler.AsmHandler;
 import cloud.lemonslice.afterthedrizzle.common.item.ItemsRegistry;
@@ -58,7 +58,7 @@ public final class OverlayEventHandler
                     }
                 }
             }
-            if (CommonConfig.Temperature.enable.get() && event.getType() == RenderGameOverlayEvent.ElementType.HEALTH)
+            if (ServerConfig.Temperature.enable.get() && event.getType() == RenderGameOverlayEvent.ElementType.HEALTH)
             {
                 clientPlayer.getCapability(CapabilityPlayerTemperature.PLAYER_TEMP).ifPresent(t ->
                         BAR_3.renderStatusBar(event.getWindow().getScaledWidth(), event.getWindow().getScaledHeight(), t, PlayerTemperatureHelper.getResistancePoint(clientPlayer, "Cold"), PlayerTemperatureHelper.getResistancePoint(clientPlayer, "Heat")));

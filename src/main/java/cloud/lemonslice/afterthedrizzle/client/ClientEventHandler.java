@@ -2,24 +2,16 @@ package cloud.lemonslice.afterthedrizzle.client;
 
 import cloud.lemonslice.afterthedrizzle.AfterTheDrizzle;
 import cloud.lemonslice.afterthedrizzle.common.capability.CapabilityWorldWeather;
-import cloud.lemonslice.afterthedrizzle.common.environment.crop.CropHumidityInfo;
-import cloud.lemonslice.afterthedrizzle.common.environment.crop.CropInfoManager;
-import cloud.lemonslice.afterthedrizzle.common.environment.crop.CropSeasonInfo;
 import cloud.lemonslice.afterthedrizzle.common.environment.weather.WeatherType;
 import cloud.lemonslice.afterthedrizzle.common.fluid.NormalFlowingFluidBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.BlockItem;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.LightType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -28,13 +20,6 @@ public final class ClientEventHandler
 {
     public static WeatherType current = WeatherType.NONE;
     public static float currentDensity = 0.006F;
-
-    @SubscribeEvent
-    public static void addTooltips(ItemTooltipEvent event)
-    {
-        addCropTooltips(event);
-        addArmorTempTooltips(event);
-    }
 
     @SubscribeEvent
     public static void onFogRender(EntityViewRenderEvent.FogDensity event)
@@ -96,38 +81,6 @@ public final class ClientEventHandler
             event.setRed((float) (((color >> 16) & 255) / 255.0));
             event.setGreen((float) (((color >> 8) & 255) / 255.0));
             event.setBlue((float) ((color & 255) / 255.0));
-        }
-    }
-
-    public static void addArmorTempTooltips(ItemTooltipEvent event)
-    {
-        if (event.getItemStack().getItem() instanceof ArmorItem)
-        {
-            if (event.getItemStack().getOrCreateTag().getString("Resistance").equals("Cold"))
-            {
-                event.getToolTip().add(1, new TranslationTextComponent("info.afterthedrizzle.environment.temperature.cold_resistance").applyTextStyle(TextFormatting.ITALIC).applyTextStyle(TextFormatting.GRAY));
-            }
-            else if (event.getItemStack().getOrCreateTag().getString("Resistance").equals("Heat"))
-            {
-                event.getToolTip().add(1, new TranslationTextComponent("info.afterthedrizzle.environment.temperature.heat_resistance").applyTextStyle(TextFormatting.ITALIC).applyTextStyle(TextFormatting.GRAY));
-            }
-        }
-    }
-
-    public static void addCropTooltips(ItemTooltipEvent event)
-    {
-        if (event.getItemStack().getItem() instanceof BlockItem)
-        {
-            if (CropInfoManager.getHumidityCrops().contains(((BlockItem) event.getItemStack().getItem()).getBlock()))
-            {
-                CropHumidityInfo info = CropInfoManager.getHumidityInfo(((BlockItem) event.getItemStack().getItem()).getBlock());
-                event.getToolTip().addAll(info.getTooltip());
-            }
-            if (CropInfoManager.getSeasonCrops().contains(((BlockItem) event.getItemStack().getItem()).getBlock()))
-            {
-                CropSeasonInfo info = CropInfoManager.getSeasonInfo(((BlockItem) event.getItemStack().getItem()).getBlock());
-                event.getToolTip().addAll(info.getTooltip());
-            }
         }
     }
 }

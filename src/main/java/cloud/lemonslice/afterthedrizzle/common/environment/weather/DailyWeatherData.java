@@ -1,7 +1,7 @@
 package cloud.lemonslice.afterthedrizzle.common.environment.weather;
 
 import cloud.lemonslice.afterthedrizzle.common.capability.CapabilitySolarTermTime;
-import cloud.lemonslice.afterthedrizzle.common.config.CommonConfig;
+import cloud.lemonslice.afterthedrizzle.common.config.ServerConfig;
 import cloud.lemonslice.afterthedrizzle.common.environment.solar.Season;
 import com.google.common.collect.Lists;
 import net.minecraft.nbt.CompoundNBT;
@@ -117,10 +117,10 @@ public class DailyWeatherData
                 {
                     if (index < 3 && random.nextInt(100) < 60)
                     {
-                        if (CommonConfig.Weather.enableFoggy.get())
+                        if (ServerConfig.Weather.enableFoggy.get())
                             return create(WeatherType.FOGGY, 6 - index);
                     }
-                    if (CommonConfig.Weather.enableOvercast.get())
+                    if (ServerConfig.Weather.enableOvercast.get())
                         return create(WeatherType.OVERCAST, lasting);
                     else
                         return create(WeatherType.SUNNY, lasting);
@@ -154,7 +154,7 @@ public class DailyWeatherData
                 }
                 else if (f < 0.75F)
                 {
-                    if (CommonConfig.Weather.enableOvercast.get())
+                    if (ServerConfig.Weather.enableOvercast.get())
                         return create(WeatherType.OVERCAST, lasting);
                     else
                         return create(WeatherType.SUNNY, lasting);
@@ -188,7 +188,7 @@ public class DailyWeatherData
                 }
                 else if (f < 0.75F)
                 {
-                    if (CommonConfig.Weather.enableOvercast.get())
+                    if (ServerConfig.Weather.enableOvercast.get())
                         return create(WeatherType.OVERCAST, lasting);
                     else
                         return create(WeatherType.SUNNY, lasting);
@@ -217,10 +217,10 @@ public class DailyWeatherData
 
                     if (index < 3 && random.nextInt(100) < 45)
                     {
-                        if (CommonConfig.Weather.enableFoggy.get())
+                        if (ServerConfig.Weather.enableFoggy.get())
                             return create(WeatherType.FOGGY, 6 - index);
                     }
-                    if (CommonConfig.Weather.enableOvercast.get())
+                    if (ServerConfig.Weather.enableOvercast.get())
                         return create(WeatherType.OVERCAST, lasting);
                     else
                         return create(WeatherType.SUNNY, lasting);

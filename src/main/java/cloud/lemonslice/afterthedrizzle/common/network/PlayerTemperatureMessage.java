@@ -1,7 +1,7 @@
 package cloud.lemonslice.afterthedrizzle.common.network;
 
+import cloud.lemonslice.afterthedrizzle.AfterTheDrizzle;
 import cloud.lemonslice.afterthedrizzle.common.capability.CapabilityPlayerTemperature;
-import net.minecraft.client.Minecraft;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
@@ -36,8 +36,8 @@ public class PlayerTemperatureMessage implements INormalMessage
     {
         context.get().enqueueWork(() ->
         {
-            if (Minecraft.getInstance().player != null)
-                Minecraft.getInstance().player.getCapability(CapabilityPlayerTemperature.PLAYER_TEMP).ifPresent(t ->
+            if (AfterTheDrizzle.proxy.getClientPlayer() != null)
+                AfterTheDrizzle.proxy.getClientPlayer().getCapability(CapabilityPlayerTemperature.PLAYER_TEMP).ifPresent(t ->
                 {
                     t.setPlayerTemperature(playerTemperature);
                     t.setHotterOrColder(up);

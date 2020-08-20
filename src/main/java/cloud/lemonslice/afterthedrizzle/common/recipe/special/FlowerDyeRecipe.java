@@ -1,7 +1,8 @@
-package cloud.lemonslice.afterthedrizzle.common.recipe.type;
+package cloud.lemonslice.afterthedrizzle.common.recipe.special;
 
 import cloud.lemonslice.afterthedrizzle.common.environment.flower.FlowerColor;
 import cloud.lemonslice.afterthedrizzle.common.item.HybridizableFlowerBlockItem;
+import cloud.lemonslice.afterthedrizzle.common.recipe.serializer.RecipeSerializersRegistry;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;

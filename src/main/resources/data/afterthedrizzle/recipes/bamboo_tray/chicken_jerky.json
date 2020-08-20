@@ -1,0 +1,8 @@
+{
+    "type": "afterthedrizzle:bamboo_tray_outdoors",
+    "ingredient": {
+        "item": "minecraft:chicken"
+    },
+    "result": "afterthedrizzle:chicken_jerky",
+    "workingtime": 200
+}

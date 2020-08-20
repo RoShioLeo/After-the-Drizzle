@@ -1,0 +1,8 @@
+{
+    "type": "afterthedrizzle:bamboo_tray_outdoors",
+    "ingredient": {
+        "item": "minecraft:carrot"
+    },
+    "result": "afterthedrizzle:dried_carrot",
+    "workingtime": 200
+}

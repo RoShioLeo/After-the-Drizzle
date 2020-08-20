@@ -1,0 +1,8 @@
+{
+    "type": "afterthedrizzle:bamboo_tray_outdoors",
+    "ingredient": {
+        "tag": "afterthedrizzle:food/jerky"
+    },
+    "result": "minecraft:leather",
+    "workingtime": 200
+}

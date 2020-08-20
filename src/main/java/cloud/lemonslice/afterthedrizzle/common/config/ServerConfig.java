@@ -2,39 +2,16 @@ package cloud.lemonslice.afterthedrizzle.common.config;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 
-public class CommonConfig
+public class ServerConfig
 {
-    protected CommonConfig(ForgeConfigSpec.Builder builder)
+    protected ServerConfig(ForgeConfigSpec.Builder builder)
     {
-        Time.load(builder);
         Block.load(builder);
         Temperature.load(builder);
         Agriculture.load(builder);
         Season.load(builder);
         Weather.load(builder);
         Others.load(builder);
-    }
-
-    public static class Time
-    {
-        public static ForgeConfigSpec.IntValue dryingOutdoorsBasicTime;
-        public static ForgeConfigSpec.IntValue dryingIndoorsBasicTime;
-        public static ForgeConfigSpec.IntValue fermentationBasicTime;
-        public static ForgeConfigSpec.IntValue bakeBasicTime;
-
-        private static void load(ForgeConfigSpec.Builder builder)
-        {
-            builder.push("Time");
-            dryingOutdoorsBasicTime = builder.comment("The ticks of drying per item outdoors. (1 second = 20 ticks)")
-                    .defineInRange("OutdoorDryingBasic", 800, 200, Integer.MAX_VALUE);
-            dryingIndoorsBasicTime = builder.comment("The ticks of drying per item indoors. (1 second = 20 ticks)")
-                    .defineInRange("IndoorDryingBasic", 900, 200, Integer.MAX_VALUE);
-            fermentationBasicTime = builder.comment("The ticks of fermentation per item. (1 second = 20 ticks)")
-                    .defineInRange("FermentationBasic", 1000, 200, Integer.MAX_VALUE);
-            bakeBasicTime = builder.comment("The ticks of baking per item. (1 second = 20 ticks)")
-                    .defineInRange("BakeBasic", 300, 200, Integer.MAX_VALUE);
-            builder.pop();
-        }
     }
 
     public static class Block

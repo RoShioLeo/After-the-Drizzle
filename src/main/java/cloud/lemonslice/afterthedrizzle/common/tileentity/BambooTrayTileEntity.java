@@ -3,16 +3,16 @@ package cloud.lemonslice.afterthedrizzle.common.tileentity;
 import cloud.lemonslice.afterthedrizzle.common.block.BambooTrayMode;
 import cloud.lemonslice.afterthedrizzle.common.block.CatapultBoardBlockWithTray;
 import cloud.lemonslice.afterthedrizzle.common.block.IStoveBlock;
-import cloud.lemonslice.afterthedrizzle.common.config.CommonConfig;
 import cloud.lemonslice.afterthedrizzle.common.environment.Humidity;
 import cloud.lemonslice.afterthedrizzle.common.inventory.BambooTrayContainer;
-import cloud.lemonslice.afterthedrizzle.common.recipe.RecipesRegistry;
-import cloud.lemonslice.afterthedrizzle.common.recipe.bamboo_tray.BambooTaryRecipe;
-import cloud.lemonslice.afterthedrizzle.common.recipe.bamboo_tray.IBambooTrayRecipeManager;
+import cloud.lemonslice.afterthedrizzle.common.recipe.bamboo_tray.BambooTraySingleInRecipe;
+import cloud.lemonslice.afterthedrizzle.common.recipe.type.NormalRecipeTypes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
@@ -28,7 +28,7 @@ import java.util.Random;
 
 import static net.minecraft.state.properties.BlockStateProperties.ENABLED;
 
-public class BambooTrayTileEntity extends NormalContainerTileEntity implements ITickableTileEntity
+public class BambooTrayTileEntity extends NormalContainerTileEntity implements ITickableTileEntity, IInventory
 {
     private int processTicks = 0;
     private int totalTicks = 0;
@@ -39,7 +39,7 @@ public class BambooTrayTileEntity extends NormalContainerTileEntity implements I
     private BambooTrayMode mode = BambooTrayMode.OUTDOORS;
 
     private final LazyOptional<ItemStackHandler> containerInventory = LazyOptional.of(this::createHandler);
-    private BambooTaryRecipe currentRecipe = new BambooTaryRecipe(ItemStack.EMPTY, ItemStack.EMPTY);
+    private BambooTraySingleInRecipe currentRecipe;
 
     public BambooTrayTileEntity()
     {
@@ -89,24 +89,20 @@ public class BambooTrayTileEntity extends NormalContainerTileEntity implements I
         switch (BambooTrayMode.getMode(this.world, this.pos))
         {
             case IN_RAIN:
-                this.refreshTotalTicks(0);
-                this.getWet();
+                this.process(NormalRecipeTypes.BT_IN_RAIN, Humidity.getHumid(rainfall, temp).getCoefficient());
                 this.mode = BambooTrayMode.IN_RAIN;
                 return;
             case OUTDOORS:
-                this.refreshTotalTicks(Humidity.getHumid(rainfall, temp).getOutdoorDryingTicks());
                 if (!this.isWorldRaining())
-                    this.process(RecipesRegistry.MANAGER_BAMBOO_TRAY_OUTDOORS);
+                    this.process(NormalRecipeTypes.BT_OUTDOORS, Humidity.getHumid(rainfall, temp).getCoefficient());
                 this.mode = BambooTrayMode.OUTDOORS;
                 return;
             case INDOORS:
-                this.refreshTotalTicks(Humidity.getHumid(rainfall, temp).getFermentationTicks());
-                this.process(RecipesRegistry.MANAGER_BAMBOO_TRAY_INDOORS);
+                this.process(NormalRecipeTypes.BT_INDOORS, Humidity.getHumid(rainfall, temp).getCoefficient());
                 this.mode = BambooTrayMode.INDOORS;
                 return;
             case BAKE:
-                this.refreshTotalTicks(CommonConfig.Time.bakeBasicTime.get());
-                this.process(RecipesRegistry.MANAGER_BAMBOO_TRAY_BAKE);
+                this.process(NormalRecipeTypes.BT_BAKE, Humidity.getHumid(rainfall, temp).getCoefficient());
                 this.mode = BambooTrayMode.BAKE;
                 return;
             case PROCESS:
@@ -118,11 +114,11 @@ public class BambooTrayTileEntity extends NormalContainerTileEntity implements I
     private void getWet()
     {
         ItemStack input = this.getInput();
-        if (!this.currentRecipe.isTheSameInput(input) || mode != getMode())
+        if (this.currentRecipe == null || !this.currentRecipe.getIngredient().test(input) || mode != getMode())
         {
-            this.currentRecipe = RecipesRegistry.MANAGER_BAMBOO_TRAY_IN_RAIN.getRecipe(input);
+            this.currentRecipe = this.world.getRecipeManager().getRecipe(NormalRecipeTypes.BT_IN_RAIN, this, this.world).orElse(null);
         }
-        if (!getOutput().isEmpty())
+        if (currentRecipe != null && !getOutput().isEmpty())
         {
             ItemStack wetOutput = this.getOutput().copy();
             wetOutput.setCount(input.getCount());
@@ -132,7 +128,7 @@ public class BambooTrayTileEntity extends NormalContainerTileEntity implements I
         setToZero();
     }
 
-    private boolean process(IBambooTrayRecipeManager recipeManager)
+    private boolean process(IRecipeType recipeType, float coefficient)
     {
         ItemStack input = getInput();
         if (input.isEmpty())
@@ -140,12 +136,13 @@ public class BambooTrayTileEntity extends NormalContainerTileEntity implements I
             setToZero();
             return false;
         }
-        if (!this.currentRecipe.isTheSameInput(input) || mode != BambooTrayMode.getMode(this.world, this.pos))
+        if (this.currentRecipe == null || !this.currentRecipe.getIngredient().test(input) || mode != BambooTrayMode.getMode(this.world, this.pos))
         {
-            this.currentRecipe = recipeManager.getRecipe(input);
+            this.currentRecipe = this.world.getRecipeManager().getRecipe((IRecipeType<BambooTraySingleInRecipe>) recipeType, this, this.world).orElse(null);
         }
-        if (!this.getOutput().isEmpty())
+        if (currentRecipe != null && !getOutput().isEmpty())
         {
+            this.refreshTotalTicks(currentRecipe.getWorkTime(), coefficient);
             if (this.mode == BambooTrayMode.BAKE)
             {
                 this.processTicks += ((IStoveBlock) this.getWorld().getBlockState(pos.down()).getBlock()).getFuelPower();
@@ -182,7 +179,11 @@ public class BambooTrayTileEntity extends NormalContainerTileEntity implements I
 
     public ItemStack getOutput()
     {
-        return this.currentRecipe.getOutput().copy();
+        if (currentRecipe == null)
+        {
+            return ItemStack.EMPTY;
+        }
+        return this.currentRecipe.getRecipeOutput().copy();
     }
 
     public int getTotalTicks()
@@ -198,6 +199,21 @@ public class BambooTrayTileEntity extends NormalContainerTileEntity implements I
     public BambooTrayMode getMode()
     {
         return this.mode;
+    }
+
+    public IRecipeType<?> getRecipeType()
+    {
+        switch (this.mode)
+        {
+            case IN_RAIN:
+                return NormalRecipeTypes.BT_IN_RAIN;
+            case OUTDOORS:
+                return NormalRecipeTypes.BT_OUTDOORS;
+            case INDOORS:
+                return NormalRecipeTypes.BT_INDOORS;
+            default:
+                return NormalRecipeTypes.BT_BAKE;
+        }
     }
 
     public int getRandomSeed()
@@ -217,7 +233,11 @@ public class BambooTrayTileEntity extends NormalContainerTileEntity implements I
 
     public boolean isWorking()
     {
-        return !this.currentRecipe.getOutput().isEmpty();
+        if (this.currentRecipe == null)
+        {
+            return false;
+        }
+        return !this.currentRecipe.getRecipeOutput().isEmpty();
     }
 
     public void singleClickStart()
@@ -231,9 +251,9 @@ public class BambooTrayTileEntity extends NormalContainerTileEntity implements I
         return doubleClickTicks > 0;
     }
 
-    private void refreshTotalTicks(int basicTicks)
+    private void refreshTotalTicks(int basicTicks, float coefficient)
     {
-        this.totalTicks = this.getInput().getCount() * basicTicks;
+        this.totalTicks = (int) (this.getInput().getCount() * basicTicks * coefficient);
     }
 
     private void setToZero()
@@ -249,23 +269,6 @@ public class BambooTrayTileEntity extends NormalContainerTileEntity implements I
         return new BambooTrayContainer(i, playerInventory, pos, world);
     }
 
-    public static IBambooTrayRecipeManager getRecipeManager(BambooTrayMode mode)
-    {
-        switch (mode)
-        {
-            case OUTDOORS:
-                return RecipesRegistry.MANAGER_BAMBOO_TRAY_OUTDOORS;
-            case INDOORS:
-                return RecipesRegistry.MANAGER_BAMBOO_TRAY_INDOORS;
-            case BAKE:
-                return RecipesRegistry.MANAGER_BAMBOO_TRAY_BAKE;
-            case IN_RAIN:
-                return RecipesRegistry.MANAGER_BAMBOO_TRAY_IN_RAIN;
-            default:
-                return RecipesRegistry.MANAGER_BAMBOO_TRAY_PROCESS;
-        }
-    }
-
     private ItemStackHandler createHandler()
     {
         return new ItemStackHandler()
@@ -278,5 +281,54 @@ public class BambooTrayTileEntity extends NormalContainerTileEntity implements I
                 super.onContentsChanged(slot);
             }
         };
+    }
+
+    @Override
+    public int getSizeInventory()
+    {
+        return 1;
+    }
+
+    @Override
+    public boolean isEmpty()
+    {
+        return this.containerInventory.map(h -> h.getStackInSlot(0).isEmpty()).orElse(true);
+    }
+
+    @Override
+    public ItemStack getStackInSlot(int index)
+    {
+        return this.containerInventory.map(h -> h.getStackInSlot(0)).orElse(ItemStack.EMPTY);
+    }
+
+    @Override
+    public ItemStack decrStackSize(int index, int count)
+    {
+        return this.containerInventory.map(h -> h.getStackInSlot(0).split(count)).orElse(ItemStack.EMPTY);
+    }
+
+    @Override
+    public ItemStack removeStackFromSlot(int index)
+    {
+        this.containerInventory.ifPresent(h -> h.setStackInSlot(0, ItemStack.EMPTY));
+        return ItemStack.EMPTY;
+    }
+
+    @Override
+    public void setInventorySlotContents(int index, ItemStack stack)
+    {
+        this.containerInventory.ifPresent(h -> h.setStackInSlot(0, stack));
+    }
+
+    @Override
+    public boolean isUsableByPlayer(PlayerEntity player)
+    {
+        return true;
+    }
+
+    @Override
+    public void clear()
+    {
+        removeStackFromSlot(0);
     }
 }
