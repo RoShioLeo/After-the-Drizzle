@@ -1,7 +1,7 @@
 package cloud.lemonslice.afterthedrizzle.client.hud;
 
 import cloud.lemonslice.afterthedrizzle.AfterTheDrizzle;
-import cloud.lemonslice.afterthedrizzle.common.environment.temperature.Temperature;
+import cloud.lemonslice.silveroak.common.environment.Temperature;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;

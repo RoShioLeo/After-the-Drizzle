@@ -5,6 +5,7 @@ import cloud.lemonslice.afterthedrizzle.common.recipe.bamboo_tray.BambooTrayBake
 import cloud.lemonslice.afterthedrizzle.common.recipe.bamboo_tray.BambooTrayInRainRecipe;
 import cloud.lemonslice.afterthedrizzle.common.recipe.bamboo_tray.BambooTrayIndoorsRecipe;
 import cloud.lemonslice.afterthedrizzle.common.recipe.bamboo_tray.BambooTrayOutdoorsRecipe;
+import cloud.lemonslice.afterthedrizzle.common.recipe.drink.DrinkRecipe;
 import cloud.lemonslice.afterthedrizzle.common.recipe.special.FlowerDyeRecipe;
 import cloud.lemonslice.afterthedrizzle.common.recipe.special.TemperatureResistanceRecipe;
 import net.minecraft.item.crafting.IRecipeSerializer;
@@ -25,4 +26,5 @@ public final class RecipeSerializersRegistry
     public final static RegistryObject<BambooTraySingleInRecipeSerializer<BambooTrayInRainRecipe>> BAMBOO_TRAY_IN_RAIN = RECIPE_SERIALIZERS.register("bamboo_tray_in_rain", () -> new BambooTraySingleInRecipeSerializer<>(BambooTrayInRainRecipe::new, 0));
     public final static RegistryObject<BambooTraySingleInRecipeSerializer<BambooTrayBakeRecipe>> BAMBOO_TRAY_BAKE = RECIPE_SERIALIZERS.register("bamboo_tray_bake", () -> new BambooTraySingleInRecipeSerializer<>(BambooTrayBakeRecipe::new, 200));
 
+    public final static RegistryObject<DrinkRecipeSerializer<DrinkRecipe>> DRINK_MAKER = RECIPE_SERIALIZERS.register("drink_maker", () -> new DrinkRecipeSerializer<>(DrinkRecipe::new));
 }

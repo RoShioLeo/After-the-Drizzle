@@ -5,6 +5,7 @@ import cloud.lemonslice.afterthedrizzle.common.fluid.FluidsRegistry;
 import cloud.lemonslice.afterthedrizzle.common.item.ItemsRegistry;
 import cloud.lemonslice.afterthedrizzle.common.recipe.serializer.RecipeSerializersRegistry;
 import cloud.lemonslice.afterthedrizzle.data.builder.BambooTrayRecipeBuilder;
+import cloud.lemonslice.afterthedrizzle.data.builder.DrinkRecipeBuilder;
 import cloud.lemonslice.afterthedrizzle.data.tag.NormalTags;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.*;
@@ -75,9 +76,6 @@ public final class RecipesProvider extends RecipeProvider
         ShapelessRecipeBuilder.shapelessRecipe(ItemsRegistry.ICE_WATER_BAG).addIngredient(ItemsRegistry.WATER_BAG).addIngredient(Blocks.ICE).setGroup("ice_water_bag").addCriterion("has_ice", this.hasItem(Blocks.ICE)).build(consumer, new ResourceLocation("afterthedrizzle:ice_water_bag_ice"));
         ShapelessRecipeBuilder.shapelessRecipe(ItemsRegistry.ICE_WATER_BAG).addIngredient(ItemsRegistry.WATER_BAG).addIngredient(Items.SNOWBALL, 3).setGroup("ice_water_bag").addCriterion("has_snowball", this.hasItem(Items.SNOWBALL)).build(consumer, new ResourceLocation("afterthedrizzle:ice_water_bag_snow"));
         ShapelessRecipeBuilder.shapelessRecipe(ItemsRegistry.ICE_WATER_BAG).addIngredient(ItemsRegistry.WATER_BAG).addIngredient(Blocks.SNOW_BLOCK).setGroup("ice_water_bag").addCriterion("has_snowball", this.hasItem(Items.SNOWBALL)).build(consumer, new ResourceLocation("afterthedrizzle:ice_water_bag_snow_block"));
-        ShapedRecipeBuilder.shapedRecipe(ItemsRegistry.THERMOMETER).key('x', Items.WATER_BUCKET).key('#', Tags.Items.GLASS_COLORLESS).patternLine("###").patternLine("# #").patternLine("#x#").setGroup("thermometer").addCriterion("has_water_bucket", this.hasItem(Items.WATER_BUCKET)).build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(ItemsRegistry.RAIN_GAUGE).key('#', Tags.Items.GLASS_COLORLESS).key('*', Items.BUCKET).patternLine("# #").patternLine("# #").patternLine("#*#").setGroup("rain_gauge").addCriterion("has_bucket", this.hasItem(Items.BUCKET)).build(consumer);
-        ShapelessRecipeBuilder.shapelessRecipe(ItemsRegistry.HYGROMETER).addIngredient(ItemsRegistry.THERMOMETER).addIngredient(ItemsRegistry.RAIN_GAUGE).setGroup("hygrometer").addCriterion("has_thermometer", this.hasItem(ItemsRegistry.THERMOMETER)).build(consumer);
 
         // Smelting Recipes 熔炼配方
         CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(Items.WATER_BUCKET), FluidsRegistry.BOILING_WATER_BUCKET.get(), 0.2F, 200).addCriterion("has_water_bucket", this.hasItem(Items.WATER_BUCKET)).build(consumer);
@@ -118,6 +116,8 @@ public final class RecipesProvider extends RecipeProvider
         // Bamboo Tray Bake Recipes 竹篾匾烘焙配方
         BambooTrayRecipeBuilder.bakeRecipe(Ingredient.fromTag(NormalTags.Items.CROPS_TEA_LEAF), ItemsRegistry.WHITE_TEA_LEAVES, 200).build(consumer);
 
+        // Drink Maker Recipes 沏茶台配方
+        DrinkRecipeBuilder.boilingRecipe(FluidsRegistry.BLACK_TEA_STILL.get(), Ingredient.fromItems(ItemsRegistry.BLACK_TEA_LEAVES), Ingredient.fromItems(ItemsRegistry.BLACK_TEA_LEAVES), Ingredient.fromItems(ItemsRegistry.BLACK_TEA_LEAVES), Ingredient.fromItems(ItemsRegistry.BLACK_TEA_LEAVES)).build(consumer);
     }
 
     @Override

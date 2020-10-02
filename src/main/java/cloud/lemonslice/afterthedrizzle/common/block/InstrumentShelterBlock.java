@@ -4,7 +4,7 @@ import cloud.lemonslice.afterthedrizzle.common.capability.CapabilityWorldWeather
 import cloud.lemonslice.afterthedrizzle.common.config.ServerConfig;
 import cloud.lemonslice.afterthedrizzle.common.environment.weather.DailyWeatherData;
 import cloud.lemonslice.afterthedrizzle.common.environment.weather.WeatherType;
-import cloud.lemonslice.afterthedrizzle.common.item.ItemsRegistry;
+import cloud.lemonslice.silveroak.common.item.SilveroakItemsRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
@@ -58,19 +58,19 @@ public class InstrumentShelterBlock extends NormalBlock
     @SuppressWarnings("deprecation")
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit)
     {
-        if (player.getHeldItem(handIn).getItem() == ItemsRegistry.THERMOMETER && !state.get(THERMOMETER))
+        if (player.getHeldItem(handIn).getItem() == SilveroakItemsRegistry.THERMOMETER && !state.get(THERMOMETER))
         {
             player.getHeldItem(handIn).shrink(1);
             worldIn.setBlockState(pos, state.with(THERMOMETER, true));
             return ActionResultType.SUCCESS;
         }
-        else if (player.getHeldItem(handIn).getItem() == ItemsRegistry.RAIN_GAUGE && !state.get(RAIN_GAUGE))
+        else if (player.getHeldItem(handIn).getItem() == SilveroakItemsRegistry.RAIN_GAUGE && !state.get(RAIN_GAUGE))
         {
             player.getHeldItem(handIn).shrink(1);
             worldIn.setBlockState(pos, state.with(RAIN_GAUGE, true));
             return ActionResultType.SUCCESS;
         }
-        else if (player.getHeldItem(handIn).getItem() == ItemsRegistry.HYGROMETER && !state.get(HYGROMETER))
+        else if (player.getHeldItem(handIn).getItem() == SilveroakItemsRegistry.HYGROMETER && !state.get(HYGROMETER))
         {
             player.getHeldItem(handIn).shrink(1);
             worldIn.setBlockState(pos, state.with(HYGROMETER, true));

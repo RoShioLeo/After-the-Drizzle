@@ -1,0 +1,22 @@
+{
+    "type": "afterthedrizzle:drink_maker",
+    "item_ingredients": [
+        {
+            "item": "afterthedrizzle:black_tea_leaves"
+        },
+        {
+            "item": "afterthedrizzle:black_tea_leaves"
+        },
+        {
+            "item": "afterthedrizzle:black_tea_leaves"
+        },
+        {
+            "item": "afterthedrizzle:black_tea_leaves"
+        }
+    ],
+    "fluid_ingredient": {
+        "fluid": "afterthedrizzle:boiling_water",
+        "amount": 200
+    },
+    "drink_result": "afterthedrizzle:black_tea"
+}

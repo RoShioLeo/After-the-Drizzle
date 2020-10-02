@@ -26,7 +26,6 @@ import cloud.lemonslice.afterthedrizzle.common.recipe.serializer.RecipeSerialize
 import cloud.lemonslice.afterthedrizzle.common.tileentity.TileEntityTypesRegistry;
 import cloud.lemonslice.afterthedrizzle.common.world.WorldGenManager;
 import cloud.lemonslice.afterthedrizzle.common.world.feature.FeaturesRegistry;
-import cloud.lemonslice.afterthedrizzle.registry.RegisterManager;
 import net.minecraft.item.ItemGroup;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.DistExecutor;
@@ -83,7 +82,6 @@ public final class AfterTheDrizzle
         CommonProxy.registerCompostable();
         CommonProxy.registerFireInfo();
         CropInfoManager.initTrellisBlocks();
-        RegisterManager.clearAll();
     }
 
     public void clientSetup(FMLClientSetupEvent event)

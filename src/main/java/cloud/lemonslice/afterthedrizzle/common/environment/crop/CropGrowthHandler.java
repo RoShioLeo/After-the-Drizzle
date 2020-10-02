@@ -2,8 +2,8 @@ package cloud.lemonslice.afterthedrizzle.common.environment.crop;
 
 import cloud.lemonslice.afterthedrizzle.AfterTheDrizzle;
 import cloud.lemonslice.afterthedrizzle.common.config.ServerConfig;
-import cloud.lemonslice.afterthedrizzle.common.environment.Humidity;
 import cloud.lemonslice.afterthedrizzle.helper.SeasonHelper;
+import cloud.lemonslice.silveroak.common.environment.Humidity;
 import net.minecraft.block.Block;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;

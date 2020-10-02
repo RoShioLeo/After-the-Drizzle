@@ -1,6 +1,6 @@
 package cloud.lemonslice.afterthedrizzle.common.environment.crop;
 
-import cloud.lemonslice.afterthedrizzle.common.environment.Humidity;
+import cloud.lemonslice.silveroak.common.environment.Humidity;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;

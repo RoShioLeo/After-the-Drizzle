@@ -3,7 +3,6 @@ package cloud.lemonslice.afterthedrizzle.common.command;
 import cloud.lemonslice.afterthedrizzle.common.capability.CapabilityWorldWeather;
 import cloud.lemonslice.afterthedrizzle.common.environment.weather.WeatherType;
 import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.arguments.IntegerArgumentType;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -13,8 +12,16 @@ public class WeatherCommand
 {
     public static void register(CommandDispatcher<CommandSource> dispatcher)
     {
-        dispatcher.register(Commands.literal("changeweather").requires((source) -> source.hasPermissionLevel(2))
-                .then(Commands.literal("set").then(Commands.argument("weather", IntegerArgumentType.integer()).executes(commandContext -> setWeather(commandContext.getSource(), IntegerArgumentType.getInteger(commandContext, "weather"))))));
+        dispatcher.register(Commands.literal("instantweather").requires((source) -> source.hasPermissionLevel(2))
+                .then(Commands.literal("set")
+                        .then(Commands.literal("clear").executes((commandContext) -> setWeather(commandContext.getSource(), 1)))
+                        .then(Commands.literal("overcast").executes((commandContext) -> setWeather(commandContext.getSource(), 2)))
+                        .then(Commands.literal("light_rain").executes((commandContext) -> setWeather(commandContext.getSource(), 3)))
+                        .then(Commands.literal("normal_rain").executes((commandContext) -> setWeather(commandContext.getSource(), 4)))
+                        .then(Commands.literal("heavy_rain").executes((commandContext) -> setWeather(commandContext.getSource(), 5)))
+                        .then(Commands.literal("storm").executes((commandContext) -> setWeather(commandContext.getSource(), 6)))
+                        .then(Commands.literal("foggy").executes((commandContext) -> setWeather(commandContext.getSource(), 7)))
+                ));
     }
 
     private static int getWeather(ServerWorld worldIn)
@@ -29,7 +36,8 @@ public class WeatherCommand
             serverworld.getCapability(CapabilityWorldWeather.WORLD_WEATHER).ifPresent(data -> data.setCurrentWeather(WeatherType.values()[weather]));
         }
 
-        source.sendFeedback(new TranslationTextComponent("commands.afterthedrizzle.solar.set", weather), true);
+
+        source.sendFeedback(new TranslationTextComponent("commands.afterthedrizzle.weather.set", WeatherType.values()[weather].getTranslation()), true);
         return getWeather(source.getWorld());
     }
 }
