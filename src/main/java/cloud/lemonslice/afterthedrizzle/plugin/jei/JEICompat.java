@@ -84,7 +84,7 @@ public class JEICompat implements IModPlugin
         registration.addRecipes(getRecipes(NormalRecipeTypes.BT_OUTDOORS), new ResourceLocation(AfterTheDrizzle.MODID, OUTDOORS));
         registration.addRecipes(getRecipes(NormalRecipeTypes.BT_INDOORS), new ResourceLocation(AfterTheDrizzle.MODID, INDOORS));
         registration.addRecipes(getRecipes(NormalRecipeTypes.BT_BAKE), new ResourceLocation(AfterTheDrizzle.MODID, BAKE));
-//        registration.addRecipes(RecipesRegistry.MANAGER_DRINK_MAKER.getSet(), new ResourceLocation(AfterTheDrizzle.MODID, DRINK_MAKER));
+        registration.addRecipes(getRecipes(NormalRecipeTypes.DRINK_MAKER), new ResourceLocation(AfterTheDrizzle.MODID, DRINK_MAKER));
     }
 
     private static List<IRecipe<?>> getRecipes(IRecipeType<?> type)

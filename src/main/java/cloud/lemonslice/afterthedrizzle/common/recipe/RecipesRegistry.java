@@ -2,13 +2,10 @@ package cloud.lemonslice.afterthedrizzle.common.recipe;
 
 import cloud.lemonslice.afterthedrizzle.common.drink.DrinkEffectAttribute;
 import cloud.lemonslice.afterthedrizzle.common.drink.DrinkEffectsManager;
-import cloud.lemonslice.afterthedrizzle.common.drink.DrinkIngredientsManager;
 import cloud.lemonslice.afterthedrizzle.common.fluid.FluidsRegistry;
-import cloud.lemonslice.afterthedrizzle.common.item.ItemsRegistry;
 import cloud.lemonslice.afterthedrizzle.common.potion.EffectsRegistry;
 import cloud.lemonslice.afterthedrizzle.common.recipe.drink.DrinkRecipeInput;
 import cloud.lemonslice.afterthedrizzle.common.recipe.drink.DrinkRecipeManager;
-import net.minecraft.item.Items;
 import net.minecraft.potion.Effects;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -18,19 +15,7 @@ public final class RecipesRegistry
 
     public static void init()
     {
-        registerDrinkIngredients();
         registerDrinkEffects();
-        addDrinkRecipes();
-    }
-
-    private static void registerDrinkIngredients()
-    {
-        DrinkIngredientsManager.registerIngredientItem(Items.SUGAR, "sugar");
-        DrinkIngredientsManager.registerIngredientItem(ItemsRegistry.GREEN_TEA_LEAVES, "green_tea_leaf");
-        DrinkIngredientsManager.registerIngredientItem(ItemsRegistry.BLACK_TEA_LEAVES, "black_tea_leaf");
-        DrinkIngredientsManager.registerIngredientItem(ItemsRegistry.WHITE_TEA_LEAVES, "white_tea_leaf");
-        DrinkIngredientsManager.registerIngredientItem(ItemsRegistry.GREEN_TEA_BAG, "green_tea_bag");
-        DrinkIngredientsManager.registerIngredientItem(ItemsRegistry.BLACK_TEA_BAG, "black_tea_bag");
     }
 
     private static void registerDrinkEffects()

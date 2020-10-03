@@ -111,23 +111,6 @@ public class BambooTrayTileEntity extends NormalContainerTileEntity implements I
         }
     }
 
-    private void getWet()
-    {
-        ItemStack input = this.getInput();
-        if (this.currentRecipe == null || !this.currentRecipe.getIngredient().test(input) || mode != getMode())
-        {
-            this.currentRecipe = this.world.getRecipeManager().getRecipe(NormalRecipeTypes.BT_IN_RAIN, this, this.world).orElse(null);
-        }
-        if (currentRecipe != null && !getOutput().isEmpty())
-        {
-            ItemStack wetOutput = this.getOutput().copy();
-            wetOutput.setCount(input.getCount());
-            this.containerInventory.ifPresent(inv ->
-                    inv.setStackInSlot(0, wetOutput));
-        }
-        setToZero();
-    }
-
     private boolean process(IRecipeType recipeType, float coefficient)
     {
         ItemStack input = getInput();

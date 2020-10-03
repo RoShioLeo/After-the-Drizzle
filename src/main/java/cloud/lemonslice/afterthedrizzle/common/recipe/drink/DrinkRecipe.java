@@ -3,6 +3,7 @@ package cloud.lemonslice.afterthedrizzle.common.recipe.drink;
 import cloud.lemonslice.afterthedrizzle.common.recipe.serializer.RecipeSerializersRegistry;
 import cloud.lemonslice.afterthedrizzle.common.recipe.type.NormalRecipeTypes;
 import cloud.lemonslice.silveroak.common.recipe.FluidIngredient;
+import com.google.common.collect.Lists;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -20,7 +21,6 @@ import net.minecraftforge.fluids.FluidUtil;
 
 import java.util.List;
 
-import static cloud.lemonslice.afterthedrizzle.AfterTheDrizzle.MODID;
 import static net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack.FLUID_NBT_KEY;
 
 public class DrinkRecipe implements IRecipe<IInventory>
@@ -43,8 +43,7 @@ public class DrinkRecipe implements IRecipe<IInventory>
     @Override
     public boolean matches(IInventory inv, World worldIn)
     {
-        List<ItemStack> inputs = new java.util.ArrayList<>();
-
+        List<ItemStack> inputs = Lists.newArrayList();
         return FluidUtil.getFluidHandler(inv.getStackInSlot(8).copy()).map(h ->
         {
             if (fluidIngredient.hasNoMatchingFluids())
@@ -64,18 +63,12 @@ public class DrinkRecipe implements IRecipe<IInventory>
                 }
                 if (!flag) return false;
 
-                int amount = (int) Math.ceil(1.0D * h.getFluidInTank(0).getAmount() / fluidIngredient.getMatchingStacks()[0].getAmount());
-
                 for (int j = 0; j < 4; ++j)
                 {
                     ItemStack itemstack = inv.getStackInSlot(j).copy();
                     if (!itemstack.isEmpty())
                     {
-                        if (itemstack.getCount() >= amount)
-                        {
-                            inputs.add(itemstack);
-                        }
-                        else return false;
+                        inputs.add(itemstack);
                     }
                 }
 
@@ -112,7 +105,7 @@ public class DrinkRecipe implements IRecipe<IInventory>
     @Override
     public ResourceLocation getId()
     {
-        return new ResourceLocation(MODID, "drink_maker");
+        return this.id;
     }
 
     @Override
@@ -129,6 +122,11 @@ public class DrinkRecipe implements IRecipe<IInventory>
     public FluidIngredient getFluidIngredient()
     {
         return fluidIngredient;
+    }
+
+    public int getFluidAmount()
+    {
+        return fluidIngredient.getMatchingStacks()[0].getAmount();
     }
 
     @Override

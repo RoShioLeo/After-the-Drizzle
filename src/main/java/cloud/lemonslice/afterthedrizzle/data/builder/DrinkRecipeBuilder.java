@@ -39,7 +39,7 @@ public class DrinkRecipeBuilder
 
     public static DrinkRecipeBuilder boilingRecipe(Fluid resultIn, Ingredient... ingredientsIn)
     {
-        return new DrinkRecipeBuilder(resultIn, FluidIngredient.fromFluid(200, FluidsRegistry.BOILING_WATER_STILL.get()), NonNullList.from(Ingredient.EMPTY, ingredientsIn));
+        return new DrinkRecipeBuilder(resultIn, FluidIngredient.fromFluid(500, FluidsRegistry.BOILING_WATER_STILL.get()), NonNullList.from(Ingredient.EMPTY, ingredientsIn));
     }
 
     public void build(Consumer<IFinishedRecipe> consumerIn)

@@ -2,21 +2,21 @@
     "type": "afterthedrizzle:drink_maker",
     "item_ingredients": [
         {
-            "item": "afterthedrizzle:black_tea_leaves"
+            "tag": "forge:crops/black_tea_leaf"
         },
         {
-            "item": "afterthedrizzle:black_tea_leaves"
+            "tag": "forge:crops/black_tea_leaf"
         },
         {
-            "item": "afterthedrizzle:black_tea_leaves"
+            "tag": "forge:crops/black_tea_leaf"
         },
         {
-            "item": "afterthedrizzle:black_tea_leaves"
+            "tag": "forge:crops/black_tea_leaf"
         }
     ],
     "fluid_ingredient": {
         "fluid": "afterthedrizzle:boiling_water",
-        "amount": 200
+        "amount": 500
     },
     "drink_result": "afterthedrizzle:black_tea"
 }

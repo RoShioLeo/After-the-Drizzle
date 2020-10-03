@@ -117,7 +117,8 @@ public final class RecipesProvider extends RecipeProvider
         BambooTrayRecipeBuilder.bakeRecipe(Ingredient.fromTag(NormalTags.Items.CROPS_TEA_LEAF), ItemsRegistry.WHITE_TEA_LEAVES, 200).build(consumer);
 
         // Drink Maker Recipes 沏茶台配方
-        DrinkRecipeBuilder.boilingRecipe(FluidsRegistry.BLACK_TEA_STILL.get(), Ingredient.fromItems(ItemsRegistry.BLACK_TEA_LEAVES), Ingredient.fromItems(ItemsRegistry.BLACK_TEA_LEAVES), Ingredient.fromItems(ItemsRegistry.BLACK_TEA_LEAVES), Ingredient.fromItems(ItemsRegistry.BLACK_TEA_LEAVES)).build(consumer);
+        DrinkRecipeBuilder.boilingRecipe(FluidsRegistry.WEAK_BLACK_TEA_STILL.get(), Ingredient.fromTag(NormalTags.Items.CROPS_BLACK_TEA_LEAF), Ingredient.fromTag(NormalTags.Items.CROPS_BLACK_TEA_LEAF)).build(consumer);
+        DrinkRecipeBuilder.boilingRecipe(FluidsRegistry.BLACK_TEA_STILL.get(), Ingredient.fromTag(NormalTags.Items.CROPS_BLACK_TEA_LEAF), Ingredient.fromTag(NormalTags.Items.CROPS_BLACK_TEA_LEAF), Ingredient.fromTag(NormalTags.Items.CROPS_BLACK_TEA_LEAF), Ingredient.fromTag(NormalTags.Items.CROPS_BLACK_TEA_LEAF)).build(consumer);
     }
 
     @Override

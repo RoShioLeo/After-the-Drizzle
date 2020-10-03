@@ -1,12 +1,13 @@
 package cloud.lemonslice.afterthedrizzle.common.tileentity;
 
 import cloud.lemonslice.afterthedrizzle.common.inventory.DrinkMakerContainer;
-import cloud.lemonslice.afterthedrizzle.common.recipe.RecipesRegistry;
-import cloud.lemonslice.afterthedrizzle.common.recipe.drink.DrinkRecipeInput;
+import cloud.lemonslice.afterthedrizzle.common.recipe.drink.DrinkRecipe;
 import net.minecraft.block.HorizontalBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Container;
+import net.minecraft.item.BucketItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
@@ -28,9 +29,10 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
+import static cloud.lemonslice.afterthedrizzle.common.recipe.type.NormalRecipeTypes.DRINK_MAKER;
 import static net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack.FLUID_NBT_KEY;
 
-public class DrinkMakerTileEntity extends NormalContainerTileEntity implements ITickableTileEntity
+public class DrinkMakerTileEntity extends NormalContainerTileEntity implements ITickableTileEntity, IInventory
 {
     private final LazyOptional<ItemStackHandler> ingredientsInventory = LazyOptional.of(() -> this.createItemHandler(4));
     private final LazyOptional<ItemStackHandler> residuesInventory = LazyOptional.of(() -> this.createItemHandler(4));
@@ -40,6 +42,8 @@ public class DrinkMakerTileEntity extends NormalContainerTileEntity implements I
 
     private int processTicks = 0;
     private static final int totalTicks = 200;
+
+    private DrinkRecipe currentRecipe;
 
     public DrinkMakerTileEntity()
     {
@@ -91,33 +95,44 @@ public class DrinkMakerTileEntity extends NormalContainerTileEntity implements I
         return super.write(tag);
     }
 
+    private boolean isEnoughAmount()
+    {
+        if (currentRecipe != null)
+        {
+            int n = (int) Math.ceil(1.0F * getFluidAmount() / currentRecipe.getFluidAmount());
+            for (int i = 0; i < 4; i++)
+            {
+                if (!getStackInSlot(i).isEmpty() && getStackInSlot(i).getCount() < n)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public void tick()
     {
-        if (this.getFluidAmount() != 0)
+        if (this.getFluidAmount() != 0 && !isIngredientsEmpty())
         {
-            this.ingredientsInventory.ifPresent(inv ->
-                    getFluidHandler().ifPresent(fluid ->
-                    {
-                        DrinkRecipeInput inventoryRecipe = DrinkRecipeInput.toRecipe(inv, fluid.getFluidInTank(0).getFluid());
-                        FluidStack output = RecipesRegistry.MANAGER_DRINK_MAKER.getOutput(inventoryRecipe);
-                        if (!output.isEmpty())
-                        {
-                            int n = (int) Math.ceil(this.getFluidAmount() * 1.0F / output.getAmount());
-                            for (int i = 0; i < 4; i++)
-                            {
-                                if (!inv.getStackInSlot(i).isEmpty() && inv.getStackInSlot(i).getCount() < n)
-                                {
-                                    this.setToZero();
-                                    return;
-                                }
-                            }
-                            this.processTicks++;
-                            this.markDirty();
-                            if (this.processTicks >= totalTicks)
+            if (this.currentRecipe == null || !this.currentRecipe.matches(this, this.world))
+            {
+                this.currentRecipe = this.world.getRecipeManager().getRecipe(DRINK_MAKER, this, this.world).orElse(null);
+            }
+            if (currentRecipe != null && isEnoughAmount())
+            {
+                this.processTicks++;
+                this.markDirty();
+                if (this.processTicks >= totalTicks)
+                {
+                    this.ingredientsInventory.ifPresent(inv ->
+                            getFluidHandler().ifPresent(fluid ->
                             {
                                 this.residuesInventory.ifPresent(h ->
                                 {
+                                    int n = (int) Math.ceil(this.getFluidAmount() * 1.0F / currentRecipe.getFluidIngredient().getMatchingStacks()[0].getAmount());
                                     for (int i = 0; i < 4; i++)
                                     {
                                         ItemStack residue = inv.getStackInSlot(i).getContainerItem();
@@ -129,49 +144,52 @@ public class DrinkMakerTileEntity extends NormalContainerTileEntity implements I
                                         }
                                     }
                                 });
-                                CompoundNBT nbt = new FluidStack(output.getFluid(), this.getFluidAmount()).writeToNBT(new CompoundNBT());
+                                CompoundNBT nbt = new FluidStack(currentRecipe.getFluidResult(), this.getFluidAmount()).writeToNBT(new CompoundNBT());
                                 fluid.getContainer().getOrCreateTag().put(FLUID_NBT_KEY, nbt);
                                 this.setToZero();
-                            }
-                        }
-                        else
-                        {
-                            this.setToZero();
-                        }
-                        inputInventory.ifPresent(in ->
-                                outputInventory.ifPresent(out ->
-                                {
-                                    {
-                                        ItemStack inputCup = in.getStackInSlot(0);
-                                        ItemStack outputCup = out.getStackInSlot(0);
-                                        if (outputCup.isEmpty())
-                                        {
-                                            FluidActionResult filledSimulated = FluidUtil.tryFillContainer(inputCup, fluid, Integer.MAX_VALUE, null, true);
-                                            if (filledSimulated.isSuccess())
-                                            {
-                                                if (filledSimulated.getResult().hasTag())
-                                                {
-                                                    ItemHandlerHelper.insertItemStacked(out, filledSimulated.getResult(), false);
-                                                    inputCup.shrink(1);
-                                                }
-                                            }
-                                            if (fluid.getFluidInTank(0).isEmpty())
-                                            {
-                                                containerInventory.ifPresent(container ->
-                                                {
-                                                    if (container.getStackInSlot(0).hasContainerItem())
-                                                        container.setStackInSlot(0, container.getStackInSlot(0).getContainerItem());
-                                                });
-                                            }
-                                        }
-                                    }
-                                }));
-                    }));
+                            }));
+                }
+            }
+            else
+            {
+                setToZero();
+            }
         }
         else
         {
-            this.setToZero();
+            this.currentRecipe = null;
+            setToZero();
         }
+
+        getFluidHandler().ifPresent(fluid ->
+                inputInventory.ifPresent(in ->
+                        outputInventory.ifPresent(out ->
+                        {
+                            {
+                                ItemStack inputCup = in.getStackInSlot(0);
+                                ItemStack outputCup = out.getStackInSlot(0);
+                                if (outputCup.isEmpty())
+                                {
+                                    FluidActionResult filledSimulated = FluidUtil.tryFillContainer(inputCup, fluid, Integer.MAX_VALUE, null, true);
+                                    if (filledSimulated.isSuccess())
+                                    {
+                                        if (filledSimulated.getResult().hasTag())
+                                        {
+                                            ItemHandlerHelper.insertItemStacked(out, filledSimulated.getResult(), false);
+                                            inputCup.shrink(1);
+                                        }
+                                    }
+                                    if (fluid.getFluidInTank(0).isEmpty())
+                                    {
+                                        containerInventory.ifPresent(container ->
+                                        {
+                                            if (container.getStackInSlot(0).hasContainerItem())
+                                                container.setStackInSlot(0, container.getStackInSlot(0).getContainerItem());
+                                        });
+                                    }
+                                }
+                            }
+                        })));
     }
 
     @Nullable
@@ -211,6 +229,12 @@ public class DrinkMakerTileEntity extends NormalContainerTileEntity implements I
             public int getSlotLimit(int slot)
             {
                 return 1;
+            }
+
+            @Override
+            public boolean isItemValid(int slot, @Nonnull ItemStack stack)
+            {
+                return !(stack.getItem() instanceof BucketItem);
             }
         };
     }
@@ -277,5 +301,143 @@ public class DrinkMakerTileEntity extends NormalContainerTileEntity implements I
     public Direction getFacing()
     {
         return this.getBlockState().get(HorizontalBlock.HORIZONTAL_FACING);
+    }
+
+    @Override
+    public int getSizeInventory()
+    {
+        return 11;
+    }
+
+    public boolean isIngredientsEmpty()
+    {
+        return ingredientsInventory.map(h ->
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                if (!h.getStackInSlot(i).isEmpty())
+                {
+                    return false;
+                }
+            }
+            return true;
+        }).orElse(true);
+    }
+
+    @Override
+    public boolean isEmpty()
+    {
+        return isIngredientsEmpty() &&
+                residuesInventory.map(h ->
+                {
+                    for (int i = 0; i < 4; i++)
+                    {
+                        if (!h.getStackInSlot(i).isEmpty())
+                        {
+                            return false;
+                        }
+                    }
+                    return true;
+                }).orElse(true) &&
+                containerInventory.map(h -> h.getStackInSlot(0).isEmpty()).orElse(true) &&
+                inputInventory.map(h -> h.getStackInSlot(0).isEmpty()).orElse(true) &&
+                outputInventory.map(h -> h.getStackInSlot(0).isEmpty()).orElse(true);
+    }
+
+    @Override
+    public ItemStack getStackInSlot(int index)
+    {
+        if (index < 4)
+        {
+            return ingredientsInventory.map(h -> h.getStackInSlot(index)).orElse(ItemStack.EMPTY);
+        }
+        else if (index < 8)
+        {
+            return residuesInventory.map(h -> h.getStackInSlot(index - 4)).orElse(ItemStack.EMPTY);
+        }
+        else if (index == 8)
+        {
+            return containerInventory.map(h -> h.getStackInSlot(0)).orElse(ItemStack.EMPTY);
+        }
+        else if (index == 9)
+        {
+            return inputInventory.map(h -> h.getStackInSlot(0)).orElse(ItemStack.EMPTY);
+        }
+        else
+        {
+            return outputInventory.map(h -> h.getStackInSlot(0)).orElse(ItemStack.EMPTY);
+        }
+    }
+
+    @Override
+    public ItemStack decrStackSize(int index, int count)
+    {
+        if (index < 4)
+        {
+            return ingredientsInventory.map(h -> h.getStackInSlot(index).split(count)).orElse(ItemStack.EMPTY);
+        }
+        else if (index < 8)
+        {
+            return residuesInventory.map(h -> h.getStackInSlot(index - 4).split(count)).orElse(ItemStack.EMPTY);
+        }
+        else if (index == 8)
+        {
+            return containerInventory.map(h -> h.getStackInSlot(0).split(count)).orElse(ItemStack.EMPTY);
+        }
+        else if (index == 9)
+        {
+            return inputInventory.map(h -> h.getStackInSlot(0).split(count)).orElse(ItemStack.EMPTY);
+        }
+        else
+        {
+            return outputInventory.map(h -> h.getStackInSlot(0).split(count)).orElse(ItemStack.EMPTY);
+        }
+    }
+
+    @Override
+    public ItemStack removeStackFromSlot(int index)
+    {
+        setInventorySlotContents(index, ItemStack.EMPTY);
+        return ItemStack.EMPTY;
+    }
+
+    @Override
+    public void setInventorySlotContents(int index, ItemStack stack)
+    {
+        if (index < 4)
+        {
+            ingredientsInventory.ifPresent(h -> h.setStackInSlot(index, stack));
+        }
+        else if (index < 8)
+        {
+            residuesInventory.ifPresent(h -> h.setStackInSlot(index - 4, stack));
+        }
+        else if (index == 8)
+        {
+            containerInventory.ifPresent(h -> h.setStackInSlot(0, stack));
+        }
+        else if (index == 9)
+        {
+            inputInventory.ifPresent(h -> h.setStackInSlot(0, stack));
+        }
+        else
+        {
+            outputInventory.ifPresent(h -> h.setStackInSlot(0, stack));
+        }
+    }
+
+    @Override
+    public boolean isUsableByPlayer(PlayerEntity player)
+    {
+        return true;
+    }
+
+    @Override
+    public void clear()
+    {
+        for (int i = 0; i < getSizeInventory(); i++)
+        {
+            removeStackFromSlot(i);
+        }
     }
 }
