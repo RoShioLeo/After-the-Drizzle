@@ -3,6 +3,7 @@ package cloud.lemonslice.afterthedrizzle.common.item;
 import cloud.lemonslice.afterthedrizzle.AfterTheDrizzle;
 import cloud.lemonslice.afterthedrizzle.common.drink.DrinkEffectAttribute;
 import cloud.lemonslice.afterthedrizzle.common.drink.DrinkEffectsManager;
+import cloud.lemonslice.afterthedrizzle.common.fluid.FluidsRegistry;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -89,6 +90,11 @@ public class CupDrinkItem extends ItemFluidContainer
                 itemStack.getOrCreateTag().put(FLUID_NBT_KEY, fluidTag);
                 items.add(itemStack);
             }
+            ItemStack itemStack = new ItemStack(this);
+            CompoundNBT fluidTag = new CompoundNBT();
+            new FluidStack(FluidsRegistry.BOILING_WATER_STILL.get(), capacity).writeToNBT(fluidTag);
+            itemStack.getOrCreateTag().put(FLUID_NBT_KEY, fluidTag);
+            items.add(itemStack);
         }
     }
 

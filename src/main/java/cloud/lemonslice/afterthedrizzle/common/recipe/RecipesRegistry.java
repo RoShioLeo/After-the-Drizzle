@@ -34,8 +34,6 @@ public final class RecipesRegistry
 
     private static void addDrinkRecipes()
     {
-        MANAGER_DRINK_MAKER.add(new DrinkRecipeInput("sugar", "sugar", "sugar", "sugar"), new FluidStack(FluidsRegistry.SUGARY_WATER_STILL.get(), 500));
-
         MANAGER_DRINK_MAKER.add(new DrinkRecipeInput("green_tea_leaf", "green_tea_leaf"), new FluidStack(FluidsRegistry.WEAK_GREEN_TEA_STILL.get(), 500));
         MANAGER_DRINK_MAKER.add(new DrinkRecipeInput(FluidsRegistry.WEAK_GREEN_TEA_STILL.get(), "green_tea_leaf", "green_tea_leaf", "green_tea_leaf"), new FluidStack(FluidsRegistry.GREEN_TEA_STILL.get(), 500));
         MANAGER_DRINK_MAKER.add(new DrinkRecipeInput("green_tea_leaf", "green_tea_leaf", "green_tea_leaf", "green_tea_leaf"), new FluidStack(FluidsRegistry.GREEN_TEA_STILL.get(), 500));
@@ -43,11 +41,6 @@ public final class RecipesRegistry
         MANAGER_DRINK_MAKER.add(new DrinkRecipeInput("green_tea_bag", "green_tea_bag"), new FluidStack(FluidsRegistry.STRONG_GREEN_TEA_STILL.get(), 500));
         MANAGER_DRINK_MAKER.add(new DrinkRecipeInput(FluidsRegistry.GREEN_TEA_STILL.get(), "green_tea_leaf", "green_tea_leaf", "green_tea_leaf", "green_tea_leaf"), new FluidStack(FluidsRegistry.STRONG_GREEN_TEA_STILL.get(), 500));
 
-        MANAGER_DRINK_MAKER.add(new DrinkRecipeInput("black_tea_leaf", "black_tea_leaf"), new FluidStack(FluidsRegistry.WEAK_BLACK_TEA_STILL.get(), 500));
-        MANAGER_DRINK_MAKER.add(new DrinkRecipeInput(FluidsRegistry.WEAK_BLACK_TEA_STILL.get(), "black_tea_leaf", "black_tea_leaf", "black_tea_leaf"), new FluidStack(FluidsRegistry.BLACK_TEA_STILL.get(), 500));
-        MANAGER_DRINK_MAKER.add(new DrinkRecipeInput("black_tea_leaf", "black_tea_leaf", "black_tea_leaf", "black_tea_leaf"), new FluidStack(FluidsRegistry.BLACK_TEA_STILL.get(), 500));
-        MANAGER_DRINK_MAKER.add(new DrinkRecipeInput("black_tea_bag"), new FluidStack(FluidsRegistry.BLACK_TEA_STILL.get(), 500));
-        MANAGER_DRINK_MAKER.add(new DrinkRecipeInput("black_tea_bag", "black_tea_bag"), new FluidStack(FluidsRegistry.STRONG_BLACK_TEA_STILL.get(), 500));
         MANAGER_DRINK_MAKER.add(new DrinkRecipeInput(FluidsRegistry.BLACK_TEA_STILL.get(), "black_tea_leaf", "black_tea_leaf", "black_tea_leaf", "black_tea_leaf"), new FluidStack(FluidsRegistry.STRONG_BLACK_TEA_STILL.get(), 500));
 
         MANAGER_DRINK_MAKER.add(new DrinkRecipeInput("white_tea_leaf", "white_tea_leaf"), new FluidStack(FluidsRegistry.WEAK_WHITE_TEA_STILL.get(), 500));

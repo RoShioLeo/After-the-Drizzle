@@ -1,0 +1,22 @@
+{
+    "type": "afterthedrizzle:drink_maker",
+    "item_ingredients": [
+        {
+            "tag": "forge:crops/green_tea_leaf"
+        },
+        {
+            "tag": "forge:crops/green_tea_leaf"
+        },
+        {
+            "tag": "forge:crops/green_tea_leaf"
+        },
+        {
+            "tag": "forge:crops/green_tea_leaf"
+        }
+    ],
+    "fluid_ingredient": {
+        "fluid": "afterthedrizzle:green_tea",
+        "amount": 500
+    },
+    "drink_result": "afterthedrizzle:strong_green_tea"
+}

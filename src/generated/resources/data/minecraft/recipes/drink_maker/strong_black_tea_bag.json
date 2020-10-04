@@ -3,11 +3,14 @@
     "item_ingredients": [
         {
             "item": "afterthedrizzle:black_tea_bag"
+        },
+        {
+            "item": "afterthedrizzle:black_tea_bag"
         }
     ],
     "fluid_ingredient": {
         "fluid": "afterthedrizzle:boiling_water",
         "amount": 500
     },
-    "drink_result": "afterthedrizzle:black_tea"
+    "drink_result": "afterthedrizzle:strong_black_tea"
 }

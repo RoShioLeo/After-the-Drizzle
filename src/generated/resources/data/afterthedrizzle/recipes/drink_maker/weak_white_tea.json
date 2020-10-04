@@ -2,12 +2,15 @@
     "type": "afterthedrizzle:drink_maker",
     "item_ingredients": [
         {
-            "item": "afterthedrizzle:black_tea_bag"
+            "tag": "forge:crops/white_tea_leaf"
+        },
+        {
+            "tag": "forge:crops/white_tea_leaf"
         }
     ],
     "fluid_ingredient": {
         "fluid": "afterthedrizzle:boiling_water",
         "amount": 500
     },
-    "drink_result": "afterthedrizzle:black_tea"
+    "drink_result": "afterthedrizzle:weak_white_tea"
 }

@@ -1,0 +1,22 @@
+{
+    "type": "afterthedrizzle:drink_maker",
+    "item_ingredients": [
+        {
+            "item": "minecraft:sugar"
+        },
+        {
+            "item": "minecraft:sugar"
+        },
+        {
+            "item": "minecraft:sugar"
+        },
+        {
+            "item": "minecraft:sugar"
+        }
+    ],
+    "fluid_ingredient": {
+        "fluid": "afterthedrizzle:boiling_water",
+        "amount": 500
+    },
+    "drink_result": "afterthedrizzle:sugary_water"
+}

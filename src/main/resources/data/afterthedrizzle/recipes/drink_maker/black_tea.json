@@ -2,16 +2,7 @@
     "type": "afterthedrizzle:drink_maker",
     "item_ingredients": [
         {
-            "tag": "forge:crops/black_tea_leaf"
-        },
-        {
-            "tag": "forge:crops/black_tea_leaf"
-        },
-        {
-            "tag": "forge:crops/black_tea_leaf"
-        },
-        {
-            "tag": "forge:crops/black_tea_leaf"
+            "item": "afterthedrizzle:black_tea_bag"
         }
     ],
     "fluid_ingredient": {
