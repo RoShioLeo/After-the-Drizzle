@@ -1,5 +1,6 @@
 package cloud.lemonslice.afterthedrizzle.common.environment.temperature;
 
+import cloud.lemonslice.silveroak.common.environment.Temperature;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -51,7 +52,7 @@ public enum ApparentTemperature
 
     public ITextComponent getTranslation()
     {
-        return new TranslationTextComponent("info.afterthedrizzle.environment.temperature." + getName()).applyTextStyle(color);
+        return new TranslationTextComponent("info.silveroak.environment.temperature." + getName()).applyTextStyle(color);
     }
 
     public TextFormatting getColor()

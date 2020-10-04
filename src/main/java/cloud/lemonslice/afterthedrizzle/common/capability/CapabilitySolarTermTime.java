@@ -1,6 +1,6 @@
 package cloud.lemonslice.afterthedrizzle.common.capability;
 
-import cloud.lemonslice.afterthedrizzle.common.config.CommonConfig;
+import cloud.lemonslice.afterthedrizzle.common.config.ServerConfig;
 import cloud.lemonslice.afterthedrizzle.common.environment.solar.BiomeTemperatureManager;
 import cloud.lemonslice.afterthedrizzle.common.environment.solar.SolarTerm;
 import cloud.lemonslice.afterthedrizzle.common.network.SimpleNetworkHandler;
@@ -57,7 +57,7 @@ public class CapabilitySolarTermTime
             if (solarTermsTicks > dayTime + 100)
             {
                 solarTermsDay++;
-                solarTermsDay %= 24 * CommonConfig.Season.lastingDaysOfEachTerm.get();
+                solarTermsDay %= 24 * ServerConfig.Season.lastingDaysOfEachTerm.get();
                 ForgeRegistries.BIOMES.forEach(biome ->
                         biome.temperature = BiomeTemperatureManager.getDefaultTemperature(biome) + SolarTerm.get(getSolarTermIndex()).getTemperatureChange());
                 sendUpdateMessage(world);
@@ -67,7 +67,7 @@ public class CapabilitySolarTermTime
 
         public int getSolarTermIndex()
         {
-            return solarTermsDay / CommonConfig.Season.lastingDaysOfEachTerm.get();
+            return solarTermsDay / ServerConfig.Season.lastingDaysOfEachTerm.get();
         }
 
         public SolarTerm getSolarTerm()
@@ -87,7 +87,7 @@ public class CapabilitySolarTermTime
 
         public void setSolarTermsDay(int solarTermsDay)
         {
-            this.solarTermsDay = Math.max(solarTermsDay, 0) % (24 * CommonConfig.Season.lastingDaysOfEachTerm.get());
+            this.solarTermsDay = Math.max(solarTermsDay, 0) % (24 * ServerConfig.Season.lastingDaysOfEachTerm.get());
         }
 
         public void setSolarTermsTicks(int solarTermsTicks)

@@ -1,9 +1,9 @@
 package cloud.lemonslice.afterthedrizzle.common.world;
 
-import cloud.lemonslice.afterthedrizzle.common.environment.Humidity;
-import cloud.lemonslice.afterthedrizzle.common.environment.Rainfall;
-import cloud.lemonslice.afterthedrizzle.common.environment.temperature.Temperature;
 import cloud.lemonslice.afterthedrizzle.common.world.feature.FeaturesRegistry;
+import cloud.lemonslice.silveroak.common.environment.Humidity;
+import cloud.lemonslice.silveroak.common.environment.Rainfall;
+import cloud.lemonslice.silveroak.common.environment.Temperature;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.IFeatureConfig;
 import net.minecraft.world.gen.placement.FrequencyConfig;

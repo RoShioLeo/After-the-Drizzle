@@ -3,7 +3,9 @@ package cloud.lemonslice.afterthedrizzle.data.provider;
 import cloud.lemonslice.afterthedrizzle.common.block.BlocksRegistry;
 import cloud.lemonslice.afterthedrizzle.common.fluid.FluidsRegistry;
 import cloud.lemonslice.afterthedrizzle.common.item.ItemsRegistry;
-import cloud.lemonslice.afterthedrizzle.common.recipe.type.RecipeSerializersRegistry;
+import cloud.lemonslice.afterthedrizzle.common.recipe.serializer.RecipeSerializersRegistry;
+import cloud.lemonslice.afterthedrizzle.data.builder.BambooTrayRecipeBuilder;
+import cloud.lemonslice.afterthedrizzle.data.builder.DrinkRecipeBuilder;
 import cloud.lemonslice.afterthedrizzle.data.tag.NormalTags;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.*;
@@ -15,7 +17,7 @@ import net.minecraftforge.common.Tags;
 
 import java.util.function.Consumer;
 
-public class RecipesProvider extends RecipeProvider
+public final class RecipesProvider extends RecipeProvider
 {
     public RecipesProvider(DataGenerator generatorIn)
     {
@@ -74,15 +76,49 @@ public class RecipesProvider extends RecipeProvider
         ShapelessRecipeBuilder.shapelessRecipe(ItemsRegistry.ICE_WATER_BAG).addIngredient(ItemsRegistry.WATER_BAG).addIngredient(Blocks.ICE).setGroup("ice_water_bag").addCriterion("has_ice", this.hasItem(Blocks.ICE)).build(consumer, new ResourceLocation("afterthedrizzle:ice_water_bag_ice"));
         ShapelessRecipeBuilder.shapelessRecipe(ItemsRegistry.ICE_WATER_BAG).addIngredient(ItemsRegistry.WATER_BAG).addIngredient(Items.SNOWBALL, 3).setGroup("ice_water_bag").addCriterion("has_snowball", this.hasItem(Items.SNOWBALL)).build(consumer, new ResourceLocation("afterthedrizzle:ice_water_bag_snow"));
         ShapelessRecipeBuilder.shapelessRecipe(ItemsRegistry.ICE_WATER_BAG).addIngredient(ItemsRegistry.WATER_BAG).addIngredient(Blocks.SNOW_BLOCK).setGroup("ice_water_bag").addCriterion("has_snowball", this.hasItem(Items.SNOWBALL)).build(consumer, new ResourceLocation("afterthedrizzle:ice_water_bag_snow_block"));
-        ShapedRecipeBuilder.shapedRecipe(ItemsRegistry.THERMOMETER).key('x', Items.WATER_BUCKET).key('#', Tags.Items.GLASS_COLORLESS).patternLine("###").patternLine("# #").patternLine("#x#").setGroup("thermometer").addCriterion("has_water_bucket", this.hasItem(Items.WATER_BUCKET)).build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(ItemsRegistry.RAIN_GAUGE).key('#', Tags.Items.GLASS_COLORLESS).key('*', Items.BUCKET).patternLine("# #").patternLine("# #").patternLine("#*#").setGroup("rain_gauge").addCriterion("has_bucket", this.hasItem(Items.BUCKET)).build(consumer);
-        ShapelessRecipeBuilder.shapelessRecipe(ItemsRegistry.HYGROMETER).addIngredient(ItemsRegistry.THERMOMETER).addIngredient(ItemsRegistry.RAIN_GAUGE).setGroup("hygrometer").addCriterion("has_thermometer", this.hasItem(ItemsRegistry.THERMOMETER)).build(consumer);
 
         // Smelting Recipes 熔炼配方
         CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(Items.WATER_BUCKET), FluidsRegistry.BOILING_WATER_BUCKET.get(), 0.2F, 200).addCriterion("has_water_bucket", this.hasItem(Items.WATER_BUCKET)).build(consumer);
         CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(ItemsRegistry.CLAY_CUP), ItemsRegistry.PORCELAIN_CUP, 0.2F, 200).addCriterion("has_clay_cup", this.hasItem(ItemsRegistry.CLAY_CUP)).build(consumer);
         CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(ItemsRegistry.CLAY_TEAPOT), ItemsRegistry.PORCELAIN_TEAPOT, 0.2F, 200).addCriterion("has_clay_teapot", this.hasItem(ItemsRegistry.CLAY_TEAPOT)).build(consumer);
         CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(ItemsRegistry.WATER_BAG), ItemsRegistry.HOT_WATER_BAG, 0.2F, 200).addCriterion("has_water_bag", this.hasItem(ItemsRegistry.WATER_BAG)).build(consumer);
+
+        // Bamboo Tray In-rain Recipes 竹篾匾淋雨配方
+        BambooTrayRecipeBuilder.wetRecipe(Ingredient.fromItems(ItemsRegistry.RABBIT_JERKY), Items.RABBIT, 0).build(consumer);
+        BambooTrayRecipeBuilder.wetRecipe(Ingredient.fromItems(ItemsRegistry.PORK_JERKY), Items.PORKCHOP, 0).build(consumer);
+        BambooTrayRecipeBuilder.wetRecipe(Ingredient.fromItems(ItemsRegistry.BEEF_JERKY), Items.BEEF, 0).build(consumer);
+        BambooTrayRecipeBuilder.wetRecipe(Ingredient.fromItems(ItemsRegistry.MUTTON_JERKY), Items.MUTTON, 0).build(consumer);
+        BambooTrayRecipeBuilder.wetRecipe(Ingredient.fromItems(ItemsRegistry.CHICKEN_JERKY), Items.CHICKEN, 0).build(consumer);
+        BambooTrayRecipeBuilder.wetRecipe(Ingredient.fromItems(ItemsRegistry.DRIED_CARROT), Items.CARROT, 0).build(consumer);
+        BambooTrayRecipeBuilder.wetRecipe(Ingredient.fromItems(ItemsRegistry.DRIED_BEETROOT), Items.BEETROOT, 0).build(consumer);
+        BambooTrayRecipeBuilder.wetRecipe(Ingredient.fromTag(NormalTags.Items.CROPS_TEA_LEAF), ItemsRegistry.TEA_RESIDUES, 0).build(consumer);
+        BambooTrayRecipeBuilder.wetRecipe(Ingredient.fromTag(NormalTags.Items.CROPS_BLACK_TEA_LEAF), ItemsRegistry.TEA_RESIDUES, 0).build(consumer, new ResourceLocation("afterthedrizzle:black_tea_residue"));
+        BambooTrayRecipeBuilder.wetRecipe(Ingredient.fromTag(NormalTags.Items.CROPS_GREEN_TEA_LEAF), ItemsRegistry.TEA_RESIDUES, 0).build(consumer, new ResourceLocation("afterthedrizzle:green_tea_residue"));
+        BambooTrayRecipeBuilder.wetRecipe(Ingredient.fromTag(NormalTags.Items.CROPS_WHITE_TEA_LEAF), ItemsRegistry.TEA_RESIDUES, 0).build(consumer, new ResourceLocation("afterthedrizzle:white_tea_residue"));
+
+        // Bamboo Tray Outdoors Recipes 竹篾匾户外配方
+        BambooTrayRecipeBuilder.outdoorsRecipe(Ingredient.fromTag(NormalTags.Items.CROPS_TEA_LEAF), ItemsRegistry.GREEN_TEA_LEAVES, 200).build(consumer);
+        BambooTrayRecipeBuilder.outdoorsRecipe(Ingredient.fromItems(Items.ROTTEN_FLESH), Items.LEATHER, 200).build(consumer);
+        BambooTrayRecipeBuilder.outdoorsRecipe(Ingredient.fromItems(Items.RABBIT), ItemsRegistry.RABBIT_JERKY, 200).build(consumer);
+        BambooTrayRecipeBuilder.outdoorsRecipe(Ingredient.fromItems(Items.PORKCHOP), ItemsRegistry.PORK_JERKY, 200).build(consumer);
+        BambooTrayRecipeBuilder.outdoorsRecipe(Ingredient.fromItems(Items.BEEF), ItemsRegistry.BEEF_JERKY, 200).build(consumer);
+        BambooTrayRecipeBuilder.outdoorsRecipe(Ingredient.fromItems(Items.MUTTON), ItemsRegistry.MUTTON_JERKY, 200).build(consumer);
+        BambooTrayRecipeBuilder.outdoorsRecipe(Ingredient.fromItems(Items.CHICKEN), ItemsRegistry.CHICKEN_JERKY, 200).build(consumer);
+        BambooTrayRecipeBuilder.outdoorsRecipe(Ingredient.fromItems(Items.BEETROOT), ItemsRegistry.DRIED_BEETROOT, 200).build(consumer);
+        BambooTrayRecipeBuilder.outdoorsRecipe(Ingredient.fromItems(Items.CARROT), ItemsRegistry.DRIED_CARROT, 200).build(consumer);
+        BambooTrayRecipeBuilder.outdoorsRecipe(Ingredient.fromTag(NormalTags.Items.FOOD_JERKY), Items.LEATHER, 200).build(consumer, new ResourceLocation("afterthedrizzle:jerky_leather"));
+
+        // Bamboo Tray Indoors Recipes 竹篾匾室内配方
+        BambooTrayRecipeBuilder.indoorsRecipe(Ingredient.fromTag(NormalTags.Items.FOOD_MEAT), Items.ROTTEN_FLESH, 200).build(consumer);
+        BambooTrayRecipeBuilder.indoorsRecipe(Ingredient.fromItems(Items.SPIDER_EYE), Items.FERMENTED_SPIDER_EYE, 200).build(consumer);
+        BambooTrayRecipeBuilder.indoorsRecipe(Ingredient.fromTag(NormalTags.Items.CROPS_TEA_LEAF), ItemsRegistry.BLACK_TEA_LEAVES, 200).build(consumer);
+
+        // Bamboo Tray Bake Recipes 竹篾匾烘焙配方
+        BambooTrayRecipeBuilder.bakeRecipe(Ingredient.fromTag(NormalTags.Items.CROPS_TEA_LEAF), ItemsRegistry.WHITE_TEA_LEAVES, 200).build(consumer);
+
+        // Drink Maker Recipes 沏茶台配方
+        DrinkRecipeBuilder.boilingRecipe(FluidsRegistry.WEAK_BLACK_TEA_STILL.get(), Ingredient.fromTag(NormalTags.Items.CROPS_BLACK_TEA_LEAF), Ingredient.fromTag(NormalTags.Items.CROPS_BLACK_TEA_LEAF)).build(consumer);
+        DrinkRecipeBuilder.boilingRecipe(FluidsRegistry.BLACK_TEA_STILL.get(), Ingredient.fromTag(NormalTags.Items.CROPS_BLACK_TEA_LEAF), Ingredient.fromTag(NormalTags.Items.CROPS_BLACK_TEA_LEAF), Ingredient.fromTag(NormalTags.Items.CROPS_BLACK_TEA_LEAF), Ingredient.fromTag(NormalTags.Items.CROPS_BLACK_TEA_LEAF)).build(consumer);
     }
 
     @Override

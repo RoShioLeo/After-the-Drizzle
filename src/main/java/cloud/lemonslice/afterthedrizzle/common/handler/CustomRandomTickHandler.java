@@ -1,7 +1,7 @@
 package cloud.lemonslice.afterthedrizzle.common.handler;
 
 import cloud.lemonslice.afterthedrizzle.AfterTheDrizzle;
-import cloud.lemonslice.afterthedrizzle.common.config.CommonConfig;
+import cloud.lemonslice.afterthedrizzle.common.config.ServerConfig;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -37,7 +37,7 @@ public final class CustomRandomTickHandler
     @SubscribeEvent
     public static void onWorldTick(TickEvent.WorldTickEvent event)
     {
-        if (event.phase.equals(TickEvent.Phase.END) && CommonConfig.Temperature.enable.get() && CommonConfig.Temperature.iceMelt.get() && !event.world.isRemote)
+        if (event.phase.equals(TickEvent.Phase.END) && ServerConfig.Temperature.enable.get() && ServerConfig.Temperature.iceMelt.get() && !event.world.isRemote)
         {
             ServerWorld world = (ServerWorld) event.world;
             int randomTickSpeed = world.getGameRules().getInt(GameRules.RANDOM_TICK_SPEED);
@@ -73,7 +73,7 @@ public final class CustomRandomTickHandler
 
     private static void doCustomRandomTick(BlockState state, ServerWorld worldIn, BlockPos pos)
     {
-        if (CommonConfig.Temperature.iceMelt.get())
+        if (ServerConfig.Temperature.iceMelt.get())
         {
             SNOW_MELT.tick(state, worldIn, pos);
         }

@@ -1,14 +1,14 @@
 package cloud.lemonslice.afterthedrizzle.helper;
 
 import cloud.lemonslice.afterthedrizzle.common.capability.CapabilityPlayerTemperature;
-import cloud.lemonslice.afterthedrizzle.common.config.CommonConfig;
-import cloud.lemonslice.afterthedrizzle.common.environment.Humidity;
+import cloud.lemonslice.afterthedrizzle.common.config.ServerConfig;
 import cloud.lemonslice.afterthedrizzle.common.environment.temperature.ApparentTemperature;
-import cloud.lemonslice.afterthedrizzle.common.environment.temperature.Temperature;
 import cloud.lemonslice.afterthedrizzle.common.item.IItemWithTemperature;
 import cloud.lemonslice.afterthedrizzle.common.network.PlayerTemperatureMessage;
 import cloud.lemonslice.afterthedrizzle.common.network.SimpleNetworkHandler;
 import cloud.lemonslice.afterthedrizzle.common.potion.EffectsRegistry;
+import cloud.lemonslice.silveroak.common.environment.Humidity;
+import cloud.lemonslice.silveroak.common.environment.Temperature;
 import com.google.common.collect.Lists;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -49,7 +49,7 @@ public final class PlayerTemperatureHelper
             }
             else
             {
-                ApparentTemperature ATemp = getTemperatureWithPoint(getTemperatureByLight(getTemperatureIndoors(getTemperatureByHeight(getEnvOriginTemp(temp, humidity, world), humidity, world, pos), world, pos), world, pos), player);
+                ApparentTemperature ATemp = getTemperatureWithPoint(getTemperatureByLight(getTemperatureIndoors(getTemperatureByHeight(getEnvOriginTemp(temp, humidity, world, pos), world, pos), world, pos), world, pos), player);
                 adjustTemperature((int) (ATemp.getMiddle() * humidity.getCoefficient()), t, player);
             }
             applyEffects(player, world, t.getApparentTemperature());
@@ -74,7 +74,7 @@ public final class PlayerTemperatureHelper
 
     public static ApparentTemperature getTemperatureByLight(ApparentTemperature temp, World world, BlockPos pos)
     {
-        if (CommonConfig.Temperature.heatInfluencedByLight.get())
+        if (ServerConfig.Temperature.heatInfluencedByLight.get())
         {
             int light = world.getLightFor(LightType.BLOCK, pos);
             if (light >= 15)
@@ -104,7 +104,7 @@ public final class PlayerTemperatureHelper
 
     public static ApparentTemperature getTemperatureIndoors(ApparentTemperature temp, World world, BlockPos pos)
     {
-        if (CommonConfig.Temperature.coolerIndoors.get() && !world.canBlockSeeSky(pos) && temp.getIndex() > 4)
+        if (ServerConfig.Temperature.coolerIndoors.get() && !world.canBlockSeeSky(pos) && temp.getIndex() > 4)
         {
             return ApparentTemperature.values()[temp.getIndex() - 1];
         }
@@ -115,21 +115,21 @@ public final class PlayerTemperatureHelper
      * 根据玩家所处的高度决定温度（主世界地底挖矿）。
      *  Temperature depending on height.
      */
-    public static ApparentTemperature getTemperatureByHeight(float temp, Humidity humidity, World world, BlockPos pos)
+    public static ApparentTemperature getTemperatureByHeight(float temp, World world, BlockPos pos)
     {
-        if (CommonConfig.Temperature.coolUnderground.get() && world.getDimension().getType() == DimensionType.OVERWORLD && !world.canBlockSeeSky(pos))
+        if (ServerConfig.Temperature.coolUnderground.get() && world.getDimension().getType() == DimensionType.OVERWORLD && !world.canBlockSeeSky(pos))
         {
-            if (pos.getY() <= CommonConfig.Temperature.undergroundHeight.get() / 2)
+            if (pos.getY() <= ServerConfig.Temperature.undergroundHeight.get() / 2)
             {
                 return ApparentTemperature.WARM;
             }
-            else if (pos.getY() <= CommonConfig.Temperature.undergroundHeight.get())
+            else if (pos.getY() <= ServerConfig.Temperature.undergroundHeight.get())
             {
                 return ApparentTemperature.COOL;
             }
         }
         float apparent = temp;
-        if (CommonConfig.Temperature.fluctuation.get() && world.getDimension().getType().hasSkyLight())
+        if (!world.getDimension().getType().hasSkyLight())
         {
             apparent = world.getBiome(pos).getTemperature(pos);
         }
@@ -154,16 +154,23 @@ public final class PlayerTemperatureHelper
      * 计算玩家所处的环境随时间变化的原始气温。
      *  Calculate the original time-related temperature.
      */
-    public static float getEnvOriginTemp(float biomeTemp, Humidity humidity, World world)
+    public static float getEnvOriginTemp(float biomeTemp, Humidity humidity, World world, BlockPos pos)
     {
-        int t = ((int) (world.getCelestialAngle(0) * 24000 + 6000)) % 24000 / 100;
-        boolean isRaining = world.isRaining();
-        int id = humidity.getId();
-        //Volatility halved when raining. 雨天波动减半
-        double volatility = (6 - id) * (6 - id) * 0.02D * Math.abs((double) biomeTemp) * (CommonConfig.Temperature.fluctuationDecreaseWhenRaining.get() && isRaining ? 0.5D : 1);
-        double standard = (double) biomeTemp - volatility * volatility;
-        double actual = -4.0706867802E-14 * t * t * t * t * t * t - 6.6491872724E-11 * t * t * t * t * t + 5.5361084324E-08 * t * t * t * t - 1.2584165083E-05 * t * t * t + 8.4482896013E-04 * t * t + 9.6706499996E-03 * t - 7.3983503027E-01;
-        return (float) (volatility * actual + standard);
+        if (ServerConfig.Temperature.fluctuation.get())
+        {
+            int t = ((int) (world.getCelestialAngle(0) * 24000 + 6000)) % 24000 / 100;
+            boolean isRaining = world.isRaining();
+            int id = humidity.getId();
+            //Volatility halved when raining. 雨天波动减半
+            double volatility = (6 - id) * (6 - id) * 0.02D * Math.abs((double) biomeTemp) * (ServerConfig.Temperature.fluctuationDecreaseWhenRaining.get() && isRaining ? 0.5D : 1);
+            double standard = (double) biomeTemp - volatility * volatility;
+            double actual = -4.0706867802E-14 * t * t * t * t * t * t - 6.6491872724E-11 * t * t * t * t * t + 5.5361084324E-08 * t * t * t * t - 1.2584165083E-05 * t * t * t + 8.4482896013E-04 * t * t + 9.6706499996E-03 * t - 7.3983503027E-01;
+            return (float) (volatility * actual + standard);
+        }
+        else
+        {
+            return world.getBiome(pos).getTemperature(pos);
+        }
     }
 
     public static int getFluidApparentTemp(int k)
@@ -197,7 +204,7 @@ public final class PlayerTemperatureHelper
     public static int getResistancePoint(PlayerEntity player, String type)
     {
         int point = 0;
-        boolean emptyArmor = CommonConfig.Temperature.coolerWithoutArmor.get();
+        boolean emptyArmor = ServerConfig.Temperature.coolerWithoutArmor.get();
         List<Item> onceUsedList = Lists.newArrayList();
         for (ItemStack armor : player.getArmorInventoryList())
         {
@@ -311,9 +318,9 @@ public final class PlayerTemperatureHelper
             else if (id >= 5)
             {
                 int tier = id - 5;
-                if (ticks % 600 == 0)
+                if (player.getActivePotionEffect(Effects.HUNGER) == null)
                 {
-                    player.addPotionEffect(new EffectInstance(Effects.NAUSEA, 400));
+                    player.addPotionEffect(new EffectInstance(Effects.HUNGER, 400, tier));
                 }
                 if (player.getActivePotionEffect(Effects.SLOWNESS) == null)
                 {

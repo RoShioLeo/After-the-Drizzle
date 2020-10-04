@@ -1,7 +1,7 @@
 package cloud.lemonslice.afterthedrizzle.common.network;
 
 import cloud.lemonslice.afterthedrizzle.common.capability.CapabilitySolarTermTime;
-import cloud.lemonslice.afterthedrizzle.common.config.CommonConfig;
+import cloud.lemonslice.afterthedrizzle.common.config.ServerConfig;
 import cloud.lemonslice.afterthedrizzle.common.environment.solar.BiomeTemperatureManager;
 import cloud.lemonslice.afterthedrizzle.common.environment.solar.SolarTerm;
 import net.minecraft.client.Minecraft;
@@ -44,7 +44,7 @@ public class SolarTermsMessage implements INormalMessage
                     data.setSolarTermsDay(solarDay);
                     ForgeRegistries.BIOMES.forEach(biome ->
                             biome.temperature = BiomeTemperatureManager.getDefaultTemperature(biome) + SolarTerm.get(data.getSolarTermIndex()).getTemperatureChange());
-                    if (solarDay % CommonConfig.Season.lastingDaysOfEachTerm.get() == 0 && Minecraft.getInstance().player != null)
+                    if (solarDay % ServerConfig.Season.lastingDaysOfEachTerm.get() == 0 && Minecraft.getInstance().player != null)
                     {
                         Minecraft.getInstance().player.sendMessage(new TranslationTextComponent("info.afterthedrizzle.environment.solar_term.message", SolarTerm.get(data.getSolarTermIndex()).getTranslation()));
                     }

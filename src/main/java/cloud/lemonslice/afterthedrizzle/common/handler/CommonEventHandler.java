@@ -5,7 +5,10 @@ import cloud.lemonslice.afterthedrizzle.common.block.TeaPlantBlock;
 import cloud.lemonslice.afterthedrizzle.common.capability.CapabilityPlayerTemperature;
 import cloud.lemonslice.afterthedrizzle.common.capability.CapabilitySolarTermTime;
 import cloud.lemonslice.afterthedrizzle.common.capability.CapabilityWorldWeather;
-import cloud.lemonslice.afterthedrizzle.common.config.CommonConfig;
+import cloud.lemonslice.afterthedrizzle.common.config.ServerConfig;
+import cloud.lemonslice.afterthedrizzle.common.environment.crop.CropHumidityInfo;
+import cloud.lemonslice.afterthedrizzle.common.environment.crop.CropInfoManager;
+import cloud.lemonslice.afterthedrizzle.common.environment.crop.CropSeasonInfo;
 import cloud.lemonslice.afterthedrizzle.common.item.ItemsRegistry;
 import cloud.lemonslice.afterthedrizzle.common.network.PlayerTemperatureMessage;
 import cloud.lemonslice.afterthedrizzle.common.network.SimpleNetworkHandler;
@@ -18,10 +21,13 @@ import net.minecraft.block.FireBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.ArmorItem;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
@@ -103,7 +109,7 @@ public final class CommonEventHandler
     @SubscribeEvent
     public static void onUseBoneMeal(BonemealEvent event)
     {
-        if (!CommonConfig.Agriculture.canUseBoneMeal.get())
+        if (!ServerConfig.Agriculture.canUseBoneMeal.get())
         {
             if (event.getBlock().getBlock() instanceof TeaPlantBlock)
             {
@@ -128,7 +134,7 @@ public final class CommonEventHandler
     @SubscribeEvent
     public static void onNeighborChanged(BlockEvent.NeighborNotifyEvent event)
     {
-        if (CommonConfig.Others.woodDropsAshWhenBurning.get())
+        if (ServerConfig.Others.woodDropsAshWhenBurning.get())
             event.getNotifiedSides().forEach(direction ->
             {
                 if (event.getWorld().getBlockState(event.getPos()).isFlammable(event.getWorld(), event.getPos(), direction) && event.getWorld().getBlockState(event.getPos().offset(direction)).getBlock() instanceof FireBlock)
@@ -172,7 +178,7 @@ public final class CommonEventHandler
     @SubscribeEvent
     public static void onAttachCapabilitiesEntity(AttachCapabilitiesEvent<Entity> event)
     {
-        if (CommonConfig.Temperature.enable.get() && event.getObject() instanceof PlayerEntity && !(event.getObject() instanceof FakePlayer))
+        if (ServerConfig.Temperature.enable.get() && event.getObject() instanceof PlayerEntity && !(event.getObject() instanceof FakePlayer))
         {
             event.addCapability(new ResourceLocation(AfterTheDrizzle.MODID, "player_temperature"), new CapabilityPlayerTemperature.Provider());
         }
@@ -181,7 +187,7 @@ public final class CommonEventHandler
     @SubscribeEvent
     public static void onAttachCapabilitiesWorld(AttachCapabilitiesEvent<World> event)
     {
-        if (CommonConfig.Season.enable.get() && event.getObject().getDimension().getType().equals(DimensionType.OVERWORLD))
+        if (ServerConfig.Season.enable.get() && event.getObject().getDimension().getType().equals(DimensionType.OVERWORLD))
         {
             event.addCapability(new ResourceLocation(AfterTheDrizzle.MODID, "world_solar_terms"), new CapabilitySolarTermTime.Provider());
         }
@@ -193,15 +199,18 @@ public final class CommonEventHandler
     {
         if (event.getPlayer() instanceof ServerPlayerEntity && !(event.getPlayer() instanceof FakePlayer))
         {
-            if (CommonConfig.Temperature.enable.get())
+            if (ServerConfig.Temperature.enable.get())
             {
                 event.getPlayer().getCapability(CapabilityPlayerTemperature.PLAYER_TEMP).ifPresent(t -> SimpleNetworkHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.getPlayer()), new PlayerTemperatureMessage(t.getTemperature(), t.getHotterOrColder())));
             }
-            if (CommonConfig.Season.enable.get())
+            if (ServerConfig.Season.enable.get())
             {
                 event.getPlayer().getEntityWorld().getCapability(CapabilitySolarTermTime.WORLD_SOLAR_TIME).ifPresent(t -> SimpleNetworkHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.getPlayer()), new SolarTermsMessage(t.getSolarTermsDay())));
             }
-            event.getPlayer().getEntityWorld().getCapability(CapabilityWorldWeather.WORLD_WEATHER).ifPresent(data -> SimpleNetworkHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.getPlayer()), new WeatherChangeMessage(data.getCurrentDay().getCurrentWeather(Math.toIntExact(((ServerPlayerEntity) event.getPlayer()).getServerWorld().getGameTime() % 24000)))));
+            if (ServerConfig.Weather.enable.get())
+            {
+                event.getPlayer().getEntityWorld().getCapability(CapabilityWorldWeather.WORLD_WEATHER).ifPresent(data -> SimpleNetworkHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.getPlayer()), new WeatherChangeMessage(data.getCurrentDay().getCurrentWeather(Math.toIntExact(((ServerPlayerEntity) event.getPlayer()).getServerWorld().getGameTime() % 24000)))));
+            }
         }
     }
 
@@ -209,9 +218,51 @@ public final class CommonEventHandler
     public static void onPlayTick(TickEvent.PlayerTickEvent event)
     {
         PlayerEntity player = event.player;
-        if (CommonConfig.Temperature.enable.get() && event.phase == TickEvent.Phase.START && player instanceof ServerPlayerEntity && !(player instanceof FakePlayer) && player.getEntityWorld().getGameTime() % 50 == 0)
+        if (ServerConfig.Temperature.enable.get() && event.phase == TickEvent.Phase.START && player instanceof ServerPlayerEntity && !(player instanceof FakePlayer) && player.getEntityWorld().getGameTime() % 50 == 0)
         {
             PlayerTemperatureHelper.adjustPlayerTemperature((ServerPlayerEntity) player, player.getEntityWorld(), player.getPosition());
+        }
+    }
+
+    @SubscribeEvent
+    public static void addTooltips(ItemTooltipEvent event)
+    {
+        if (ServerConfig.Season.enable.get())
+        {
+            addCropTooltips(event);
+        }
+        addArmorTempTooltips(event);
+    }
+
+    public static void addArmorTempTooltips(ItemTooltipEvent event)
+    {
+        if (event.getItemStack().getItem() instanceof ArmorItem)
+        {
+            if (event.getItemStack().getOrCreateTag().getString("Resistance").equals("Cold"))
+            {
+                event.getToolTip().add(1, new TranslationTextComponent("info.afterthedrizzle.environment.temperature.cold_resistance").applyTextStyle(TextFormatting.ITALIC).applyTextStyle(TextFormatting.GRAY));
+            }
+            else if (event.getItemStack().getOrCreateTag().getString("Resistance").equals("Heat"))
+            {
+                event.getToolTip().add(1, new TranslationTextComponent("info.afterthedrizzle.environment.temperature.heat_resistance").applyTextStyle(TextFormatting.ITALIC).applyTextStyle(TextFormatting.GRAY));
+            }
+        }
+    }
+
+    public static void addCropTooltips(ItemTooltipEvent event)
+    {
+        if (event.getItemStack().getItem() instanceof BlockItem)
+        {
+            if (CropInfoManager.getHumidityCrops().contains(((BlockItem) event.getItemStack().getItem()).getBlock()))
+            {
+                CropHumidityInfo info = CropInfoManager.getHumidityInfo(((BlockItem) event.getItemStack().getItem()).getBlock());
+                event.getToolTip().addAll(info.getTooltip());
+            }
+            if (CropInfoManager.getSeasonCrops().contains(((BlockItem) event.getItemStack().getItem()).getBlock()))
+            {
+                CropSeasonInfo info = CropInfoManager.getSeasonInfo(((BlockItem) event.getItemStack().getItem()).getBlock());
+                event.getToolTip().addAll(info.getTooltip());
+            }
         }
     }
 }

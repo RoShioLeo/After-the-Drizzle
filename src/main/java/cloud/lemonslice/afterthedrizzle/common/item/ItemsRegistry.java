@@ -28,11 +28,6 @@ public final class ItemsRegistry extends RegistryModule
     public static final Item RABBIT_JERKY = new FoodItem("rabbit_jerky", NormalFoods.RABBIT_JERKY);
     public static final Item MUTTON_JERKY = new FoodItem("mutton_jerky", NormalFoods.MUTTON_JERKY);
 
-    // ENVIRONMENT 环境
-    public static final Item THERMOMETER = new NormalItem("thermometer", getNormalItemProperties());
-    public static final Item RAIN_GAUGE = new NormalItem("rain_gauge");
-    public static final Item HYGROMETER = new NormalItem("hygrometer");
-
     // MISC 杂项
     public static final Item BAMBOO_PLANK = new NormalItem("bamboo_plank");
     public static final Item ASH = new FertilizerItem("ash");

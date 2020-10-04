@@ -13,18 +13,24 @@ description=''' '''
 [[dependencies.afterthedrizzle]] #optional
     modId="forge" #mandatory
     mandatory=true #mandatory
-    versionRange="[31.2.0,)" #mandatory
-    ordering="NONE"
-    side="BOTH"
+versionRange = "[31.2.0,)" #mandatory
+ordering = "NONE"
+side = "BOTH"
 [[dependencies.afterthedrizzle]]
-    modId="minecraft"
-    mandatory=true
-    versionRange="[1.15.2]"
-    ordering="NONE"
-    side="BOTH"
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.15.2]"
+ordering = "NONE"
+side = "BOTH"
 [[dependencies.afterthedrizzle]]
-    modId="jei"
-    mandatory=false
-    versionRange="[6.0.0.4,)"
-    ordering="NONE"
-    side="BOTH"
+modId = "silveroakoutpost"
+mandatory = true
+versionRange = "[0.2.1-Alpha,)"
+ordering = "NONE"
+side = "BOTH"
+[[dependencies.afterthedrizzle]]
+modId = "jei"
+mandatory = false
+versionRange = "[6.0.0.4,)"
+ordering = "NONE"
+side = "BOTH"
