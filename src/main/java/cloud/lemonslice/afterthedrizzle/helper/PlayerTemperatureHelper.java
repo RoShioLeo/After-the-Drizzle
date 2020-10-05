@@ -260,7 +260,7 @@ public final class PlayerTemperatureHelper
                 point += ((IItemWithTemperature) hotbar).getResistancePoint();
             }
         }
-        if (type.equals("Cold") && player.getActivePotionEffect(EffectsRegistry.EXCITEMENT) != null)
+        if (player.getActivePotionEffect(EffectsRegistry.EXCITEMENT) != null)
         {
             point += 2;
         }

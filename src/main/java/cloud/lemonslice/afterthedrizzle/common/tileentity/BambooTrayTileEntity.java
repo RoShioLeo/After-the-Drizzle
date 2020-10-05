@@ -241,8 +241,11 @@ public class BambooTrayTileEntity extends NormalContainerTileEntity implements I
 
     private void setToZero()
     {
-        this.processTicks = 0;
-        this.markDirty();
+        if (this.processTicks != 0)
+        {
+            this.processTicks = 0;
+            this.markDirty();
+        }
     }
 
     @Nullable

@@ -171,7 +171,6 @@ public class TeapotBlock extends NormalHorizontalBlock
     public ItemStack getDrop(World worldIn, BlockPos pos)
     {
         TileEntity tileEntity = worldIn.getTileEntity(pos);
-        boolean flag = tileEntity instanceof TeapotTileEntity;
         if (tileEntity instanceof TeapotTileEntity)
         {
             FluidStack fluidStack = ((TeapotTileEntity) tileEntity).getFluidTank().getFluidInTank(0);

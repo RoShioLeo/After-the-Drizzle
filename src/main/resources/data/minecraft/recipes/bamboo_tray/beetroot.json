@@ -1,0 +1,8 @@
+{
+    "type": "afterthedrizzle:bamboo_tray_in_rain",
+    "ingredient": {
+        "item": "afterthedrizzle:dried_beetroot"
+    },
+    "result": "minecraft:beetroot",
+    "workingtime": 0
+}

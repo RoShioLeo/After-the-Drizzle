@@ -9,13 +9,10 @@
         },
         {
             "tag": "forge:crops/black_tea_leaf"
-        },
-        {
-            "tag": "forge:crops/black_tea_leaf"
         }
     ],
     "fluid_ingredient": {
-        "fluid": "afterthedrizzle:boiling_water",
+        "fluid": "afterthedrizzle:weak_black_tea",
         "amount": 500
     },
     "drink_result": "afterthedrizzle:black_tea"

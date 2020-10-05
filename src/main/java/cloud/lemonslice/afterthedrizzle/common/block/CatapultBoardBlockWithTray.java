@@ -4,7 +4,7 @@ import cloud.lemonslice.afterthedrizzle.common.recipe.bamboo_tray.BambooTraySing
 import cloud.lemonslice.afterthedrizzle.common.tileentity.BambooTrayTileEntity;
 import cloud.lemonslice.afterthedrizzle.common.tileentity.NormalContainerTileEntity;
 import cloud.lemonslice.afterthedrizzle.common.tileentity.TileEntityTypesRegistry;
-import cloud.lemonslice.afterthedrizzle.helper.VoxelShapeHelper;
+import cloud.lemonslice.silveroak.helper.VoxelShapeHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -20,6 +20,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -29,10 +30,13 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.storage.loot.*;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 public class CatapultBoardBlockWithTray extends NormalHorizontalBlock
@@ -71,6 +75,24 @@ public class CatapultBoardBlockWithTray extends NormalHorizontalBlock
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
     {
         return SHAPE;
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder)
+    {
+        ResourceLocation resourcelocation = this.getLootTable();
+        if (resourcelocation == LootTables.EMPTY)
+        {
+            return Collections.emptyList();
+        }
+        else
+        {
+            LootContext lootcontext = builder.withParameter(LootParameters.BLOCK_STATE, state).build(LootParameterSets.BLOCK);
+            ServerWorld serverworld = lootcontext.getWorld();
+            LootTable loottable = serverworld.getServer().getLootTableManager().getLootTableFromLocation(resourcelocation);
+            return loottable.generate(lootcontext);
+        }
     }
 
     @Override

@@ -4,7 +4,7 @@ import cloud.lemonslice.afterthedrizzle.common.recipe.bamboo_tray.BambooTraySing
 import cloud.lemonslice.afterthedrizzle.common.tileentity.BambooTrayTileEntity;
 import cloud.lemonslice.afterthedrizzle.common.tileentity.NormalContainerTileEntity;
 import cloud.lemonslice.afterthedrizzle.common.tileentity.TileEntityTypesRegistry;
-import cloud.lemonslice.afterthedrizzle.helper.VoxelShapeHelper;
+import cloud.lemonslice.silveroak.helper.VoxelShapeHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;

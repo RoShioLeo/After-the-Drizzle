@@ -3,7 +3,7 @@ package cloud.lemonslice.afterthedrizzle.common.item;
 import cloud.lemonslice.afterthedrizzle.AfterTheDrizzle;
 import cloud.lemonslice.afterthedrizzle.common.block.BlocksRegistry;
 import cloud.lemonslice.afterthedrizzle.common.block.DrinkMakerBlock;
-import cloud.lemonslice.afterthedrizzle.helper.BlockHelper;
+import cloud.lemonslice.silveroak.helper.BlockHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;

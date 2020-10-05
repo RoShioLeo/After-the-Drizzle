@@ -21,7 +21,7 @@ import cloud.lemonslice.afterthedrizzle.common.inventory.ContainerTypesRegistry;
 import cloud.lemonslice.afterthedrizzle.common.item.ItemsRegistry;
 import cloud.lemonslice.afterthedrizzle.common.network.SimpleNetworkHandler;
 import cloud.lemonslice.afterthedrizzle.common.potion.EffectsRegistry;
-import cloud.lemonslice.afterthedrizzle.common.recipe.RecipesRegistry;
+import cloud.lemonslice.afterthedrizzle.common.recipe.drink.DrinkEffectsManager;
 import cloud.lemonslice.afterthedrizzle.common.recipe.serializer.RecipeSerializersRegistry;
 import cloud.lemonslice.afterthedrizzle.common.tileentity.TileEntityTypesRegistry;
 import cloud.lemonslice.afterthedrizzle.common.world.WorldGenManager;
@@ -73,7 +73,7 @@ public final class AfterTheDrizzle
 
     public void setup(FMLCommonSetupEvent event)
     {
-        RecipesRegistry.init();
+        DrinkEffectsManager.init();
         WorldGenManager.init();
         CapabilitiesRegistry.init();
         SimpleNetworkHandler.init();

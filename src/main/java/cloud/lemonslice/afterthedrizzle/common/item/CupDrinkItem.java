@@ -1,9 +1,8 @@
 package cloud.lemonslice.afterthedrizzle.common.item;
 
 import cloud.lemonslice.afterthedrizzle.AfterTheDrizzle;
-import cloud.lemonslice.afterthedrizzle.common.drink.DrinkEffectAttribute;
-import cloud.lemonslice.afterthedrizzle.common.drink.DrinkEffectsManager;
 import cloud.lemonslice.afterthedrizzle.common.fluid.FluidsRegistry;
+import cloud.lemonslice.afterthedrizzle.common.recipe.drink.DrinkEffectsManager;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -13,7 +12,6 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.UseAction;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.potion.EffectInstance;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.*;
 import net.minecraft.util.text.ITextComponent;
@@ -30,7 +28,6 @@ import net.minecraftforge.items.ItemHandlerHelper;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.List;
 
 import static net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack.FLUID_NBT_KEY;
@@ -133,8 +130,7 @@ public class CupDrinkItem extends ItemFluidContainer
         if (canDrink(stack))
         {
             worldIn.playSound(null, entityLiving.getPosX(), entityLiving.getPosY(), entityLiving.getPosZ(), entityLiving.getEatSound(stack), SoundCategory.NEUTRAL, 1.0F, 1.0F + (worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) * 0.4F);
-            for (EffectInstance effect : getEffects(stack))
-                entityLiving.addPotionEffect(effect);
+            FluidUtil.getFluidContained(stack).ifPresent(h -> DrinkEffectsManager.getEffects(h.getFluid()).accept(entityLiving, h.getAmount()));
             if (entityLiving instanceof PlayerEntity)
             {
                 ItemHandlerHelper.giveItemToPlayer((PlayerEntity) entityLiving, new ItemStack(this.getContainerItem()));
@@ -148,26 +144,8 @@ public class CupDrinkItem extends ItemFluidContainer
     {
         if (stack.getChildTag(FLUID_NBT_KEY) != null)
         {
-            return FluidUtil.getFluidContained(stack).map(f -> FluidTags.getCollection().getOrCreate(new ResourceLocation("afterthedrizzle:drink")).contains(f.getFluid())).orElse(false);
+            return FluidUtil.getFluidContained(stack).map(f -> DrinkEffectsManager.getEffects(f.getFluid()) != null).orElse(false);
         }
         return false;
-    }
-
-    public static List<EffectInstance> getEffects(ItemStack stack)
-    {
-        if (stack.getChildTag(FLUID_NBT_KEY) != null)
-        {
-            return FluidUtil.getFluidContained(stack).map(f ->
-            {
-                DrinkEffectAttribute[] effectAttributes = DrinkEffectsManager.getDrinkEffects(f.getFluid());
-                List<EffectInstance> list = new ArrayList<>();
-                for (DrinkEffectAttribute effect : effectAttributes)
-                {
-                    list.add(new EffectInstance(effect.getPotion(), f.getAmount() * effect.getDuration(), effect.getLevel()));
-                }
-                return list;
-            }).orElse(new ArrayList<>());
-        }
-        return new ArrayList<>();
     }
 }

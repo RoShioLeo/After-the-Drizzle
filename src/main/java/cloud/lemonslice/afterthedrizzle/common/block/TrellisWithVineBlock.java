@@ -1,7 +1,7 @@
 package cloud.lemonslice.afterthedrizzle.common.block;
 
 import cloud.lemonslice.afterthedrizzle.common.environment.crop.CropInfoManager;
-import cloud.lemonslice.afterthedrizzle.helper.VoxelShapeHelper;
+import cloud.lemonslice.silveroak.helper.VoxelShapeHelper;
 import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

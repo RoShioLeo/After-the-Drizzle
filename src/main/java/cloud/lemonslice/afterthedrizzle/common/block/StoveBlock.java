@@ -3,7 +3,7 @@ package cloud.lemonslice.afterthedrizzle.common.block;
 import cloud.lemonslice.afterthedrizzle.common.tileentity.NormalContainerTileEntity;
 import cloud.lemonslice.afterthedrizzle.common.tileentity.StoveTileEntity;
 import cloud.lemonslice.afterthedrizzle.common.tileentity.TileEntityTypesRegistry;
-import cloud.lemonslice.afterthedrizzle.helper.VoxelShapeHelper;
+import cloud.lemonslice.silveroak.helper.VoxelShapeHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -152,6 +152,12 @@ public class StoveBlock extends NormalHorizontalBlock implements IStoveBlock
                     ((StoveTileEntity) te).setToLit();
                     player.getHeldItem(handIn).damageItem(1, player, onBroken -> onBroken.sendBreakAnimation(handIn));
                     worldIn.playSound(player, pos, SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 1.0F, worldIn.getRandom().nextFloat() * 0.4F + 0.8F);
+                    return ActionResultType.SUCCESS;
+                }
+                else if (player.getHeldItem(handIn).getItem().equals(Items.FIRE_CHARGE))
+                {
+                    ((StoveTileEntity) te).setToLit();
+                    player.getHeldItem(handIn).shrink(1);
                     return ActionResultType.SUCCESS;
                 }
                 else if (ForgeHooks.getBurnTime(player.getHeldItem(handIn)) > 0)

@@ -1,7 +1,7 @@
 package cloud.lemonslice.afterthedrizzle.common.block;
 
 import cloud.lemonslice.afterthedrizzle.common.entity.SeatEntity;
-import cloud.lemonslice.afterthedrizzle.helper.VoxelShapeHelper;
+import cloud.lemonslice.silveroak.helper.VoxelShapeHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;

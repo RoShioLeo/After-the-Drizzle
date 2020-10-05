@@ -21,7 +21,6 @@ import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
@@ -170,14 +169,15 @@ public class DrinkMakerTileEntity extends NormalContainerTileEntity implements I
                                 ItemStack outputCup = out.getStackInSlot(0);
                                 if (outputCup.isEmpty())
                                 {
-                                    FluidActionResult filledSimulated = FluidUtil.tryFillContainer(inputCup, fluid, Integer.MAX_VALUE, null, true);
-                                    if (filledSimulated.isSuccess())
+                                    FluidActionResult fluidActionResult = FluidUtil.tryFillContainerAndStow(inputCup, fluid, out, Integer.MAX_VALUE, null, true);
+                                    if (!fluidActionResult.isSuccess())
                                     {
-                                        if (filledSimulated.getResult().hasTag())
-                                        {
-                                            ItemHandlerHelper.insertItemStacked(out, filledSimulated.getResult(), false);
-                                            inputCup.shrink(1);
-                                        }
+                                        fluidActionResult = FluidUtil.tryEmptyContainerAndStow(inputCup, fluid, out, Integer.MAX_VALUE, null, true);
+                                    }
+                                    if (fluidActionResult.isSuccess())
+                                    {
+                                        out.setStackInSlot(0, fluidActionResult.getResult());
+                                        inputCup.shrink(1);
                                     }
                                     if (fluid.getFluidInTank(0).isEmpty())
                                     {
@@ -239,10 +239,13 @@ public class DrinkMakerTileEntity extends NormalContainerTileEntity implements I
         };
     }
 
-    public void setToZero()
+    private void setToZero()
     {
-        processTicks = 0;
-        this.markDirty();
+        if (this.processTicks != 0)
+        {
+            this.processTicks = 0;
+            this.markDirty();
+        }
     }
 
     public int getProcessTicks()
@@ -258,6 +261,20 @@ public class DrinkMakerTileEntity extends NormalContainerTileEntity implements I
     public int getFluidAmount()
     {
         return getFluidHandler().map(h -> h.getFluidInTank(0).getAmount()).orElse(0);
+    }
+
+    @Nullable
+    public DrinkRecipe getCurrentRecipe()
+    {
+        return currentRecipe;
+    }
+
+    public int getNeededAmount()
+    {
+        if (currentRecipe != null)
+            return (int) Math.ceil(this.getFluidAmount() * 1.0F / currentRecipe.getFluidIngredient().getMatchingStacks()[0].getAmount());
+        else
+            return 0;
     }
 
     @Nullable

@@ -3,8 +3,7 @@ package cloud.lemonslice.afterthedrizzle.common.block;
 import cloud.lemonslice.afterthedrizzle.common.item.ItemsRegistry;
 import cloud.lemonslice.afterthedrizzle.common.tileentity.TeaCupTileEntity;
 import cloud.lemonslice.afterthedrizzle.common.tileentity.TileEntityTypesRegistry;
-import cloud.lemonslice.afterthedrizzle.helper.VoxelShapeHelper;
-import com.google.common.collect.Lists;
+import cloud.lemonslice.silveroak.helper.VoxelShapeHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
@@ -25,13 +24,10 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraft.world.storage.loot.LootContext;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.ItemHandlerHelper;
-
-import java.util.List;
 
 import static net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack.FLUID_NBT_KEY;
 
@@ -149,15 +145,6 @@ public class WoodenTrayBlock extends NormalBlock
             }
         }
         return ActionResultType.SUCCESS;
-    }
-
-    @Override
-    @SuppressWarnings("deprecation")
-    public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder)
-    {
-        List<ItemStack> list = Lists.newArrayList();
-        list.add(new ItemStack(this));
-        return list;
     }
 
     public boolean setCup(TeaCupTileEntity te, int index, ItemStack itemStack, World world, BlockPos pos, BlockState state)

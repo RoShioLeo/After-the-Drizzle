@@ -1,6 +1,6 @@
 {
-  "replace": false,
-  "values": [
-    "#forge:seeds/quinoa"
-  ]
+    "replace": false,
+    "values": [
+        "#forge:seeds/quinoa"
+    ]
 }

@@ -3,8 +3,9 @@ package cloud.lemonslice.afterthedrizzle.common.block;
 import cloud.lemonslice.afterthedrizzle.common.tileentity.DrinkMakerTileEntity;
 import cloud.lemonslice.afterthedrizzle.common.tileentity.NormalContainerTileEntity;
 import cloud.lemonslice.afterthedrizzle.common.tileentity.TileEntityTypesRegistry;
-import cloud.lemonslice.afterthedrizzle.helper.BlockHelper;
-import cloud.lemonslice.afterthedrizzle.helper.VoxelShapeHelper;
+import cloud.lemonslice.silveroak.helper.BlockHelper;
+import cloud.lemonslice.silveroak.helper.VoxelShapeHelper;
+import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
@@ -26,6 +27,7 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraft.world.storage.loot.LootContext;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fluids.FluidUtil;
@@ -34,6 +36,8 @@ import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemHandlerHelper;
+
+import java.util.List;
 
 public class DrinkMakerBlock extends NormalHorizontalBlock
 {
@@ -158,6 +162,15 @@ public class DrinkMakerBlock extends NormalHorizontalBlock
     public boolean causesSuffocation(BlockState state, IBlockReader worldIn, BlockPos pos)
     {
         return false;
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder)
+    {
+        List<ItemStack> list = Lists.newArrayList();
+        if (state.get(LEFT)) list.add(new ItemStack(this));
+        return list;
     }
 
     private void dropItems(World worldIn, BlockPos pos)

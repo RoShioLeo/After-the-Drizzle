@@ -1,0 +1,13 @@
+{
+    "type": "afterthedrizzle:drink_maker",
+    "item_ingredients": [
+        {
+            "item": "afterthedrizzle:green_tea_bag"
+        }
+    ],
+    "fluid_ingredient": {
+        "fluid": "afterthedrizzle:boiling_water",
+        "amount": 500
+    },
+    "drink_result": "afterthedrizzle:green_tea"
+}

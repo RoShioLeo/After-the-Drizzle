@@ -1,4 +1,4 @@
-package cloud.lemonslice.afterthedrizzle.common.drink;
+package cloud.lemonslice.afterthedrizzle.common.recipe.drink;
 
 import net.minecraft.potion.Effect;
 
