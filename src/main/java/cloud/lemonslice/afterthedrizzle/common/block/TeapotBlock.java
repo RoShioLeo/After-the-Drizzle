@@ -7,22 +7,19 @@ import cloud.lemonslice.afterthedrizzle.common.tileentity.TileEntityTypesRegistr
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FlowingFluid;
 import net.minecraft.fluid.Fluid;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.StateContainer;
-import net.minecraft.tags.FluidTags;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -46,9 +43,9 @@ public class TeapotBlock extends NormalHorizontalBlock
 {
     private static final VoxelShape SHAPE = makeCuboidShape(5F, 0F, 5F, 11F, 8F, 11F);
 
-    public TeapotBlock()
+    public TeapotBlock(String name, Properties properties)
     {
-        super(Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(3.5F).tickRandomly(), "porcelain_teapot");
+        super(properties, name);
     }
 
     @Override
@@ -108,15 +105,12 @@ public class TeapotBlock extends NormalHorizontalBlock
     @SuppressWarnings("deprecation")
     public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random)
     {
-        if (random.nextFloat() < 0.75F)
+        TileEntity tileentity = worldIn.getTileEntity(pos);
+        if (tileentity instanceof TeapotTileEntity)
         {
-            TileEntity tileentity = worldIn.getTileEntity(pos);
-            if (tileentity instanceof TeapotTileEntity)
+            if (IStoveBlock.isBurning(worldIn, pos.down()) && ((TeapotTileEntity) tileentity).getFluid() == Fluids.WATER)
             {
-                if (IStoveBlock.isBurning(worldIn, pos.down()) && FluidTags.getCollection().getOrCreate(new ResourceLocation("water")).contains(((TeapotTileEntity) tileentity).getFluid()))
-                {
-                    ((TeapotTileEntity) tileentity).setFluid(FluidsRegistry.BOILING_WATER_STILL.get());
-                }
+                ((TeapotTileEntity) tileentity).setFluid(FluidsRegistry.BOILING_WATER_STILL.get());
             }
         }
     }

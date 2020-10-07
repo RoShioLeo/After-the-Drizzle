@@ -1,8 +1,8 @@
 package cloud.lemonslice.afterthedrizzle.common.item;
 
 import cloud.lemonslice.afterthedrizzle.AfterTheDrizzle;
-import cloud.lemonslice.afterthedrizzle.common.block.BlocksRegistry;
 import cloud.lemonslice.afterthedrizzle.common.fluid.FluidsRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.client.util.ITooltipFlag;
@@ -40,17 +40,20 @@ import static net.minecraftforge.fluids.capability.templates.FluidHandlerItemSta
 
 public class TeapotItem extends NormalBlockItem
 {
-    private static final int CAPACITY = 1000;
+    private final int capacity;
+    private final boolean canFillWater;
 
-    public TeapotItem()
+    public TeapotItem(Block block, int capacity, boolean fillWater)
     {
-        super(BlocksRegistry.TEAPOT, new Properties().group(AfterTheDrizzle.GROUP_CORE).maxStackSize(1));
+        super(block, new Properties().group(AfterTheDrizzle.GROUP_DRINK).maxStackSize(1));
+        this.capacity = capacity;
+        this.canFillWater = fillWater;
     }
 
     @Override
     public ICapabilityProvider initCapabilities(@Nonnull ItemStack stack, @Nullable CompoundNBT nbt)
     {
-        return new FluidHandlerItemStack(stack, CAPACITY);
+        return new FluidHandlerItemStack(stack, capacity);
     }
 
     @Override
@@ -62,55 +65,59 @@ public class TeapotItem extends NormalBlockItem
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn)
     {
-        ItemStack itemStack = playerIn.getHeldItem(handIn);
-        RayTraceResult raytraceresult = rayTrace(worldIn, playerIn, RayTraceContext.FluidMode.SOURCE_ONLY);
-        if (raytraceresult.getType() == RayTraceResult.Type.MISS)
+        if (canFillWater)
         {
-            return new ActionResult<>(ActionResultType.PASS, itemStack);
-        }
-        else if (raytraceresult.getType() != RayTraceResult.Type.BLOCK)
-        {
-            return new ActionResult<>(ActionResultType.PASS, itemStack);
-        }
-        else
-        {
-            BlockRayTraceResult blockraytraceresult = (BlockRayTraceResult) raytraceresult;
-            BlockPos blockpos = blockraytraceresult.getPos();
-            if (worldIn.isBlockModifiable(playerIn, blockpos) && playerIn.canPlayerEdit(blockpos, blockraytraceresult.getFace(), itemStack))
+            ItemStack itemStack = playerIn.getHeldItem(handIn);
+            RayTraceResult raytraceresult = rayTrace(worldIn, playerIn, RayTraceContext.FluidMode.SOURCE_ONLY);
+            if (raytraceresult.getType() == RayTraceResult.Type.MISS)
             {
-                BlockState blockstate1 = worldIn.getBlockState(blockpos);
-                if (blockstate1.getBlock() instanceof FlowingFluidBlock)
-                {
-                    Fluid fluid = ((FlowingFluidBlock) blockstate1.getBlock()).getFluid();
-                    if (fluid != Fluids.EMPTY && fluid.isIn(FluidTags.WATER))
-                    {
-                        ((FlowingFluidBlock) blockstate1.getBlock()).pickupFluid(worldIn, blockpos, blockstate1);
-                        playerIn.addStat(Stats.ITEM_USED.get(this));
-
-                        SoundEvent soundevent = SoundEvents.ITEM_BOTTLE_FILL;
-                        playerIn.playSound(soundevent, 1.0F, 1.0F);
-
-                        if (!playerIn.isCreative())
-                        {
-                            ItemStack itemStack1 = new ItemStack(this);
-                            CompoundNBT fluidTag = new CompoundNBT();
-                            new FluidStack(fluid, CAPACITY).writeToNBT(fluidTag);
-                            itemStack1.getOrCreateTag().put(FLUID_NBT_KEY, fluidTag);
-                            ItemHandlerHelper.giveItemToPlayer(playerIn, itemStack1);
-
-                            itemStack.shrink(1);
-                        }
-
-                        return new ActionResult<>(ActionResultType.SUCCESS, itemStack);
-                    }
-                }
-                return new ActionResult<>(ActionResultType.FAIL, itemStack);
+                return new ActionResult<>(ActionResultType.PASS, itemStack);
+            }
+            else if (raytraceresult.getType() != RayTraceResult.Type.BLOCK)
+            {
+                return new ActionResult<>(ActionResultType.PASS, itemStack);
             }
             else
             {
-                return new ActionResult<>(ActionResultType.FAIL, itemStack);
+                BlockRayTraceResult blockraytraceresult = (BlockRayTraceResult) raytraceresult;
+                BlockPos blockpos = blockraytraceresult.getPos();
+                if (worldIn.isBlockModifiable(playerIn, blockpos) && playerIn.canPlayerEdit(blockpos, blockraytraceresult.getFace(), itemStack))
+                {
+                    BlockState blockstate1 = worldIn.getBlockState(blockpos);
+                    if (blockstate1.getBlock() instanceof FlowingFluidBlock)
+                    {
+                        Fluid fluid = ((FlowingFluidBlock) blockstate1.getBlock()).getFluid();
+                        if (fluid != Fluids.EMPTY && fluid.isIn(FluidTags.WATER))
+                        {
+                            ((FlowingFluidBlock) blockstate1.getBlock()).pickupFluid(worldIn, blockpos, blockstate1);
+                            playerIn.addStat(Stats.ITEM_USED.get(this));
+
+                            SoundEvent soundevent = SoundEvents.ITEM_BOTTLE_FILL;
+                            playerIn.playSound(soundevent, 1.0F, 1.0F);
+
+                            if (!playerIn.isCreative())
+                            {
+                                ItemStack itemStack1 = new ItemStack(this);
+                                CompoundNBT fluidTag = new CompoundNBT();
+                                new FluidStack(fluid, capacity).writeToNBT(fluidTag);
+                                itemStack1.getOrCreateTag().put(FLUID_NBT_KEY, fluidTag);
+                                ItemHandlerHelper.giveItemToPlayer(playerIn, itemStack1);
+
+                                itemStack.shrink(1);
+                            }
+
+                            return new ActionResult<>(ActionResultType.SUCCESS, itemStack);
+                        }
+                    }
+                    return new ActionResult<>(ActionResultType.FAIL, itemStack);
+                }
+                else
+                {
+                    return new ActionResult<>(ActionResultType.FAIL, itemStack);
+                }
             }
         }
+        else return super.onItemRightClick(worldIn, playerIn, handIn);
     }
 
     @Override
@@ -118,23 +125,20 @@ public class TeapotItem extends NormalBlockItem
     {
         if (group == AfterTheDrizzle.GROUP_DRINK)
         {
+            items.add(new ItemStack(this));
             for (Fluid fluid : FluidTags.getCollection().getOrCreate(new ResourceLocation("afterthedrizzle:drink")).getAllElements())
             {
                 ItemStack itemStack = new ItemStack(this);
                 CompoundNBT fluidTag = new CompoundNBT();
-                new FluidStack(fluid, CAPACITY).writeToNBT(fluidTag);
+                new FluidStack(fluid, capacity).writeToNBT(fluidTag);
                 itemStack.getOrCreateTag().put(FLUID_NBT_KEY, fluidTag);
                 items.add(itemStack);
             }
             ItemStack itemStack = new ItemStack(this);
             CompoundNBT fluidTag = new CompoundNBT();
-            new FluidStack(FluidsRegistry.BOILING_WATER_STILL.get(), CAPACITY).writeToNBT(fluidTag);
+            new FluidStack(FluidsRegistry.BOILING_WATER_STILL.get(), capacity).writeToNBT(fluidTag);
             itemStack.getOrCreateTag().put(FLUID_NBT_KEY, fluidTag);
             items.add(itemStack);
-        }
-        else if (group == AfterTheDrizzle.GROUP_CORE)
-        {
-            items.add(new ItemStack(this));
         }
     }
 
@@ -146,7 +150,7 @@ public class TeapotItem extends NormalBlockItem
         if (stack.getChildTag(FLUID_NBT_KEY) != null)
         {
             FluidUtil.getFluidHandler(stack).ifPresent(f ->
-                    tooltip.add(f.getFluidInTank(0).getDisplayName().appendText(String.format(": %d / %dmB", f.getFluidInTank(0).getAmount(), CAPACITY)).applyTextStyle(TextFormatting.GRAY)));
+                    tooltip.add(f.getFluidInTank(0).getDisplayName().appendText(String.format(": %d / %dmB", f.getFluidInTank(0).getAmount(), capacity)).applyTextStyle(TextFormatting.GRAY)));
         }
     }
 }

@@ -1,7 +1,7 @@
 {
     "replace": false,
     "values": [
-        "#afterthedrizzle:food/jerky",
+        "#forge:food/jerky",
         "minecraft:rabbit",
         "minecraft:porkchop",
         "minecraft:beef",

@@ -14,8 +14,7 @@ import net.minecraftforge.fluids.capability.ItemFluidContainer;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import static cloud.lemonslice.afterthedrizzle.common.item.NormalItem.getNormalItemProperties;
-import static cloud.lemonslice.afterthedrizzle.common.item.NormalItem.getTeaLeavesItemProperties;
+import static cloud.lemonslice.afterthedrizzle.common.item.NormalItem.*;
 
 public final class ItemsRegistry extends RegistryModule
 {
@@ -47,6 +46,9 @@ public final class ItemsRegistry extends RegistryModule
     public static final Item HANDWARMER = new HandwarmerItem();
     public static final Item LIT_HANDWARMER = new LitHandwarmerItem();
 
+    public static final Item BAMBOO_CHARCOAL = new NormalBurntItem("bamboo_charcoal", 800);
+    public static final Item HONEYCOMB_BRIQUETTE = new NormalBurntItem("honeycomb_briquette", 2000);
+
     // INGREDIENTS 原料
     public static final Item TEA_LEAVES = new NormalItem("tea_leaves");
     public static final Item GREEN_TEA_LEAVES = new NormalItem("green_tea_leaves", getTeaLeavesItemProperties());
@@ -63,8 +65,8 @@ public final class ItemsRegistry extends RegistryModule
     public static final Item GRAPES = new GrapeSeedsItem();
 
     // DRINK 饮品
-    public static final Item CLAY_CUP = new NormalItem("clay_cup");
-    public static final Item PORCELAIN_CUP = new ItemFluidContainer(getNormalItemProperties(), 250)
+    public static final Item CLAY_CUP = new NormalItem("clay_cup", getDrinkItemProperties());
+    public static final Item PORCELAIN_CUP = new ItemFluidContainer(getDrinkItemProperties(), 250)
     {
         @Override
         public ICapabilityProvider initCapabilities(@Nonnull ItemStack stack, @Nullable CompoundNBT nbt)
@@ -72,7 +74,7 @@ public final class ItemsRegistry extends RegistryModule
             return super.initCapabilities(new ItemStack(ItemsRegistry.PORCELAIN_CUP_DRINK), nbt);
         }
     }.setRegistryName("porcelain_cup");
-    public static final Item BOTTLE = new ItemFluidContainer(getNormalItemProperties(), 500)
+    public static final Item BOTTLE = new ItemFluidContainer(getDrinkItemProperties(), 500)
     {
         @Override
         public ICapabilityProvider initCapabilities(@Nonnull ItemStack stack, @Nullable CompoundNBT nbt)
@@ -80,8 +82,9 @@ public final class ItemsRegistry extends RegistryModule
             return super.initCapabilities(new ItemStack(ItemsRegistry.BOTTLE_DRINK), nbt);
         }
     }.setRegistryName("bottle");
-    public static final Item CLAY_TEAPOT = new NormalItem("clay_teapot");
-    public static final Item PORCELAIN_TEAPOT = new TeapotItem();
+    public static final Item CLAY_TEAPOT = new NormalItem("clay_teapot", getDrinkItemProperties());
+    public static final Item PORCELAIN_TEAPOT = new TeapotItem(BlocksRegistry.TEAPOT, 1000, false);
+    public static final Item IRON_KETTLE = new IronKettleItem(BlocksRegistry.IRON_KETTLE, 4000);
     public static final Item PORCELAIN_CUP_DRINK = new CupDrinkItem(250, PORCELAIN_CUP, "porcelain_cup_drink");
     public static final Item BOTTLE_DRINK = new CupDrinkItem(500, BOTTLE, "bottle_drink");
 }

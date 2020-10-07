@@ -1,0 +1,8 @@
+{
+    "type": "afterthedrizzle:bamboo_tray_bake",
+    "ingredient": {
+        "item": "minecraft:mutton"
+    },
+    "result": "afterthedrizzle:mutton_jerky",
+    "workingtime": 200
+}

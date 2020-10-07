@@ -42,8 +42,7 @@ public abstract class NormalContainerTileEntity extends TileEntity implements IN
     @Override
     public SUpdateTileEntityPacket getUpdatePacket()
     {
-        CompoundNBT nbtTag = new CompoundNBT();
-        this.write(nbtTag);
+        CompoundNBT nbtTag = this.write(new CompoundNBT());
         return new SUpdateTileEntityPacket(getPos(), 1, nbtTag);
     }
 

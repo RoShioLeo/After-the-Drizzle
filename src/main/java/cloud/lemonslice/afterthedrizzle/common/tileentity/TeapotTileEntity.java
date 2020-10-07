@@ -1,11 +1,13 @@
 package cloud.lemonslice.afterthedrizzle.common.tileentity;
 
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
+import net.minecraft.inventory.container.Container;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -18,13 +20,15 @@ import javax.annotation.Nullable;
 
 import static cloud.lemonslice.afterthedrizzle.common.tileentity.TileEntityTypesRegistry.TEAPOT;
 
-public class TeapotTileEntity extends TileEntity
+public class TeapotTileEntity extends NormalContainerTileEntity
 {
     private final LazyOptional<FluidTank> fluidTank = LazyOptional.of(this::createFluidHandler);
+    private final int capacity;
 
-    public TeapotTileEntity()
+    public TeapotTileEntity(int capacity)
     {
         super(TEAPOT);
+        this.capacity = capacity;
     }
 
     @Override
@@ -78,11 +82,12 @@ public class TeapotTileEntity extends TileEntity
 
     private FluidTank createFluidHandler()
     {
-        return new FluidTank(1000)
+        return new FluidTank(capacity)
         {
             @Override
             protected void onContentsChanged()
             {
+                TeapotTileEntity.this.refresh();
                 TeapotTileEntity.this.markDirty();
                 super.onContentsChanged();
             }
@@ -118,5 +123,13 @@ public class TeapotTileEntity extends TileEntity
     public void setFluid(Fluid fluid)
     {
         this.fluidTank.ifPresent(f -> f.setFluid(new FluidStack(fluid, getFluidAmount())));
+        this.refresh();
+    }
+
+    @Nullable
+    @Override
+    public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity)
+    {
+        return null;
     }
 }

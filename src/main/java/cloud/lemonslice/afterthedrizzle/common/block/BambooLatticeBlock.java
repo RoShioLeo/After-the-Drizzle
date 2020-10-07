@@ -2,8 +2,10 @@ package cloud.lemonslice.afterthedrizzle.common.block;
 
 import cloud.lemonslice.silveroak.helper.VoxelShapeHelper;
 import com.google.common.collect.Lists;
-import net.minecraft.block.*;
-import net.minecraft.block.material.Material;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.IWaterLoggable;
+import net.minecraft.block.SixWayBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.fluid.IFluidState;
@@ -54,9 +56,9 @@ public class BambooLatticeBlock extends NormalBlock implements IWaterLoggable
         return list;
     }
 
-    public BambooLatticeBlock()
+    public BambooLatticeBlock(String name, Properties properties)
     {
-        super("bamboo_lattice", Block.Properties.create(Material.BAMBOO).sound(SoundType.BAMBOO).hardnessAndResistance(0.6F).notSolid());
+        super(name, properties);
         this.setDefaultState(this.stateContainer.getBaseState().with(NORTH, false).with(EAST, false).with(SOUTH, false).with(WEST, false).with(WATERLOGGED, false));
     }
 

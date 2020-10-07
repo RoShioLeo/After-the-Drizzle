@@ -18,4 +18,10 @@ public class NormalBlockTagsProvider extends BlockTagsProvider
     {
         getBuilder(BlockTags.WOODEN_FENCES).add(BlocksRegistry.BAMBOO_LATTICE).add(BlocksRegistry.TRELLIS_BLOCKS.toArray(new Block[0]));
     }
+
+    @Override
+    public String getName()
+    {
+        return "After the Drizzle Block Tags";
+    }
 }

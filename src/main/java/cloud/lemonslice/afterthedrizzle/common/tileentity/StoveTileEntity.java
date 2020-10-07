@@ -28,6 +28,7 @@ public class StoveTileEntity extends NormalContainerTileEntity implements ITicka
 {
     private int remainTicks = 0;
     private int fuelTicks = 0;
+    private int workTicks = 0;
     private boolean lit = false;
 
     private int doubleClickTicks = 0;
@@ -48,6 +49,7 @@ public class StoveTileEntity extends NormalContainerTileEntity implements ITicka
         this.ashInventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("Ash")));
         this.fuelTicks = tag.getInt("FuelTicks");
         this.remainTicks = tag.getInt("RemainTicks");
+        this.workTicks = tag.getInt("WorkTicks");
         this.lit = tag.getBoolean("Lit");
 
     }
@@ -59,6 +61,7 @@ public class StoveTileEntity extends NormalContainerTileEntity implements ITicka
         ashInventory.ifPresent(h -> tag.put("Ash", ((INBTSerializable<CompoundNBT>) h).serializeNBT()));
         tag.putInt("FuelTicks", fuelTicks);
         tag.putInt("RemainTicks", remainTicks);
+        tag.putInt("WorkTicks", workTicks);
         tag.putBoolean("Lit", lit);
         return super.write(tag);
     }
@@ -93,7 +96,6 @@ public class StoveTileEntity extends NormalContainerTileEntity implements ITicka
             if (this.lit)
             {
                 this.addFuel();
-                refresh();
             }
             if (this.remainTicks > 0)
             {

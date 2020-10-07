@@ -25,7 +25,7 @@ side = "BOTH"
 [[dependencies.afterthedrizzle]]
 modId = "silveroakoutpost"
 mandatory = true
-versionRange = "[0.2.3-Alpha,)"
+versionRange = "[0.2.4-Alpha,)"
 ordering = "NONE"
 side = "BOTH"
 [[dependencies.afterthedrizzle]]

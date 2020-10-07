@@ -107,7 +107,7 @@ public final class RecipesProvider extends RecipeProvider
         BambooTrayRecipeBuilder.outdoorsRecipe(Ingredient.fromItems(Items.CHICKEN), ItemsRegistry.CHICKEN_JERKY, 200).build(consumer);
         BambooTrayRecipeBuilder.outdoorsRecipe(Ingredient.fromItems(Items.BEETROOT), ItemsRegistry.DRIED_BEETROOT, 200).build(consumer);
         BambooTrayRecipeBuilder.outdoorsRecipe(Ingredient.fromItems(Items.CARROT), ItemsRegistry.DRIED_CARROT, 200).build(consumer);
-        BambooTrayRecipeBuilder.outdoorsRecipe(Ingredient.fromTag(NormalTags.Items.FOOD_JERKY), Items.LEATHER, 200).build(consumer, new ResourceLocation("afterthedrizzle:jerky_leather"));
+        BambooTrayRecipeBuilder.outdoorsRecipe(Ingredient.fromTag(NormalTags.Items.FOOD_JERKY), Items.LEATHER, 200).build(consumer, "afterthedrizzle:jerky_leather");
 
         // Bamboo Tray Indoors Recipes 竹篾匾室内配方
         BambooTrayRecipeBuilder.indoorsRecipe(Ingredient.fromTag(NormalTags.Items.FOOD_MEAT), Items.ROTTEN_FLESH, 200).build(consumer);
@@ -116,26 +116,35 @@ public final class RecipesProvider extends RecipeProvider
 
         // Bamboo Tray Bake Recipes 竹篾匾烘焙配方
         BambooTrayRecipeBuilder.bakeRecipe(Ingredient.fromTag(NormalTags.Items.CROPS_TEA_LEAF), ItemsRegistry.WHITE_TEA_LEAVES, 200).build(consumer);
+        BambooTrayRecipeBuilder.bakeRecipe(Ingredient.fromItems(Items.ROTTEN_FLESH), Items.LEATHER, 200).build(consumer, "afterthedrizzle:bake_flesh");
+        BambooTrayRecipeBuilder.bakeRecipe(Ingredient.fromItems(Items.RABBIT), ItemsRegistry.RABBIT_JERKY, 200).build(consumer, "afterthedrizzle:bake_rabbit");
+        BambooTrayRecipeBuilder.bakeRecipe(Ingredient.fromItems(Items.PORKCHOP), ItemsRegistry.PORK_JERKY, 200).build(consumer, "afterthedrizzle:bake_porkchop");
+        BambooTrayRecipeBuilder.bakeRecipe(Ingredient.fromItems(Items.BEEF), ItemsRegistry.BEEF_JERKY, 200).build(consumer, "afterthedrizzle:bake_beef");
+        BambooTrayRecipeBuilder.bakeRecipe(Ingredient.fromItems(Items.MUTTON), ItemsRegistry.MUTTON_JERKY, 200).build(consumer, "afterthedrizzle:bake_mutton");
+        BambooTrayRecipeBuilder.bakeRecipe(Ingredient.fromItems(Items.CHICKEN), ItemsRegistry.CHICKEN_JERKY, 200).build(consumer, "afterthedrizzle:bake_chicken");
+        BambooTrayRecipeBuilder.bakeRecipe(Ingredient.fromItems(Items.BEETROOT), ItemsRegistry.DRIED_BEETROOT, 200).build(consumer, "afterthedrizzle:bake_beetroot");
+        BambooTrayRecipeBuilder.bakeRecipe(Ingredient.fromItems(Items.CARROT), ItemsRegistry.DRIED_CARROT, 200).build(consumer, "afterthedrizzle:bake_carrot");
+        BambooTrayRecipeBuilder.bakeRecipe(Ingredient.fromTag(NormalTags.Items.FOOD_JERKY), Items.LEATHER, 200).build(consumer, "afterthedrizzle:bake_leather");
 
         // Drink Maker Recipes 沏茶台配方
         DrinkRecipeBuilder.boilingRecipe(FluidsRegistry.SUGARY_WATER_STILL.get(), Ingredient.fromItems(Items.SUGAR), Ingredient.fromItems(Items.SUGAR), Ingredient.fromItems(Items.SUGAR), Ingredient.fromItems(Items.SUGAR)).build(consumer);
 
         DrinkRecipeBuilder.boilingRecipe(FluidsRegistry.WEAK_BLACK_TEA_STILL.get(), Ingredient.fromTag(NormalTags.Items.CROPS_BLACK_TEA_LEAF), Ingredient.fromTag(NormalTags.Items.CROPS_BLACK_TEA_LEAF)).build(consumer);
-        DrinkRecipeBuilder.boilingRecipe(FluidsRegistry.BLACK_TEA_STILL.get(), Ingredient.fromItems(ItemsRegistry.BLACK_TEA_BAG)).build(consumer, "black_tea_bag");
-        DrinkRecipeBuilder.drinkRecipe(FluidsRegistry.BLACK_TEA_STILL.get(), FluidIngredient.fromFluid(500, FluidsRegistry.WEAK_BLACK_TEA_STILL.get()), Ingredient.fromTag(NormalTags.Items.CROPS_BLACK_TEA_LEAF), Ingredient.fromTag(NormalTags.Items.CROPS_BLACK_TEA_LEAF), Ingredient.fromTag(NormalTags.Items.CROPS_BLACK_TEA_LEAF)).build(consumer, "weak_to_black_tea");
+        DrinkRecipeBuilder.boilingRecipe(FluidsRegistry.BLACK_TEA_STILL.get(), Ingredient.fromItems(ItemsRegistry.BLACK_TEA_BAG)).build(consumer, "afterthedrizzle:black_tea_bag");
+        DrinkRecipeBuilder.drinkRecipe(FluidsRegistry.BLACK_TEA_STILL.get(), FluidIngredient.fromFluid(500, FluidsRegistry.WEAK_BLACK_TEA_STILL.get()), Ingredient.fromTag(NormalTags.Items.CROPS_BLACK_TEA_LEAF), Ingredient.fromTag(NormalTags.Items.CROPS_BLACK_TEA_LEAF), Ingredient.fromTag(NormalTags.Items.CROPS_BLACK_TEA_LEAF)).build(consumer, "afterthedrizzle:weak_to_black_tea");
         DrinkRecipeBuilder.boilingRecipe(FluidsRegistry.BLACK_TEA_STILL.get(), Ingredient.fromTag(NormalTags.Items.CROPS_BLACK_TEA_LEAF), Ingredient.fromTag(NormalTags.Items.CROPS_BLACK_TEA_LEAF), Ingredient.fromTag(NormalTags.Items.CROPS_BLACK_TEA_LEAF), Ingredient.fromTag(NormalTags.Items.CROPS_BLACK_TEA_LEAF)).build(consumer);
-        DrinkRecipeBuilder.boilingRecipe(FluidsRegistry.STRONG_BLACK_TEA_STILL.get(), Ingredient.fromItems(ItemsRegistry.BLACK_TEA_BAG), Ingredient.fromItems(ItemsRegistry.BLACK_TEA_BAG)).build(consumer, "strong_black_tea_bag");
+        DrinkRecipeBuilder.boilingRecipe(FluidsRegistry.STRONG_BLACK_TEA_STILL.get(), Ingredient.fromItems(ItemsRegistry.BLACK_TEA_BAG), Ingredient.fromItems(ItemsRegistry.BLACK_TEA_BAG)).build(consumer, "afterthedrizzle:strong_black_tea_bag");
         DrinkRecipeBuilder.drinkRecipe(FluidsRegistry.STRONG_BLACK_TEA_STILL.get(), FluidIngredient.fromFluid(500, FluidsRegistry.BLACK_TEA_STILL.get()), Ingredient.fromTag(NormalTags.Items.CROPS_BLACK_TEA_LEAF), Ingredient.fromTag(NormalTags.Items.CROPS_BLACK_TEA_LEAF), Ingredient.fromTag(NormalTags.Items.CROPS_BLACK_TEA_LEAF), Ingredient.fromTag(NormalTags.Items.CROPS_BLACK_TEA_LEAF)).build(consumer);
 
         DrinkRecipeBuilder.boilingRecipe(FluidsRegistry.WEAK_GREEN_TEA_STILL.get(), Ingredient.fromTag(NormalTags.Items.CROPS_GREEN_TEA_LEAF), Ingredient.fromTag(NormalTags.Items.CROPS_GREEN_TEA_LEAF)).build(consumer);
-        DrinkRecipeBuilder.boilingRecipe(FluidsRegistry.GREEN_TEA_STILL.get(), Ingredient.fromItems(ItemsRegistry.GREEN_TEA_BAG)).build(consumer, "green_tea_bag");
-        DrinkRecipeBuilder.drinkRecipe(FluidsRegistry.GREEN_TEA_STILL.get(), FluidIngredient.fromFluid(500, FluidsRegistry.WEAK_GREEN_TEA_STILL.get()), Ingredient.fromTag(NormalTags.Items.CROPS_GREEN_TEA_LEAF), Ingredient.fromTag(NormalTags.Items.CROPS_GREEN_TEA_LEAF), Ingredient.fromTag(NormalTags.Items.CROPS_GREEN_TEA_LEAF)).build(consumer, "weak_to_green_tea");
+        DrinkRecipeBuilder.boilingRecipe(FluidsRegistry.GREEN_TEA_STILL.get(), Ingredient.fromItems(ItemsRegistry.GREEN_TEA_BAG)).build(consumer, "afterthedrizzle:green_tea_bag");
+        DrinkRecipeBuilder.drinkRecipe(FluidsRegistry.GREEN_TEA_STILL.get(), FluidIngredient.fromFluid(500, FluidsRegistry.WEAK_GREEN_TEA_STILL.get()), Ingredient.fromTag(NormalTags.Items.CROPS_GREEN_TEA_LEAF), Ingredient.fromTag(NormalTags.Items.CROPS_GREEN_TEA_LEAF), Ingredient.fromTag(NormalTags.Items.CROPS_GREEN_TEA_LEAF)).build(consumer, "afterthedrizzle:weak_to_green_tea");
         DrinkRecipeBuilder.boilingRecipe(FluidsRegistry.GREEN_TEA_STILL.get(), Ingredient.fromTag(NormalTags.Items.CROPS_GREEN_TEA_LEAF), Ingredient.fromTag(NormalTags.Items.CROPS_GREEN_TEA_LEAF), Ingredient.fromTag(NormalTags.Items.CROPS_GREEN_TEA_LEAF), Ingredient.fromTag(NormalTags.Items.CROPS_GREEN_TEA_LEAF)).build(consumer);
-        DrinkRecipeBuilder.boilingRecipe(FluidsRegistry.STRONG_GREEN_TEA_STILL.get(), Ingredient.fromItems(ItemsRegistry.GREEN_TEA_BAG), Ingredient.fromItems(ItemsRegistry.GREEN_TEA_BAG)).build(consumer, "strong_green_tea_bag");
+        DrinkRecipeBuilder.boilingRecipe(FluidsRegistry.STRONG_GREEN_TEA_STILL.get(), Ingredient.fromItems(ItemsRegistry.GREEN_TEA_BAG), Ingredient.fromItems(ItemsRegistry.GREEN_TEA_BAG)).build(consumer, "afterthedrizzle:strong_green_tea_bag");
         DrinkRecipeBuilder.drinkRecipe(FluidsRegistry.STRONG_GREEN_TEA_STILL.get(), FluidIngredient.fromFluid(500, FluidsRegistry.GREEN_TEA_STILL.get()), Ingredient.fromTag(NormalTags.Items.CROPS_GREEN_TEA_LEAF), Ingredient.fromTag(NormalTags.Items.CROPS_GREEN_TEA_LEAF), Ingredient.fromTag(NormalTags.Items.CROPS_GREEN_TEA_LEAF), Ingredient.fromTag(NormalTags.Items.CROPS_GREEN_TEA_LEAF)).build(consumer);
 
         DrinkRecipeBuilder.boilingRecipe(FluidsRegistry.WEAK_WHITE_TEA_STILL.get(), Ingredient.fromTag(NormalTags.Items.CROPS_WHITE_TEA_LEAF), Ingredient.fromTag(NormalTags.Items.CROPS_WHITE_TEA_LEAF)).build(consumer);
-        DrinkRecipeBuilder.drinkRecipe(FluidsRegistry.WHITE_TEA_STILL.get(), FluidIngredient.fromFluid(500, FluidsRegistry.WEAK_WHITE_TEA_STILL.get()), Ingredient.fromTag(NormalTags.Items.CROPS_WHITE_TEA_LEAF), Ingredient.fromTag(NormalTags.Items.CROPS_WHITE_TEA_LEAF), Ingredient.fromTag(NormalTags.Items.CROPS_WHITE_TEA_LEAF)).build(consumer, "weak_to_white_tea");
+        DrinkRecipeBuilder.drinkRecipe(FluidsRegistry.WHITE_TEA_STILL.get(), FluidIngredient.fromFluid(500, FluidsRegistry.WEAK_WHITE_TEA_STILL.get()), Ingredient.fromTag(NormalTags.Items.CROPS_WHITE_TEA_LEAF), Ingredient.fromTag(NormalTags.Items.CROPS_WHITE_TEA_LEAF), Ingredient.fromTag(NormalTags.Items.CROPS_WHITE_TEA_LEAF)).build(consumer, "afterthedrizzle:weak_to_white_tea");
         DrinkRecipeBuilder.boilingRecipe(FluidsRegistry.WHITE_TEA_STILL.get(), Ingredient.fromTag(NormalTags.Items.CROPS_WHITE_TEA_LEAF), Ingredient.fromTag(NormalTags.Items.CROPS_WHITE_TEA_LEAF), Ingredient.fromTag(NormalTags.Items.CROPS_WHITE_TEA_LEAF), Ingredient.fromTag(NormalTags.Items.CROPS_WHITE_TEA_LEAF)).build(consumer);
         DrinkRecipeBuilder.drinkRecipe(FluidsRegistry.STRONG_WHITE_TEA_STILL.get(), FluidIngredient.fromFluid(500, FluidsRegistry.WHITE_TEA_STILL.get()), Ingredient.fromTag(NormalTags.Items.CROPS_WHITE_TEA_LEAF), Ingredient.fromTag(NormalTags.Items.CROPS_WHITE_TEA_LEAF), Ingredient.fromTag(NormalTags.Items.CROPS_WHITE_TEA_LEAF), Ingredient.fromTag(NormalTags.Items.CROPS_WHITE_TEA_LEAF)).build(consumer);
     }

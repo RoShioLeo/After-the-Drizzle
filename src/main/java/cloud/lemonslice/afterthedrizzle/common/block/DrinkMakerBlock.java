@@ -33,8 +33,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fml.network.NetworkHooks;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 import java.util.List;
@@ -176,19 +174,16 @@ public class DrinkMakerBlock extends NormalHorizontalBlock
     private void dropItems(World worldIn, BlockPos pos)
     {
         TileEntity te = worldIn.getTileEntity(pos);
-        if (te != null)
+        if (te instanceof DrinkMakerTileEntity)
         {
-            te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.UP).ifPresent(inv ->
+            for (int i = 0; i < 11; i++)
             {
-                for (int i = inv.getSlots() - 1; i >= 0; --i)
+                ItemStack stack = ((DrinkMakerTileEntity) te).decrStackSize(i, Integer.MAX_VALUE);
+                if (stack != ItemStack.EMPTY)
                 {
-                    if (inv.getStackInSlot(i) != ItemStack.EMPTY)
-                    {
-                        Block.spawnAsEntity(worldIn, pos, inv.getStackInSlot(i));
-                        ((IItemHandlerModifiable) inv).setStackInSlot(i, ItemStack.EMPTY);
-                    }
+                    Block.spawnAsEntity(worldIn, pos, stack);
                 }
-            });
+            }
         }
     }
 

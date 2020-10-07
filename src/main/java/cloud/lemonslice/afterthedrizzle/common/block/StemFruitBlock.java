@@ -5,6 +5,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.IGrowable;
+import net.minecraft.item.Item;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.util.Direction;
@@ -32,6 +33,12 @@ public class StemFruitBlock extends NormalBlock implements IGrowable, IPlantable
         super(name, properties);
         this.type = type;
         this.setDefaultState(this.stateContainer.getBaseState().with(AGE, 0));
+    }
+
+    @Override
+    public Item asItem()
+    {
+        return super.asItem();
     }
 
     @Override

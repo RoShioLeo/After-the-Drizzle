@@ -1,0 +1,8 @@
+{
+    "type": "afterthedrizzle:bamboo_tray_bake",
+    "ingredient": {
+        "item": "minecraft:rabbit"
+    },
+    "result": "afterthedrizzle:rabbit_jerky",
+    "workingtime": 200
+}

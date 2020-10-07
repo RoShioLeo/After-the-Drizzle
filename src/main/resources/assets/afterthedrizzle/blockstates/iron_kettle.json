@@ -1,0 +1,19 @@
+{
+    "variants": {
+        "facing=north": {
+            "model": "afterthedrizzle:block/iron_kettle"
+        },
+        "facing=south": {
+            "model": "afterthedrizzle:block/iron_kettle",
+            "y": 180
+        },
+        "facing=west": {
+            "model": "afterthedrizzle:block/iron_kettle",
+            "y": 270
+        },
+        "facing=east": {
+            "model": "afterthedrizzle:block/iron_kettle",
+            "y": 90
+        }
+    }
+}

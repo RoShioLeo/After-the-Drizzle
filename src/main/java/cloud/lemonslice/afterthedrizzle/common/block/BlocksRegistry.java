@@ -27,11 +27,12 @@ public final class BlocksRegistry extends RegistryModule
     public static final Block DIRT_STOVE = new StoveBlock(Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(3.5F), "dirt_stove", 1);
     public static final Block STONE_STOVE = new StoveBlock(Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(3.5F), "stone_stove", 2);
     public static final Block WOODEN_FRAME = new WoodenFrameBlock();
-    public static final Block TEAPOT = new TeapotBlock();
+    public static final Block TEAPOT = new TeapotBlock("porcelain_teapot", Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(3.5F));
+    public static final Block IRON_KETTLE = new IronKettleBlock("iron_kettle", Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(3.5F).tickRandomly());
     public static final Block STONE_CATAPULT_BOARD = new CatapultBoardBlock(0.2F, "stone_catapult_board", Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(3.5F).notSolid());
     public static final Block STONE_CATAPULT_BOARD_WITH_TRAY = new CatapultBoardBlockWithTray("stone_catapult_board_with_tray", Block.Properties.create(Material.ROCK).sound(SoundType.BAMBOO).notSolid());
     public static final Block BAMBOO_CATAPULT_BOARD = new CatapultBoardBlock(0.4F, "bamboo_catapult_board", Block.Properties.create(Material.BAMBOO).sound(SoundType.BAMBOO).notSolid());
-    public static final Block IRON_CATAPULT_BOARD = new CatapultBoardBlock(0.6F, "iron_catapult_board", Block.Properties.create(Material.IRON).sound(SoundType.STONE).hardnessAndResistance(3.5F).notSolid());
+    public static final Block IRON_CATAPULT_BOARD = new CatapultBoardBlock(0.6F, "iron_catapult_board", Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(3.5F).notSolid());
     public static final Block FILTER_SCREEN = new FilterScreenBlock();
     public static final Block INSTRUMENT_SHELTER = new InstrumentShelterBlock();
     public static final Block WOODEN_TRAY = new WoodenTrayBlock();
@@ -93,7 +94,9 @@ public final class BlocksRegistry extends RegistryModule
     }.setRegistryName("bamboo_lantern");
     public static final Block BAMBOO_DOOR = new BambooDoorBlock("bamboo_door");
     public static final Block BAMBOO_GLASS_DOOR = new BambooDoorBlock("bamboo_glass_door");
-    public static final Block BAMBOO_LATTICE = new BambooLatticeBlock();
+    public static final Block BAMBOO_LATTICE = new BambooLatticeBlock("bamboo_lattice", Block.Properties.create(Material.BAMBOO).sound(SoundType.BAMBOO).hardnessAndResistance(0.6F).notSolid());
+    public static final Block FRESH_BAMBOO_WALL = new BambooWallBlock("fresh_bamboo_wall");
+    public static final Block DRIED_BAMBOO_WALL = new BambooWallBlock("dried_bamboo_wall");
 //    public static final Block BAMBOO_GLASS_WINDOW = new BambooGlassWindow();
 
     public static final BlockItem WOODEN_TABLE_ITEM = new NormalBlockItem(WOODEN_TABLE);
@@ -106,17 +109,21 @@ public final class BlocksRegistry extends RegistryModule
     public static final BlockItem BAMBOO_DOOR_ITEM = new NormalBlockItem(BAMBOO_DOOR);
     public static final BlockItem BAMBOO_GLASS_DOOR_ITEM = new NormalBlockItem(BAMBOO_GLASS_DOOR);
     public static final BlockItem BAMBOO_LATTICE_ITEM = new NormalBlockItem(BAMBOO_LATTICE);
+    public static final BlockItem FRESH_BAMBOO_WALL_ITEM = new NormalBlockItem(FRESH_BAMBOO_WALL);
+    public static final BlockItem DRIED_BAMBOO_WALL_ITEM = new NormalBlockItem(DRIED_BAMBOO_WALL);
 //    public static final BlockItem BAMBOO_GLASS_WINDOW_ITEM = new NormalBlockItem(BAMBOO_GLASS_WINDOW);
 
     // CROPS 作物
     public static final Block PADDY_FIELD = new PaddyFieldBlock();
     public static final Block TEA_PLANT = new TeaPlantBlock();
     public static final Block WILD_TEA_PLANT = new WildTeaPlantBlock();
+    public static final Block WILD_GRAPE = new WildGrapeBlock();
     public static final Block RICE_SEEDLING = new RiceSeedlingBlock("rice_seedling");
     public static final Block RICE_PLANT = new RicePlantBlock("rice_plant");
     public static final Block GRAPE = new StemFruitBlock("grape_plant", Block.Properties.create(Material.PLANTS).doesNotBlockMovement().tickRandomly().hardnessAndResistance(0.0F).sound(SoundType.CROP), VineType.GRAPE);
 
     public static final BlockItem WILD_TEA_PLANT_ITEM = new NormalBlockItem(WILD_TEA_PLANT);
+    public static final BlockItem WILD_GRAPE_ITEM = new NormalBlockItem(WILD_GRAPE);
 
     // FLOWERS 花朵
     public static final Block CHRYSANTHEMUM = new HybridizableFlowerBlock("chrysanthemum");

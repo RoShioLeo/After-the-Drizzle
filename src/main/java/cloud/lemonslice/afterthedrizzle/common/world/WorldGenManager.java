@@ -23,6 +23,7 @@ public final class WorldGenManager
             {
                 biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, FeaturesRegistry.TEA_PLANT.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placement.COUNT_HEIGHTMAP_DOUBLE.configure(new FrequencyConfig(1))));
                 biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, FeaturesRegistry.BAMBOO_DIRT.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placement.COUNT_HEIGHTMAP_DOUBLE.configure(new FrequencyConfig(2))));
+                biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, FeaturesRegistry.WILD_GRAPE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placement.COUNT_HEIGHTMAP_DOUBLE.configure(new FrequencyConfig(1))));
             }
 
             Temperature temperature = Temperature.getTemperatureLevel(temp);

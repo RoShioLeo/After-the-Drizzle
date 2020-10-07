@@ -1,7 +1,7 @@
 {
     "type": "afterthedrizzle:bamboo_tray_indoors",
     "ingredient": {
-        "tag": "afterthedrizzle:food/meat"
+        "tag": "forge:food/meat"
     },
     "result": "minecraft:rotten_flesh",
     "workingtime": 200

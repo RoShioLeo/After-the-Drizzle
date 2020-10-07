@@ -96,7 +96,7 @@ dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
     compile fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}")
-    compile fg.deobf("cloud.lemonslice.silveroak:SilveroakOutpost-Forge-1.15.2:0.2.3-Alpha")
+    compile fg.deobf("cloud.lemonslice.silveroak:SilveroakOutpost-Forge-1.15.2:0.2.4-Alpha")
 }
 
 jar {

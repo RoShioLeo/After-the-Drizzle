@@ -2,6 +2,7 @@ package cloud.lemonslice.afterthedrizzle.client;
 
 import cloud.lemonslice.afterthedrizzle.AfterTheDrizzle;
 import cloud.lemonslice.afterthedrizzle.common.capability.CapabilityWorldWeather;
+import cloud.lemonslice.afterthedrizzle.common.config.ServerConfig;
 import cloud.lemonslice.afterthedrizzle.common.environment.weather.WeatherType;
 import cloud.lemonslice.afterthedrizzle.common.fluid.NormalFlowingFluidBlock;
 import net.minecraft.block.BlockState;
@@ -19,54 +20,55 @@ import net.minecraftforge.fml.common.Mod;
 public final class ClientEventHandler
 {
     public static WeatherType current = WeatherType.NONE;
-    public static float currentDensity = 0.006F;
+    public static float currentDensity = 0.005F;
 
     @SubscribeEvent
     public static void onFogRender(EntityViewRenderEvent.FogDensity event)
     {
-        AfterTheDrizzle.proxy.getClientWorld().getCapability(CapabilityWorldWeather.WORLD_WEATHER).ifPresent(data ->
-        {
-            if (current == WeatherType.FOGGY)
+        if (ServerConfig.Weather.enable.get())
+            AfterTheDrizzle.proxy.getClientWorld().getCapability(CapabilityWorldWeather.WORLD_WEATHER).ifPresent(data ->
             {
-                Entity entity = event.getInfo().getRenderViewEntity();
-                if (entity instanceof PlayerEntity && ((PlayerEntity) entity).isPotionActive(Effects.BLINDNESS))
+                if (current == WeatherType.FOGGY)
                 {
-                    currentDensity = 0.006F;
-                    return;
+                    Entity entity = event.getInfo().getRenderViewEntity();
+                    if (entity instanceof PlayerEntity && ((PlayerEntity) entity).isPotionActive(Effects.BLINDNESS))
+                    {
+                        currentDensity = 0.006F;
+                        return;
+                    }
+                    BlockPos blockpos = new BlockPos(entity);
+                    if (entity.getEntityWorld().getLightFor(LightType.SKY, blockpos) > 0)
+                    {
+                        if (currentDensity < 0.1F) currentDensity += 0.0001F;
+                        event.setDensity(currentDensity);
+                        event.setCanceled(true);
+                        return;
+                    }
                 }
-                BlockPos blockpos = new BlockPos(entity);
-                if (entity.getEntityWorld().getLightFor(LightType.SKY, blockpos) > 0)
+                else if (current == WeatherType.STORM)
                 {
-                    if (currentDensity < 0.1F) currentDensity += 0.0001F;
+                    Entity entity = event.getInfo().getRenderViewEntity();
+                    if (entity instanceof PlayerEntity && ((PlayerEntity) entity).isPotionActive(Effects.BLINDNESS))
+                    {
+                        currentDensity = 0.006F;
+                        return;
+                    }
+                    BlockPos blockpos = new BlockPos(entity);
+                    if (entity.getEntityWorld().getLightFor(LightType.SKY, blockpos) > 0)
+                    {
+                        if (currentDensity < 0.02F) currentDensity += 0.0001F;
+                        event.setDensity(currentDensity);
+                        event.setCanceled(true);
+                        return;
+                    }
+                }
+                if (currentDensity > 0.0055F)
+                {
+                    currentDensity -= 0.0001F;
                     event.setDensity(currentDensity);
                     event.setCanceled(true);
-                    return;
                 }
-            }
-            else if (current == WeatherType.STORM)
-            {
-                Entity entity = event.getInfo().getRenderViewEntity();
-                if (entity instanceof PlayerEntity && ((PlayerEntity) entity).isPotionActive(Effects.BLINDNESS))
-                {
-                    currentDensity = 0.006F;
-                    return;
-                }
-                BlockPos blockpos = new BlockPos(entity);
-                if (entity.getEntityWorld().getLightFor(LightType.SKY, blockpos) > 0)
-                {
-                    if (currentDensity < 0.02F) currentDensity += 0.0001F;
-                    event.setDensity(currentDensity);
-                    event.setCanceled(true);
-                    return;
-                }
-            }
-            if (currentDensity > 0.006F)
-            {
-                currentDensity -= 0.0001F;
-                event.setDensity(currentDensity);
-                event.setCanceled(true);
-            }
-        });
+            });
     }
 
     @SubscribeEvent

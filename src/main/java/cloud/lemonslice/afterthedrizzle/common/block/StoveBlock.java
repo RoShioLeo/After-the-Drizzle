@@ -1,5 +1,6 @@
 package cloud.lemonslice.afterthedrizzle.common.block;
 
+import cloud.lemonslice.afterthedrizzle.common.item.ItemsRegistry;
 import cloud.lemonslice.afterthedrizzle.common.tileentity.NormalContainerTileEntity;
 import cloud.lemonslice.afterthedrizzle.common.tileentity.StoveTileEntity;
 import cloud.lemonslice.afterthedrizzle.common.tileentity.TileEntityTypesRegistry;
@@ -12,6 +13,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.particles.ParticleTypes;
@@ -137,6 +139,11 @@ public class StoveBlock extends NormalHorizontalBlock implements IStoveBlock
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit)
     {
         TileEntity te = worldIn.getTileEntity(pos);
+        Item held = player.getHeldItem(handIn).getItem();
+        if (held == BlocksRegistry.BAMBOO_TRAY_ITEM || held == ItemsRegistry.IRON_KETTLE)
+        {
+            return ActionResultType.PASS;
+        }
         if (te instanceof StoveTileEntity)
         {
             if (player.isSneaking())
@@ -147,14 +154,14 @@ public class StoveBlock extends NormalHorizontalBlock implements IStoveBlock
             }
             else
             {
-                if (player.getHeldItem(handIn).getItem().equals(Items.FLINT_AND_STEEL))
+                if (held.equals(Items.FLINT_AND_STEEL))
                 {
                     ((StoveTileEntity) te).setToLit();
                     player.getHeldItem(handIn).damageItem(1, player, onBroken -> onBroken.sendBreakAnimation(handIn));
                     worldIn.playSound(player, pos, SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 1.0F, worldIn.getRandom().nextFloat() * 0.4F + 0.8F);
                     return ActionResultType.SUCCESS;
                 }
-                else if (player.getHeldItem(handIn).getItem().equals(Items.FIRE_CHARGE))
+                else if (held.equals(Items.FIRE_CHARGE))
                 {
                     ((StoveTileEntity) te).setToLit();
                     player.getHeldItem(handIn).shrink(1);

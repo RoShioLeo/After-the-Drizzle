@@ -1,21 +1,26 @@
 package cloud.lemonslice.afterthedrizzle.common.item;
 
+import cloud.lemonslice.afterthedrizzle.common.block.BlocksRegistry;
 import cloud.lemonslice.afterthedrizzle.common.block.TrellisBlock;
 import cloud.lemonslice.afterthedrizzle.common.block.TrellisWithVineBlock;
 import cloud.lemonslice.afterthedrizzle.common.block.VineType;
 import cloud.lemonslice.afterthedrizzle.common.environment.crop.CropInfoManager;
 import net.minecraft.block.BlockState;
+import net.minecraft.item.BlockNamedItem;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.Tags;
 
-public class GrapeSeedsItem extends NormalItem
+import static cloud.lemonslice.afterthedrizzle.common.item.NormalItem.getNormalItemProperties;
+
+public class GrapeSeedsItem extends BlockNamedItem
 {
     public GrapeSeedsItem()
     {
-        super("grapes");
+        super(BlocksRegistry.GRAPE, getNormalItemProperties());
+        this.setRegistryName("grapes");
     }
 
     @Override

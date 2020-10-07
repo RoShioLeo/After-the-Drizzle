@@ -1,0 +1,6 @@
+{
+    "parent": "block/cross",
+    "textures": {
+        "cross": "afterthedrizzle:block/wild_grape"
+    }
+}
