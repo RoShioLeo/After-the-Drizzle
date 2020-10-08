@@ -1,0 +1,23 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "group": "instrument_shelter",
+    "pattern": [
+        " # ",
+        "x x",
+        "***"
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:smooth_stone_slab"
+        },
+        "x": {
+            "tag": "forge:ingots/iron"
+        },
+        "*": {
+            "tag": "forge:rods/wooden"
+        }
+    },
+    "result": {
+        "item": "afterthedrizzle:instrument_shelter"
+    }
+}

@@ -6,6 +6,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.IGrowable;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.util.Direction;
@@ -17,9 +18,12 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.storage.loot.LootContext;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.IPlantable;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 public class StemFruitBlock extends NormalBlock implements IGrowable, IPlantable
@@ -174,5 +178,14 @@ public class StemFruitBlock extends NormalBlock implements IGrowable, IPlantable
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder)
     {
         builder.add(AGE);
+    }
+
+    @Override
+    public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder)
+    {
+        if (state.get(AGE) == 4)
+            return super.getDrops(state, builder);
+        else
+            return Collections.emptyList();
     }
 }

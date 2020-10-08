@@ -27,6 +27,7 @@ public final class CropInfoManager
 {
     private final static Map<Block, CropHumidityInfo> CROP_HUMIDITY_INFO = new HashMap<>();
     private final static Map<Block, CropSeasonInfo> CROP_SEASON_INFO = new HashMap<>();
+
     private final static Map<VinePair, TrellisWithVineBlock> TRELLIS_VINES_INFO = new HashMap<>();
     private final static Map<TrellisWithVineBlock, TrellisBlock> TRELLIS_INFO = new HashMap<>();
 
@@ -74,6 +75,20 @@ public final class CropInfoManager
         registerCropHumidityInfo(ForgeRegistries.ITEMS.getValue(new ResourceLocation("pamhc2crops:waterchestnutseeditem")), CropHumidityType.MOIST_HUMID);
         registerCropHumidityInfo(ForgeRegistries.ITEMS.getValue(new ResourceLocation("pamhc2crops:whitemushroomseeditem")), CropHumidityType.MOIST_HUMID);
         registerCropHumidityInfo(ForgeRegistries.ITEMS.getValue(new ResourceLocation("pamhc2crops:wintersquashseeditem")), CropHumidityType.DRY_MOIST);
+
+        registerCropHumidityInfo(BlocksRegistry.OAK_TRELLIS_GRAPE, CropHumidityType.MOIST_HUMID, true);
+        registerCropHumidityInfo(BlocksRegistry.BIRCH_TRELLIS_GRAPE, CropHumidityType.MOIST_HUMID, true);
+        registerCropHumidityInfo(BlocksRegistry.JUNGLE_TRELLIS_GRAPE, CropHumidityType.MOIST_HUMID, true);
+        registerCropHumidityInfo(BlocksRegistry.SPRUCE_TRELLIS_GRAPE, CropHumidityType.MOIST_HUMID, true);
+        registerCropHumidityInfo(BlocksRegistry.DARK_OAK_TRELLIS_GRAPE, CropHumidityType.MOIST_HUMID, true);
+        registerCropHumidityInfo(BlocksRegistry.ACACIA_TRELLIS_GRAPE, CropHumidityType.MOIST_HUMID, true);
+
+        registerCropSeasonInfo(BlocksRegistry.OAK_TRELLIS_GRAPE, CropSeasonType.SP_SU, true);
+        registerCropSeasonInfo(BlocksRegistry.BIRCH_TRELLIS_GRAPE, CropSeasonType.SP_SU, true);
+        registerCropSeasonInfo(BlocksRegistry.JUNGLE_TRELLIS_GRAPE, CropSeasonType.SP_SU, true);
+        registerCropSeasonInfo(BlocksRegistry.SPRUCE_TRELLIS_GRAPE, CropSeasonType.SP_SU, true);
+        registerCropSeasonInfo(BlocksRegistry.DARK_OAK_TRELLIS_GRAPE, CropSeasonType.SP_SU, true);
+        registerCropSeasonInfo(BlocksRegistry.ACACIA_TRELLIS_GRAPE, CropSeasonType.SP_SU, true);
 
         ForgeRegistries.BLOCKS.forEach(block ->
         {

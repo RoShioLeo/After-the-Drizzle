@@ -10,6 +10,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.util.ActionResultType;
@@ -19,6 +20,7 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraft.world.storage.loot.LootContext;
 
 import java.util.List;
 
@@ -64,12 +66,12 @@ public class InstrumentShelterBlock extends NormalBlock
             worldIn.setBlockState(pos, state.with(THERMOMETER, true));
             return ActionResultType.SUCCESS;
         }
-        else if (player.getHeldItem(handIn).getItem() == SilveroakItemsRegistry.RAIN_GAUGE && !state.get(RAIN_GAUGE))
-        {
-            player.getHeldItem(handIn).shrink(1);
-            worldIn.setBlockState(pos, state.with(RAIN_GAUGE, true));
-            return ActionResultType.SUCCESS;
-        }
+//        else if (player.getHeldItem(handIn).getItem() == SilveroakItemsRegistry.RAIN_GAUGE && !state.get(RAIN_GAUGE))
+//        {
+//            player.getHeldItem(handIn).shrink(1);
+//            worldIn.setBlockState(pos, state.with(RAIN_GAUGE, true));
+//            return ActionResultType.SUCCESS;
+//        }
         else if (player.getHeldItem(handIn).getItem() == SilveroakItemsRegistry.HYGROMETER && !state.get(HYGROMETER))
         {
             player.getHeldItem(handIn).shrink(1);
@@ -129,5 +131,25 @@ public class InstrumentShelterBlock extends NormalBlock
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder)
     {
         builder.add(THERMOMETER, RAIN_GAUGE, HYGROMETER);
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder)
+    {
+        List<ItemStack> list = super.getDrops(state, builder);
+        if (state.get(THERMOMETER))
+        {
+            list.add(new ItemStack(SilveroakItemsRegistry.THERMOMETER));
+        }
+        if (state.get(RAIN_GAUGE))
+        {
+            list.add(new ItemStack(SilveroakItemsRegistry.RAIN_GAUGE));
+        }
+        if (state.get(HYGROMETER))
+        {
+            list.add(new ItemStack(SilveroakItemsRegistry.HYGROMETER));
+        }
+        return list;
     }
 }

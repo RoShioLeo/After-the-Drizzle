@@ -133,6 +133,7 @@ public final class NormalTags
         public final static Tag<Item> CROPS_GREEN_TEA_LEAF = new ItemTags.Wrapper(new ResourceLocation("forge:crops/green_tea_leaf"));
         public final static Tag<Item> CROPS_TEA_LEAF = new ItemTags.Wrapper(new ResourceLocation("forge:crops/tea_leaf"));
         public final static Tag<Item> CROPS_WHITE_TEA_LEAF = new ItemTags.Wrapper(new ResourceLocation("forge:crops/white_tea_leaf"));
+        public final static Tag<Item> CROPS_GRAPE = new ItemTags.Wrapper(new ResourceLocation("forge:crops/grape"));
 
         public final static Tag<Item> FOOD_JERKY = new ItemTags.Wrapper(new ResourceLocation("forge:food/jerky"));
         public final static Tag<Item> FOOD_MEAT = new ItemTags.Wrapper(new ResourceLocation("forge:food/meat"));

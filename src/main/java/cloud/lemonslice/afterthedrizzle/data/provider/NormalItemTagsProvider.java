@@ -59,9 +59,9 @@ public class NormalItemTagsProvider extends ItemTagsProvider
         getBuilder(ELDERBERRY);
         getBuilder(FLAX);
         getBuilder(GARLIC);
-        getBuilder(GINGER);
-        getBuilder(GRAPE);
-        getBuilder(GREEN_GRAPE);
+        getBuilder(GINGER);*/
+        getBuilder(SEEDS_GRAPE).add(ItemsRegistry.GRAPES);
+        /*getBuilder(GREEN_GRAPE);
         getBuilder(HONEYDEW);
         getBuilder(HUCKLEBERRY);
         getBuilder(JICAMA);
@@ -116,6 +116,7 @@ public class NormalItemTagsProvider extends ItemTagsProvider
         getBuilder(CROPS_GREEN_TEA_LEAF).add(ItemsRegistry.GREEN_TEA_LEAVES);
         getBuilder(CROPS_TEA_LEAF).add(ItemsRegistry.TEA_LEAVES);
         getBuilder(CROPS_WHITE_TEA_LEAF).add(ItemsRegistry.WHITE_TEA_LEAVES);
+        getBuilder(CROPS_GRAPE).add(ItemsRegistry.GRAPES);
     }
 
     @Override

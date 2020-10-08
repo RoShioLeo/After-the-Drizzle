@@ -1,6 +1,5 @@
 package cloud.lemonslice.afterthedrizzle.common.item;
 
-import cloud.lemonslice.afterthedrizzle.AfterTheDrizzle;
 import cloud.lemonslice.afterthedrizzle.common.environment.flower.FlowerColor;
 import net.minecraft.block.Block;
 import net.minecraft.client.util.ITooltipFlag;
@@ -26,7 +25,7 @@ public class HybridizableFlowerBlockItem extends NormalBlockItem
     @Override
     public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items)
     {
-        if (group == AfterTheDrizzle.GROUP_CORE)
+        if (group == ItemGroup.DECORATIONS)
         {
             for (FlowerColor c : FlowerColor.values())
             {

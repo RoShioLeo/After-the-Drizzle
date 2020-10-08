@@ -41,6 +41,13 @@ public final class RecipesProvider extends RecipeProvider
         ShapedRecipeBuilder.shapedRecipe(BlocksRegistry.BAMBOO_TABLE).key('x', ItemsRegistry.BAMBOO_PLANK).key('#', Items.BAMBOO).patternLine("xxx").patternLine("# #").patternLine("# #").setGroup("bamboo_table").addCriterion("has_bamboo_plank", this.hasItem(ItemsRegistry.BAMBOO_PLANK)).build(consumer);
         ShapedRecipeBuilder.shapedRecipe(BlocksRegistry.BAMBOO_TRAY).key('x', ItemsRegistry.BAMBOO_PLANK).key('#', Items.BAMBOO).patternLine("# #").patternLine("#x#").setGroup("bamboo_tray").addCriterion("has_bamboo_plank", this.hasItem(ItemsRegistry.BAMBOO_PLANK)).build(consumer);
         ShapedRecipeBuilder.shapedRecipe(BlocksRegistry.WOODEN_FRAME).key('x', Tags.Items.RODS_WOODEN).key('#', ItemTags.PLANKS).patternLine("#x#").patternLine("x#x").patternLine("x x").setGroup("wooden_frame").addCriterion("has_plank", this.hasItem(ItemTags.PLANKS)).build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(BlocksRegistry.FRESH_BAMBOO_WALL, 2).key('x', Items.BAMBOO).key('#', Tags.Items.STRING).patternLine("xxx").patternLine("###").patternLine("xxx").setGroup("fresh_bamboo_wall").addCriterion("has_bamboo", this.hasItem(Items.BAMBOO)).build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(BlocksRegistry.WOODEN_TABLE).key('x', ItemTags.PLANKS).key('#', Tags.Items.RODS_WOODEN).patternLine("xxx").patternLine("# #").patternLine("# #").setGroup("wooden_table").addCriterion("has_plank", this.hasItem(ItemTags.PLANKS)).build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(BlocksRegistry.WOODEN_CHAIR).key('x', ItemTags.PLANKS).key('#', Tags.Items.RODS_WOODEN).patternLine("x  ").patternLine("xxx").patternLine("# #").setGroup("wooden_chair").addCriterion("has_plank", this.hasItem(ItemTags.PLANKS)).build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(BlocksRegistry.STONE_TABLE).key('x', Blocks.STONE).key('#', Blocks.COBBLESTONE_WALL).patternLine("xxx").patternLine("# #").patternLine("# #").setGroup("stone_table").addCriterion("has_stone", this.hasItem(Blocks.STONE)).build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(BlocksRegistry.STONE_CHAIR).key('x', Blocks.STONE).key('#', Blocks.COBBLESTONE_WALL).patternLine("xxx").patternLine("# #").setGroup("stone_chair").addCriterion("has_stone", this.hasItem(Blocks.STONE)).build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(BlocksRegistry.WOODEN_TRAY).key('#', Tags.Items.RODS_WOODEN).patternLine("# #").patternLine("###").setGroup("wooden_tray").addCriterion("has_rod", this.hasItem(Tags.Items.RODS_WOODEN)).build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(BlocksRegistry.BAMBOO_LATTICE, 2).key('x', Items.BAMBOO).patternLine("x x").patternLine(" x ").patternLine("x x").setGroup("bamboo_lattice").addCriterion("has_bamboo", this.hasItem(Items.BAMBOO)).build(consumer);
 
         // Drink Ingredient Recipes 茶饮配料配方
         ShapedRecipeBuilder.shapedRecipe(ItemsRegistry.EMPTY_TEA_BAG, 3).key('/', Items.STRING).key('x', Items.PAPER).patternLine(" / ").patternLine("xxx").patternLine("xxx").setGroup("empty_tea_bag").addCriterion("has_paper", this.hasItem(Items.PAPER)).build(consumer);
@@ -66,6 +73,7 @@ public final class RecipesProvider extends RecipeProvider
         ShapedRecipeBuilder.shapedRecipe(BlocksRegistry.JUNGLE_TRELLIS, 2).key('#', Tags.Items.RODS_WOODEN).key('*', Blocks.JUNGLE_FENCE).patternLine("#*#").patternLine(" # ").setGroup("trellis").addCriterion("has_planks", this.hasItem(Blocks.JUNGLE_FENCE)).build(consumer);
         ShapedRecipeBuilder.shapedRecipe(BlocksRegistry.DARK_OAK_TRELLIS, 2).key('#', Tags.Items.RODS_WOODEN).key('*', Blocks.DARK_OAK_FENCE).patternLine("#*#").patternLine(" # ").setGroup("trellis").addCriterion("has_planks", this.hasItem(Blocks.DARK_OAK_FENCE)).build(consumer);
         ShapedRecipeBuilder.shapedRecipe(BlocksRegistry.ACACIA_TRELLIS, 2).key('#', Tags.Items.RODS_WOODEN).key('*', Blocks.ACACIA_FENCE).patternLine("#*#").patternLine(" # ").setGroup("trellis").addCriterion("has_planks", this.hasItem(Blocks.ACACIA_FENCE)).build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(BlocksRegistry.INSTRUMENT_SHELTER).key('#', Blocks.SMOOTH_STONE_SLAB).key('x', Tags.Items.INGOTS_IRON).key('*', Tags.Items.RODS_WOODEN).patternLine(" # ").patternLine("x x").patternLine("***").setGroup("instrument_shelter").addCriterion("has_smooth", this.hasItem(Blocks.SMOOTH_STONE_SLAB)).build(consumer);
 
         // Survival Ingredient Recipes 生存用品配方
         ShapedRecipeBuilder.shapedRecipe(ItemsRegistry.GAUZE).key('#', Tags.Items.STRING).patternLine("# #").patternLine("###").patternLine("# #").setGroup("gauze").addCriterion("has_string", this.hasItem(Tags.Items.STRING)).build(consumer);
@@ -83,6 +91,7 @@ public final class RecipesProvider extends RecipeProvider
         CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(ItemsRegistry.CLAY_CUP), ItemsRegistry.PORCELAIN_CUP, 0.2F, 200).addCriterion("has_clay_cup", this.hasItem(ItemsRegistry.CLAY_CUP)).build(consumer);
         CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(ItemsRegistry.CLAY_TEAPOT), ItemsRegistry.PORCELAIN_TEAPOT, 0.2F, 200).addCriterion("has_clay_teapot", this.hasItem(ItemsRegistry.CLAY_TEAPOT)).build(consumer);
         CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(ItemsRegistry.WATER_BAG), ItemsRegistry.HOT_WATER_BAG, 0.2F, 200).addCriterion("has_water_bag", this.hasItem(ItemsRegistry.WATER_BAG)).build(consumer);
+        CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(Items.BAMBOO), ItemsRegistry.BAMBOO_CHARCOAL, 0.2F, 200).addCriterion("has_bamboo", this.hasItem(Items.BAMBOO)).build(consumer);
 
         // Bamboo Tray In-rain Recipes 竹篾匾淋雨配方
         BambooTrayRecipeBuilder.wetRecipe(Ingredient.fromItems(ItemsRegistry.RABBIT_JERKY), Items.RABBIT, 0).build(consumer);
@@ -108,6 +117,8 @@ public final class RecipesProvider extends RecipeProvider
         BambooTrayRecipeBuilder.outdoorsRecipe(Ingredient.fromItems(Items.BEETROOT), ItemsRegistry.DRIED_BEETROOT, 200).build(consumer);
         BambooTrayRecipeBuilder.outdoorsRecipe(Ingredient.fromItems(Items.CARROT), ItemsRegistry.DRIED_CARROT, 200).build(consumer);
         BambooTrayRecipeBuilder.outdoorsRecipe(Ingredient.fromTag(NormalTags.Items.FOOD_JERKY), Items.LEATHER, 200).build(consumer, "afterthedrizzle:jerky_leather");
+        BambooTrayRecipeBuilder.outdoorsRecipe(Ingredient.fromTag(NormalTags.Items.CROPS_GRAPE), ItemsRegistry.RAISINS, 200).build(consumer);
+        BambooTrayRecipeBuilder.outdoorsRecipe(Ingredient.fromItems(BlocksRegistry.FRESH_BAMBOO_WALL), BlocksRegistry.DRIED_BAMBOO_WALL, 200).build(consumer);
 
         // Bamboo Tray Indoors Recipes 竹篾匾室内配方
         BambooTrayRecipeBuilder.indoorsRecipe(Ingredient.fromTag(NormalTags.Items.FOOD_MEAT), Items.ROTTEN_FLESH, 200).build(consumer);

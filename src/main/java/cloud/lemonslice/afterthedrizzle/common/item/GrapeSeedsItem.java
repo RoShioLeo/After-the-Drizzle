@@ -5,6 +5,7 @@ import cloud.lemonslice.afterthedrizzle.common.block.TrellisBlock;
 import cloud.lemonslice.afterthedrizzle.common.block.TrellisWithVineBlock;
 import cloud.lemonslice.afterthedrizzle.common.block.VineType;
 import cloud.lemonslice.afterthedrizzle.common.environment.crop.CropInfoManager;
+import cloud.lemonslice.afterthedrizzle.common.item.food.NormalFoods;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.BlockNamedItem;
 import net.minecraft.item.ItemUseContext;
@@ -19,7 +20,7 @@ public class GrapeSeedsItem extends BlockNamedItem
 {
     public GrapeSeedsItem()
     {
-        super(BlocksRegistry.GRAPE, getNormalItemProperties());
+        super(BlocksRegistry.GRAPE, getNormalItemProperties().food(NormalFoods.GRAPE));
         this.setRegistryName("grapes");
     }
 

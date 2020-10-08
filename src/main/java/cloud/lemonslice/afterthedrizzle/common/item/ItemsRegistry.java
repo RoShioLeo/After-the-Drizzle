@@ -27,6 +27,8 @@ public final class ItemsRegistry extends RegistryModule
     public static final Item RABBIT_JERKY = new FoodItem("rabbit_jerky", NormalFoods.RABBIT_JERKY);
     public static final Item MUTTON_JERKY = new FoodItem("mutton_jerky", NormalFoods.MUTTON_JERKY);
 
+    public static final Item RAISINS = new NormalItem("raisins", getNormalItemProperties().food(NormalFoods.RAISINS));
+
     // MISC 杂项
     public static final Item BAMBOO_PLANK = new NormalItem("bamboo_plank");
     public static final Item ASH = new FertilizerItem("ash");

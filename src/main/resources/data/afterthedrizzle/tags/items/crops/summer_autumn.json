@@ -1,6 +1,14 @@
 {
     "replace": false,
     "values": [
+        "#forge:seeds/cassava",
+        "#forge:seeds/okra",
+        "#forge:seeds/arrowroot",
+        "#forge:seeds/chili_pepper",
+        "#forge:seeds/asparagus",
+        "#forge:seeds/elderberry",
+        "#forge:seeds/chickpea",
+        "#forge:seeds/amaranth",
         "#forge:seeds/leek",
         "#forge:seeds/onion",
         "#forge:seeds/parsnip",

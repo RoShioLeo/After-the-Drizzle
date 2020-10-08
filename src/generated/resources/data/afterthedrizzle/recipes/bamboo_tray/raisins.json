@@ -1,0 +1,8 @@
+{
+    "type": "afterthedrizzle:bamboo_tray_outdoors",
+    "ingredient": {
+        "tag": "forge:crops/grape"
+    },
+    "result": "afterthedrizzle:raisins",
+    "workingtime": 200
+}
