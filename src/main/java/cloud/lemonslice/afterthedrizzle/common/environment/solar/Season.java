@@ -28,4 +28,9 @@ public enum Season
     {
         return new TranslationTextComponent("info.afterthedrizzle.environment.season." + getName()).applyTextStyle(color);
     }
+
+    public TextFormatting getColor()
+    {
+        return color;
+    }
 }

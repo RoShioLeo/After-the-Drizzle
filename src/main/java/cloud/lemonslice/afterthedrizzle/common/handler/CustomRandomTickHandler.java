@@ -8,6 +8,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkSection;
+import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.server.ChunkHolder;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.TickEvent;
@@ -21,15 +22,21 @@ public final class CustomRandomTickHandler
 {
     private static final CustomRandomTick SNOW_MELT = (state, world, pos) ->
     {
-        if (world.getBiome(pos).getTemperature(pos) >= 0.15F)
+        BlockPos blockpos = world.getHeight(Heightmap.Type.MOTION_BLOCKING, world.getBlockRandomPos(pos.getX(), 0, pos.getZ(), 15));
+        if (world.isAreaLoaded(blockpos, 1) && world.getBiome(blockpos).getTemperature(blockpos) >= 0.15F)
         {
-            if (state.getBlock().equals(Blocks.SNOW))
+            BlockState topState = world.getBlockState(blockpos);
+            if (topState.getBlock().equals(Blocks.SNOW))
             {
-                world.setBlockState(pos, Blocks.AIR.getDefaultState());
+                world.setBlockState(blockpos, Blocks.AIR.getDefaultState());
             }
-            else if (state.getBlock().equals(Blocks.ICE))
+            else
             {
-                world.setBlockState(pos, Blocks.WATER.getDefaultState());
+                BlockState downState = world.getBlockState(blockpos.down());
+                if (downState.getBlock().equals(Blocks.ICE))
+                {
+                    world.setBlockState(blockpos.down(), Blocks.WATER.getDefaultState());
+                }
             }
         }
     };
@@ -37,7 +44,7 @@ public final class CustomRandomTickHandler
     @SubscribeEvent
     public static void onWorldTick(TickEvent.WorldTickEvent event)
     {
-        if (event.phase.equals(TickEvent.Phase.END) && ServerConfig.Temperature.enable.get() && ServerConfig.Temperature.iceMelt.get() && !event.world.isRemote)
+        if (event.phase.equals(TickEvent.Phase.END) && ServerConfig.Temperature.iceMelt.get() && !event.world.isRemote)
         {
             ServerWorld world = (ServerWorld) event.world;
             int randomTickSpeed = world.getGameRules().getInt(GameRules.RANDOM_TICK_SPEED);
@@ -59,9 +66,10 @@ public final class CustomRandomTickHandler
 
                                 for (int l = 0; l < randomTickSpeed; ++l)
                                 {
-                                    BlockPos blockpos = world.getBlockRandomPos(x, y, z, 15);
-                                    BlockState blockstate = chunksection.getBlockState(blockpos.getX() - x, blockpos.getY() - y, blockpos.getZ() - z);
-                                    doCustomRandomTick(blockstate, world, blockpos);
+                                    if (world.rand.nextInt(16) == 0)
+                                    {
+                                        doCustomRandomTick(world, x, y, z);
+                                    }
                                 }
                             }
                         }
@@ -71,11 +79,11 @@ public final class CustomRandomTickHandler
         }
     }
 
-    private static void doCustomRandomTick(BlockState state, ServerWorld worldIn, BlockPos pos)
+    private static void doCustomRandomTick(ServerWorld world, int x, int y, int z)
     {
         if (ServerConfig.Temperature.iceMelt.get())
         {
-            SNOW_MELT.tick(state, worldIn, pos);
+            SNOW_MELT.tick(null, world, new BlockPos(x, y, z));
         }
     }
 }

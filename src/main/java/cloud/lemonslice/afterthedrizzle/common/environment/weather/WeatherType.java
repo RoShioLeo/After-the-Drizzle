@@ -6,7 +6,6 @@ public enum WeatherType
 {
     NONE(false),
     SUNNY(false),
-    OVERCAST(false),
     RAINY_LIGHT(true),
     RAINY_NORMAL(true),
     RAINY_HEAVY(true),

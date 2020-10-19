@@ -15,12 +15,11 @@ public class WeatherCommand
         dispatcher.register(Commands.literal("instantweather").requires((source) -> source.hasPermissionLevel(2))
                 .then(Commands.literal("set")
                         .then(Commands.literal("clear").executes((commandContext) -> setWeather(commandContext.getSource(), 1)))
-                        .then(Commands.literal("overcast").executes((commandContext) -> setWeather(commandContext.getSource(), 2)))
-                        .then(Commands.literal("light_rain").executes((commandContext) -> setWeather(commandContext.getSource(), 3)))
-                        .then(Commands.literal("normal_rain").executes((commandContext) -> setWeather(commandContext.getSource(), 4)))
-                        .then(Commands.literal("heavy_rain").executes((commandContext) -> setWeather(commandContext.getSource(), 5)))
-                        .then(Commands.literal("storm").executes((commandContext) -> setWeather(commandContext.getSource(), 6)))
-                        .then(Commands.literal("foggy").executes((commandContext) -> setWeather(commandContext.getSource(), 7)))
+                        .then(Commands.literal("light_rain").executes((commandContext) -> setWeather(commandContext.getSource(), 2)))
+                        .then(Commands.literal("normal_rain").executes((commandContext) -> setWeather(commandContext.getSource(), 3)))
+                        .then(Commands.literal("heavy_rain").executes((commandContext) -> setWeather(commandContext.getSource(), 4)))
+                        .then(Commands.literal("storm").executes((commandContext) -> setWeather(commandContext.getSource(), 5)))
+                        .then(Commands.literal("foggy").executes((commandContext) -> setWeather(commandContext.getSource(), 6)))
                 ));
     }
 

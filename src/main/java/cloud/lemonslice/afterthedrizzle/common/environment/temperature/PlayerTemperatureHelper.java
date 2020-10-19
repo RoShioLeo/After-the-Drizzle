@@ -1,8 +1,7 @@
-package cloud.lemonslice.afterthedrizzle.helper;
+package cloud.lemonslice.afterthedrizzle.common.environment.temperature;
 
 import cloud.lemonslice.afterthedrizzle.common.capability.CapabilityPlayerTemperature;
 import cloud.lemonslice.afterthedrizzle.common.config.ServerConfig;
-import cloud.lemonslice.afterthedrizzle.common.environment.temperature.ApparentTemperature;
 import cloud.lemonslice.afterthedrizzle.common.item.IItemWithTemperature;
 import cloud.lemonslice.afterthedrizzle.common.network.PlayerTemperatureMessage;
 import cloud.lemonslice.afterthedrizzle.common.network.SimpleNetworkHandler;
@@ -275,13 +274,19 @@ public final class PlayerTemperatureHelper
     {
         if (env > t.getTemperature())
         {
-            t.addPlayerTemperature(1);
-            t.setHotterOrColder(1);
+            if (t.getTemperature() < 0 || player.getEntityWorld().getGameTime() % 150 == 0)
+            {
+                t.addPlayerTemperature(1);
+                t.setHotterOrColder(1);
+            }
         }
         else if (env < t.getTemperature())
         {
-            t.addPlayerTemperature(-1);
-            t.setHotterOrColder(2);
+            if (t.getTemperature() > -1 || player.getEntityWorld().getGameTime() % 150 == 0)
+            {
+                t.addPlayerTemperature(-1);
+                t.setHotterOrColder(2);
+            }
         }
         else
         {

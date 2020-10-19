@@ -21,6 +21,7 @@ import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
@@ -165,7 +166,7 @@ public class DrinkMakerTileEntity extends NormalContainerTileEntity implements I
                         outputInventory.ifPresent(out ->
                         {
                             {
-                                ItemStack inputCup = in.getStackInSlot(0);
+                                ItemStack inputCup = ItemHandlerHelper.copyStackWithSize(in.getStackInSlot(0), 1);
                                 ItemStack outputCup = out.getStackInSlot(0);
                                 if (outputCup.isEmpty())
                                 {
@@ -177,7 +178,7 @@ public class DrinkMakerTileEntity extends NormalContainerTileEntity implements I
                                     if (fluidActionResult.isSuccess())
                                     {
                                         out.setStackInSlot(0, fluidActionResult.getResult());
-                                        inputCup.shrink(1);
+                                        in.getStackInSlot(0).shrink(1);
                                     }
                                     if (fluid.getFluidInTank(0).isEmpty())
                                     {

@@ -1,8 +1,7 @@
 package cloud.lemonslice.afterthedrizzle.common.environment.weather;
 
 import cloud.lemonslice.afterthedrizzle.common.capability.CapabilitySolarTermTime;
-import cloud.lemonslice.afterthedrizzle.common.config.ServerConfig;
-import cloud.lemonslice.afterthedrizzle.common.environment.solar.Season;
+import cloud.lemonslice.afterthedrizzle.common.environment.solar.SolarTerm;
 import com.google.common.collect.Lists;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.server.ServerWorld;
@@ -26,10 +25,16 @@ public class DailyWeatherData
     private DailyWeatherData(ServerWorld world)
     {
         Random rand = world.rand;
-        Season season = world.getCapability(CapabilitySolarTermTime.WORLD_SOLAR_TIME).map(data -> data.getSolarTerm().getSeason()).orElse(Season.NONE);
+        SolarTerm solarTerm = world.getCapability(CapabilitySolarTermTime.WORLD_SOLAR_TIME).map(data -> data.getSolarTerm()).orElse(SolarTerm.NONE);
+        int lasting = rand.nextInt(3) + 3;
         while (weatherList.size() < 24)
         {
-            weatherList.addAll(create(season, rand, weatherList.size()));
+            WeatherType weatherType = solarTerm.createWeather(rand, weatherList.size());
+            if (weatherType == WeatherType.FOGGY)
+            {
+                weatherList.addAll(create(weatherType, 6 - weatherList.size()));
+            }
+            else weatherList.addAll(create(weatherType, lasting));
         }
     }
 
@@ -99,146 +104,6 @@ public class DailyWeatherData
             list.add(WeatherType.values()[nbt.getInt("Weather_" + i)]);
         }
         return new DailyWeatherData(list);
-    }
-
-    public static List<WeatherType> create(Season season, Random random, int index)
-    {
-        int lasting = random.nextInt(3) + 3;
-        float f = random.nextFloat();
-        switch (season)
-        {
-            case SPRING:
-            {
-                if (f < 0.4F)
-                {
-                    return create(WeatherType.SUNNY, lasting);
-                }
-                else if (f < 0.7F)
-                {
-                    if (index < 3 && random.nextInt(100) < 60)
-                    {
-                        if (ServerConfig.Weather.enableFoggy.get())
-                            return create(WeatherType.FOGGY, 6 - index);
-                    }
-                    if (ServerConfig.Weather.enableOvercast.get())
-                        return create(WeatherType.OVERCAST, lasting);
-                    else
-                        return create(WeatherType.SUNNY, lasting);
-                }
-                else
-                {
-                    float rain = random.nextInt(100);
-                    if (rain < 40)
-                    {
-                        return create(WeatherType.RAINY_LIGHT, lasting);
-                    }
-                    else if (rain < 70)
-                    {
-                        return create(WeatherType.RAINY_NORMAL, lasting);
-                    }
-                    else if (rain < 90)
-                    {
-                        return create(WeatherType.RAINY_HEAVY, lasting);
-                    }
-                    else
-                    {
-                        return create(WeatherType.STORM, lasting);
-                    }
-                }
-            }
-            case SUMMER:
-            {
-                if (f < 0.6F)
-                {
-                    return create(WeatherType.SUNNY, lasting);
-                }
-                else if (f < 0.75F)
-                {
-                    if (ServerConfig.Weather.enableOvercast.get())
-                        return create(WeatherType.OVERCAST, lasting);
-                    else
-                        return create(WeatherType.SUNNY, lasting);
-                }
-                else
-                {
-                    float rain = random.nextInt(100);
-                    if (rain < 20F)
-                    {
-                        return create(WeatherType.RAINY_LIGHT, lasting);
-                    }
-                    else if (rain < 60F)
-                    {
-                        return create(WeatherType.RAINY_NORMAL, lasting);
-                    }
-                    else
-                    {
-                        if (index >= 6 && index < 12 && random.nextBoolean())
-                        {
-                            return create(WeatherType.STORM, random.nextInt(3) + 1);
-                        }
-                        else return create(WeatherType.STORM, lasting);
-                    }
-                }
-            }
-            case WINTER:
-            {
-                if (f < 0.45F)
-                {
-                    return create(WeatherType.SUNNY, lasting);
-                }
-                else if (f < 0.75F)
-                {
-                    if (ServerConfig.Weather.enableOvercast.get())
-                        return create(WeatherType.OVERCAST, lasting);
-                    else
-                        return create(WeatherType.SUNNY, lasting);
-                }
-                else
-                {
-                    switch (random.nextInt(3))
-                    {
-                        case 2:
-                            return create(WeatherType.RAINY_HEAVY, lasting);
-                        case 1:
-                            return create(WeatherType.RAINY_NORMAL, lasting);
-                        default:
-                            return create(WeatherType.RAINY_LIGHT, lasting);
-                    }
-                }
-            }
-            default:
-            {
-                if (f < 0.6F)
-                {
-                    return create(WeatherType.SUNNY, lasting);
-                }
-                else if (f < 0.8F)
-                {
-
-                    if (index < 3 && random.nextInt(100) < 45)
-                    {
-                        if (ServerConfig.Weather.enableFoggy.get())
-                            return create(WeatherType.FOGGY, 6 - index);
-                    }
-                    if (ServerConfig.Weather.enableOvercast.get())
-                        return create(WeatherType.OVERCAST, lasting);
-                    else
-                        return create(WeatherType.SUNNY, lasting);
-                }
-                else
-                {
-                    switch (random.nextInt(3))
-                    {
-                        case 2:
-                            return create(WeatherType.RAINY_HEAVY, lasting);
-                        case 1:
-                            return create(WeatherType.RAINY_NORMAL, lasting);
-                        default:
-                            return create(WeatherType.RAINY_LIGHT, lasting);
-                    }
-                }
-            }
-        }
     }
 
     public static List<WeatherType> create(WeatherType type, int amount)

@@ -1,5 +1,7 @@
 package cloud.lemonslice.afterthedrizzle.common.block;
 
+import cloud.lemonslice.afterthedrizzle.common.item.ItemsRegistry;
+import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BushBlock;
@@ -7,12 +9,16 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraft.world.storage.loot.LootContext;
+
+import java.util.List;
 
 public class WildGrapeBlock extends BushBlock
 {
@@ -41,5 +47,14 @@ public class WildGrapeBlock extends BushBlock
         }
 
         super.onEntityCollision(state, worldIn, pos, entityIn);
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder)
+    {
+        List<ItemStack> list = Lists.newArrayList();
+        list.add(new ItemStack(ItemsRegistry.GRAPES, builder.getWorld().rand.nextInt(4) + 1));
+        return list;
     }
 }

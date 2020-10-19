@@ -9,6 +9,7 @@ import cloud.lemonslice.afterthedrizzle.common.environment.weather.WeatherType;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.function.Supplier;
@@ -38,7 +39,7 @@ public class WeatherChangeMessage implements INormalMessage
     {
         context.get().enqueueWork(() ->
         {
-            if (AfterTheDrizzle.proxy.getClientWorld() != null)
+            if (context.get().getDirection() == NetworkDirection.PLAY_TO_CLIENT)
             {
                 AfterTheDrizzle.proxy.getClientWorld().getCapability(CapabilityWorldWeather.WORLD_WEATHER).ifPresent(data ->
                 {
@@ -46,12 +47,6 @@ public class WeatherChangeMessage implements INormalMessage
                     WeatherType type = WeatherType.values()[weatherType];
                     switch (type)
                     {
-                        case OVERCAST:
-                            world.getWorldInfo().setRaining(true);
-                            world.getWorldInfo().setThundering(false);
-                            BiomeWeatherManager.setToOvercast();
-                            ClientEventHandler.current = WeatherType.OVERCAST;
-                            break;
                         case SUNNY:
                             world.getWorldInfo().setRaining(false);
                             ClientEventHandler.current = WeatherType.SUNNY;

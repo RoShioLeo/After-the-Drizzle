@@ -58,6 +58,7 @@ public final class RecipesProvider extends RecipeProvider
         ShapedRecipeBuilder.shapedRecipe(ItemsRegistry.BOTTLE).key('x', Tags.Items.NUGGETS_IRON).key('#', Tags.Items.GLASS_PANES_COLORLESS).patternLine(" x ").patternLine("# #").patternLine("###").setGroup("bottle").addCriterion("has_glass_pane", this.hasItem(Tags.Items.GLASS_PANES_COLORLESS)).build(consumer);
         ShapedRecipeBuilder.shapedRecipe(ItemsRegistry.CLAY_CUP).key('x', Items.CLAY_BALL).patternLine("x x").patternLine(" x ").setGroup("clay_cup").addCriterion("has_clay_ball", this.hasItem(Items.CLAY_BALL)).build(consumer);
         ShapedRecipeBuilder.shapedRecipe(ItemsRegistry.CLAY_TEAPOT).key('x', Blocks.CLAY).patternLine("x x").patternLine(" x ").setGroup("clay_teapot").addCriterion("has_clay_ball", this.hasItem(Items.CLAY_BALL)).build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(ItemsRegistry.IRON_KETTLE).key('*', Items.BUCKET).key('x', Tags.Items.INGOTS_IRON).patternLine(" x ").patternLine("x*x").patternLine("xxx").setGroup("iron_kettle").addCriterion("has_iron", this.hasItem(Tags.Items.INGOTS_IRON)).build(consumer);
 
         // Craft Block Recipes 工艺方块配方
         ShapedRecipeBuilder.shapedRecipe(BlocksRegistry.DIRT_STOVE).key('x', NormalTags.Items.DIRT).patternLine("xxx").patternLine("x x").patternLine("xxx").setGroup("stove").addCriterion("has_dirt", this.hasItem(NormalTags.Items.DIRT)).build(consumer);

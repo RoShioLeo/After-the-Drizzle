@@ -7,14 +7,14 @@ import net.minecraft.util.text.TranslationTextComponent;
 
 public enum ApparentTemperature
 {
-    UNDER_FREEZING(TextFormatting.DARK_BLUE),
-    FREEZING(TextFormatting.DARK_BLUE),
-    COLD(TextFormatting.BLUE),
-    COOL(TextFormatting.AQUA),
-    WARM(TextFormatting.GOLD),
-    HOT(TextFormatting.RED),
-    HEAT(TextFormatting.DARK_RED),
-    OVER_HEAT(TextFormatting.DARK_RED);
+    UNDER_FREEZING(TextFormatting.DARK_BLUE), // -32~-25
+    FREEZING(TextFormatting.DARK_BLUE), // -24~-17
+    COLD(TextFormatting.BLUE), // -16~-9
+    COOL(TextFormatting.AQUA), // -8~-1
+    WARM(TextFormatting.GOLD), // 0~7
+    HOT(TextFormatting.RED), // 8~15
+    HEAT(TextFormatting.DARK_RED), // 16~23
+    OVER_HEAT(TextFormatting.DARK_RED); // 24~31
 
     private final TextFormatting color;
 

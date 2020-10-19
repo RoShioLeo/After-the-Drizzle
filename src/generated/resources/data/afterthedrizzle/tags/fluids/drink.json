@@ -1,6 +1,7 @@
 {
     "replace": false,
     "values": [
+        "afterthedrizzle:boiling_water",
         "afterthedrizzle:sugary_water",
         "afterthedrizzle:weak_black_tea",
         "afterthedrizzle:black_tea",

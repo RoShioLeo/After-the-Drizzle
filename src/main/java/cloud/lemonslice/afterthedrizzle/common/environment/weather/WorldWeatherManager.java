@@ -34,15 +34,6 @@ public final class WorldWeatherManager
 
                     switch (current)
                     {
-                        case OVERCAST:
-                            if (data.currentType != WeatherType.OVERCAST || !event.world.getWorldInfo().isRaining())
-                            {
-                                BiomeWeatherManager.setToOvercast();
-                                sendUpdateMessage((ServerWorld) event.world, current, data);
-                                event.world.getWorldInfo().setRaining(true);
-                                event.world.getWorldInfo().setThundering(false);
-                            }
-                            break;
                         case SUNNY:
                             if (data.currentType != WeatherType.SUNNY || event.world.getWorldInfo().isRaining())
                             {

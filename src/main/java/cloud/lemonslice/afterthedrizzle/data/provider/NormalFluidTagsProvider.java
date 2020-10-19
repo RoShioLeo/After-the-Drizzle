@@ -20,7 +20,7 @@ public class NormalFluidTagsProvider extends FluidTagsProvider
     @Override
     protected void registerTags()
     {
-        getBuilder(NormalTags.Fluids.DRINK).add(FluidsRegistry.SUGARY_WATER_STILL.get(), FluidsRegistry.WEAK_BLACK_TEA_STILL.get(), FluidsRegistry.BLACK_TEA_STILL.get(), FluidsRegistry.STRONG_BLACK_TEA_STILL.get(),
+        getBuilder(NormalTags.Fluids.DRINK).add(FluidsRegistry.BOILING_WATER_STILL.get(), FluidsRegistry.SUGARY_WATER_STILL.get(), FluidsRegistry.WEAK_BLACK_TEA_STILL.get(), FluidsRegistry.BLACK_TEA_STILL.get(), FluidsRegistry.STRONG_BLACK_TEA_STILL.get(),
                 FluidsRegistry.WEAK_GREEN_TEA_STILL.get(), FluidsRegistry.GREEN_TEA_STILL.get(), FluidsRegistry.STRONG_GREEN_TEA_STILL.get(),
                 FluidsRegistry.WEAK_WHITE_TEA_STILL.get(), FluidsRegistry.WHITE_TEA_STILL.get(), FluidsRegistry.STRONG_WHITE_TEA_STILL.get());
 

@@ -3,6 +3,7 @@ package cloud.lemonslice.afterthedrizzle.common.item;
 import cloud.lemonslice.afterthedrizzle.AfterTheDrizzle;
 import cloud.lemonslice.afterthedrizzle.common.fluid.FluidsRegistry;
 import cloud.lemonslice.afterthedrizzle.common.recipe.drink.DrinkEffectsManager;
+import cloud.lemonslice.afterthedrizzle.data.tag.NormalTags;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -57,7 +58,7 @@ public class CupDrinkItem extends ItemFluidContainer
             @Override
             public boolean isFluidValid(int tank, @Nonnull FluidStack stack)
             {
-                return stack.getFluid().getAttributes().getTemperature() <= 423 && !stack.getFluid().getAttributes().isLighterThanAir();
+                return stack.getFluid().isIn(NormalTags.Fluids.DRINK);
             }
         };
     }
