@@ -16,8 +16,8 @@ public enum SolarTerm
     BEGINNING_OF_SPRING(-0.25F, 10500, 70, 10, 10, 6, 1, 0, 1),
     RAIN_WATER(-0.15F, 11000, 70, 10, 15, 8, 1, 0, 2),
     INSECTS_AWAKENING(-0.1F, 11500, 70, 9, 16, 9, 2, 1, 3),
-    SPRING_EQUINOX(-0.05F, 12000, 70, 8, 17, 10, 1, 2, 3),
-    FRESH_GREEN(0.0F, 1250070, 70, 8, 18, 10, 2, 2, 2),
+    SPRING_EQUINOX(0, 12000, 70, 8, 17, 10, 1, 2, 3),
+    FRESH_GREEN(0, 1250070, 70, 8, 18, 10, 2, 2, 2),
     GRAIN_RAIN(0.05F, 13000, 70, 8, 20, 10, 1, 1, 2),
 
     // Summer Solar Terms
@@ -32,7 +32,7 @@ public enum SolarTerm
     BEGINNING_OF_AUTUMN(0.15F, 13500, 80, 5, 6, 8, 2, 4, 0),
     END_OF_HEAT(0.1F, 13000, 75, 8, 8, 8, 1, 2, 1),
     WHITE_DEW(0.05F, 12500, 75, 10, 10, 8, 1, 1, 2),
-    AUTUMNAL_EQUINOX(0.0F, 12000, 72, 10, 10, 6, 2, 0, 3),
+    AUTUMNAL_EQUINOX(0, 12000, 72, 10, 10, 6, 2, 0, 3),
     COLD_DEW(-0.1F, 11500, 70, 10, 11, 6, 1, 0, 4),
     FIRST_FROST(-0.2F, 11000, 70, 12, 11, 8, 1, 0, 6),
 
@@ -42,7 +42,7 @@ public enum SolarTerm
     HEAVY_SNOW(-0.35F, 9500, 66, 14, 11, 8, 4, 0, 4),
     WINTER_SOLSTICE(-0.4F, 9000, 66, 16, 11, 10, 3, 0, 2),
     LESSER_COLD(-0.45F, 9500, 68, 14, 11, 11, 3, 0, 1),
-    GREATER_COLD(-0.45F, 10000, 70, 12, 10, 8, 2, 0, 1),
+    GREATER_COLD(-0.4F, 10000, 70, 12, 10, 8, 2, 0, 1),
 
     NONE(0.0F, 12000, 70, 10, 7, 6, 4, 1, 2);
 

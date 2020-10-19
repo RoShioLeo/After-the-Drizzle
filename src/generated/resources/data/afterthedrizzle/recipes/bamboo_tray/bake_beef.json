@@ -1,8 +1,0 @@
-{
-    "type": "afterthedrizzle:bamboo_tray_bake",
-    "ingredient": {
-        "item": "minecraft:beef"
-    },
-    "result": "afterthedrizzle:beef_jerky",
-    "workingtime": 200
-}

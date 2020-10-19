@@ -1,8 +1,0 @@
-{
-    "type": "afterthedrizzle:bamboo_tray_outdoors",
-    "ingredient": {
-        "item": "minecraft:beef"
-    },
-    "result": "afterthedrizzle:beef_jerky",
-    "workingtime": 200
-}

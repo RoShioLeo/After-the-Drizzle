@@ -66,7 +66,7 @@ public final class CustomRandomTickHandler
 
                                 for (int l = 0; l < randomTickSpeed; ++l)
                                 {
-                                    if (world.rand.nextInt(16) == 0)
+                                    if (world.rand.nextInt(32) == 0)
                                     {
                                         doCustomRandomTick(world, x, y, z);
                                     }

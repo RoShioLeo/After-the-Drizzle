@@ -10,7 +10,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = AfterTheDrizzle.MODID)
-public class WorldSolarTermManager
+public final class WorldSolarTermManager
 {
     @SubscribeEvent
     public static void onWorldTick(TickEvent.WorldTickEvent event)
@@ -19,7 +19,12 @@ public class WorldSolarTermManager
         {
             ServerWorld world = event.world.getServer().getWorld(DimensionType.OVERWORLD);
             world.getCapability(CapabilitySolarTermTime.WORLD_SOLAR_TIME).ifPresent(data ->
-                    data.updateTicks(world));
+            {
+                if (!world.getPlayers().isEmpty())
+                {
+                    data.updateTicks(world);
+                }
+            });
         }
     }
 }

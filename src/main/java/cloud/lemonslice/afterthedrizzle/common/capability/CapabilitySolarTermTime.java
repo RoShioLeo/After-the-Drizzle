@@ -47,7 +47,7 @@ public class CapabilitySolarTermTime
 
     public static class Data
     {
-        private int solarTermsDay = 0;
+        private int solarTermsDay = (ServerConfig.Season.initialSolarTermIndex.get() - 1) * ServerConfig.Season.lastingDaysOfEachTerm.get();
         private int solarTermsTicks = 0;
 
         public void updateTicks(ServerWorld world)

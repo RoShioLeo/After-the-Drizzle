@@ -1,8 +1,0 @@
-{
-    "type": "afterthedrizzle:bamboo_tray_in_rain",
-    "ingredient": {
-        "tag": "forge:crops/black_tea_leaf"
-    },
-    "result": "afterthedrizzle:tea_residues",
-    "workingtime": 0
-}

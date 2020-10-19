@@ -1,8 +1,0 @@
-{
-    "type": "afterthedrizzle:bamboo_tray_bake",
-    "ingredient": {
-        "item": "minecraft:porkchop"
-    },
-    "result": "afterthedrizzle:pork_jerky",
-    "workingtime": 200
-}

@@ -1,8 +1,0 @@
-{
-    "type": "afterthedrizzle:bamboo_tray_in_rain",
-    "ingredient": {
-        "item": "afterthedrizzle:rabbit_jerky"
-    },
-    "result": "minecraft:rabbit",
-    "workingtime": 0
-}
