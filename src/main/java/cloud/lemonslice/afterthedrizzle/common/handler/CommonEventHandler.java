@@ -224,16 +224,6 @@ public final class CommonEventHandler
         }
     }
 
-    @SubscribeEvent
-    public static void addTooltips(ItemTooltipEvent event)
-    {
-        if (ServerConfig.Season.enable.get())
-        {
-            addCropTooltips(event);
-        }
-        addArmorTempTooltips(event);
-    }
-
     public static void addArmorTempTooltips(ItemTooltipEvent event)
     {
         if (event.getItemStack().getItem() instanceof ArmorItem)

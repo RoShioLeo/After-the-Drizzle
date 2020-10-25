@@ -17,6 +17,8 @@ public class NormalBlockTagsProvider extends BlockTagsProvider
     protected void registerTags()
     {
         getBuilder(BlockTags.WOODEN_FENCES).add(BlocksRegistry.BAMBOO_LATTICE).add(BlocksRegistry.TRELLIS_BLOCKS.toArray(new Block[0]));
+        getBuilder(BlockTags.WOODEN_DOORS).add(BlocksRegistry.BAMBOO_DOOR, BlocksRegistry.BAMBOO_GLASS_DOOR);
+        getBuilder(BlockTags.SMALL_FLOWERS).add(BlocksRegistry.HYACINTH, BlocksRegistry.CHRYSANTHEMUM, BlocksRegistry.ZINNIA);
     }
 
     @Override

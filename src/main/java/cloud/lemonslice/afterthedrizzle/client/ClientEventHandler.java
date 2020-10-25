@@ -13,8 +13,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.LightType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+
+import static cloud.lemonslice.afterthedrizzle.common.handler.CommonEventHandler.addArmorTempTooltips;
+import static cloud.lemonslice.afterthedrizzle.common.handler.CommonEventHandler.addCropTooltips;
 
 @Mod.EventBusSubscriber(modid = AfterTheDrizzle.MODID, value = Dist.CLIENT)
 public final class ClientEventHandler
@@ -84,5 +88,15 @@ public final class ClientEventHandler
             event.setGreen((float) (((color >> 8) & 255) / 255.0));
             event.setBlue((float) ((color & 255) / 255.0));
         }
+    }
+
+    @SubscribeEvent
+    public static void addTooltips(ItemTooltipEvent event)
+    {
+        if (ServerConfig.Season.enable.get())
+        {
+            addCropTooltips(event);
+        }
+        addArmorTempTooltips(event);
     }
 }

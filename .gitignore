@@ -27,4 +27,3 @@ run
 forge*changelog.txt
 
 *.bat
-/src/generated/
