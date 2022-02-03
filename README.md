@@ -16,9 +16,6 @@ A Chinese agricultural mod! You can consider it as Tea the Story mod in 1.14.4 o
 
 - 对于代码：BSD 3-Clause
 
-- For resources: All Rights Reserved.
+- For resources: CC BY-NC-SA 4.0
 
-- 对于资源文件：保留所有权利。
-
-### OTHERS 其他
-
+- 对于资源文件：署名-非商业性使用-相同方式共享 4.0 国际
